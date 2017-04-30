@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ffzx.portal.mapper.CatelogMapper">
+  <sql id="Base_Column_List" >
+		t.id, 
+		t.`remarks` AS "remarks",
+		t.`create_by` AS "createBy.id",
+		t.`create_date` AS "createDate",
+		t.`last_update_by` AS "lastUpdateBy.id",
+		t.`last_update_date` AS "lastUpdateDate",
+		t.`del_flag` AS "delFlag",
+		t.`parent_id` AS "parent.id",
+		parent.`name` AS "parent.name",
+		t.`parent_ids` AS "parentIds",
+		t.`name` AS "name",
+		t.`sort` AS "sort",
+		t.`page_tab_id` AS "pageTab.id",
+		pt.`name` AS "pageTab.name",
+		t.`catelog_data_type` AS "catelogDataType",
+		t.`catelog_sort_type` AS "catelogSortType",
+		t.`image_url` AS "imageUrl",
+		t.`is_enable` AS "isEnable",
+		t.`url` AS "url",
+		t.`catelog_data_id` AS "catelogData.id",
+		t.`number` AS "number",
+		t.`en_name` AS "enName"
+		
+
+  </sql>  
+  <sql id="joins">
+    left join portal_catelog parent on parent.id = t.parent_id
+    left join portal_page_tab pt on pt.id = t.page_tab_id
+  </sql> 
+  <sql id="condition" >
+	<if test="null!=params" >
+		<if test="params.id != null and '' != params.id">
+			and t.id = #{params.id,jdbcType=VARCHAR}
+		</if>
+		<if test="params.remarks != null and '' != params.remarks">
+			and t.`remarks` = #{params.remarks,jdbcType=VARCHAR}
+		</if>
+		<if test="params.createBy != null and '' != params.createBy">
+			and t.`create_by` = #{params.createBy.id,jdbcType=VARCHAR}
+		</if>
+		<if test="params.createDate != null and '' != params.createDate">
+			and t.`create_date` = #{params.createDate,jdbcType=TIMESTAMP}
+		</if>
+		<if test="params.lastUpdateBy != null and '' != params.lastUpdateBy">
+			and t.`last_update_by` = #{params.lastUpdateBy.id,jdbcType=VARCHAR}
+		</if>
+		<if test="params.lastUpdateDate != null and '' != params.lastUpdateDate">
+			and t.`last_update_date` = #{params.lastUpdateDate,jdbcType=TIMESTAMP}
+		</if>
+		<if test="params.delFlag != null and '' != params.delFlag">
+			and t.`del_flag` = #{params.delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="params.parent != null and '' != params.parent">
+			and t.`parent_id` = #{params.parent.id,jdbcType=VARCHAR}
+		</if>
+
+		<if test="params.parentId != null and '' != params.parentId">
+			and t.`parent_id` = #{params.parentId ,jdbcType=VARCHAR}
+		</if>
+		<if test="params.parentidsrlike != null and '' != params.parentidsrlike">
+			and t.`parent_ids` like '${params.parentidsrlike}%'
+		</if>
+		<if test="params.parentidsAlllike != null and '' != params.parentidsAlllike">
+			and (t.`parent_ids` like '%${params.parentidsAlllike}%' or t.id = #{params.parentidsAlllike ,jdbcType=VARCHAR} )
+		</if>
+
+		<if test="params.parentIds != null and '' != params.parentIds">
+			and t.`parent_ids` = #{params.parentIds,jdbcType=VARCHAR}
+		</if>
+		<if test="params.name != null and '' != params.name">
+			and t.`name` = #{params.name,jdbcType=VARCHAR}
+		</if>
+		<if test="params.sort != null and '' != params.sort">
+			and t.`sort` = #{params.sort,jdbcType=INTEGER}
+		</if>
+		<if test="params.pageTab != null and '' != params.pageTab">
+			and t.`page_tab_id` = #{params.pageTab.id,jdbcType=VARCHAR}
+		</if>
+		
+		<if test="params.pageTabId != null and '' != params.pageTabId">
+			and t.`page_tab_id` = #{params.pageTabId,jdbcType=VARCHAR}
+		</if>
+		
+		<if test="params.catelogDataType != null and '' != params.catelogDataType">
+			and t.`catelog_data_type` = #{params.catelogDataType,jdbcType=VARCHAR}
+		</if>
+		<if test="params.catelogSortType != null and '' != params.catelogSortType">
+			and t.`catelog_sort_type` = #{params.catelogSortType,jdbcType=VARCHAR}
+		</if>
+		<if test="params.imageUrl != null and '' != params.imageUrl">
+			and t.`image_url` = #{params.imageUrl,jdbcType=VARCHAR}
+		</if>
+		<if test="params.isEnable != null and '' != params.isEnable">
+			and t.`is_enable` = #{params.isEnable,jdbcType=INTEGER}
+		</if>
+		<if test="params.url != null and '' != params.url">
+			and t.`url` = #{params.url,jdbcType=VARCHAR}
+		</if>
+		<if test="params.catelogData != null and '' != params.catelogData">
+			and t.`catelog_data_id` = #{params.catelogData.id,jdbcType=VARCHAR}
+		</if>
+		<if test="params.number != null and '' != params.number">
+			and t.`number` = #{params.number,jdbcType=VARCHAR}
+		</if>
+		<if test="params.nameOrNumber != null and '' != params.nameOrNumber">
+			and (t.`number` like '%${params.nameOrNumber}%' or t.`name` like '%${params.nameOrNumber}%')
+		</if>
+		<if test="params.delFlag == null or '' == params.delFlag or null == params" >
+			and t.del_flag = 0
+		</if>
+		<!-- <if test="params.enName != null or '' != params.enName" >
+			and t.en_name =  #{params.enName,jdbcType=VARCHAR}
+		</if> -->
+	</if>
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultType="com.ffzx.portal.model.Catelog" parameterType="java.lang.String" >
+   	select 
+    <include refid="Base_Column_List" />
+    from portal_catelog as t 
+    <include refid="joins"/>
+    where  t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParams" resultType="com.ffzx.portal.model.Catelog" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from portal_catelog as  t
+    <include refid="joins"/>
+    where 1=1 
+    <include refid="condition"/>
+     order by t.sort
+  </select>
+  
+  <select id="selectCount" resultType="java.lang.Integer" >
+   select count(1) as s from portal_catelog as  t
+    where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultType="com.ffzx.portal.model.Catelog" parameterType="map" >
+   select 
+    <include refid="Base_Column_List" />
+    from portal_catelog as  t    
+    <include refid="joins"/>
+    where 1=1      
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by  t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    	DELETE FROM portal_catelog WHERE id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.portal.model.Catelog" >
+    	DELETE FROM portal_catelog WHERE id = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.ffzx.portal.model.Catelog" >
+   	INSERT INTO portal_catelog
+		(
+			id,
+			`remarks`,
+			`create_by`,
+			`create_date`,
+			`last_update_by`,
+			`last_update_date`,
+			`del_flag`,
+			`parent_id`,
+			`parent_ids`,
+			`name`,
+			`sort`,
+			`page_tab_id`,
+			`catelog_data_type`,
+			`catelog_sort_type`,
+			`image_url`,
+			`is_enable`,
+			`url`,
+			`catelog_data_id`,
+			`number`,
+			`en_name`
+		) VALUES
+		(
+			#{id,jdbcType=VARCHAR},
+			#{remarks,jdbcType=VARCHAR},
+			#{createBy.id,jdbcType=VARCHAR},
+			#{createDate,jdbcType=TIMESTAMP},
+			#{lastUpdateBy.id,jdbcType=VARCHAR},
+			#{lastUpdateDate,jdbcType=TIMESTAMP},
+			#{delFlag,jdbcType=VARCHAR},
+			#{parent.id,jdbcType=VARCHAR},
+			#{parentIds,jdbcType=VARCHAR},
+			#{name,jdbcType=VARCHAR},
+			#{sort,jdbcType=INTEGER},
+			#{pageTab.id,jdbcType=VARCHAR},
+			#{catelogDataType,jdbcType=VARCHAR},
+			#{catelogSortType,jdbcType=VARCHAR},
+			#{imageUrl,jdbcType=VARCHAR},
+			#{isEnable,jdbcType=INTEGER},
+			#{url,jdbcType=VARCHAR},
+			#{catelogData.id,jdbcType=VARCHAR},
+			#{number,jdbcType=VARCHAR},
+			#{enName,jdbcType=VARCHAR}
+	
+		)
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.portal.model.Catelog" >
+   	INSERT INTO portal_catelog 
+	<trim prefix="(" suffix=")" suffixOverrides="," >
+		<if test="id != null">id,</if>
+		<if test="remarks != null" >`remarks`,</if>
+		<if test="createBy != null" >`create_by`,</if>
+		<if test="createDate != null" >`create_date`,</if>
+		<if test="lastUpdateBy != null" >`last_update_by`,</if>
+		<if test="lastUpdateDate != null" >`last_update_date`,</if>
+		<if test="delFlag != null" >`del_flag`,</if>
+		<if test="parent != null" >`parent_id`,</if>
+		<if test="parentIds != null" >`parent_ids`,</if>
+		<if test="name != null" >`name`,</if>
+		<if test="sort != null" >`sort`,</if>
+		<if test="pageTab != null" >`page_tab_id`,</if>
+		<if test="catelogDataType != null" >`catelog_data_type`,</if>
+		<if test="catelogSortType != null" >`catelog_sort_type`,</if>
+		<if test="imageUrl != null" >`image_url`,</if>
+		<if test="isEnable != null" >`is_enable`,</if>
+		<if test="url != null" >`url`,</if>
+		<if test="catelogData != null" >`catelog_data_id`,</if>
+		<if test="number != null" >`number`,</if>
+		<if test="enName != null" >`en_name`,</if>
+
+	</trim>
+	<trim prefix="values (" suffix=")" suffixOverrides="," >
+		<if test="id != null">#{id,jdbcType=VARCHAR},</if>
+		<if test="remarks != null" >#{remarks,jdbcType=VARCHAR},</if>
+		<if test="createBy != null" >#{createBy.id,jdbcType=VARCHAR},</if>
+		<if test="createDate != null" >#{createDate,jdbcType=TIMESTAMP},</if>
+		<if test="lastUpdateBy != null" >#{lastUpdateBy.id,jdbcType=VARCHAR},</if>
+		<if test="lastUpdateDate != null" >#{lastUpdateDate,jdbcType=TIMESTAMP},</if>
+		<if test="delFlag != null" >#{delFlag,jdbcType=VARCHAR},</if>
+		<if test="parent != null" >#{parent.id,jdbcType=VARCHAR},</if>
+		<if test="parentIds != null" >#{parentIds,jdbcType=VARCHAR},</if>
+		<if test="name != null" >#{name,jdbcType=VARCHAR},</if>
+		<if test="sort != null" >#{sort,jdbcType=INTEGER},</if>
+		<if test="pageTab != null" >#{pageTab.id,jdbcType=VARCHAR},</if>
+		<if test="catelogDataType != null" >#{catelogDataType,jdbcType=VARCHAR},</if>
+		<if test="catelogSortType != null" >#{catelogSortType,jdbcType=VARCHAR},</if>
+		<if test="imageUrl != null" >#{imageUrl,jdbcType=VARCHAR},</if>
+		<if test="isEnable != null" >#{isEnable,jdbcType=INTEGER},</if>
+		<if test="url != null" >#{url,jdbcType=VARCHAR},</if>
+		<if test="catelogData != null" >#{catelogData.id,jdbcType=VARCHAR},</if>
+		<if test="number != null" >#{number,jdbcType=VARCHAR},</if>
+		<if test="enName != null" >#{enName,jdbcType=VARCHAR},</if>
+
+	</trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.portal.model.Catelog" >
+   	UPDATE portal_catelog
+	<set>
+		<if test="remarks != null" >
+			`remarks` = #{remarks,jdbcType=VARCHAR},
+		</if>
+		<if test="createBy != null" >
+			`create_by` = #{createBy.id,jdbcType=VARCHAR},
+		</if>
+		<if test="createDate != null" >
+			`create_date` = #{createDate,jdbcType=TIMESTAMP},
+		</if>
+		<if test="lastUpdateBy != null" >
+			`last_update_by` = #{lastUpdateBy.id,jdbcType=VARCHAR},
+		</if>
+		<if test="lastUpdateDate != null" >
+			`last_update_date` = #{lastUpdateDate,jdbcType=TIMESTAMP},
+		</if>
+		<if test="delFlag != null" >
+			`del_flag` = #{delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="parent != null" >
+			`parent_id` = #{parent.id,jdbcType=VARCHAR},
+		</if>
+		<if test="parentIds != null" >
+			`parent_ids` = #{parentIds,jdbcType=VARCHAR},
+		</if>
+		<if test="name != null" >
+			`name` = #{name,jdbcType=VARCHAR},
+		</if>
+		<if test="sort != null" >
+			`sort` = #{sort,jdbcType=INTEGER},
+		</if>
+		<if test="pageTab != null" >
+			`page_tab_id` = #{pageTab.id,jdbcType=VARCHAR},
+		</if>
+		<if test="catelogDataType != null" >
+			`catelog_data_type` = #{catelogDataType,jdbcType=VARCHAR},
+		</if>
+		<if test="catelogSortType != null" >
+			`catelog_sort_type` = #{catelogSortType,jdbcType=VARCHAR},
+		</if>
+		<if test="imageUrl != null" >
+			`image_url` = #{imageUrl,jdbcType=VARCHAR},
+		</if>
+		<if test="isEnable != null" >
+			`is_enable` = #{isEnable,jdbcType=INTEGER},
+		</if>
+		<if test="url != null" >
+			`url` = #{url,jdbcType=VARCHAR},
+		</if>
+		<if test="catelogData != null" >
+			`catelog_data_id` = #{catelogData.id,jdbcType=VARCHAR},
+		</if>
+		<if test="number != null" >
+			`number` = #{number,jdbcType=VARCHAR},
+		</if>
+		<if test="enName != null" >
+			`en_name` = #{enName,jdbcType=VARCHAR},
+		</if>
+
+	</set>
+	where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.portal.model.Catelog" >
+   	UPDATE portal_catelog
+		<set>
+			`remarks` = #{remarks,jdbcType=VARCHAR},
+			`create_by` = #{createBy.id,jdbcType=VARCHAR},
+			`create_date` = #{createDate,jdbcType=TIMESTAMP},
+			`last_update_by` = #{lastUpdateBy.id,jdbcType=VARCHAR},
+			`last_update_date` = #{lastUpdateDate,jdbcType=TIMESTAMP},
+			`del_flag` = #{delFlag,jdbcType=VARCHAR},
+			`parent_id` = #{parent.id,jdbcType=VARCHAR},
+			`parent_ids` = #{parentIds,jdbcType=VARCHAR},
+			`name` = #{name,jdbcType=VARCHAR},
+			`sort` = #{sort,jdbcType=INTEGER},
+			`page_tab_id` = #{pageTab.id,jdbcType=VARCHAR},
+			`catelog_data_type` = #{catelogDataType,jdbcType=VARCHAR},
+			`catelog_sort_type` = #{catelogSortType,jdbcType=VARCHAR},
+			`image_url` = #{imageUrl,jdbcType=VARCHAR},
+			`is_enable` = #{isEnable,jdbcType=INTEGER},
+			`url` = #{url,jdbcType=VARCHAR},
+			`catelog_data_id` = #{catelogData.id,jdbcType=VARCHAR},
+			`number` = #{number,jdbcType=VARCHAR},
+			`en_name` =  #{params.enName,jdbcType=VARCHAR}
+		</set>
+		WHERE id = #{id,jdbcType=VARCHAR} 
+  </update>
+</mapper>

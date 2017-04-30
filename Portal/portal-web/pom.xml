@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.ffzx.portal</groupId>
+		<artifactId>portal</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<groupId>com.ffzx.portal.web</groupId>
+	<artifactId>portal-web</artifactId>
+	<packaging>war</packaging>
+	<name>portal-web</name>
+	<url>http://maven.apache.org</url>
+	
+	<!--web依赖包版本定义 -->
+	<properties>
+		<parent.web.version>2.0.0-SNAPSHOT</parent.web.version>
+		<parent.core.version>2.0.0-SNAPSHOT</parent.core.version>
+		<jetty.port>9098</jetty.port>
+	</properties>
+	
+	<dependencies>
+		<!-- parent-web引用 -->
+		<dependency>
+			<groupId>com.ffzx</groupId>
+			<artifactId>parent-web</artifactId>
+			<version>${parent.web.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.ffzx</groupId>
+			<artifactId>parent-core</artifactId>
+			<version>${parent.core.version}</version>
+		</dependency>
+		
+		<!-- portal-core引用 -->
+		<dependency>
+			<groupId>com.ffzx.portal.core</groupId>
+			<artifactId>portal-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+		<!-- jstl -->
+<!--
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+		</dependency>
+-->
+
+		<!-- web -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+		</dependency>
+
+		<!--<dependency>
+			<groupId>com.ffzx</groupId>
+			<artifactId>common-web</artifactId>
+			<version>2.0.0-SNAPSHOT</version>
+		</dependency>-->
+
+		<!-- EL -->
+		<dependency>
+			<groupId>javax.el</groupId>
+			<artifactId>javax.el-api</artifactId>
+		</dependency>
+
+		<!-- sitemesh -->
+		<dependency>
+			<groupId>opensymphony</groupId>
+			<artifactId>sitemesh</artifactId>
+		</dependency>
+  	</dependencies>
+  
+	<build>
+        <finalName>portal-web</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId><!--org.mortbay.jetty-->
+                <artifactId>jetty-maven-plugin</artifactId>
+            </plugin>
+           <!-- <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+            </plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+            </plugin>
+            <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+			</plugin>
+        </plugins>
+     </build>
+</project>

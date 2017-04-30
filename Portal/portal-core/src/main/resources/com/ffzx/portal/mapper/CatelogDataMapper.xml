@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ffzx.portal.mapper.CatelogDataMapper">
+  <sql id="Base_Column_List" >
+		t.id, 
+		t.remarks AS "remarks",
+		t.create_by AS "createBy.id",
+		t.create_date AS "createDate",
+		t.last_update_by AS "lastUpdateBy.id",
+		t.last_update_date AS "lastUpdateDate",
+		t.del_flag AS "delFlag",
+		t.catelog_id AS "catelog.id",
+		t.is_launch AS "isLaunch",
+		t.is_top AS "isTop",
+		t.lose_time AS "loseTime",
+		t.title AS "title",
+		t.content AS "content",
+		t.url_1 AS "url1",
+		t.url_2 AS "url2",
+		t.create_time AS "createTime",
+		t.key AS "key",
+		t.image_url AS "imageUrl"
+
+  </sql>  
+  <sql id="joins">
+
+  </sql> 
+  <sql id="condition" >
+	<if test="null!=params" >
+		<if test="params.id != null and '' != params.id">
+			and t.id = #{params.id,jdbcType=VARCHAR}
+		</if>
+		<if test="params.remarks != null and '' != params.remarks">
+			and t.remarks = #{params.remarks,jdbcType=VARCHAR}
+		</if>
+		<if test="params.createBy != null and '' != params.createBy">
+			and t.create_by = #{params.createBy.id,jdbcType=VARCHAR}
+		</if>
+		<if test="params.createDate != null and '' != params.createDate">
+			and t.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+		</if>
+		<if test="params.lastUpdateBy != null and '' != params.lastUpdateBy">
+			and t.last_update_by = #{params.lastUpdateBy.id,jdbcType=VARCHAR}
+		</if>
+		<if test="params.lastUpdateDate != null and '' != params.lastUpdateDate">
+			and t.last_update_date = #{params.lastUpdateDate,jdbcType=TIMESTAMP}
+		</if>
+		<if test="params.delFlag != null and '' != params.delFlag">
+			and t.del_flag = #{params.delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="params.catelog != null and '' != params.catelog">
+			and t.catelog_id = #{params.catelog.id,jdbcType=VARCHAR}
+		</if>
+		<if test="params.isLaunch != null and '' != params.isLaunch">
+			and t.is_launch = #{params.isLaunch,jdbcType=INTEGER}
+		</if>
+		<if test="params.isTop != null and '' != params.isTop">
+			and t.is_top = #{params.isTop,jdbcType=INTEGER}
+		</if>
+		<if test="params.loseTime != null and '' != params.loseTime">
+			and t.lose_time = #{params.loseTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="params.title != null and '' != params.title">
+			and t.title = #{params.title,jdbcType=VARCHAR}
+		</if>
+		<if test="params.content != null and '' != params.content">
+			and t.content = #{params.content,jdbcType=VARCHAR}
+		</if>
+		<if test="params.url1 != null and '' != params.url1">
+			and t.url_1 = #{params.url1,jdbcType=VARCHAR}
+		</if>
+		<if test="params.url2 != null and '' != params.url2">
+			and t.url_2 = #{params.url2,jdbcType=VARCHAR}
+		</if>
+		<if test="params.createTime != null and '' != params.createTime">
+			and t.create_time = #{params.createTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="params.key != null and '' != params.key">
+			and t.key = #{params.key,jdbcType=VARCHAR}
+		</if>
+		<if test="params.imageUrl != null and '' != params.imageUrl">
+			and t.image_url = #{params.imageUrl,jdbcType=VARCHAR}
+		</if>
+		<if test="params.catelogId != null and '' != params.catelogId">
+			and t.catelog_id = #{params.catelogId,jdbcType=VARCHAR}
+		</if>
+		<if test="params.delFlag == null or '' == params.delFlag or null == params" >
+			and t.del_flag = 0
+		</if>
+	</if>
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultType="com.ffzx.portal.model.CatelogData" parameterType="java.lang.String" >
+   	select 
+    <include refid="Base_Column_List" />
+    from portal_catelog_data as t 
+    <include refid="joins"/>
+    where  t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParams" resultType="com.ffzx.portal.model.CatelogData" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from portal_catelog_data as  t 
+    <include refid="joins"/>
+    where 1=1 
+    <include refid="condition"/>
+  </select>
+  
+  <select id="selectCount" resultType="java.lang.Integer" >
+   select count(1) as s from portal_catelog_data as  t where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultType="com.ffzx.portal.model.CatelogData" parameterType="map" >
+   select 
+    <include refid="Base_Column_List" />
+    from portal_catelog_data as  t    
+    <include refid="joins"/>
+    where 1=1      
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by  t.is_top DESC,t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    	DELETE FROM portal_catelog_data WHERE id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.portal.model.CatelogData" >
+    	DELETE FROM portal_catelog_data WHERE id = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.ffzx.portal.model.CatelogData" >
+   	INSERT INTO portal_catelog_data
+		(
+			id,
+			remarks,
+			create_by,
+			create_date,
+			last_update_by,
+			last_update_date,
+			del_flag,
+			catelog_id,
+			is_launch,
+			is_top,
+			lose_time,
+			title,
+			content,
+			url_1,
+			url_2,
+			create_time,
+			`key`,
+			image_url
+		) VALUES
+		(
+			#{id,jdbcType=VARCHAR},
+			#{remarks,jdbcType=VARCHAR},
+			#{createBy.id,jdbcType=VARCHAR},
+			#{createDate,jdbcType=TIMESTAMP},
+			#{lastUpdateBy.id,jdbcType=VARCHAR},
+			#{lastUpdateDate,jdbcType=TIMESTAMP},
+			#{delFlag,jdbcType=VARCHAR},
+			#{catelog.id,jdbcType=VARCHAR},
+			#{isLaunch,jdbcType=INTEGER},
+			#{isTop,jdbcType=INTEGER},
+			#{loseTime,jdbcType=TIMESTAMP},
+			#{title,jdbcType=VARCHAR},
+			#{content,jdbcType=VARCHAR},
+			#{url1,jdbcType=VARCHAR},
+			#{url2,jdbcType=VARCHAR},
+			#{createTime,jdbcType=TIMESTAMP},
+			#{key,jdbcType=VARCHAR},
+			#{imageUrl,jdbcType=VARCHAR}
+		)
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.portal.model.CatelogData" >
+   	INSERT INTO portal_catelog_data 
+	<trim prefix="(" suffix=")" suffixOverrides="," >
+		<if test="id != null">id,</if>
+		<if test="remarks != null" >remarks,</if>
+		<if test="createBy != null" >create_by,</if>
+		<if test="createDate != null" >create_date,</if>
+		<if test="lastUpdateBy != null" >last_update_by,</if>
+		<if test="lastUpdateDate != null" >last_update_date,</if>
+		<if test="delFlag != null" >del_flag,</if>
+		<if test="catelog != null" >catelog_id,</if>
+		<if test="isLaunch != null" >is_launch,</if>
+		<if test="isTop != null" >is_top,</if>
+		<if test="loseTime != null" >lose_time,</if>
+		<if test="title != null" >title,</if>
+		<if test="content != null" >content,</if>
+		<if test="url1 != null" >url_1,</if>
+		<if test="url2 != null" >url_2,</if>
+		<if test="createTime != null" >create_time,</if>
+		<if test="key != null" >`key`,</if>
+		<if test="imageUrl != null" >image_url,</if>
+	</trim>
+	<trim prefix="values (" suffix=")" suffixOverrides="," >
+		<if test="id != null">#{id,jdbcType=VARCHAR},</if>
+		<if test="remarks != null" >#{remarks,jdbcType=VARCHAR},</if>
+		<if test="createBy != null" >#{createBy.id,jdbcType=VARCHAR},</if>
+		<if test="createDate != null" >#{createDate,jdbcType=TIMESTAMP},</if>
+		<if test="lastUpdateBy != null" >#{lastUpdateBy.id,jdbcType=VARCHAR},</if>
+		<if test="lastUpdateDate != null" >#{lastUpdateDate,jdbcType=TIMESTAMP},</if>
+		<if test="delFlag != null" >#{delFlag,jdbcType=VARCHAR},</if>
+		<if test="catelog != null" >#{catelog.id,jdbcType=VARCHAR},</if>
+		<if test="isLaunch != null" >#{isLaunch,jdbcType=INTEGER},</if>
+		<if test="isTop != null" >#{isTop,jdbcType=INTEGER},</if>
+		<if test="loseTime != null" >#{loseTime,jdbcType=TIMESTAMP},</if>
+		<if test="title != null" >#{title,jdbcType=VARCHAR},</if>
+		<if test="content != null" >#{content,jdbcType=VARCHAR},</if>
+		<if test="url1 != null" >#{url1,jdbcType=VARCHAR},</if>
+		<if test="url2 != null" >#{url2,jdbcType=VARCHAR},</if>
+		<if test="createTime != null" >#{createTime,jdbcType=TIMESTAMP},</if>
+		<if test="key != null" >#{key,jdbcType=VARCHAR},</if>
+		<if test="imageUrl != null" >#{imageUrl,jdbcType=VARCHAR},</if>
+	</trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.portal.model.CatelogData" >
+   	UPDATE portal_catelog_data
+	<set>
+		<if test="remarks != null" >
+			remarks = #{remarks,jdbcType=VARCHAR},
+		</if>
+		<if test="createBy != null" >
+			create_by = #{createBy.id,jdbcType=VARCHAR},
+		</if>
+		<if test="createDate != null" >
+			create_date = #{createDate,jdbcType=TIMESTAMP},
+		</if>
+		<if test="lastUpdateBy != null" >
+			last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+		</if>
+		<if test="lastUpdateDate != null" >
+			last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+		</if>
+		<if test="delFlag != null" >
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="catelog != null" >
+			catelog_id = #{catelog.id,jdbcType=VARCHAR},
+		</if>
+		<if test="isLaunch != null" >
+			is_launch = #{isLaunch,jdbcType=INTEGER},
+		</if>
+		<if test="isTop != null" >
+			is_top = #{isTop,jdbcType=INTEGER},
+		</if>
+		<if test="loseTime != null" >
+			lose_time = #{loseTime,jdbcType=TIMESTAMP},
+		</if>
+		<if test="title != null" >
+			title = #{title,jdbcType=VARCHAR},
+		</if>
+		<if test="content != null" >
+			content = #{content,jdbcType=VARCHAR},
+		</if>
+		<if test="url1 != null" >
+			url_1 = #{url1,jdbcType=VARCHAR},
+		</if>
+		<if test="url2 != null" >
+			url_2 = #{url2,jdbcType=VARCHAR},
+		</if>
+		<if test="createTime != null" >
+			create_time = #{createTime,jdbcType=TIMESTAMP},
+		</if>
+		<if test="key != null" >
+			`key` = #{key,jdbcType=VARCHAR},
+		</if>
+		<if test="imageUrl != null" >
+			image_url = #{imageUrl,jdbcType=VARCHAR},
+		</if>
+	</set>
+	where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.portal.model.CatelogData" >
+   	UPDATE portal_catelog_data
+		<set>
+			remarks = #{remarks,jdbcType=VARCHAR},
+			create_by = #{createBy.id,jdbcType=VARCHAR},
+			create_date = #{createDate,jdbcType=TIMESTAMP},
+			last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+			last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+			catelog_id = #{catelog.id,jdbcType=VARCHAR},
+			is_launch = #{isLaunch,jdbcType=INTEGER},
+			is_top = #{isTop,jdbcType=INTEGER},
+			lose_time = #{loseTime,jdbcType=TIMESTAMP},
+			title = #{title,jdbcType=VARCHAR},
+			content = #{content,jdbcType=VARCHAR},
+			url_1 = #{url1,jdbcType=VARCHAR},
+			url_2 = #{url2,jdbcType=VARCHAR},
+			create_time = #{createTime,jdbcType=TIMESTAMP},
+			`key` = #{key,jdbcType=VARCHAR},
+			image_url = #{imageUrl,jdbcType=VARCHAR}
+		</set>
+		WHERE id = #{id,jdbcType=VARCHAR} 
+  </update>
+  
+  <select id="selectListById" parameterType="java.util.Map" resultType="com.ffzx.portal.model.CatelogData">
+		SELECT 
+			t.id, 
+			t.key AS "key",
+			t.is_launch AS "isLaunch",
+			t.is_top AS "isTop",
+			C.name AS "catelog.name",
+			C.number AS "catelog.number",
+			t.title AS "title",
+			t.content AS "content",
+			t.url_1 AS "url1",
+			t.url_2 AS "url2",
+			t.create_time AS "createTime",
+			M.PATH AS "imageUrl"
+		FROM portal_catelog_data t
+		INNER JOIN portal_catelog C
+		ON t.catelog_id = C.ID 
+		LEFT JOIN portal_data_attachment M
+		ON M.object = t.id
+		WHERE t.catelog_id = #{id}
+		AND t.is_launch = '1'
+		ORDER BY t.is_top DESC,t.create_time DESC
+	</select>
+	
+  <select id="selectByPageList" parameterType="java.util.Map" resultType="com.ffzx.portal.model.CatelogData">
+		SELECT 
+			t.id, 
+			t.key AS "key",
+			t.is_launch AS "isLaunch",
+			t.is_top AS "isTop",
+			C.name AS "catelog.name",
+			C.number AS "catelog.number",
+			t.title AS "title",
+			t.content AS "content",
+			t.url_1 AS "url1",
+			t.url_2 AS "url2",
+			t.create_time AS "createTime",
+			M.PATH AS "imageUrl"
+		FROM portal_catelog_data t
+		INNER JOIN portal_catelog C
+		ON t.catelog_id = C.ID 
+		LEFT JOIN portal_data_attachment M
+		ON M.object = t.id
+		WHERE t.catelog_id = #{params.id}
+		AND t.is_launch = '1'
+		ORDER BY t.is_top DESC,t.create_time DESC
+	</select>
+	
+	
+	<select id="getInfoById" parameterType="String" resultType="com.ffzx.portal.model.CatelogData">
+		SELECT 
+			t.title AS "title",
+			t.content AS "content",
+			m.path AS "imageUrl",
+			t.id AS "id",
+			t.is_launch AS 'isLaunch',
+			t.is_top AS 'isTop',
+			t.catelog_id AS 'catelog.id',
+			t.key AS "key",
+			t.create_date AS "createDate"
+		FROM portal_catelog_data t
+		LEFT JOIN portal_data_attachment M
+		ON M.object = t.id
+		WHERE t.id = #{id}
+	</select>
+	
+	
+	<select id="selectById" parameterType="String" resultType="com.ffzx.portal.model.CatelogData">
+		SELECT 
+			D.is_launch AS 'isLaunch',
+			C.name AS "catelog.name",
+			C.number AS "catelog.number",
+			C.create_date AS "catelog.createTime",
+			D.is_top AS "isTop",
+			D.title AS "title",
+			D.content AS "content",
+			D.url_1 AS "url1",
+			D.url_2 AS "url2",
+			M.path AS "imageUrl",
+			D.lose_time AS "loseTime",
+			D.create_time AS "createTime",
+			D.key AS "key"
+		FROM portal_catelog_data D
+		INNER JOIN portal_catelog C
+		ON D.catelog_id = C.id
+		LEFT JOIN portal_data_attachment M
+		ON M.object = D.id
+		WHERE C.page_tab_id = #{id}
+		AND D.is_launch = '1'
+		ORDER BY D.create_date DESC
+	</select>
+	
+	
+	 <update id="batchUpdateTop" parameterType="String" >
+	   	UPDATE portal_catelog_data
+		<set>
+				is_top = 0
+		</set>
+		where catelog_id = #{catelogId,jdbcType=VARCHAR}
+    </update>
+	
+	
+</mapper>
