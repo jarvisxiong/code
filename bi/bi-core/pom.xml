@@ -1,0 +1,130 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.ffzx.bi</groupId>
+		<artifactId>bi</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<groupId>com.ffzx.bi.core</groupId>
+	<artifactId>bi-core</artifactId>
+	<name>bi-core</name>
+	<url>http://maven.apache.org</url>
+	<dependencies>
+		<!-- Test -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+		          <groupId>net.sourceforge.jeval</groupId>
+		          <artifactId>jeval</artifactId>
+		          <version>1.0.1</version>
+		</dependency>
+		<!-- framework -->
+		<dependency>
+			<groupId>com.ffzx.framework</groupId>
+			<artifactId>framework</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+		<!-- bi-api引用 -->
+		<dependency>
+			<groupId>com.ffzx.bi.api</groupId>
+			<artifactId>bi-api</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.ffzx.base-data.api</groupId>
+			<artifactId>base-data-api</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<!-- 商品api引用 -->
+		<dependency>
+	        <groupId>com.ffzx.commodity.api</groupId>
+	 	 	<artifactId>cims-api</artifactId>
+	  		<version>0.0.1-SNAPSHOT</version>
+  		</dependency>
+		<!-- uc-api引用 -->
+        <dependency>
+            <groupId>com.ffzx.uc.api</groupId>
+            <artifactId>uc-api</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+		<dependency>
+			<groupId>com.kettle</groupId>
+			<artifactId>kettle-core</artifactId>
+			<version>6.1.0.1-196</version>
+		</dependency>
+		<dependency>
+			<groupId>com.kettle</groupId>
+			<artifactId>avalon-framework</artifactId>
+			<version>4.1.5</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.kettle</groupId>
+			<artifactId>commons-vfs2</artifactId>
+			<version>2.1-20150824</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.kettle</groupId>
+			<artifactId>jsch</artifactId>
+			<version>0.1.46</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.kettle</groupId>
+			<artifactId>kettle-dbdialog</artifactId>
+			<version>6.1.0.1-196</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.kettle</groupId>
+			<artifactId>kettle-engine</artifactId>
+			<version>6.1.0.1-196</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.kettle</groupId>
+			<artifactId>kettle5-log4j-plugin</artifactId>
+			<version>6.1.0.1-196</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.kettle</groupId>
+			<artifactId>metastore</artifactId>
+			<version>6.1.0.1-196</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.m2e</groupId>
+				<artifactId>lifecycle-mapping</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
