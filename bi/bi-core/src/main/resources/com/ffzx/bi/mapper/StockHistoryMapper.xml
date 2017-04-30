@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ffzx.bi.mapper.StockHistoryMapper">
+	<resultMap id="BaseResultMap" type="com.ffzx.bi.model.StockHistory">
+		<id column="id" property="id" jdbcType="CHAR" />
+	    <result column="vendor_id" property="vendorId" jdbcType="CHAR" />
+	    <result column="vendor_code" property="vendorCode" jdbcType="CHAR" />
+	    <result column="vendor_name" property="vendorName" jdbcType="VARCHAR" />
+	    <result column="commodity_id" property="commodityId" jdbcType="CHAR" />
+	    <result column="commodity_code" property="commodityCode" jdbcType="CHAR" />
+	    <result column="commodity_barcode" property="commodityBarcode" jdbcType="VARCHAR" />
+	    <result column="commodity_name" property="commodityName" jdbcType="VARCHAR" />
+	    <result column="sku_code" property="skuCode" jdbcType="CHAR" />
+	    <result column="sku_barcode" property="skuBarcode" jdbcType="VARCHAR" />
+	    <result column="category_id_one_level" property="categoryIdOneLevel" jdbcType="CHAR" />
+	    <result column="category_name_one_level" property="categoryNameOneLevel" jdbcType="VARCHAR" />
+	    <result column="category_id_two_level" property="categoryIdTwoLevel" jdbcType="CHAR" />
+	    <result column="category_name_two_level" property="categoryNameTwoLevel" jdbcType="VARCHAR" />
+	    <result column="category_id_three_level" property="categoryIdThreeLevel" jdbcType="CHAR" />
+	    <result column="category_name_three_level" property="categoryNameThreeLevel" jdbcType="VARCHAR" />
+	    <result column="stocknum" property="stocknum" jdbcType="VARCHAR" />
+	    <result column="stock_used_count" property="stockUsedCount" jdbcType="VARCHAR" />
+	    <result column="warehouse_code" property="warehouseCode" jdbcType="VARCHAR" />
+	    <result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+	    <result column="address_code" property="addressCode" jdbcType="VARCHAR" />
+	    <result column="address_name" property="addressName" jdbcType="VARCHAR" />
+	    <result column="year" property="year" jdbcType="CHAR" />
+	    <result column="quarter" property="quarter" jdbcType="CHAR" />
+	    <result column="month" property="month" jdbcType="VARCHAR" />
+	    <result column="week" property="week" jdbcType="VARCHAR" />
+	    <result column="week_num" property="weekNum" jdbcType="CHAR" />
+	    <result column="day" property="day" jdbcType="CHAR" />
+	    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+	    <result column="transfer_time" property="transferTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<resultMap id="stockNumResultMap" type="com.ffzx.bi.vo.StockHistoryCustom" extends="BaseResultMap">
+		<result column="totleStockNum" property="totleStockNum" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		t.id, t.vendor_id, t.vendor_code, t.vendor_name, t.commodity_id, t.commodity_code, 
+	    t.commodity_barcode, t.commodity_name, t.sku_code, t.sku_barcode, t.category_id_one_level, 
+	    t.category_name_one_level, t.category_id_two_level, t.category_name_two_level, t.category_id_three_level, 
+	    t.category_name_three_level, t.stocknum, t.stock_used_count, t.warehouse_code, t.warehouse_name, 
+	    t.address_code, t.address_name, t.year, t.quarter, t.month, t.week, t.week_num, t.day, 
+	    t.create_date, t.transfer_time
+	</sql>
+	<sql id="condition">
+		<if test="null!=params">
+			<if test="params.id != null and '' != params.id">
+				and t.id = #{params.id,jdbcType=CHAR}
+			</if>
+			<if test="params.vendorId != null and '' != params.vendorId">
+				and t.vendor_id = #{params.vendorId,jdbcType=CHAR}
+			</if>
+			<if test="params.vendorCode != null and '' != params.vendorCode">
+				and t.vendor_code = #{params.vendorCode,jdbcType=CHAR}
+			</if>
+			<if test="params.vendorName != null and '' != params.vendorName">
+				and t.vendor_name = #{params.vendorName,jdbcType=VARCHAR}
+			</if>
+			<if test="params.commodityId != null and '' != params.commodityId">
+				and t.commodity_id = #{params.commodityId,jdbcType=CHAR}
+			</if>
+			<if test="params.commodityCode != null and '' != params.commodityCode">
+				and t.commodity_code = #{params.commodityCode,jdbcType=CHAR}
+			</if>
+			<if
+				test="params.commodityBarcode != null and '' != params.commodityBarcode">
+				and t.commodity_barcode =
+				#{params.commodityBarcode,jdbcType=VARCHAR}
+			</if>
+			<if test="params.commodityName != null and '' != params.commodityName">
+				and t.commodity_name = #{params.commodityName,jdbcType=VARCHAR}
+			</if>
+			<if test="params.skuCode != null and '' != params.skuCode">
+				and t.sku_code = #{params.skuCode,jdbcType=CHAR}
+			</if>
+			<if test="params.skuBarcode != null and '' != params.skuBarcode">
+				and t.sku_barcode = #{params.skuBarcode,jdbcType=VARCHAR}
+			</if>
+			<if
+				test="params.categoryIdOneLevel != null and '' != params.categoryIdOneLevel">
+				and t.category_id_one_level =
+				#{params.categoryIdOneLevel,jdbcType=CHAR}
+			</if>
+			<if
+				test="params.categoryNameOneLevel != null and '' != params.categoryNameOneLevel">
+				and t.category_name_one_level =
+				#{params.categoryNameOneLevel,jdbcType=VARCHAR}
+			</if>
+			<if
+				test="params.categoryIdTwoLevel != null and '' != params.categoryIdTwoLevel">
+				and t.category_id_two_level =
+				#{params.categoryIdTwoLevel,jdbcType=CHAR}
+			</if>
+			<if
+				test="params.categoryNameTwoLevel != null and '' != params.categoryNameTwoLevel">
+				and t.category_name_two_level =
+				#{params.categoryNameTwoLevel,jdbcType=VARCHAR}
+			</if>
+			<if
+				test="params.categoryIdThreeLevel != null and '' != params.categoryIdThreeLevel">
+				and t.category_id_three_level =
+				#{params.categoryIdThreeLevel,jdbcType=CHAR}
+			</if>
+			<if
+				test="params.categoryNameThreeLevel != null and '' != params.categoryNameThreeLevel">
+				and t.category_name_three_level =
+				#{params.categoryNameThreeLevel,jdbcType=VARCHAR}
+			</if>
+			<if test="params.stocknum != null and '' != params.stocknum">
+				and t.stocknum = #{params.stocknum,jdbcType=VARCHAR}
+			</if>
+			<if test="params.stockUsedCount != null and '' != params.stockUsedCount">
+				and t.stock_used_count = #{params.stockUsedCount,jdbcType=VARCHAR}
+			</if>
+			<if test="params.warehouseCode != null and '' != params.warehouseCode">
+				and t.warehouse_code = #{params.warehouseCode,jdbcType=VARCHAR}
+			</if>
+			<if test="params.warehouseName != null and '' != params.warehouseName">
+				and t.warehouse_name = #{params.warehouseName,jdbcType=VARCHAR}
+			</if>
+			<if test="params.addressCode != null and '' != params.addressCode">
+				and t.address_code = #{params.addressCode,jdbcType=VARCHAR}
+			</if>
+			<if test="params.addressName != null and '' != params.addressName">
+				and t.address_name = #{params.addressName,jdbcType=VARCHAR}
+			</if>
+			<if test="params.year != null and '' != params.year">
+				and t.year = #{params.year,jdbcType=CHAR}
+			</if>
+			<if test="params.month != null and '' != params.month">
+				and t.month = #{params.month,jdbcType=CHAR}
+			</if>
+			<if test="params.week != null and '' != params.week">
+				and t.week = #{params.week,jdbcType=CHAR}
+			</if>
+			<if test="params.day != null and '' != params.day">
+				and t.day = #{params.day,jdbcType=CHAR}
+			</if>
+			<if test="params.createDate != null">
+				and t.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+			</if>
+		</if>
+	</sql>
+	
+	<sql id="query_stockhistory_where">
+		<if test="stockHistoryVo.stockHistoryCustom">
+			<if test="stockHistoryVo.stockHistoryCustom.groupByVendor != null and '' != stockHistoryVo.stockHistoryCustom.groupByVendor">
+				and t.vendor_code is not null
+				<if test="stockHistoryVo.stockHistoryCustom.vendorCode != null and '' != stockHistoryVo.stockHistoryCustom.vendorCode">
+					and t.vendor_code = #{stockHistoryVo.stockHistoryCustom.vendorCode}
+				</if>
+			</if>
+			<if test="stockHistoryVo.stockHistoryCustom.groupByCategory != null and '' != stockHistoryVo.stockHistoryCustom.groupByCategory">
+				<choose>
+					<when test="stockHistoryVo.stockHistoryCustom.categoryIdOneLevel != null and '' != stockHistoryVo.stockHistoryCustom.categoryIdOneLevel">
+						and t.category_id_one_level is not null
+					</when>
+					<when test="stockHistoryVo.stockHistoryCustom.categoryIdTwoLevel != null and '' != stockHistoryVo.stockHistoryCustom.categoryIdTwoLevel">
+						and t.category_id_two_level is not null
+					</when>
+					<when test="stockHistoryVo.stockHistoryCustom.categoryIdThreeLevel != null and '' != stockHistoryVo.stockHistoryCustom.categoryIdThreeLevel">
+						and t.category_id_three_level is not null
+					</when>
+					<otherwise>
+						and t.category_id_three_level is not null
+					</otherwise>
+				</choose>
+				<if test="stockHistoryVo.stockHistoryCustom.categoryIdOneLevel != null and '' != stockHistoryVo.stockHistoryCustom.categoryIdOneLevel">
+					and t.category_id_one_level = #{stockHistoryVo.stockHistoryCustom.categoryIdOneLevel}
+				</if>
+				<if test="stockHistoryVo.stockHistoryCustom.categoryIdTwoLevel != null and '' != stockHistoryVo.stockHistoryCustom.categoryIdTwoLevel">
+					and t.category_id_two_level = #{stockHistoryVo.stockHistoryCustom.categoryIdTwoLevel}
+				</if>
+				<if test="stockHistoryVo.stockHistoryCustom.categoryIdThreeLevel != null and '' != stockHistoryVo.stockHistoryCustom.categoryIdThreeLevel">
+					and t.category_id_three_level = #{stockHistoryVo.stockHistoryCustom.categoryIdThreeLevel}
+				</if>
+			</if>
+			<if test="stockHistoryVo.stockHistoryCustom.isCheckedBarcode != null and '' != stockHistoryVo.stockHistoryCustom.isCheckedBarcode">
+				and t.sku_barcode is not null
+				<if test="stockHistoryVo.stockHistoryCustom.skuBarcode != null and '' != stockHistoryVo.stockHistoryCustom.skuBarcode">
+					and t.sku_barcode = #{stockHistoryVo.stockHistoryCustom.skuBarcode}
+				</if>
+			</if>
+			<if test="stockHistoryVo.skuBarcodeList != null">
+				and t.sku_barcode in 
+				<foreach collection="stockHistoryVo.skuBarcodeList" item="item" index="index" open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+			<if test="stockHistoryVo.categoryIdList != null">
+<!-- 				<include refid="category_level" /> -->
+				and category_id_three_level in
+				<foreach collection="stockHistoryVo.categoryIdList" item="item" index="index" open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+			<if test="stockHistoryVo.vendorCodeList != null">
+				and t.vendor_code in 
+				<foreach collection="stockHistoryVo.vendorCodeList" item="item" index="index" open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+			<if test="stockHistoryVo.stockHistoryCustom.searchMinDate != null and '' != stockHistoryVo.stockHistoryCustom.searchMinDate">
+				<![CDATA[
+           		and date_format(t.transfer_time, '%Y-%m-%d') >= #{stockHistoryVo.stockHistoryCustom.searchMinDate}
+            	]]>
+			</if>
+			<if test="stockHistoryVo.stockHistoryCustom.searchMaxDate != null and '' != stockHistoryVo.stockHistoryCustom.searchMaxDate">
+				<![CDATA[
+	            and date_format(t.transfer_time, '%Y-%m-%d') <= #{stockHistoryVo.stockHistoryCustom.searchMaxDate}    
+	            ]]>
+			</if>
+		</if>
+	</sql>
+	
+<!-- 	<sql id="category_level">
+		<choose>
+			<when test="stockHistoryVo.stockHistoryCustom.categoryLevel == 0">
+				and t.category_id_one_level in 
+			</when>
+			<when test="stockHistoryVo.stockHistoryCustom.categoryLevel == 1">
+				and category_id_two_level in
+			</when>
+			<when test="stockHistoryVo.stockHistoryCustom.categoryLevel == 2">
+				and category_id_three_level in
+			</when>
+			<otherwise>
+				and category_id_three_level in
+			</otherwise>
+		</choose>
+	</sql> -->
+	
+	<sql id="category_level_condition">
+		<choose>
+			<when test="stockHistoryVo.stockHistoryCustom.categoryIdOneLevel != null and '' != stockHistoryVo.stockHistoryCustom.categoryIdOneLevel">
+				category_id_one_level
+			</when>
+			<when test="stockHistoryVo.stockHistoryCustom.categoryIdTwoLevel != null and '' != stockHistoryVo.stockHistoryCustom.categoryIdTwoLevel">
+				category_id_two_level
+			</when>
+			<when test="stockHistoryVo.stockHistoryCustom.categoryIdThreeLevel != null and '' != stockHistoryVo.stockHistoryCustom.categoryIdThreeLevel">
+				category_id_three_level
+			</when>
+			<otherwise>
+				category_id_three_level
+			</otherwise>
+		</choose>
+	</sql>
+	
+	<sql id="groupByDate">
+		<choose>
+			<when test="stockHistoryVo.stockHistoryCustom.date != null and 'day' == stockHistoryVo.stockHistoryCustom.date">
+				date_format(t.transfer_time,'%Y-%m-%d')
+			</when>
+			<when test="stockHistoryVo.stockHistoryCustom.date != null and 'week' == stockHistoryVo.stockHistoryCustom.date">
+				week
+			</when>
+			<when test="stockHistoryVo.stockHistoryCustom.date != null and 'month' == stockHistoryVo.stockHistoryCustom.date">
+				month
+			</when>
+			<when test="stockHistoryVo.stockHistoryCustom.date != null and 'year' == stockHistoryVo.stockHistoryCustom.date">
+				year
+			</when>
+			<otherwise>
+				date_format(t.transfer_time,'%Y-%m-%d')
+			</otherwise>
+		</choose>
+	</sql>
+	
+	<sql id="group_by_condition">
+		<choose>
+			<when test="stockHistoryVo.stockHistoryCustom.groupByVendor != null and '' != stockHistoryVo.stockHistoryCustom.groupByVendor
+						 and stockHistoryVo.stockHistoryCustom.groupByCategory != null and '' != stockHistoryVo.stockHistoryCustom.groupByCategory">
+				group by <include refid="groupByDate" />, vendor_code, <include refid="category_level_condition" />
+			</when>
+			<when test="stockHistoryVo.stockHistoryCustom.isCheckedBarcode != null and '' != stockHistoryVo.stockHistoryCustom.isCheckedBarcode">
+				group by <include refid="groupByDate" />, sku_barcode
+			</when>
+			<when test="stockHistoryVo.stockHistoryCustom.groupByVendor != null and '' != stockHistoryVo.stockHistoryCustom.groupByVendor">
+				group by <include refid="groupByDate" />, vendor_code
+			</when>
+			<when test="stockHistoryVo.stockHistoryCustom.groupByCategory != null and '' != stockHistoryVo.stockHistoryCustom.groupByCategory">
+				group by <include refid="groupByDate" />, <include refid="category_level_condition" />
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</sql>
+	
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from stock_repository t
+		where t.id = #{id,jdbcType=CHAR}
+	</select>
+	<select id="selectByParams" resultMap="BaseResultMap"
+		parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from stock_repository t
+		where 1=1
+		<include refid="condition" />
+	</select>
+	<select id="selectCount" resultType="java.lang.Integer">
+		select count(1) as s from stock_repository t where 1=1
+		<include refid="condition" />
+	</select>
+	<select id="selectByPage" resultMap="BaseResultMap"
+		parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from stock_repository t
+		where 1=1
+		<include refid="condition" />
+		<if test="orderByField != null and ''!=orderByField">
+			order by t.${orderByField}
+			<if test="orderByField">
+				${orderBy}
+			</if>
+		</if>
+	</select>
+	<select id="selectByList" resultMap="stockNumResultMap" parameterType="com.ffzx.bi.vo.StockHistoryVo">
+		select
+		<include refid="Base_Column_List" />, sum(stocknum) as "totleStockNum"
+		from stock_repository t
+		where 1=1
+		<include refid="query_stockhistory_where" />
+		<include refid="group_by_condition" />
+		<if test="orderByField != null and ''!=orderByField">
+			order by t.${orderByField}
+			<if test="orderByField">
+				${orderBy}
+			</if>
+		</if>
+	</select>
+	<select id="selectStockNum" resultType="com.ffzx.bi.vo.StockHistoryCustom" parameterType="com.ffzx.bi.vo.StockHistoryVo">
+<!-- 		select -->
+<!-- 		<include refid="Base_Column_List" />, sum(stocknum) as "totleStockNum" -->
+<!-- 		from stock_repository t -->
+<!-- 		where 1=1 -->
+<!-- 		<include refid="query_stockhistory_where" /> -->
+<!-- 		<include refid="group_by_condition" /> -->
+<!-- 		<if test="orderByField != null and ''!=orderByField"> -->
+<!-- 			order by t.${orderByField} -->
+<!-- 			<if test="orderByField"> -->
+<!-- 				${orderBy} -->
+<!-- 			</if> -->
+<!-- 		</if> -->
+		select 
+		  	vendor_name as "vendorName",
+		  	vendor_code as "vendorCode",
+		  	category_name_one_level as "categoryNameOneLevel",
+		  	category_name_two_level as "categoryNameTwoLevel",
+		  	category_name_three_level as "categoryNameThreeLevel",
+		  	commodity_name as "commodityName",
+		  	sku_barcode as "skuBarcode",
+		  	year,
+		  	month,
+		  	week,
+		  	week_num as "weekNum",
+		  	day,
+		  	sum(stocknum) as "stocknum",
+			date_format(transfer_time,'%Y-%m-%d') as "transferTime"
+		from
+		  stock_repository t
+		where 1=1
+		<include refid="query_stockhistory_where" />
+		<include refid="group_by_condition" /> 
+<!-- 		where t.transfer_time > date_add('2016-08-23', interval - 7 day)  -->
+<!-- 		group by date_format(t.transfer_time,'%y-%m-%d'),t.vendor_code  order by t.vendor_code -->
+		<if test="orderByField != null and ''!=orderByField">
+			order by vendor_code, t.${orderByField}
+			<if test="orderByField">
+				${orderBy}
+			</if>
+		</if>
+	</select>
+	
+	<select id="groupByVendorCode" resultMap="BaseResultMap">
+		  select 
+		  <include refid="Base_Column_List" /> 
+		  from stock_repository t where vendor_code is not null group by vendor_code limit 1;
+	</select>
+	
+	<select id="groupByCategory" resultMap="BaseResultMap">
+		  select 
+		  <include refid="Base_Column_List" /> 
+		  from stock_repository t where category_id_one_level is not null group by category_id_one_level limit 1;
+	</select>
+	
+	<select id="getYear" resultType="String">
+		select year from stock_repository group by year
+	</select>
+	
+	<select id="getMonth" resultType="String">
+		select month from stock_repository group by month
+	</select>
+	
+	<select id="getWeek" resultType="String">
+		select week from stock_repository GROUP BY week;
+	</select>
+	
+	<select id="groupByVendorWhereCategoryOneLevel" resultMap="BaseResultMap" parameterType="String">
+		select 
+	 	<include refid="Base_Column_List" /> 
+		from stock_repository t where vendor_code is not null and category_id_one_level = #{value} group by vendor_code limit 1;
+	</select>
+	
+	<select id="groupByVendorWhereCategoryTwoLevel" resultMap="BaseResultMap" parameterType="String">
+		select 
+	 	<include refid="Base_Column_List" /> 
+		from stock_repository t where vendor_code is not null and category_id_two_level = #{value} group by vendor_code limit 1;
+	</select>
+	
+	<select id="groupByVendorWhereCategoryThreeLevel" resultMap="BaseResultMap" parameterType="String">
+		select 
+	 	<include refid="Base_Column_List" /> 
+		from stock_repository t where vendor_code is not null and category_id_three_level = #{value} group by vendor_code limit 1;
+	</select>
+	
+</mapper>

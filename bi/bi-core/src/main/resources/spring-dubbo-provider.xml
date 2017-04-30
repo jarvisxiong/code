@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans.xsd
+	 http://code.alibabatech.com/schema/dubbo	http://code.alibabatech.com/schema/dubbo/dubbo.xsd">    
+	
+ 
+    
+  
+    <dubbo:service interface="com.ffzx.bi.api.service.SalesRptJobApiService" version="1.0" ref="salesRptJobApiService" registry="zookeeperService"/>
+    <bean id="salesRptJobApiService" class="com.ffzx.bi.api.service.impl.SalesRptJobApiServiceImpl"/>
+    
+    <dubbo:service interface="com.ffzx.bi.api.service.StockHistoryJobApiService" version="1.0" ref="stockHistoryJobApiService" registry="zookeeperService"/>
+    <bean id="stockHistoryJobApiService" class="com.ffzx.bi.api.service.impl.StockHistoryJobApiServiceImpl"/>
+    
+    <dubbo:service interface="com.ffzx.bi.api.service.GoodsArrivalJobApiService" version="1.0" ref="goodsArrivalJobApiService" registry="zookeeperService"/>
+    <bean id="goodsArrivalJobApiService" class="com.ffzx.bi.api.service.impl.GoodsArrivalJobApiServiceImpl"/>
+    
+    <dubbo:service interface="com.ffzx.bi.api.service.FinanceInventoryMonthJobApiService" version="1.0" ref="financeInventoryMonthJobApiService" registry="zookeeperService"/>
+    <bean id="financeInventoryMonthJobApiService" class="com.ffzx.bi.api.service.impl.FinanceInventoryMonthJobApiServiceImpl"/>
+</beans>

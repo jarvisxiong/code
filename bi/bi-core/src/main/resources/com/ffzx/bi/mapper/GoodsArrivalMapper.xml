@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ffzx.bi.mapper.GoodsArrivalMapper">
+	<resultMap id="BaseResultMap" type="com.ffzx.bi.model.GoodsArrival">
+		<id column="id" property="id" jdbcType="CHAR" />
+		<result column="purchase_order_number" property="purchaseOrderNumber"
+			jdbcType="VARCHAR" />
+		<result column="pattern" property="pattern" jdbcType="CHAR" />
+		<result column="office_id" property="officeId" jdbcType="CHAR" />
+		<result column="office_name" property="officeName" jdbcType="VARCHAR" />
+		<result column="employee_id" property="employeeId" jdbcType="CHAR" />
+		<result column="employee_name" property="employeeName"
+			jdbcType="VARCHAR" />
+		<result column="purchase_date" property="purchaseDate"
+			jdbcType="TIMESTAMP" />
+		<result column="warehouse_id" property="warehouseId" jdbcType="CHAR" />
+		<result column="warehouse_name" property="warehouseName"
+			jdbcType="VARCHAR" />
+		<result column="warehouse_address" property="warehouseAddress"
+			jdbcType="VARCHAR" />
+		<result column="source" property="source" jdbcType="CHAR" />
+		<result column="supplier_id" property="supplierId" jdbcType="CHAR" />
+		<result column="supplier_name" property="supplierName"
+			jdbcType="VARCHAR" />
+		<result column="purchase_state" property="purchaseState"
+			jdbcType="CHAR" />
+		<result column="purchase_order_close_state" property="purchaseOrderCloseState"
+			jdbcType="CHAR" />
+		<result column="purchase_order_detail_id" property="purchaseOrderDetailId"
+			jdbcType="CHAR" />
+		<result column="commodity_name" property="commodityName"
+			jdbcType="VARCHAR" />
+		<result column="sku_code" property="skuCode" jdbcType="CHAR" />
+		<result column="sku_barcode" property="skuBarcode" jdbcType="VARCHAR" />
+		<result column="unit_id" property="unitId" jdbcType="CHAR" />
+		<result column="unit_name" property="unitName" jdbcType="VARCHAR" />
+		<result column="specification" property="specification"
+			jdbcType="VARCHAR" />
+		<result column="purchase_quantity" property="purchaseQuantity"
+			jdbcType="DECIMAL" />
+		<result column="receiving_quantity" property="receivingQuantity"
+			jdbcType="DECIMAL" />
+		<result column="c_storage_quantity" property="cStorageQuantity"
+			jdbcType="DECIMAL" />
+		<result column="c_rejected_quantity" property="cRejectedQuantity"
+			jdbcType="DECIMAL" />
+		<result column="unit_price" property="unitPrice" jdbcType="DECIMAL" />
+		<result column="amount" property="amount" jdbcType="DECIMAL" />
+		<result column="tax_rate" property="taxRate" jdbcType="DECIMAL" />
+		<result column="tax_rate_amount" property="taxRateAmount"
+			jdbcType="DECIMAL" />
+		<result column="levied_total" property="leviedTotal" jdbcType="DECIMAL" />
+		<result column="delivery_date" property="deliveryDate"
+			jdbcType="TIMESTAMP" />
+		<result column="delivery_quantity" property="deliveryQuantity"
+			jdbcType="DECIMAL" />
+		<result column="expected_date" property="expectedDate"
+			jdbcType="TIMESTAMP" />
+		<result column="close_state" property="closeState" jdbcType="CHAR" />
+		<result column="commodity_code" property="commodityCode"
+			jdbcType="CHAR" />
+		<result column="commodity_barcode" property="commodityBarcode"
+			jdbcType="VARCHAR" />
+		<result column="category_id_one_level" property="categoryIdOneLevel"
+			jdbcType="CHAR" />
+		<result column="category_name_one_level" property="categoryNameOneLevel"
+			jdbcType="VARCHAR" />
+		<result column="category_id_two_level" property="categoryIdTwoLevel"
+			jdbcType="CHAR" />
+		<result column="category_name_two_level" property="categoryNameTwoLevel"
+			jdbcType="VARCHAR" />
+		<result column="category_id_three_level" property="categoryIdThreeLevel"
+			jdbcType="CHAR" />
+		<result column="category_name_three_level" property="categoryNameThreeLevel"
+			jdbcType="VARCHAR" />
+		<result column="year" property="year" jdbcType="CHAR" />
+		<result column="quarter" property="quarter" jdbcType="CHAR" />
+		<result column="month" property="month" jdbcType="CHAR" />
+		<result column="week" property="week" jdbcType="CHAR" />
+		<result column="week_num" property="weekNum" jdbcType="CHAR" />
+		<result column="day" property="day" jdbcType="CHAR" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="transfer_time" property="transferTime"
+			jdbcType="TIMESTAMP" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.ffzx.bi.vo.GoodsArrivalCustom"
+		extends="BaseResultMap">
+		<result column="commodity_attribute_value_ids" property="commodityAttributeValueIds"
+			jdbcType="LONGVARCHAR" />
+		<result column="commodity_attribute_values" property="commodityAttributeValues"
+			jdbcType="LONGVARCHAR" />
+		<result column="commodity_attribute_ids" property="commodityAttributeIds"
+			jdbcType="LONGVARCHAR" />
+		<result column="commodity_attributes" property="commodityAttributes"
+			jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		t.id, t.purchase_order_number, t.pattern, t.office_id,
+		t.office_name,
+		t.employee_id,
+		t.employee_name, t.purchase_date,
+		t.warehouse_id, t.warehouse_name,
+		t.warehouse_address,
+		t.source,
+		t.supplier_id, t.supplier_name, t.purchase_state,
+		t.purchase_order_close_state,
+		t.purchase_order_detail_id,
+		t.commodity_name, t.sku_code, t.sku_barcode, t.unit_id,
+		t.unit_name,
+		t.specification, t.purchase_quantity, t.receiving_quantity,
+		t.c_storage_quantity,
+		t.c_rejected_quantity, t.unit_price, t.amount,
+		t.tax_rate, t.tax_rate_amount,
+		t.levied_total,
+		t.delivery_date,
+		t.delivery_quantity, t.expected_date, t.close_state,
+		t.commodity_code,
+		t.commodity_barcode, t.category_id_one_level,
+		t.category_name_one_level,
+		t.category_id_two_level,
+		t.category_name_two_level, t.category_id_three_level,
+		t.category_name_three_level,
+		t.year, t.quarter, t.month, t.week,
+		t.week_num, t.day, t.create_date,
+		t.transfer_time
+	</sql>
+	<sql id="Blob_Column_List">
+		commodity_attribute_value_ids, commodity_attribute_values,
+		commodity_attribute_ids,
+		commodity_attributes
+	</sql>
+	<sql id="condition">
+		<if test="null!=params">
+			<if test="params.id != null and '' != params.id">
+				and t.id = #{params.id,jdbcType=CHAR}
+			</if>
+			<if
+				test="params.purchaseOrderNumber != null and '' != params.purchaseOrderNumber">
+				and t.purchase_order_number =
+				#{params.purchaseOrderNumber,jdbcType=VARCHAR}
+			</if>
+			<if test="params.pattern != null and '' != params.pattern">
+				and t.pattern = #{params.pattern,jdbcType=CHAR}
+			</if>
+			<if test="params.officeId != null and '' != params.officeId">
+				and t.office_id = #{params.officeId,jdbcType=CHAR}
+			</if>
+			<if test="params.officeName != null and '' != params.officeName">
+				and t.office_name = #{params.officeName,jdbcType=VARCHAR}
+			</if>
+			<if test="params.employeeId != null and '' != params.employeeId">
+				and t.employee_id = #{params.employeeId,jdbcType=CHAR}
+			</if>
+			<if test="params.employeeName != null and '' != params.employeeName">
+				and t.employee_name =
+				#{params.employeeName,jdbcType=VARCHAR}
+			</if>
+			<if test="params.purchaseDate != null">
+				and t.purchase_date =
+				#{params.purchaseDate,jdbcType=TIMESTAMP}
+			</if>
+			<if test="params.warehouseId != null and '' != params.warehouseId">
+				and t.warehouse_id = #{params.warehouseId,jdbcType=CHAR}
+			</if>
+			<if test="params.warehouseName != null and '' != params.warehouseName">
+				and t.warehouse_name =
+				#{params.warehouseName,jdbcType=VARCHAR}
+			</if>
+			<if
+				test="params.warehouseAddress != null and '' != params.warehouseAddress">
+				and t.warehouse_address =
+				#{params.warehouseAddress,jdbcType=VARCHAR}
+			</if>
+			<if test="params.source != null and '' != params.source">
+				and t.source = #{params.source,jdbcType=CHAR}
+			</if>
+			<if test="params.supplierId != null and '' != params.supplierId">
+				and t.supplier_id = #{params.supplierId,jdbcType=CHAR}
+			</if>
+			<if test="params.supplierName != null and '' != params.supplierName">
+				and t.supplier_name =
+				#{params.supplierName,jdbcType=VARCHAR}
+			</if>
+			<if test="params.purchaseState != null and '' != params.purchaseState">
+				and t.purchase_state =
+				#{params.purchaseState,jdbcType=CHAR}
+			</if>
+			<if
+				test="params.purchaseOrderCloseState != null and '' != params.purchaseOrderCloseState">
+				and t.purchase_order_close_state =
+				#{params.purchaseOrderCloseState,jdbcType=CHAR}
+			</if>
+			<if
+				test="params.purchaseOrderDetailId != null and '' != params.purchaseOrderDetailId">
+				and t.purchase_order_detail_id =
+				#{params.purchaseOrderDetailId,jdbcType=CHAR}
+			</if>
+			<if test="params.commodityName != null and '' != params.commodityName">
+				and t.commodity_name =
+				#{params.commodityName,jdbcType=VARCHAR}
+			</if>
+			<if test="params.skuCode != null and '' != params.skuCode">
+				and t.sku_code = #{params.skuCode,jdbcType=CHAR}
+			</if>
+			<if test="params.skuBarcode != null and '' != params.skuBarcode">
+				and t.sku_barcode = #{params.skuBarcode,jdbcType=VARCHAR}
+			</if>
+			<if test="params.unitId != null and '' != params.unitId">
+				and t.unit_id = #{params.unitId,jdbcType=CHAR}
+			</if>
+			<if test="params.unitName != null and '' != params.unitName">
+				and t.unit_name = #{params.unitName,jdbcType=VARCHAR}
+			</if>
+			<if test="params.specification != null and '' != params.specification">
+				and t.specification =
+				#{params.specification,jdbcType=VARCHAR}
+			</if>
+			<if test="params.purchaseQuantity != null">
+				and t.purchase_quantity =
+				#{params.purchaseQuantity,jdbcType=DECIMAL}
+			</if>
+			<if test="params.receivingQuantity != null">
+				and t.receiving_quantity =
+				#{params.receivingQuantity,jdbcType=DECIMAL}
+			</if>
+			<if test="params.cStorageQuantity != null">
+				and t.c_storage_quantity =
+				#{params.cStorageQuantity,jdbcType=DECIMAL}
+			</if>
+			<if test="params.cRejectedQuantity != null">
+				and t.c_rejected_quantity =
+				#{params.cRejectedQuantity,jdbcType=DECIMAL}
+			</if>
+			<if test="params.unitPrice != null">
+				and t.unit_price = #{params.unitPrice,jdbcType=DECIMAL}
+			</if>
+			<if test="params.amount != null">
+				and t.amount = #{params.amount,jdbcType=DECIMAL}
+			</if>
+			<if test="params.taxRate != null">
+				and t.tax_rate = #{params.taxRate,jdbcType=DECIMAL}
+			</if>
+			<if test="params.taxRateAmount != null">
+				and t.tax_rate_amount =
+				#{params.taxRateAmount,jdbcType=DECIMAL}
+			</if>
+			<if test="params.leviedTotal != null">
+				and t.levied_total =
+				#{params.leviedTotal,jdbcType=DECIMAL}
+			</if>
+			<if test="params.deliveryDate != null">
+				and t.delivery_date =
+				#{params.deliveryDate,jdbcType=TIMESTAMP}
+			</if>
+			<if test="params.deliveryQuantity != null">
+				and t.delivery_quantity =
+				#{params.deliveryQuantity,jdbcType=DECIMAL}
+			</if>
+			<if test="params.expectedDate != null">
+				and t.expected_date =
+				#{params.expectedDate,jdbcType=TIMESTAMP}
+			</if>
+			<if test="params.closeState != null and '' != params.closeState">
+				and t.close_state = #{params.closeState,jdbcType=CHAR}
+			</if>
+			<if test="params.commodityCode != null and '' != params.commodityCode">
+				and t.commodity_code =
+				#{params.commodityCode,jdbcType=CHAR}
+			</if>
+			<if
+				test="params.commodityBarcode != null and '' != params.commodityBarcode">
+				and t.commodity_barcode =
+				#{params.commodityBarcode,jdbcType=VARCHAR}
+			</if>
+			<if
+				test="params.categoryIdOneLevel != null and '' != params.categoryIdOneLevel">
+				and t.category_id_one_level =
+				#{params.categoryIdOneLevel,jdbcType=CHAR}
+			</if>
+			<if
+				test="params.categoryNameOneLevel != null and '' != params.categoryNameOneLevel">
+				and t.category_name_one_level =
+				#{params.categoryNameOneLevel,jdbcType=VARCHAR}
+			</if>
+			<if
+				test="params.categoryIdTwoLevel != null and '' != params.categoryIdTwoLevel">
+				and t.category_id_two_level =
+				#{params.categoryIdTwoLevel,jdbcType=CHAR}
+			</if>
+			<if
+				test="params.categoryNameTwoLevel != null and '' != params.categoryNameTwoLevel">
+				and t.category_name_two_level =
+				#{params.categoryNameTwoLevel,jdbcType=VARCHAR}
+			</if>
+			<if
+				test="params.categoryIdThreeLevel != null and '' != params.categoryIdThreeLevel">
+				and t.category_id_three_level =
+				#{params.categoryIdThreeLevel,jdbcType=CHAR}
+			</if>
+			<if
+				test="params.categoryNameThreeLevel != null and '' != params.categoryNameThreeLevel">
+				and t.category_name_three_level =
+				#{params.categoryNameThreeLevel,jdbcType=VARCHAR}
+			</if>
+			<if test="params.year != null and '' != params.year">
+				and t.year = #{params.year,jdbcType=CHAR}
+			</if>
+			<if test="params.quarter != null and '' != params.quarter">
+				and t.quarter = #{params.quarter,jdbcType=CHAR}
+			</if>
+			<if test="params.month != null and '' != params.month">
+				and t.month = #{params.month,jdbcType=CHAR}
+			</if>
+			<if test="params.week != null and '' != params.week">
+				and t.week = #{params.week,jdbcType=CHAR}
+			</if>
+			<if test="params.weekNum != null and '' != params.weekNum">
+				and t.week_num = #{params.weekNum,jdbcType=CHAR}
+			</if>
+			<if test="params.day != null and '' != params.day">
+				and t.day = #{params.day,jdbcType=CHAR}
+			</if>
+			<if test="params.createDate != null">
+				and t.create_date =
+				#{params.createDate,jdbcType=TIMESTAMP}
+			</if>
+			<if test="params.transferTime != null">
+				and t.transfer_time =
+				#{params.transferTime,jdbcType=TIMESTAMP}
+			</if>
+			<if
+				test="params.commodityAttributeValueIds != null and '' != params.commodityAttributeValueIds">
+				and t.commodity_attribute_value_ids =
+				#{params.commodityAttributeValueIds,jdbcType=LONGVARCHAR}
+			</if>
+			<if
+				test="params.commodityAttributeValues != null and '' != params.commodityAttributeValues">
+				and t.commodity_attribute_values =
+				#{params.commodityAttributeValues,jdbcType=LONGVARCHAR}
+			</if>
+			<if
+				test="params.commodityAttributeIds != null and '' != params.commodityAttributeIds">
+				and t.commodity_attribute_ids =
+				#{params.commodityAttributeIds,jdbcType=LONGVARCHAR}
+			</if>
+			<if
+				test="params.commodityAttributes != null and '' != params.commodityAttributes">
+				and t.commodity_attributes =
+				#{params.commodityAttributes,jdbcType=LONGVARCHAR}
+			</if>
+		</if>
+	</sql>
+	
+	<sql id="query_goodsarrival_where">
+		<if test="goodsArrivalVo.goodsArrivalCustom != null">
+			<if test="goodsArrivalVo.goodsArrivalCustom.supplierId != null and '' != goodsArrivalVo.goodsArrivalCustom.supplierId">
+				and supplier_id = #{goodsArrivalVo.goodsArrivalCustom.supplierId}
+			</if>
+			<if test="goodsArrivalVo.goodsArrivalCustom.skuBarcode != null and '' != goodsArrivalVo.goodsArrivalCustom.skuBarcode">
+				and sku_barcode like concat(#{goodsArrivalVo.goodsArrivalCustom.skuBarcode}, '%') 
+			</if>
+			<if test="goodsArrivalVo.goodsArrivalCustom.searchMinDate != null and '' != goodsArrivalVo.goodsArrivalCustom.searchMinDate">
+				<![CDATA[
+           		and date_format(t.transfer_time, '%Y-%m-%d') >= #{goodsArrivalVo.goodsArrivalCustom.searchMinDate}
+            	]]>
+			</if>
+			<if test="goodsArrivalVo.goodsArrivalCustom.searchMaxDate != null and '' != goodsArrivalVo.goodsArrivalCustom.searchMaxDate">
+				<![CDATA[
+	            and date_format(t.transfer_time, '%Y-%m-%d') <= #{goodsArrivalVo.goodsArrivalCustom.searchMaxDate}    
+	            ]]>
+			</if>
+		</if>
+	</sql>
+	<sql id="group_by_condition">
+		<choose>
+			<when test="goodsArrivalVo.goodsArrivalCustom.isCheckedVendor != null and '' != goodsArrivalVo.goodsArrivalCustom.isCheckedVendor
+						and goodsArrivalVo.goodsArrivalCustom.isCheckedBarcode != null and '' != goodsArrivalVo.goodsArrivalCustom.isCheckedBarcode">
+				group by sku_barcode, supplier_id
+			</when>
+			<when test="goodsArrivalVo.goodsArrivalCustom.isCheckedVendor != null and '' != goodsArrivalVo.goodsArrivalCustom.isCheckedVendor">
+				group by supplier_id
+			</when>
+			<when test="goodsArrivalVo.goodsArrivalCustom.isCheckedBarcode != null and '' != goodsArrivalVo.goodsArrivalCustom.isCheckedBarcode">
+				group by sku_barcode
+			</when>
+			<otherwise>
+				group by supplier_id
+			</otherwise>
+		</choose>
+	</sql>
+	
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from goods_arrival_repository t
+		where t.id = #{id,jdbcType=CHAR}
+	</select>
+	<select id="selectByParams" resultMap="ResultMapWithBLOBs"
+		parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from goods_arrival_repository t
+		where 1=1
+		<include refid="condition" />
+	</select>
+	<select id="selectCount" resultType="java.lang.Integer">
+		select count(1) as s from goods_arrival_repository t where 1=1
+		<include refid="condition" />
+	</select>
+	<select id="selectByPage" resultMap="ResultMapWithBLOBs"
+		parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from goods_arrival_repository t
+		where 1=1
+		<include refid="condition" />
+		<if test="orderByField != null and ''!=orderByField">
+			order by t.${orderByField}
+			<if test="orderByField">
+				${orderBy}
+			</if>
+		</if>
+	</select>
+
+	<select id="selectByList" resultMap="ResultMapWithBLOBs" parameterType="com.ffzx.bi.vo.GoodsArrivalVo">
+		select 
+			gar.supplier_id,
+			gar.supplier_name,
+			gar.sku_barcode,
+			gar.commodity_name,
+			gar.sku_code,
+<!-- 			t.purchase_quantity 采购数量, -->
+<!-- 			t.receiving_quantity 到货数量, -->
+<!-- 			t.c_storage_quantity 质检良品数, -->
+<!-- 			t.c_rejected_quantity 退货数, -->
+			totalPurchaseQuantity,
+			totalReceivingQuantity,
+			totalcStorageQuantity,
+			totalcRejectedQuantity,
+			concat(round(totalReceivingQuantity / totalPurchaseQuantity * 100, 2), '%') as arrivalRate,
+			concat(round(totalcStorageQuantity / totalReceivingQuantity * 100, 2), '%') as goodProductsRate,
+			concat(round(totalcRejectedQuantity / totalReceivingQuantity * 100, 2), '%') as refundRate
+		from (
+			select
+				<include refid="Base_Column_List" />,
+				<include refid="Blob_Column_List" />,
+				sum(purchase_quantity) AS totalPurchaseQuantity,
+				sum(receiving_quantity) AS totalReceivingQuantity,
+				sum(c_storage_quantity) AS totalcStorageQuantity,
+				sum(c_rejected_quantity) AS totalcRejectedQuantity
+			from goods_arrival_repository t
+			where 1 = 1
+			<include refid="query_goodsarrival_where" />
+			<include refid="group_by_condition" />
+		) gar
+		<include refid="order_by_condition" />
+	</select>
+	
+	<sql id="order_by_condition">
+		<if test="goodsArrivalVo.goodsArrivalCustom.isCheckedBarcode != null and '' != goodsArrivalVo.goodsArrivalCustom.isCheckedBarcode">
+			order by supplier_id
+		</if>
+	</sql>
+</mapper>

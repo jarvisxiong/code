@@ -1,0 +1,110 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.ffzx.bi</groupId>
+		<artifactId>bi</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<groupId>com.ffzx.bi.web</groupId>
+	<artifactId>bi-web</artifactId>
+	<packaging>war</packaging>
+	<name>bi-web Maven Webapp</name>
+	<url>http://maven.apache.org</url>
+	
+	<!--web依赖包版本定义 -->
+	<properties>
+		<parent.web.version>1.0.0-SNAPSHOT</parent.web.version>
+		<jetty.port>8091</jetty.port>
+	</properties>
+	
+	<dependencies>
+		<!-- parent-web引用 -->
+		<dependency>
+			<groupId>com.ffzx</groupId>
+			<artifactId>parent-web</artifactId>
+			<version>${parent.web.version}</version>
+		</dependency>
+		
+		<!-- bi-core引用 -->
+		<dependency>
+			<groupId>com.ffzx.bi.core</groupId>
+			<artifactId>bi-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+	     <!-- base-data引用 -->
+	   <dependency>		    
+	        <groupId>com.ffzx.base-data.api</groupId>
+	        <artifactId>base-data-api</artifactId>
+	        <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <!-- cims引用 -->
+    	<dependency>
+    	 <groupId>com.ffzx.commodity.api</groupId>
+  		 <artifactId>cims-api</artifactId>
+         <version>0.0.1-SNAPSHOT</version>
+   		</dependency>
+        
+	  <!--uc引用 -->
+	   <dependency>		    
+	        <groupId>com.ffzx.uc.api</groupId>
+	        <artifactId>uc-api</artifactId>
+	        <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+		<!-- jstl -->
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+		</dependency>
+
+		<!-- web -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+		</dependency>
+
+		<!-- EL -->
+		<dependency>
+			<groupId>javax.el</groupId>
+			<artifactId>javax.el-api</artifactId>
+		</dependency>
+
+		<!-- sitemesh -->
+		<dependency>
+			<groupId>opensymphony</groupId>
+			<artifactId>sitemesh</artifactId>
+		</dependency>
+	</dependencies>	
+	<build>
+        <finalName>bi-web</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+            </plugin>
+            <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+			</plugin>
+        </plugins>
+     </build>
+</project>

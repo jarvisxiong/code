@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans.xsd
+	 http://code.alibabatech.com/schema/dubbo	http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<dubbo:reference id="dictApiService"
+		interface="com.ffzx.basedata.api.service.DictApiService" timeout="30000"
+		version="1.0" registry="zookeeperClient" protocol="dubbo" />
+
+	<dubbo:reference id="subSystemConfigApiService"
+		interface="com.ffzx.basedata.api.service.SubSystemConfigApiService"
+		timeout="30000" version="1.0" registry="zookeeperClient" protocol="dubbo" />
+
+	<dubbo:reference id="officeApiService"
+		interface="com.ffzx.basedata.api.service.OfficeApiService" timeout="30000"
+		version="1.0" registry="zookeeperClient" protocol="dubbo" />
+
+	<dubbo:reference id="vendorApiService"
+		interface="com.ffzx.member.api.service.VendorApiService" timeout="30000"
+		version="1.0" registry="zookeeperClient" protocol="dubbo" />
+
+	<dubbo:reference id="addressApiService"
+		interface="com.ffzx.basedata.api.service.AddressApiService" timeout="30000"
+		version="1.0" registry="zookeeperClient" protocol="dubbo" />
+
+	<dubbo:reference id="categoryApiService"
+		interface="com.ffzx.commodity.api.service.CategoryApiService" timeout="30000"
+		version="1.0" registry="zookeeperClient" protocol="dubbo" />
+
+	<!-- 职员API -->
+	<dubbo:reference id="employeeApi"
+		interface="com.ffzx.basedata.api.service.EmployeeApiService" timeout="30000"
+		version="1.0" registry="zookeeperClient" protocol="dubbo" />
+</beans>
