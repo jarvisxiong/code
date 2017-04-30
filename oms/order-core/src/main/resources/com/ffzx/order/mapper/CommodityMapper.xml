@@ -1,0 +1,846 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ffzx.order.mapper.CommodityMapper" >
+  <resultMap id="BaseResultMap" type="com.ffzx.order.api.dto.Commodity" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="alias_name" property="aliasName" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="sub_title" property="subTitle" jdbcType="VARCHAR" />
+    <result column="category_id" property="categoryId" jdbcType="VARCHAR" />
+    <result column="commodity_attribute_parameter" property="commodityAttributeParameter" jdbcType="VARCHAR" />
+    <result column="brand_id" property="brandId" jdbcType="VARCHAR" />
+    <result column="brand_name" property="brandName" jdbcType="VARCHAR" />
+    <result column="vendor_id" property="vendorId" jdbcType="VARCHAR" />
+    <result column="vendor_name" property="vendorName" jdbcType="VARCHAR" />
+    <result column="vendor_code" property="vendorCode" jdbcType="VARCHAR" />
+    <result column="retail_price" property="retailPrice" jdbcType="DECIMAL" />
+    <result column="preferential_price" property="preferentialPrice" jdbcType="VARCHAR" />
+    <result column="unit_id" property="unitId" jdbcType="VARCHAR" />
+    <result column="area_category" property="areaCategory" jdbcType="CHAR" />
+    <result column="stock_limit" property="stockLimit" jdbcType="CHAR" />
+    <result column="split_single" property="splitSingle" jdbcType="CHAR" />
+    <result column="warehouse" property="warehouse" jdbcType="CHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="thumbnail" property="thumbnail" jdbcType="VARCHAR" />
+    <result column="small_image" property="smallImage" jdbcType="VARCHAR" />
+    <result column="big_image" property="bigImage" jdbcType="VARCHAR" />
+    <result column="keyword" property="keyword" jdbcType="VARCHAR" />
+    <result column="is_hot_sale" property="isHotSale" jdbcType="CHAR" />
+    <result column="is_new" property="isNew" jdbcType="CHAR" />
+    <result column="publish_time" property="publishTime" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy.id" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="last_update_by" property="lastUpdateBy.id" jdbcType="VARCHAR" />
+    <result column="last_update_date" property="lastUpdateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="entity_storage" property="entityStorage" jdbcType="CHAR" />
+    <result column="buy_type" property="buyType" jdbcType="CHAR" />
+    <result column="unit_name" property="unitName" jdbcType="VARCHAR" />
+    <result column="unit_group_id" property="unitGroupId" jdbcType="VARCHAR" />
+    <result column="sku_code" property="skuCode" jdbcType="VARCHAR" />
+    <result column="bar_code" property="barCode" jdbcType="VARCHAR" />
+    <result column="specification" property="specification" jdbcType="VARCHAR" />
+    <result column="categoryAttribute_name" property="categoryAttributeName" jdbcType="VARCHAR" />
+    <result column="coupon_id" property="couponId" jdbcType="VARCHAR" />
+    <result column="coupon_name" property="couponName" jdbcType="VARCHAR" />
+    <result column="coupon_code" property="couponCode" jdbcType="VARCHAR" />
+    <result column="commodity_dummy_type" property="commodityDummyType" jdbcType="CHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.ffzx.order.api.dto.Commodity" extends="BaseResultMap" >
+    <result column="sale_attribute_name" property="saleAttributeName" jdbcType="LONGVARCHAR" />
+    <result column="sale_attribute_ids" property="saleAttributeIds" jdbcType="LONGVARCHAR" />
+    <result column="addressName" property="addressName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    t.id, t.code, t.name, t.alias_name, t.title, t.sub_title, t.category_id, t.commodity_attribute_parameter, 
+    t.brand_id, t.brand_name, t.vendor_id, t.vendor_name,t.vendor_code, t.retail_price, t.preferential_price, 
+    t.unit_id, t.area_category, t.stock_limit, t.split_single, t.warehouse, t.status, 
+    t.thumbnail, t.small_image, t.big_image, t.keyword, t.is_hot_sale, t.is_new, t.publish_time, 
+    t.create_by as 'createBy.id', t.create_date, t.last_update_by as 'lastUpdateBy.id', 
+    t.last_update_date, t.remarks, t.entity_storage, t.buy_type, t.unit_name, t.unit_group_id, 
+    t.sku_code, t.bar_code,t.specification,t.categoryAttribute_name,t.coupon_id,t.coupon_name,t.coupon_code,t.commodity_dummy_type
+  </sql>
+  <sql id="Blob_Column_List" >
+    sale_attribute_name, sale_attribute_ids
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null and '' != params.id" >
+        and t.id = #{params.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.code != null and '' != params.code" >
+        and t.code = #{params.code,jdbcType=VARCHAR}
+      </if>
+      <if test="params.codeLike != null and '' != params.codeLike" >
+        and t.code LIKE CONCAT('%', #{params.codeLike,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test="params.name != null and '' != params.name" >
+        and t.name LIKE CONCAT('%', #{params.name,jdbcType=VARCHAR}, '%')
+      </if>
+       <if test="params.commodityCode != null and '' != params.commodityCode" >
+        and t.code = #{params.commodityCode,jdbcType=VARCHAR}
+      </if>
+      <if test="params.aliasName != null and '' != params.aliasName" >
+        and t.alias_name = #{params.aliasName,jdbcType=VARCHAR}
+      </if>
+      <if test="params.title != null and '' != params.title" >
+        and t.title = #{params.title,jdbcType=VARCHAR}
+      </if>
+      <if test="params.subTitle != null and '' != params.subTitle" >
+        and t.sub_title = #{params.subTitle,jdbcType=VARCHAR}
+      </if>
+      <if test="params.categoryId != null and '' != params.categoryId" >
+        and t.category_id = #{params.categoryId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.commodityAttributeParameter != null and '' != params.commodityAttributeParameter" >
+        and t.commodity_attribute_parameter = #{params.commodityAttributeParameter,jdbcType=VARCHAR}
+      </if>
+      <if test="params.brandId != null and '' != params.brandId" >
+        and t.brand_id = #{params.brandId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.brandName != null and '' != params.brandName" >
+        and t.brand_name = #{params.brandName,jdbcType=VARCHAR}
+      </if>
+      <if test="params.vendorId != null and '' != params.vendorId" >
+        and t.vendor_id = #{params.vendorId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.vendorName != null and '' != params.vendorName" >
+        and t.vendor_name = #{params.vendorName,jdbcType=VARCHAR}
+      </if>
+      <if test="params.retailPrice != null" >
+        and t.retail_price = #{params.retailPrice,jdbcType=DECIMAL}
+      </if>
+      <if test="params.preferentialPrice != null" >
+        and t.preferential_price = #{params.preferentialPrice,jdbcType=VARCHAR}
+      </if>
+      <if test="params.unitId != null and '' != params.unitId" >
+        and t.unit_id = #{params.unitId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.areaCategory != null and '' != params.areaCategory" >
+        and t.area_category = #{params.areaCategory,jdbcType=CHAR}
+      </if>
+      <if test="params.stockLimit != null and '' != params.stockLimit" >
+        and t.stock_limit = #{params.stockLimit,jdbcType=CHAR}
+      </if>
+      <if test="params.splitSingle != null and '' != params.splitSingle" >
+        and t.split_single = #{params.splitSingle,jdbcType=CHAR}
+      </if>
+      <if test="params.warehouse != null and '' != params.warehouse" >
+        and t.warehouse = #{params.warehouse,jdbcType=CHAR}
+      </if>
+      <if test="params.status != null and '' != params.status" >
+        and t.status = #{params.status,jdbcType=VARCHAR}
+      </if>
+      <if test="params.statusDelFlag != null and '' != params.statusDelFlag" >
+        and t.status != #{params.statusDelFlag,jdbcType=VARCHAR}
+      </if>
+      <if test="params.thumbnail != null and '' != params.thumbnail" >
+        and t.thumbnail = #{params.thumbnail,jdbcType=VARCHAR}
+      </if>
+      <if test="params.smallImage != null and '' != params.smallImage" >
+        and t.small_image = #{params.smallImage,jdbcType=VARCHAR}
+      </if>
+      <if test="params.bigImage != null and '' != params.bigImage" >
+        and t.big_image = #{params.bigImage,jdbcType=VARCHAR}
+      </if>
+      <if test="params.keyword != null and '' != params.keyword" >
+        and t.keyword = #{params.keyword,jdbcType=VARCHAR}
+      </if>
+      <if test="params.isHotSale != null and '' != params.isHotSale" >
+        and t.is_hot_sale = #{params.isHotSale,jdbcType=CHAR}
+      </if>
+      <if test="params.isNew != null and '' != params.isNew" >
+        and t.is_new = #{params.isNew,jdbcType=CHAR}
+      </if>
+      <if test="params.publishTime != null" >
+        and t.publish_time = #{params.publishTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.createBy != null and '' != params.createBy" >
+        and t.create_by = #{params.createBy.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.createDate != null" >
+        and t.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.lastUpdateBy != null and '' != params.lastUpdateBy" >
+        and t.last_update_by = #{params.lastUpdateBy.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.lastUpdateDate != null" >
+        and t.last_update_date = #{params.lastUpdateDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.remarks != null and '' != params.remarks" >
+        and t.remarks = #{params.remarks,jdbcType=VARCHAR}
+      </if>
+      <if test="params.entityStorage != null and '' != params.entityStorage" >
+        and t.entity_storage = #{params.entityStorage,jdbcType=CHAR}
+      </if>
+      <if test="params.buyType != null and '' != params.buyType" >
+        and t.buy_type = #{params.buyType,jdbcType=CHAR}
+      </if>
+      <if test="params.unitName != null and '' != params.unitName" >
+        and t.unit_name = #{params.unitName,jdbcType=VARCHAR}
+      </if>
+      <if test="params.unitGroupId != null and '' != params.unitGroupId" >
+        and t.unit_group_id = #{params.unitGroupId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.skuCode != null and '' != params.skuCode" >
+        and t.sku_code = #{params.skuCode,jdbcType=VARCHAR}
+      </if>
+      <if test="params.barCode != null and '' != params.barCode" >
+        and t.bar_code = #{params.barCode,jdbcType=VARCHAR}
+      </if>
+      <if test="params.barCodes != null and '' != params.barCodes">
+			and t.bar_code LIKE CONCAT('%', #{params.barCodes}, '%')
+	 </if>
+      <if test="params.saleAttributeName != null and '' != params.saleAttributeName" >
+        and t.sale_attribute_name = #{params.saleAttributeName,jdbcType=LONGVARCHAR}
+      </if>
+      <if test="params.saleAttributeIds != null and '' != params.saleAttributeIds" >
+        and t.sale_attribute_ids = #{params.saleAttributeIds,jdbcType=LONGVARCHAR}
+      </if>
+      <if test="params.codeIs != null and '' != params.codeIs and 0 == params.codeIs" >
+        and (cas.addressName is null or cas.addressName = '') and t.area_category = '0' 
+      </if>
+      <if test="params.statuss != null and '' != params.statuss" >
+        <if test="params.statuss == 1" >
+        	and t.status in ('COMMODITY_STATUS_ENTRYED','COMMODITY_STATUS_DEL','COMMODITY_STATUS_ENTRYING','COMMODITY_STATUS_SHELVES')
+      	</if>
+      	<if test="params.statuss == 2" >
+        	and t.status in ('COMMODITY_STATUS_ENTRYING')
+      	</if>
+      	<if test="params.statuss == 3" >
+        	and t.status in ('COMMODITY_STATUS_ENTRYED','COMMODITY_STATUS_ADDED','COMMODITY_STATUS_SHELVES')
+      	</if>
+      	<if test="params.statuss == 4" >
+        	and t.status in ('COMMODITY_STATUS_ENTRYED','COMMODITY_STATUS_SHELVES')
+      	</if>
+      	<if test="params.statuss == 5" >
+        	and t.status in ('COMMODITY_STATUS_ENTRYING','COMMODITY_STATUS_ENTRYED','COMMODITY_STATUS_ADDED','COMMODITY_STATUS_SHELVES')
+      	</if>
+      	<if test="params.statuss == 6" >
+        	and t.status in ('COMMODITY_STATUS_ENTRYING','COMMODITY_STATUS_ENTRYED','COMMODITY_STATUS_SHELVES')
+      	</if>
+      </if>
+    </if>
+  </sql>
+  <select id="getCommoditybyskuCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from cims_db.commodity t , cims_db.commodity_sku sku
+    where sku.sku_code = #{skuCode,jdbcType=VARCHAR}
+      and sku.commodity_code=t.`code` 
+  </select>
+  
+  <select id="selectByBarCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  		select 
+	    <include refid="Base_Column_List" />
+	    from cims_db.commodity t 
+	    where t.bar_code = #{barCode}
+   </select>
+    
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from cims_db.commodity t 
+    where t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByCode" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from cims_db.commodity t 
+    where t.code = #{code,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParams" resultMap="ResultMapWithBLOBs" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from cims_db.commodity t 
+    where 1=1
+    <include refid="condition" />
+  </select>
+  
+  <select id="findCommodityStock" resultMap="ResultMapWithBLOBs" parameterType="map" >
+    select  
+    DISTINCT t.code AS code ,t.name as name,a.commodity_sku_code
+    from cims_db.commodity t 
+    LEFT JOIN cims_db.commodity_sku cs ON cs.`commodity_code`=t.`code` 
+	LEFT JOIN stock_custom AS a ON a.`commodity_sku_code`=cs.`sku_code`
+	LEFT JOIN stock_custom_used scu ON scu.id=a.stock_custom_used_id
+    where 1=1
+    AND (a.commodity_sku_code is null OR a.commodity_sku_code="")
+    <include refid="condition" />
+  </select>
+  
+  <select id="countCommodityStock" resultType="java.lang.Integer" parameterType="map">
+    select 
+  	 COUNT(DISTINCT  t.`code`) as s
+  	from cims_db.commodity t 
+    LEFT JOIN cims_db.commodity_sku cs ON cs.`commodity_code`=t.`code` 
+	LEFT JOIN stock_custom AS a ON a.`commodity_sku_code`=cs.`sku_code`
+	LEFT JOIN stock_custom_used scu ON scu.id=a.stock_custom_used_id
+    where 1=1
+    AND (a.commodity_sku_code is null OR a.commodity_sku_code="")
+    <include refid="condition" />
+  </select>
+  
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from cims_db.commodity t  where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="ResultMapWithBLOBs" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />, cas.addressName
+    from cims_db.commodity t left join  
+    (select GROUP_CONCAT(ca.address_name) as addressName, ca.commodity_code from commodity_address ca GROUP BY ca.commodity_code) cas 
+    on t.`code` = cas.commodity_code 
+    where 1=1 
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by t.${orderByField} DESC
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  
+  <select id="findByPageBySwitch" resultMap="ResultMapWithBLOBs" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from cims_db.commodity t
+    where 1=1 
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by t.${orderByField} DESC
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from cims_db.commodity
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.order.api.dto.Commodity" >
+    delete from cims_db.commodity
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ffzx.order.api.dto.Commodity" >
+    insert into cims_db.commodity (id, code, name, 
+      alias_name, title, sub_title, 
+      category_id, commodity_attribute_parameter, 
+      brand_id, brand_name, vendor_id, 
+      vendor_name, retail_price, preferential_price, 
+      unit_id, area_category, stock_limit, 
+      split_single, warehouse, status, 
+      thumbnail, small_image, big_image, 
+      keyword, is_hot_sale, is_new, 
+      publish_time, create_by, create_date, 
+      last_update_by, last_update_date, remarks, 
+      entity_storage, buy_type, unit_name, 
+      unit_group_id, sku_code, bar_code, 
+      sale_attribute_name, sale_attribute_ids,
+      specification,categoryAttribute_name
+      )
+    values (#{id,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{aliasName,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{subTitle,jdbcType=VARCHAR}, 
+      #{categoryId,jdbcType=VARCHAR}, #{commodityAttributeParameter,jdbcType=VARCHAR}, 
+      #{brandId,jdbcType=VARCHAR}, #{brandName,jdbcType=VARCHAR}, #{vendorId,jdbcType=VARCHAR}, 
+      #{vendorName,jdbcType=VARCHAR}, #{retailPrice,jdbcType=DECIMAL}, #{preferentialPrice,jdbcType=VARCHAR}, 
+      #{unitId,jdbcType=VARCHAR}, #{areaCategory,jdbcType=CHAR}, #{stockLimit,jdbcType=CHAR}, 
+      #{splitSingle,jdbcType=CHAR}, #{warehouse,jdbcType=CHAR}, #{status,jdbcType=VARCHAR}, 
+      #{thumbnail,jdbcType=VARCHAR}, #{smallImage,jdbcType=VARCHAR}, #{bigImage,jdbcType=VARCHAR}, 
+      #{keyword,jdbcType=VARCHAR}, #{isHotSale,jdbcType=CHAR}, #{isNew,jdbcType=CHAR}, 
+      #{publishTime,jdbcType=TIMESTAMP}, #{createBy.id,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{lastUpdateBy.id,jdbcType=VARCHAR}, #{lastUpdateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, 
+      #{entityStorage,jdbcType=CHAR}, #{buyType,jdbcType=CHAR}, #{unitName,jdbcType=VARCHAR}, 
+      #{unitGroupId,jdbcType=VARCHAR}, #{skuCode,jdbcType=VARCHAR}, #{barCode,jdbcType=VARCHAR}, 
+      #{saleAttributeName,jdbcType=LONGVARCHAR}, #{saleAttributeIds,jdbcType=LONGVARCHAR},
+      #{specification,jdbcType=VARCHAR},#{categoryAttributeName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.order.api.dto.Commodity" >
+    insert into cims_db.commodity
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="aliasName != null" >
+        alias_name,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="subTitle != null" >
+        sub_title,
+      </if>
+      <if test="categoryId != null" >
+        category_id,
+      </if>
+      <if test="commodityAttributeParameter != null" >
+        commodity_attribute_parameter,
+      </if>
+      <if test="brandId != null" >
+        brand_id,
+      </if>
+      <if test="brandName != null" >
+        brand_name,
+      </if>
+      <if test="vendorId != null" >
+        vendor_id,
+      </if>
+      <if test="vendorName != null" >
+        vendor_name,
+      </if>
+      <if test="retailPrice != null" >
+        retail_price,
+      </if>
+      <if test="preferentialPrice != null" >
+        preferential_price,
+      </if>
+      <if test="unitId != null" >
+        unit_id,
+      </if>
+      <if test="areaCategory != null" >
+        area_category,
+      </if>
+      <if test="stockLimit != null" >
+        stock_limit,
+      </if>
+      <if test="splitSingle != null" >
+        split_single,
+      </if>
+      <if test="warehouse != null" >
+        warehouse,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="thumbnail != null" >
+        thumbnail,
+      </if>
+      <if test="smallImage != null" >
+        small_image,
+      </if>
+      <if test="bigImage != null" >
+        big_image,
+      </if>
+      <if test="keyword != null" >
+        keyword,
+      </if>
+      <if test="isHotSale != null" >
+        is_hot_sale,
+      </if>
+      <if test="isNew != null" >
+        is_new,
+      </if>
+      <if test="publishTime != null" >
+        publish_time,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by,
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="entityStorage != null" >
+        entity_storage,
+      </if>
+      <if test="buyType != null" >
+        buy_type,
+      </if>
+      <if test="unitName != null" >
+        unit_name,
+      </if>
+      <if test="unitGroupId != null" >
+        unit_group_id,
+      </if>
+      <if test="skuCode != null" >
+        sku_code,
+      </if>
+      <if test="barCode != null" >
+        bar_code,
+      </if>
+      <if test="saleAttributeName != null" >
+        sale_attribute_name,
+      </if>
+      <if test="saleAttributeIds != null" >
+        sale_attribute_ids,
+      </if>
+       <if test="specification != null" >
+        specification,
+      </if>
+      <if test="categoryAttributeName != null" >
+        categoryAttribute_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="aliasName != null" >
+        #{aliasName,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="subTitle != null" >
+        #{subTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryId != null" >
+        #{categoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityAttributeParameter != null" >
+        #{commodityAttributeParameter,jdbcType=VARCHAR},
+      </if>
+      <if test="brandId != null" >
+        #{brandId,jdbcType=VARCHAR},
+      </if>
+      <if test="brandName != null" >
+        #{brandName,jdbcType=VARCHAR},
+      </if>
+      <if test="vendorId != null" >
+        #{vendorId,jdbcType=VARCHAR},
+      </if>
+      <if test="vendorName != null" >
+        #{vendorName,jdbcType=VARCHAR},
+      </if>
+      <if test="retailPrice != null" >
+        #{retailPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="preferentialPrice != null" >
+        #{preferentialPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="unitId != null" >
+        #{unitId,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCategory != null" >
+        #{areaCategory,jdbcType=CHAR},
+      </if>
+      <if test="stockLimit != null" >
+        #{stockLimit,jdbcType=CHAR},
+      </if>
+      <if test="splitSingle != null" >
+        #{splitSingle,jdbcType=CHAR},
+      </if>
+      <if test="warehouse != null" >
+        #{warehouse,jdbcType=CHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="thumbnail != null" >
+        #{thumbnail,jdbcType=VARCHAR},
+      </if>
+      <if test="smallImage != null" >
+        #{smallImage,jdbcType=VARCHAR},
+      </if>
+      <if test="bigImage != null" >
+        #{bigImage,jdbcType=VARCHAR},
+      </if>
+      <if test="keyword != null" >
+        #{keyword,jdbcType=VARCHAR},
+      </if>
+      <if test="isHotSale != null" >
+        #{isHotSale,jdbcType=CHAR},
+      </if>
+      <if test="isNew != null" >
+        #{isNew,jdbcType=CHAR},
+      </if>
+      <if test="publishTime != null" >
+        #{publishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        #{createBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null" >
+        #{lastUpdateBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="entityStorage != null" >
+        #{entityStorage,jdbcType=CHAR},
+      </if>
+      <if test="buyType != null" >
+        #{buyType,jdbcType=CHAR},
+      </if>
+      <if test="unitName != null" >
+        #{unitName,jdbcType=VARCHAR},
+      </if>
+      <if test="unitGroupId != null" >
+        #{unitGroupId,jdbcType=VARCHAR},
+      </if>
+      <if test="skuCode != null" >
+        #{skuCode,jdbcType=VARCHAR},
+      </if>
+      <if test="barCode != null" >
+        #{barCode,jdbcType=VARCHAR},
+      </if>
+      <if test="saleAttributeName != null" >
+        #{saleAttributeName,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="saleAttributeIds != null" >
+        #{saleAttributeIds,jdbcType=LONGVARCHAR},
+      </if>
+       <if test="specification != null" >
+        #{specification,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryAttributeName != null" >
+        #{categoryAttributeName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.order.api.dto.Commodity" >
+    update cims_db.commodity
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="aliasName != null" >
+        alias_name = #{aliasName,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="subTitle != null" >
+        sub_title = #{subTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryId != null" >
+        category_id = #{categoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityAttributeParameter != null" >
+        commodity_attribute_parameter = #{commodityAttributeParameter,jdbcType=VARCHAR},
+      </if>
+      <if test="brandId != null" >
+        brand_id = #{brandId,jdbcType=VARCHAR},
+      </if>
+      <if test="brandName != null" >
+        brand_name = #{brandName,jdbcType=VARCHAR},
+      </if>
+      <if test="vendorId != null" >
+        vendor_id = #{vendorId,jdbcType=VARCHAR},
+      </if>
+      <if test="vendorName != null" >
+        vendor_name = #{vendorName,jdbcType=VARCHAR},
+      </if>
+      <if test="retailPrice != null" >
+        retail_price = #{retailPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="preferentialPrice != null" >
+        preferential_price = #{preferentialPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="unitId != null" >
+        unit_id = #{unitId,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCategory != null" >
+        area_category = #{areaCategory,jdbcType=CHAR},
+      </if>
+      <if test="stockLimit != null" >
+        stock_limit = #{stockLimit,jdbcType=CHAR},
+      </if>
+      <if test="splitSingle != null" >
+        split_single = #{splitSingle,jdbcType=CHAR},
+      </if>
+      <if test="warehouse != null" >
+        warehouse = #{warehouse,jdbcType=CHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="thumbnail != null" >
+        thumbnail = #{thumbnail,jdbcType=VARCHAR},
+      </if>
+      <if test="smallImage != null" >
+        small_image = #{smallImage,jdbcType=VARCHAR},
+      </if>
+      <if test="bigImage != null" >
+        big_image = #{bigImage,jdbcType=VARCHAR},
+      </if>
+      <if test="keyword != null" >
+        keyword = #{keyword,jdbcType=VARCHAR},
+      </if>
+      <if test="isHotSale != null" >
+        is_hot_sale = #{isHotSale,jdbcType=CHAR},
+      </if>
+      <if test="isNew != null" >
+        is_new = #{isNew,jdbcType=CHAR},
+      </if>
+      <if test="publishTime != null" >
+        publish_time = #{publishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="entityStorage != null" >
+        entity_storage = #{entityStorage,jdbcType=CHAR},
+      </if>
+      <if test="buyType != null" >
+        buy_type = #{buyType,jdbcType=CHAR},
+      </if>
+      <if test="unitName != null" >
+        unit_name = #{unitName,jdbcType=VARCHAR},
+      </if>
+      <if test="unitGroupId != null" >
+        unit_group_id = #{unitGroupId,jdbcType=VARCHAR},
+      </if>
+      <if test="skuCode != null" >
+        sku_code = #{skuCode,jdbcType=VARCHAR},
+      </if>
+      <if test="barCode != null" >
+        bar_code = #{barCode,jdbcType=VARCHAR},
+      </if>
+      <if test="saleAttributeName != null" >
+        sale_attribute_name = #{saleAttributeName,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="saleAttributeIds != null" >
+        sale_attribute_ids = #{saleAttributeIds,jdbcType=LONGVARCHAR},
+      </if>
+       <if test="specification != null" >
+        specification = #{specification,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryAttributeName != null" >
+        categoryAttribute_name = #{categoryAttributeName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ffzx.order.api.dto.Commodity" >
+    update cims_db.commodity
+    set code = #{code,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      alias_name = #{aliasName,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      sub_title = #{subTitle,jdbcType=VARCHAR},
+      category_id = #{categoryId,jdbcType=VARCHAR},
+      commodity_attribute_parameter = #{commodityAttributeParameter,jdbcType=VARCHAR},
+      brand_id = #{brandId,jdbcType=VARCHAR},
+      brand_name = #{brandName,jdbcType=VARCHAR},
+      vendor_id = #{vendorId,jdbcType=VARCHAR},
+      vendor_name = #{vendorName,jdbcType=VARCHAR},
+      retail_price = #{retailPrice,jdbcType=DECIMAL},
+      preferential_price = #{preferentialPrice,jdbcType=VARCHAR},
+      unit_id = #{unitId,jdbcType=VARCHAR},
+      area_category = #{areaCategory,jdbcType=CHAR},
+      stock_limit = #{stockLimit,jdbcType=CHAR},
+      split_single = #{splitSingle,jdbcType=CHAR},
+      warehouse = #{warehouse,jdbcType=CHAR},
+      status = #{status,jdbcType=VARCHAR},
+      thumbnail = #{thumbnail,jdbcType=VARCHAR},
+      small_image = #{smallImage,jdbcType=VARCHAR},
+      big_image = #{bigImage,jdbcType=VARCHAR},
+      keyword = #{keyword,jdbcType=VARCHAR},
+      is_hot_sale = #{isHotSale,jdbcType=CHAR},
+      is_new = #{isNew,jdbcType=CHAR},
+      publish_time = #{publishTime,jdbcType=TIMESTAMP},
+      create_by = #{createBy.id,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+      last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      entity_storage = #{entityStorage,jdbcType=CHAR},
+      buy_type = #{buyType,jdbcType=CHAR},
+      unit_name = #{unitName,jdbcType=VARCHAR},
+      unit_group_id = #{unitGroupId,jdbcType=VARCHAR},
+      sku_code = #{skuCode,jdbcType=VARCHAR},
+      bar_code = #{barCode,jdbcType=VARCHAR},
+      sale_attribute_name = #{saleAttributeName,jdbcType=LONGVARCHAR},
+      sale_attribute_ids = #{saleAttributeIds,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.order.api.dto.Commodity" >
+    update cims_db.commodity
+    set code = #{code,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      alias_name = #{aliasName,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      sub_title = #{subTitle,jdbcType=VARCHAR},
+      category_id = #{categoryId,jdbcType=VARCHAR},
+      commodity_attribute_parameter = #{commodityAttributeParameter,jdbcType=VARCHAR},
+      brand_id = #{brandId,jdbcType=VARCHAR},
+      brand_name = #{brandName,jdbcType=VARCHAR},
+      vendor_id = #{vendorId,jdbcType=VARCHAR},
+      vendor_name = #{vendorName,jdbcType=VARCHAR},
+      retail_price = #{retailPrice,jdbcType=DECIMAL},
+      preferential_price = #{preferentialPrice,jdbcType=VARCHAR},
+      unit_id = #{unitId,jdbcType=VARCHAR},
+      area_category = #{areaCategory,jdbcType=CHAR},
+      stock_limit = #{stockLimit,jdbcType=CHAR},
+      split_single = #{splitSingle,jdbcType=CHAR},
+      warehouse = #{warehouse,jdbcType=CHAR},
+      status = #{status,jdbcType=VARCHAR},
+      thumbnail = #{thumbnail,jdbcType=VARCHAR},
+      small_image = #{smallImage,jdbcType=VARCHAR},
+      big_image = #{bigImage,jdbcType=VARCHAR},
+      keyword = #{keyword,jdbcType=VARCHAR},
+      is_hot_sale = #{isHotSale,jdbcType=CHAR},
+      is_new = #{isNew,jdbcType=CHAR},
+      publish_time = #{publishTime,jdbcType=TIMESTAMP},
+      create_by = #{createBy.id,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+      last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      entity_storage = #{entityStorage,jdbcType=CHAR},
+      buy_type = #{buyType,jdbcType=CHAR},
+      unit_name = #{unitName,jdbcType=VARCHAR},
+      unit_group_id = #{unitGroupId,jdbcType=VARCHAR},
+      sku_code = #{skuCode,jdbcType=VARCHAR},
+      bar_code = #{barCode,jdbcType=VARCHAR},
+      specification = #{specification,jdbcType=VARCHAR},
+      categoryAttribute_name= #{categoryAttributeName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

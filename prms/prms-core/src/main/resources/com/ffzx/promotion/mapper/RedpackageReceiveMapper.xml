@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ffzx.promotion.mapper.RedpackageReceiveMapper" >
+  <resultMap id="BaseResultMap" type="com.ffzx.promotion.api.dto.RedpackageReceive" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="redpackage_number" property="redpackageNumber" jdbcType="VARCHAR" />
+    <result column="fack_value" property="fackValue" jdbcType="DECIMAL" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="receive_date" property="receiveDate" jdbcType="TIMESTAMP" />
+    <result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
+    <result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
+    <result column="use_state" property="useState" jdbcType="CHAR" />
+    <result column="use_date" property="useDate" jdbcType="TIMESTAMP" />
+    <result column="receive_mode" property="receiveMode" jdbcType="CHAR" />
+    <result column="redpackage_id" property="redpackageId" jdbcType="VARCHAR" />
+    <result column="member_id" property="memberId" jdbcType="VARCHAR" />
+    <result column="is_grant" property="isGrant" jdbcType="CHAR" />
+    <result column="is_receive" property="isReceive" jdbcType="CHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+    <result column="redpackage_grant_id" property="redpackageGrantId" jdbcType="VARCHAR" />
+    <result column="order_price" property="orderPrice" jdbcType="DECIMAL" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="redpackagenumber" property="redpackage.number" jdbcType="VARCHAR" />
+    <result column="redpackagename" property="redpackage.name" jdbcType="VARCHAR" />
+    <result column="redpackagefack_value" property="redpackage.fackValue" jdbcType="DECIMAL" />
+    <result column="redpackagegrant_num" property="redpackage.grantNum" jdbcType="INTEGER" />
+    <result column="is_pay" property="isPay" jdbcType="CHAR" />
+  </resultMap>
+   <resultMap id="BaseResultMapCount" type="com.ffzx.promotion.api.dto.RedpackageCount" >
+    <result column="use_change" property="useChange" jdbcType="DECIMAL" />
+    <result column="use_redpackage_price" property="useRedpackagePrice" jdbcType="DECIMAL" />
+    <result column="use_order_price" property="useOrderPrice" jdbcType="DECIMAL" />
+    <result column="use_order_person_price" property="useOrderPersonPrice" jdbcType="DECIMAL" />
+    <result column="redpackage_id" property="redpackageId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    t.id, t.redpackage_number, t.fack_value, t.phone, t.receive_date, t.start_date, t.end_date, 
+    t.use_state, t.use_date, t.receive_mode, t.redpackage_id, t.member_id, t.is_grant, 
+    t.is_receive, t.del_flag, t.redpackage_grant_id, t.order_price, t.create_date, t.is_pay
+  </sql>
+  <sql id="Base_Column_List_package" >
+    t.id, t.redpackage_number, t.fack_value, t.phone, t.receive_date, t.start_date, t.end_date, 
+    t.use_state, t.use_date, t.receive_mode, t.redpackage_id, t.member_id, t.is_grant, 
+    t.is_receive, t.del_flag, t.redpackage_grant_id, t.order_price, t.create_date, t.is_pay,
+    r.number as "redpackagenumber",r.fack_value  as "redpackagefack_value",r.grant_num  as "redpackagegrant_num",
+    r.name as "redpackagename"
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null and '' != params.id" >
+        and t.id = #{params.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.redpackageNumber != null and '' != params.redpackageNumber" >
+        and t.redpackage_number = #{params.redpackageNumber,jdbcType=VARCHAR}
+      </if>
+      <if test="params.fackValue != null" >
+        and t.fack_value = #{params.fackValue,jdbcType=DECIMAL}
+      </if>
+      <if test="params.phone != null and '' != params.phone" >
+        and t.phone  like  CONCAT('%', #{params.phone}, '%')  
+      </if>
+      <if test="params.receiveDateStartStr != null" >
+        and t.receive_date &gt;= #{params.receiveDateStartStr,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.receiveDateEndStr != null" >
+        and t.receive_date &lt;= #{params.receiveDateEndStr,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.receiveDate != null" >
+        and t.receive_date = #{params.receiveDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.startDate != null" >
+        and t.start_date = #{params.startDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.endDate != null" >
+        and t.end_date = #{params.endDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.useState != null and '' != params.useState" >
+        and t.use_state = #{params.useState,jdbcType=CHAR}
+      </if>
+      <if test="params.useStateStr != null and '' != params.useStateStr" >
+	      <if test="params.useStateStr == 0" >
+	        and (t.use_state = #{params.useStateStr,jdbcType=CHAR} 
+	         and now() &lt;= t.end_date 
+	        )
+	      </if>
+	      <if test="params.useStateStr == 1" >
+	        and t.use_state = #{params.useStateStr,jdbcType=CHAR}
+	      </if>
+	      <if test="params.useStateStr == 2" >
+	        and t.use_state = '0'
+	        and now() &gt;= t.end_date 
+	      </if>
+      </if>
+      
+      <if test="params.useDateStartStr != null" >
+        and t.use_date &gt;= #{params.useDateStartStr,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.useDateEndStr != null" >
+        and t.use_date &lt;= #{params.useDateEndStr,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.useDate != null" >
+        and t.use_date = #{params.useDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.receiveMode != null and '' != params.receiveMode" >
+        and t.receive_mode = #{params.receiveMode,jdbcType=CHAR}
+      </if>
+      <if test="params.redpackageId != null and '' != params.redpackageId" >
+        and t.redpackage_id = #{params.redpackageId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.memberId != null and '' != params.memberId" >
+        and t.member_id = #{params.memberId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.isGrant != null and '' != params.isGrant" >
+        and t.is_grant = #{params.isGrant,jdbcType=CHAR}
+      </if>
+      <if test="params.isReceive != null and '' != params.isReceive" >
+        and t.is_receive = #{params.isReceive,jdbcType=CHAR}
+      </if>
+      <if test="params.delFlag != null and '' != params.delFlag" >
+        and t.del_flag = #{params.delFlag,jdbcType=CHAR}
+      </if>
+      <if test="params.redpackageGrantId != null and '' != params.redpackageGrantId" >
+        and t.redpackage_grant_id = #{params.redpackageGrantId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.orderPrice != null" >
+        and t.order_price = #{params.orderPrice,jdbcType=DECIMAL}
+      </if>
+      <if test="params.createDate != null" >
+        and t.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.isPay != null and '' != params.isPay" >
+        and t.is_pay = #{params.isPay,jdbcType=CHAR}
+      </if>     
+      <if test="params.useStatus != null and '' != params.useStatus" >
+	      <if test="params.useStatus== 0" >
+	       <![CDATA[and  now()<t.end_date]]> and t.use_state=0 and t.is_receive=1
+	      </if>
+	        <if test="params.useStatus== 2" >
+	       <![CDATA[and now() >=t.end_date]]> and t.use_state=0 and t.is_receive=1
+	      </if>	
+	       <if test="params.useStatus== 1" >
+	       	and t.use_state=1 and t.is_receive=1
+	      </if>		     
+      </if>
+       <if test="params.ondue != null and '' != params.ondue" >
+        	<![CDATA[and now() <t.end_date and now()>= t.start_date]]>
+      </if>
+       <if test="params.grantdu != null and '' != params.grantdu" >
+        	<![CDATA[and now() <e.end_date and now()>= e.start_date]]>
+      </if>
+       <if test="params.receiveIds != null and '' != params.receiveIds" >
+	    and t.id in 
+	  	<foreach collection="params.receiveIds" item="item" index="index" open="(" separator="," close=")">#{item}</foreach>
+	  </if>
+	   <if test="params.aredIdStr!= null and '' != params.aredIdStr" >
+	    and t.redpackage_grant_id in 
+	  	<foreach collection="params.aredIdStr" item="item" index="index" open="(" separator="," close=")">#{item}</foreach>
+	  </if>
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from redpackage_receive t 
+    where t.id = #{id,jdbcType=VARCHAR}
+  </select>
+ <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+      <if test="params.packageReceive != null and '' != params.packageReceive" >
+       ,g.name  as "redpackage.name"
+      </if>
+       <if test="params.packageGrant != null and '' != params.packageGrant" >
+       ,e.name as "grant.name"
+      </if>
+    from redpackage_receive t 
+     <if test="params.packageReceive != null and '' != params.packageReceive" >
+       left join redpackage g on g.id=t.redpackage_id
+      </if>
+       <if test="params.packageGrant != null and '' != params.packageGrant" >
+       left join redpackage_grant e on e.id=t.redpackage_grant_id
+      </if>
+    where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from redpackage_receive t  where 1=1
+    <include refid="condition" />
+  </select>
+  
+  <!-- 查询所有可用优惠券 -->
+  <select id="selectSumRedpackage" resultMap="BaseResultMapCount" >
+    select IFNULL(sum(fack_value),0) as 'useRedpackagePrice',IFNULL(sum(order_price),0) as 'useOrderPrice' from redpackage_receive t  where 1=1
+    <include refid="condition" />
+  </select>
+  
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List_package" />
+    from redpackage_receive t 
+    left join redpackage r on r.id=t.redpackage_id 
+    where 1=1
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from redpackage_receive
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.promotion.api.dto.RedpackageReceive" >
+    delete from redpackage_receive
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ffzx.promotion.api.dto.RedpackageReceive" >
+    insert into redpackage_receive (id, redpackage_number, fack_value, 
+      phone, receive_date, start_date, 
+      end_date, use_state, use_date, 
+      receive_mode, redpackage_id, member_id, 
+      is_grant, is_receive, del_flag, 
+      redpackage_grant_id, order_price, create_date
+      )
+    values (#{id,jdbcType=VARCHAR}, #{redpackageNumber,jdbcType=VARCHAR}, #{fackValue,jdbcType=DECIMAL}, 
+      #{phone,jdbcType=VARCHAR}, #{receiveDate,jdbcType=TIMESTAMP}, #{startDate,jdbcType=TIMESTAMP}, 
+      #{endDate,jdbcType=TIMESTAMP}, #{useState,jdbcType=CHAR}, #{useDate,jdbcType=TIMESTAMP}, 
+      #{receiveMode,jdbcType=CHAR}, #{redpackageId,jdbcType=VARCHAR}, #{memberId,jdbcType=VARCHAR}, 
+      #{isGrant,jdbcType=CHAR}, #{isReceive,jdbcType=CHAR}, #{delFlag,jdbcType=CHAR}, 
+      #{redpackageGrantId,jdbcType=VARCHAR}, #{orderPrice,jdbcType=DECIMAL}, #{createDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  
+  <insert id="insertManyValue" parameterType="com.ffzx.promotion.api.dto.RedpackageReceive" >
+    insert into redpackage_receive (id, redpackage_number, fack_value,receive_date, start_date,end_date, use_state,receive_mode,redpackage_id,member_id,is_grant, is_receive, del_flag, 
+      redpackage_grant_id,create_date,phone) values
+      <foreach collection="list" item="item" index="index" separator="," >  
+	 (
+	  #{item.id,jdbcType=VARCHAR}, #{item.redpackageNumber,jdbcType=VARCHAR}, #{item.fackValue,jdbcType=DECIMAL}, 
+      #{item.receiveDate,jdbcType=TIMESTAMP}, #{item.startDate,jdbcType=TIMESTAMP}, 
+      #{item.endDate,jdbcType=TIMESTAMP}, #{item.useState,jdbcType=CHAR},
+      #{item.receiveMode,jdbcType=CHAR}, #{item.redpackageId,jdbcType=VARCHAR}, #{item.memberId,jdbcType=VARCHAR}, 
+      #{item.isGrant,jdbcType=CHAR}, #{item.isReceive,jdbcType=CHAR}, #{item.delFlag,jdbcType=CHAR}, 
+      #{item.redpackageGrantId,jdbcType=VARCHAR},  #{item.createDate,jdbcType=TIMESTAMP},#{item.phone,jdbcType=VARCHAR}
+      )
+    </foreach>        
+ 
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.ffzx.promotion.api.dto.RedpackageReceive" >
+    insert into redpackage_receive
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="redpackageNumber != null" >
+        redpackage_number,
+      </if>
+      <if test="fackValue != null" >
+        fack_value,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="receiveDate != null" >
+        receive_date,
+      </if>
+      <if test="startDate != null" >
+        start_date,
+      </if>
+      <if test="endDate != null" >
+        end_date,
+      </if>
+      <if test="useState != null" >
+        use_state,
+      </if>
+      <if test="useDate != null" >
+        use_date,
+      </if>
+      <if test="receiveMode != null" >
+        receive_mode,
+      </if>
+      <if test="redpackageId != null" >
+        redpackage_id,
+      </if>
+      <if test="memberId != null" >
+        member_id,
+      </if>
+      <if test="isGrant != null" >
+        is_grant,
+      </if>
+      <if test="isReceive != null" >
+        is_receive,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="redpackageGrantId != null" >
+        redpackage_grant_id,
+      </if>
+      <if test="orderPrice != null" >
+        order_price,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+       <if test="isPay != null" >
+        is_pay,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="redpackageNumber != null" >
+        #{redpackageNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="fackValue != null" >
+        #{fackValue,jdbcType=DECIMAL},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveDate != null" >
+        #{receiveDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="startDate != null" >
+        #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="useState != null" >
+        #{useState,jdbcType=CHAR},
+      </if>
+      <if test="useDate != null" >
+        #{useDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="receiveMode != null" >
+        #{receiveMode,jdbcType=CHAR},
+      </if>
+      <if test="redpackageId != null" >
+        #{redpackageId,jdbcType=VARCHAR},
+      </if>
+      <if test="memberId != null" >
+        #{memberId,jdbcType=VARCHAR},
+      </if>
+      <if test="isGrant != null" >
+        #{isGrant,jdbcType=CHAR},
+      </if>
+      <if test="isReceive != null" >
+        #{isReceive,jdbcType=CHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="redpackageGrantId != null" >
+        #{redpackageGrantId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderPrice != null" >
+        #{orderPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      
+      <if test="isPay != null" >
+        #{isPay,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.promotion.api.dto.RedpackageReceive" >
+    update redpackage_receive
+    <set >
+      <if test="redpackageNumber != null" >
+        redpackage_number = #{redpackageNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="fackValue != null" >
+        fack_value = #{fackValue,jdbcType=DECIMAL},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveDate != null" >
+        receive_date = #{receiveDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="startDate != null" >
+        start_date = #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null" >
+        end_date = #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="useState != null" >
+        use_state = #{useState,jdbcType=CHAR},
+      </if>
+      <if test="useDate != null" >
+        use_date = #{useDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="receiveMode != null" >
+        receive_mode = #{receiveMode,jdbcType=CHAR},
+      </if>
+      <if test="redpackageId != null" >
+        redpackage_id = #{redpackageId,jdbcType=VARCHAR},
+      </if>
+      <if test="memberId != null" >
+        member_id = #{memberId,jdbcType=VARCHAR},
+      </if>
+      <if test="isGrant != null" >
+        is_grant = #{isGrant,jdbcType=CHAR},
+      </if>
+      <if test="isReceive != null" >
+        is_receive = #{isReceive,jdbcType=CHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="redpackageGrantId != null" >
+        redpackage_grant_id = #{redpackageGrantId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderPrice != null" >
+        order_price = #{orderPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isPay != null" >
+        is_pay = #{isPay,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.promotion.api.dto.RedpackageReceive" >
+    update redpackage_receive
+    set redpackage_number = #{redpackageNumber,jdbcType=VARCHAR},
+      fack_value = #{fackValue,jdbcType=DECIMAL},
+      phone = #{phone,jdbcType=VARCHAR},
+      receive_date = #{receiveDate,jdbcType=TIMESTAMP},
+      start_date = #{startDate,jdbcType=TIMESTAMP},
+      end_date = #{endDate,jdbcType=TIMESTAMP},
+      use_state = #{useState,jdbcType=CHAR},
+      use_date = #{useDate,jdbcType=TIMESTAMP},
+      receive_mode = #{receiveMode,jdbcType=CHAR},
+      redpackage_id = #{redpackageId,jdbcType=VARCHAR},
+      member_id = #{memberId,jdbcType=VARCHAR},
+      is_grant = #{isGrant,jdbcType=CHAR},
+      is_receive = #{isReceive,jdbcType=CHAR},
+      del_flag = #{delFlag,jdbcType=CHAR},
+      redpackage_grant_id = #{redpackageGrantId,jdbcType=VARCHAR},
+      order_price = #{orderPrice,jdbcType=DECIMAL},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      is_pay = #{isPay,jdbcType=CHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

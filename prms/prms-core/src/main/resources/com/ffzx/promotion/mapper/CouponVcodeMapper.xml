@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ffzx.promotion.mapper.CouponVcodeMapper" >
+  <resultMap id="BaseResultMap" type="com.ffzx.promotion.api.dto.CouponVcode" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="vcode" property="vcode" jdbcType="VARCHAR" />
+    <result column="start" property="start" jdbcType="CHAR" />
+    <result column="coupon_grant_id" property="couponGrantId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    t.id, t.vcode, t.start, t.coupon_grant_id
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null and '' != params.id" >
+        and t.id = #{params.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.vcode != null and '' != params.vcode" >
+        and t.vcode = #{params.vcode,jdbcType=VARCHAR}
+      </if>
+      <if test="params.start != null and '' != params.start" >
+        and t.start = #{params.start,jdbcType=CHAR}
+      </if>
+      <if test="params.couponGrantId != null and '' != params.couponGrantId" >
+        and t.coupon_grant_id = #{params.couponGrantId,jdbcType=VARCHAR}
+      </if>
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from coupon_vcode t 
+    where t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from coupon_vcode t 
+    where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from coupon_vcode t  where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from coupon_vcode t 
+    where 1=1
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from coupon_vcode
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.promotion.api.dto.CouponVcode" >
+    delete from coupon_vcode
+    where 
+      <if test="id != null and '' != id" >
+    	  id = #{id,jdbcType=VARCHAR} 
+    
+      </if>
+      <if test="couponGrantId != null and '' != couponGrantId" >
+         coupon_grant_id = #{couponGrantId,jdbcType=VARCHAR}
+      </if>
+  </delete>
+  
+  <insert id="insert" parameterType="com.ffzx.promotion.api.dto.CouponVcode" >
+    insert into coupon_vcode (id, vcode, start, 
+      coupon_grant_id)
+    values (#{id,jdbcType=VARCHAR}, #{vcode,jdbcType=VARCHAR}, #{start,jdbcType=CHAR}, 
+      #{couponGrantId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.promotion.api.dto.CouponVcode" >
+    insert into coupon_vcode
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="vcode != null" >
+        vcode,
+      </if>
+      <if test="start != null" >
+        start,
+      </if>
+      <if test="couponGrantId != null" >
+        coupon_grant_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="vcode != null" >
+        #{vcode,jdbcType=VARCHAR},
+      </if>
+      <if test="start != null" >
+        #{start,jdbcType=CHAR},
+      </if>
+      <if test="couponGrantId != null" >
+        #{couponGrantId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.promotion.api.dto.CouponVcode" >
+    update coupon_vcode
+    <set >
+      <if test="vcode != null" >
+        vcode = #{vcode,jdbcType=VARCHAR},
+      </if>
+      <if test="start != null" >
+        start = #{start,jdbcType=CHAR},
+      </if>
+      <if test="couponGrantId != null" >
+        coupon_grant_id = #{couponGrantId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.promotion.api.dto.CouponVcode" >
+    update coupon_vcode
+    set vcode = #{vcode,jdbcType=VARCHAR},
+      start = #{start,jdbcType=CHAR},
+      coupon_grant_id = #{couponGrantId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,1 @@
+zhuguojin:主要提供对外接口,包含dto数据传输对象和service接口类,其实现类在core内

@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ffzx.promotion.mapper.CouponAdminMapper" >
+  <resultMap id="BaseResultMap" type="com.ffzx.promotion.api.dto.CouponAdmin" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="number" property="number" jdbcType="VARCHAR" />
+    <result column="face_value" property="faceValue" jdbcType="DECIMAL" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="consumption_limit" property="consumptionLimit" jdbcType="DECIMAL" />
+    <result column="effective_date_state" property="effectiveDateState" jdbcType="CHAR" />
+    <result column="effective_date_start" property="effectiveDateStart" jdbcType="TIMESTAMP" />
+    <result column="effective_date_end" property="effectiveDateEnd" jdbcType="TIMESTAMP" />
+    <result column="coupon_state" property="couponState" jdbcType="CHAR" />
+    <result column="effective_date_num" property="effectiveDateNum" jdbcType="DECIMAL" />
+    <result column="goods_select" property="goodsSelect" jdbcType="CHAR" />
+    <result column="other_limit" property="otherLimit" jdbcType="CHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy.name" jdbcType="VARCHAR" />
+    <result column="last_update_by" property="lastUpdateBy.id" jdbcType="VARCHAR" />
+    <result column="last_update_date" property="lastUpdateDate" jdbcType="TIMESTAMP" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+    <result column="coupon_grant_id" property="couponGrantId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    t.id, t.number, t.face_value, t.name, t.consumption_limit, t.effective_date_state, 
+    t.effective_date_start, t.effective_date_end, t.coupon_state, t.effective_date_num, 
+    t.goods_select, t.other_limit, t.create_date, t.remarks, t.create_by as 'createBy.name', 
+    t.last_update_by as 'lastUpdateBy.id', t.last_update_date, t.del_flag
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null and '' != params.id" >
+        and t.id = #{params.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.number != null and '' != params.number" >
+        and t.number = #{params.number,jdbcType=VARCHAR}
+      </if>
+      <if test="params.faceValue != null" >       
+        <![CDATA[  and t.face_value >= #{params.faceValue,jdbcType=DECIMAL}  ]]>
+      </if>
+       <if test="params.maxFaceValue != null" >
+          <![CDATA[ and t.face_value <= #{params.maxFaceValue,jdbcType=DECIMAL} ]]>
+      </if>
+      <!-- 不过期的时间 -->
+      <if test="params.effectiveDateStr != null and '' != params.effectiveDateStr" >
+        <![CDATA[and (t.effective_date_end >= #{params.effectiveDateStr,jdbcType=TIMESTAMP}
+        or t.effective_date_state='0'
+        )
+        ]]>
+      </if>
+      
+      <if test="params.name != null and '' != params.name" >
+        and t.name like CONCAT('%', #{params.name}, '%')
+      </if>
+      <if test="params.consumptionLimit != null" >
+        and t.consumption_limit = #{params.consumptionLimit,jdbcType=DECIMAL}
+      </if>
+      <if test="params.effectiveDateState != null and '' != params.effectiveDateState" >
+        and t.effective_date_state = #{params.effectiveDateState,jdbcType=CHAR}
+      </if>
+      <if test="params.effectiveDateStart != null" >
+        <![CDATA[and t.effective_date_start >= #{params.effectiveDateStart,jdbcType=TIMESTAMP}]]>
+      </if>
+      <if test="params.effectiveDateEnd != null" >
+        <![CDATA[and t.effective_date_end <= #{params.effectiveDateEnd,jdbcType=TIMESTAMP}]]>
+      </if>
+<!--       <if test="params.couponState != null and '' != params.couponState and params.couponState==0" >
+      				<![CDATA[and t.effective_date_start > #{params.couponStateDate,jdbcType=TIMESTAMP}]]>
+      	</if>
+      	<if test="params.couponState != null and '' != params.couponState and params.couponState==1" >
+      				<![CDATA[and t.effective_date_start < #{params.couponStateDate,jdbcType=TIMESTAMP}]]>
+      				<![CDATA[and t.effective_date_end >#{params.couponStateDate,jdbcType=TIMESTAMP}]]>
+      	</if>
+      	<if test="params.couponState != null and '' != params.couponState and params.couponState==2">
+      				<![CDATA[and t.effective_date_end <#{params.couponStateDate,jdbcType=TIMESTAMP}]]>
+      	</if> -->
+      <if test="params.createDateStart!= null and '' != params.createDateStart" >
+        	<![CDATA[and t.create_date >= #{params.createDateStart,jdbcType=TIMESTAMP}]]>
+      </if>
+         <if test="params.createDateEnd!= null and '' != params.createDateEnd" >
+        	<![CDATA[and t.create_date <= #{params.createDateEnd,jdbcType=TIMESTAMP}]]>
+      </if>
+      <if test="params.effectiveDateNum != null" >
+        and t.effective_date_num = #{params.effectiveDateNum,jdbcType=DECIMAL}
+      </if>
+      <if test="params.goodsSelect != null and '' != params.goodsSelect" >
+        and t.goods_select = #{params.goodsSelect,jdbcType=CHAR}
+      </if>
+      <if test="params.otherLimit != null and '' != params.otherLimit" >
+        and t.other_limit = #{params.otherLimit,jdbcType=CHAR}
+      </if>
+      <if test="params.createDate != null" >
+        and t.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.remarks != null and '' != params.remarks" >
+        and t.remarks = #{params.remarks,jdbcType=VARCHAR}
+      </if>
+      <if test="params.createBy != null and '' != params.createBy" >
+        and t.create_by = #{params.createBy.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.lastUpdateBy != null and '' != params.lastUpdateBy" >
+        and t.last_update_by = #{params.lastUpdateBy.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.lastUpdateDate != null" >
+        and t.last_update_date = #{params.lastUpdateDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.delFlag != null and '' != params.delFlag" >
+        and t.del_flag = #{params.delFlag,jdbcType=CHAR}
+      </if>
+      <if test="params.listid !=null">
+      and t.id in
+      
+		<foreach item="item" collection="params.listid" separator="," open="(" close=")">
+			#{item}
+		</foreach> 
+      
+      </if>
+      <!-- 优惠券编码模糊查询 -->
+      <if test="params.couponNumber != null and '' != params.couponNumber" >
+        and t.number like '%${params.couponNumber}%'
+      </if>
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from coupon_admin t 
+    where t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from coupon_admin t 
+    where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from coupon_admin t  where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from coupon_admin t 
+    where 1=1
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from coupon_admin
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.promotion.api.dto.CouponAdmin" >
+    delete from coupon_admin
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ffzx.promotion.api.dto.CouponAdmin" >
+    insert into coupon_admin (id, number, face_value, 
+      name, consumption_limit, effective_date_state, 
+      effective_date_start, effective_date_end, 
+      coupon_state, effective_date_num, goods_select, 
+      other_limit, create_date, remarks, 
+      create_by, last_update_by, last_update_date, 
+      del_flag)
+    values (#{id,jdbcType=VARCHAR}, #{number,jdbcType=VARCHAR}, #{faceValue,jdbcType=DECIMAL}, 
+      #{name,jdbcType=VARCHAR}, #{consumptionLimit,jdbcType=DECIMAL}, #{effectiveDateState,jdbcType=CHAR}, 
+      #{effectiveDateStart,jdbcType=TIMESTAMP}, #{effectiveDateEnd,jdbcType=TIMESTAMP}, 
+      #{couponState,jdbcType=CHAR}, #{effectiveDateNum,jdbcType=DECIMAL}, #{goodsSelect,jdbcType=CHAR}, 
+      #{otherLimit,jdbcType=CHAR}, #{createDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, 
+      #{createBy.name,jdbcType=VARCHAR}, #{lastUpdateBy.id,jdbcType=VARCHAR}, #{lastUpdateDate,jdbcType=TIMESTAMP}, 
+      #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.promotion.api.dto.CouponAdmin" >
+    insert into coupon_admin
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="number != null" >
+        number,
+      </if>
+      <if test="faceValue != null" >
+        face_value,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="consumptionLimit != null" >
+        consumption_limit,
+      </if>
+      <if test="effectiveDateState != null" >
+        effective_date_state,
+      </if>
+      <if test="effectiveDateStart != null" >
+        effective_date_start,
+      </if>
+      <if test="effectiveDateEnd != null" >
+        effective_date_end,
+      </if>
+      <if test="couponState != null" >
+        coupon_state,
+      </if>
+      <if test="effectiveDateNum != null" >
+        effective_date_num,
+      </if>
+      <if test="goodsSelect != null" >
+        goods_select,
+      </if>
+      <if test="otherLimit != null" >
+        other_limit,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by,
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null" >
+        #{number,jdbcType=VARCHAR},
+      </if>
+      <if test="faceValue != null" >
+        #{faceValue,jdbcType=DECIMAL},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="consumptionLimit != null" >
+        #{consumptionLimit,jdbcType=DECIMAL},
+      </if>
+      <if test="effectiveDateState != null" >
+        #{effectiveDateState,jdbcType=CHAR},
+      </if>
+      <if test="effectiveDateStart != null" >
+        #{effectiveDateStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="effectiveDateEnd != null" >
+        #{effectiveDateEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="couponState != null" >
+        #{couponState,jdbcType=CHAR},
+      </if>
+      <if test="effectiveDateNum != null" >
+        #{effectiveDateNum,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsSelect != null" >
+        #{goodsSelect,jdbcType=CHAR},
+      </if>
+      <if test="otherLimit != null" >
+        #{otherLimit,jdbcType=CHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy.name,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateBy != null" >
+        #{lastUpdateBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.promotion.api.dto.CouponAdmin" >
+    update coupon_admin
+    <set >
+      <if test="number != null" >
+        number = #{number,jdbcType=VARCHAR},
+      </if>
+      <if test="faceValue != null" >
+        face_value = #{faceValue,jdbcType=DECIMAL},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="consumptionLimit != null" >
+        consumption_limit = #{consumptionLimit,jdbcType=DECIMAL},
+      </if>
+      <if test="effectiveDateState != null" >
+        effective_date_state = #{effectiveDateState,jdbcType=CHAR},
+        <if test="effectiveDateState == 0" ><!-- 自定义有效期 -->
+	        effective_date_end = #{effectiveDateEnd,jdbcType=TIMESTAMP},
+	        effective_date_start = #{effectiveDateStart,jdbcType=TIMESTAMP},
+      	</if>
+        <if test="effectiveDateState == 1" ><!-- 指定有效期 -->
+        	effective_date_num = #{effectiveDateNum,jdbcType=DECIMAL},
+      	</if>
+      </if>
+      <if test="effectiveDateStart != null" >
+        effective_date_start = #{effectiveDateStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="effectiveDateEnd != null" >
+        effective_date_end = #{effectiveDateEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="couponState != null" >
+        coupon_state = #{couponState,jdbcType=CHAR},
+      </if>
+      <if test="effectiveDateNum != null" >
+        effective_date_num = #{effectiveDateNum,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsSelect != null" >
+        goods_select = #{goodsSelect,jdbcType=CHAR},
+      </if>
+      <if test="otherLimit != null" >
+        other_limit = #{otherLimit,jdbcType=CHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy.name,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.promotion.api.dto.CouponAdmin" >
+    update coupon_admin
+    set number = #{number,jdbcType=VARCHAR},
+      face_value = #{faceValue,jdbcType=DECIMAL},
+      name = #{name,jdbcType=VARCHAR},
+      consumption_limit = #{consumptionLimit,jdbcType=DECIMAL},
+      effective_date_state = #{effectiveDateState,jdbcType=CHAR},
+      effective_date_start = #{effectiveDateStart,jdbcType=TIMESTAMP},
+      effective_date_end = #{effectiveDateEnd,jdbcType=TIMESTAMP},
+      coupon_state = #{couponState,jdbcType=CHAR},
+      effective_date_num = #{effectiveDateNum,jdbcType=DECIMAL},
+      goods_select = #{goodsSelect,jdbcType=CHAR},
+      other_limit = #{otherLimit,jdbcType=CHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      create_by = #{createBy.name,jdbcType=VARCHAR},
+      last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+      last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="findCouponAdmin" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from coupon_admin t 
+    where 1=1
+    <if test="params.couponName != null and '' != params.couponName" >
+       and t.name like CONCAT('%', #{params.couponName}, '%')
+    </if>
+    <if test="params.noidList!=null">
+     and t.id  not in 
+		<foreach item="item" collection="params.noidList" separator="," open="(" close=")">
+			#{item}
+		</foreach> 
+    </if>
+    <if test="params.idList!=null">
+     and t.id  in 
+		<foreach item="item" collection="params.idList" separator="," open="(" close=")">
+			#{item}
+		</foreach> 
+    </if>
+    <if test="params.date != null" >
+        <![CDATA[and (t.effective_date_end >= #{params.date,jdbcType=TIMESTAMP}]]> or t.effective_date_state = 0)
+    </if>
+      <if test="params.number != null and '' != params.number" >
+        and t.number = #{params.number,jdbcType=VARCHAR}
+      </if>
+    and t.del_flag = '1' 
+    <if test="orderByField != null and ''!=orderByField" >
+      order by t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  
+  <!--  -->
+  <select id="findCouponAdminByGrantNumber" resultMap="BaseResultMap" parameterType="map" >
+  	select 
+    <include refid="Base_Column_List" />
+    , g.id as coupon_grant_id
+    from coupon_admin t 
+    left join coupon_admin_coupon_grant ag on ag.coupon_admin_id = t.id  
+    left join coupon_grant g on g.id = ag.coupon_grant_id 
+    where 1=1 
+    <if test="params.number != null and '' != params.number">
+    	and g.number = #{params.number,jdbcType=VARCHAR}
+    </if>
+  </select>
+</mapper>

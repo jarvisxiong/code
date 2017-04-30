@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ffzx.promotion.mapper.UserLableMapper" >
+  <resultMap id="BaseResultMap" type="com.ffzx.promotion.api.dto.UserLable" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="lable_id" property="lableId" jdbcType="VARCHAR" />
+    <result column="redpackage_grant_id" property="redpackageGrantId" jdbcType="VARCHAR" />
+    <result column="coupon_grant_id" property="couponGrantId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    t.id, t.lable_id, t.redpackage_grant_id, t.coupon_grant_id
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null and '' != params.id" >
+        and t.id = #{params.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.lableId != null and '' != params.lableId" >
+        and t.lable_id = #{params.lableId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.redpackageGrantId != null and '' != params.redpackageGrantId" >
+        and t.redpackage_grant_id = #{params.redpackageGrantId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.couponGrantId != null and '' != params.couponGrantId" >
+        and t.coupon_grant_id = #{params.couponGrantId,jdbcType=VARCHAR}
+      </if>
+       <if test="params.aredIdStr != null and '' != params.aredIdStr" >
+        and t.redpackage_grant_id in 
+        <foreach collection="params.aredIdStr" item="item" index="index" open="(" separator="," close=")">#{item}</foreach>
+      </if>
+      <if test="params.couponIdStr != null and '' != params.couponIdStr" >
+        and t.coupon_grant_id in 
+        <foreach collection="params.couponIdStr" item="item" index="index" open="(" separator="," close=")">#{item}</foreach>
+      </if>
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_lable t 
+    where t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_lable t 
+    where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByParamStrings" resultType="java.lang.String" parameterType="map" >
+    select 
+    t.lable_id
+    from user_lable t 
+    where 1=1
+    <include refid="condition" />
+  </select>
+  
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from user_lable t  where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_lable t 
+    where 1=1
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from user_lable
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.promotion.api.dto.UserLable" >
+    delete from user_lable
+    where 
+    <if test="redpackageGrantId != null" >
+     redpackage_grant_id = #{redpackageGrantId,jdbcType=VARCHAR}
+    </if>
+    <if test="couponGrantId != null" >
+      coupon_grant_id = #{couponGrantId,jdbcType=VARCHAR}
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ffzx.promotion.api.dto.UserLable" >
+    insert into user_lable (id, lable_id, redpackage_grant_id, 
+      coupon_grant_id)
+    values (#{id,jdbcType=VARCHAR}, #{lableId,jdbcType=VARCHAR}, #{redpackageGrantId,jdbcType=VARCHAR}, 
+      #{couponGrantId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.promotion.api.dto.UserLable" >
+    insert into user_lable
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="lableId != null" >
+        lable_id,
+      </if>
+      <if test="redpackageGrantId != null" >
+        redpackage_grant_id,
+      </if>
+      <if test="couponGrantId != null" >
+        coupon_grant_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="lableId != null" >
+        #{lableId,jdbcType=VARCHAR},
+      </if>
+      <if test="redpackageGrantId != null" >
+        #{redpackageGrantId,jdbcType=VARCHAR},
+      </if>
+      <if test="couponGrantId != null" >
+        #{couponGrantId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.promotion.api.dto.UserLable" >
+    update user_lable
+    <set >
+      <if test="lableId != null" >
+        lable_id = #{lableId,jdbcType=VARCHAR},
+      </if>
+      <if test="redpackageGrantId != null" >
+        redpackage_grant_id = #{redpackageGrantId,jdbcType=VARCHAR},
+      </if>
+      <if test="couponGrantId != null" >
+        coupon_grant_id = #{couponGrantId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.promotion.api.dto.UserLable" >
+    update user_lable
+    set lable_id = #{lableId,jdbcType=VARCHAR},
+      redpackage_grant_id = #{redpackageGrantId,jdbcType=VARCHAR},
+      coupon_grant_id = #{couponGrantId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

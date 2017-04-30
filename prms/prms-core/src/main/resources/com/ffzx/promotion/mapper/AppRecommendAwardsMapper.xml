@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ffzx.promotion.mapper.AppRecommendAwardsMapper">
+  <sql id="Base_Column_List" >
+		t.id, 
+		t.remarks AS "remarks",
+		t.create_by AS "createBy.id",
+		t.create_date AS "createDate",
+		t.last_update_by AS "lastUpdateBy.id",
+		t.last_update_date AS "lastUpdateDate",
+		t.del_flag AS "delFlag",
+		t.recommend_status AS "recommendStatus",
+		t.recommend_title AS "recommendTitle",
+		t.page_x_value AS "pageXValue",
+		t.page_rule AS "pageRule",
+		t.page_y_value AS "pageYValue",
+		t.share_title AS "shareTitle",
+		t.share_description AS "shareDescription",
+		t.shareafter_title AS "shareafterTitle",
+		t.shareafter_x_value AS "shareafterXValue",
+		t.shareafter_rule AS "shareafterRule",
+		t.newuser_grantcode AS "newuserGrantcode",
+		t.olduser_grantcode AS "olduserGrantcode"
+
+  </sql>  
+  <sql id="joins">
+
+  </sql> 
+  <sql id="condition" >
+	<if test="null!=params" >
+		<if test="params.id != null and '' != params.id">
+			and t.id = #{params.id,jdbcType=VARCHAR}
+		</if>
+		<if test="params.remarks != null and '' != params.remarks">
+			and t.remarks = #{params.remarks,jdbcType=VARCHAR}
+		</if>
+		<if test="params.createBy != null and '' != params.createBy">
+			and t.create_by = #{params.createBy.id,jdbcType=VARCHAR}
+		</if>
+		<if test="params.createDate != null and '' != params.createDate">
+			and t.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+		</if>
+		<if test="params.lastUpdateBy != null and '' != params.lastUpdateBy">
+			and t.last_update_by = #{params.lastUpdateBy.id,jdbcType=VARCHAR}
+		</if>
+		<if test="params.lastUpdateDate != null and '' != params.lastUpdateDate">
+			and t.last_update_date = #{params.lastUpdateDate,jdbcType=TIMESTAMP}
+		</if>
+		<if test="params.delFlag != null and '' != params.delFlag">
+			and t.del_flag = #{params.delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="params.recommendStatus != null and '' != params.recommendStatus">
+			and t.recommend_status = #{params.recommendStatus,jdbcType=VARCHAR}
+		</if>
+		<if test="params.recommendTitle != null and '' != params.recommendTitle">
+			and t.recommend_title = #{params.recommendTitle,jdbcType=VARCHAR}
+		</if>
+		<if test="params.pageXValue != null and '' != params.pageXValue">
+			and t.page_x_value = #{params.pageXValue,jdbcType=VARCHAR}
+		</if>
+		<if test="params.pageRule != null and '' != params.pageRule">
+			and t.page_rule = #{params.pageRule,jdbcType=VARCHAR}
+		</if>
+		<if test="params.pageYValue != null and '' != params.pageYValue">
+			and t.page_y_value = #{params.pageYValue,jdbcType=VARCHAR}
+		</if>
+		<if test="params.shareTitle != null and '' != params.shareTitle">
+			and t.share_title = #{params.shareTitle,jdbcType=VARCHAR}
+		</if>
+		<if test="params.shareDescription != null and '' != params.shareDescription">
+			and t.share_description = #{params.shareDescription,jdbcType=VARCHAR}
+		</if>
+		<if test="params.shareafterTitle != null and '' != params.shareafterTitle">
+			and t.shareafter_title = #{params.shareafterTitle,jdbcType=VARCHAR}
+		</if>
+		<if test="params.shareafterXValue != null and '' != params.shareafterXValue">
+			and t.shareafter_x_value = #{params.shareafterXValue,jdbcType=VARCHAR}
+		</if>
+		<if test="params.shareafterRule != null and '' != params.shareafterRule">
+			and t.shareafter_rule = #{params.shareafterRule,jdbcType=VARCHAR}
+		</if>
+		<if test="params.newuserGrantcode != null and '' != params.newuserGrantcode">
+			and t.newuser_grantcode = #{params.newuserGrantcode,jdbcType=VARCHAR}
+		</if>
+		<if test="params.olduserGrantcode != null and '' != params.olduserGrantcode">
+			and t.olduser_grantcode = #{params.olduserGrantcode,jdbcType=VARCHAR}
+		</if>
+		<if test="params.delFlag == null or '' == params.delFlag or null == params" >
+			and t.del_flag = 0
+		</if>
+	</if>
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultType="com.ffzx.promotion.api.dto.AppRecommendAwards" parameterType="java.lang.String" >
+   	select 
+    <include refid="Base_Column_List" />
+    from app_recommendawards as t 
+    <include refid="joins"/>
+    where  t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParams" resultType="com.ffzx.promotion.api.dto.AppRecommendAwards" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from app_recommendawards as  t 
+    <include refid="joins"/>
+    where 1=1 
+    <include refid="condition"/>
+  </select>
+  
+  <select id="selectCount" resultType="java.lang.Integer" >
+   select count(1) as s from app_recommendawards as  t where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultType="com.ffzx.promotion.api.dto.AppRecommendAwards" parameterType="map" >
+   select 
+    <include refid="Base_Column_List" />
+    from app_recommendawards as  t    
+    <include refid="joins"/>
+    where 1=1      
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by  t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    	DELETE FROM app_recommendawards WHERE id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.promotion.api.dto.AppRecommendAwards" >
+    	DELETE FROM app_recommendawards WHERE id = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.ffzx.promotion.api.dto.AppRecommendAwards" >
+   	INSERT INTO app_recommendawards
+		(
+			id,
+			remarks,
+			create_by,
+			create_date,
+			last_update_by,
+			last_update_date,
+			del_flag,
+			recommend_status,
+			recommend_title,
+			page_x_value,
+			page_rule,
+			page_y_value,
+			share_title,
+			share_description,
+			shareafter_title,
+			shareafter_x_value,
+			shareafter_rule,
+			newuser_grantcode,
+			olduser_grantcode
+		) VALUES
+		(
+			#{id,jdbcType=VARCHAR},
+			#{remarks,jdbcType=VARCHAR},
+			#{createBy.id,jdbcType=VARCHAR},
+			#{createDate,jdbcType=TIMESTAMP},
+			#{lastUpdateBy.id,jdbcType=VARCHAR},
+			#{lastUpdateDate,jdbcType=TIMESTAMP},
+			#{delFlag,jdbcType=VARCHAR},
+			#{recommendStatus,jdbcType=VARCHAR},
+			#{recommendTitle,jdbcType=VARCHAR},
+			#{pageXValue,jdbcType=VARCHAR},
+			#{pageRule,jdbcType=VARCHAR},
+			#{pageYValue,jdbcType=VARCHAR},
+			#{shareTitle,jdbcType=VARCHAR},
+			#{shareDescription,jdbcType=VARCHAR},
+			#{shareafterTitle,jdbcType=VARCHAR},
+			#{shareafterXValue,jdbcType=VARCHAR},
+			#{shareafterRule,jdbcType=VARCHAR},
+			#{newuserGrantcode,jdbcType=VARCHAR},
+			#{olduserGrantcode,jdbcType=VARCHAR}
+		)
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.promotion.api.dto.AppRecommendAwards" >
+   	INSERT INTO app_recommendawards 
+	<trim prefix="(" suffix=")" suffixOverrides="," >
+		<if test="id != null">id,</if>
+		<if test="remarks != null" >remarks,</if>
+		<if test="createBy != null" >create_by,</if>
+		<if test="createDate != null" >create_date,</if>
+		<if test="lastUpdateBy != null" >last_update_by,</if>
+		<if test="lastUpdateDate != null" >last_update_date,</if>
+		<if test="delFlag != null" >del_flag,</if>
+		<if test="recommendStatus != null" >recommend_status,</if>
+		<if test="recommendTitle != null" >recommend_title,</if>
+		<if test="pageXValue != null" >page_x_value,</if>
+		<if test="pageRule != null" >page_rule,</if>
+		<if test="pageYValue != null" >page_y_value,</if>
+		<if test="shareTitle != null" >share_title,</if>
+		<if test="shareDescription != null" >share_description,</if>
+		<if test="shareafterTitle != null" >shareafter_title,</if>
+		<if test="shareafterXValue != null" >shareafter_x_value,</if>
+		<if test="shareafterRule != null" >shareafter_rule,</if>
+		<if test="newuserGrantcode != null" >newuser_grantcode,</if>
+		<if test="olduserGrantcode != null" >olduser_grantcode,</if>
+	</trim>
+	<trim prefix="values (" suffix=")" suffixOverrides="," >
+		<if test="id != null">#{id,jdbcType=VARCHAR},</if>
+		<if test="remarks != null" >#{remarks,jdbcType=VARCHAR},</if>
+		<if test="createBy != null" >#{createBy.id,jdbcType=VARCHAR},</if>
+		<if test="createDate != null" >#{createDate,jdbcType=TIMESTAMP},</if>
+		<if test="lastUpdateBy != null" >#{lastUpdateBy.id,jdbcType=VARCHAR},</if>
+		<if test="lastUpdateDate != null" >#{lastUpdateDate,jdbcType=TIMESTAMP},</if>
+		<if test="delFlag != null" >#{delFlag,jdbcType=VARCHAR},</if>
+		<if test="recommendStatus != null" >#{recommendStatus,jdbcType=VARCHAR},</if>
+		<if test="recommendTitle != null" >#{recommendTitle,jdbcType=VARCHAR},</if>
+		<if test="pageXValue != null" >#{pageXValue,jdbcType=VARCHAR},</if>
+		<if test="pageRule != null" >#{pageRule,jdbcType=VARCHAR},</if>
+		<if test="pageYValue != null" >#{pageYValue,jdbcType=VARCHAR},</if>
+		<if test="shareTitle != null" >#{shareTitle,jdbcType=VARCHAR},</if>
+		<if test="shareDescription != null" >#{shareDescription,jdbcType=VARCHAR},</if>
+		<if test="shareafterTitle != null" >#{shareafterTitle,jdbcType=VARCHAR},</if>
+		<if test="shareafterXValue != null" >#{shareafterXValue,jdbcType=VARCHAR},</if>
+		<if test="shareafterRule != null" >#{shareafterRule,jdbcType=VARCHAR},</if>
+		<if test="newuserGrantcode != null" >#{newuserGrantcode,jdbcType=VARCHAR},</if>
+		<if test="olduserGrantcode != null" >#{olduserGrantcode,jdbcType=VARCHAR},</if>
+	</trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.promotion.api.dto.AppRecommendAwards" >
+   	UPDATE app_recommendawards
+	<set>
+		<if test="remarks != null" >
+			remarks = #{remarks,jdbcType=VARCHAR},
+		</if>
+		<if test="createBy != null" >
+			create_by = #{createBy.id,jdbcType=VARCHAR},
+		</if>
+		<if test="createDate != null" >
+			create_date = #{createDate,jdbcType=TIMESTAMP},
+		</if>
+		<if test="lastUpdateBy != null" >
+			last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+		</if>
+		<if test="lastUpdateDate != null" >
+			last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+		</if>
+		<if test="delFlag != null" >
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="recommendStatus != null" >
+			recommend_status = #{recommendStatus,jdbcType=VARCHAR},
+		</if>
+		<if test="recommendTitle != null" >
+			recommend_title = #{recommendTitle,jdbcType=VARCHAR},
+		</if>
+		<if test="pageXValue != null" >
+			page_x_value = #{pageXValue,jdbcType=VARCHAR},
+		</if>
+		<if test="pageRule != null" >
+			page_rule = #{pageRule,jdbcType=VARCHAR},
+		</if>
+		<if test="pageYValue != null" >
+			page_y_value = #{pageYValue,jdbcType=VARCHAR},
+		</if>
+		<if test="shareTitle != null" >
+			share_title = #{shareTitle,jdbcType=VARCHAR},
+		</if>
+		<if test="shareDescription != null" >
+			share_description = #{shareDescription,jdbcType=VARCHAR},
+		</if>
+		<if test="shareafterTitle != null" >
+			shareafter_title = #{shareafterTitle,jdbcType=VARCHAR},
+		</if>
+		<if test="shareafterXValue != null" >
+			shareafter_x_value = #{shareafterXValue,jdbcType=VARCHAR},
+		</if>
+		<if test="shareafterRule != null" >
+			shareafter_rule = #{shareafterRule,jdbcType=VARCHAR},
+		</if>
+		<if test="newuserGrantcode != null" >
+			newuser_grantcode = #{newuserGrantcode,jdbcType=VARCHAR},
+		</if>
+		<if test="olduserGrantcode != null" >
+			olduser_grantcode = #{olduserGrantcode,jdbcType=VARCHAR},
+		</if>
+	</set>
+	where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.promotion.api.dto.AppRecommendAwards" >
+   	UPDATE app_recommendawards
+		<set>
+			remarks = #{remarks,jdbcType=VARCHAR},
+			create_by = #{createBy.id,jdbcType=VARCHAR},
+			create_date = #{createDate,jdbcType=TIMESTAMP},
+			last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+			last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+			recommend_status = #{recommendStatus,jdbcType=VARCHAR},
+			recommend_title = #{recommendTitle,jdbcType=VARCHAR},
+			page_x_value = #{pageXValue,jdbcType=VARCHAR},
+			page_rule = #{pageRule,jdbcType=VARCHAR},
+			page_y_value = #{pageYValue,jdbcType=VARCHAR},
+			share_title = #{shareTitle,jdbcType=VARCHAR},
+			share_description = #{shareDescription,jdbcType=VARCHAR},
+			shareafter_title = #{shareafterTitle,jdbcType=VARCHAR},
+			shareafter_x_value = #{shareafterXValue,jdbcType=VARCHAR},
+			shareafter_rule = #{shareafterRule,jdbcType=VARCHAR},
+			newuser_grantcode = #{newuserGrantcode,jdbcType=VARCHAR},
+			olduser_grantcode = #{olduserGrantcode,jdbcType=VARCHAR}
+		</set>
+		WHERE id = #{id,jdbcType=VARCHAR} 
+  </update>
+</mapper>

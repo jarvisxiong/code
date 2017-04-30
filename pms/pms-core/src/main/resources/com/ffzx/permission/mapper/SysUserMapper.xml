@@ -1,0 +1,582 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ffzx.permission.mapper.SysUserMapper" >  
+  <sql id="Base_Column_List" >
+    u.id,
+    u.login_name as "loginName", 
+    u.password, 
+    u.company_id as "company.id", 
+    company.name as "company.name", 
+    company.parent_ids as "company.parentIds",
+    u.office_id as "office.id", 
+    office.name as "office.name", 
+    office.parent_ids as "office.parentIds",
+    u.work_no as "workNo", 
+    u.name, 
+    u.email, 
+    u.phone, 
+    u.mobile, 
+    u.user_type as "userType", 
+    u.login_flag as "loginFlag",
+    u.all_office_flag as "allOfficeFlag",
+    u.all_warehouse_flag as "allWarehouseFlag",
+    u.all_address_flag as "allAddressFlag", 
+    u.remarks, 
+    u.create_by as "createBy.id", 
+    u.create_date as "createDate", 
+    u.last_update_by as "lastUpdateBy.id", 
+    u.last_update_date as "lastUpdateDate", 
+    u.del_flag as "delFlag",
+    u.vendor_id as "vendorId",
+    u.vendor_code as "vendorCode"
+  </sql>  
+  <sql id="joins">
+       LEFT JOIN `base_data_db`.office company ON company.id = u.company_id
+       LEFT JOIN `base_data_db`.office office ON office.id = u.office_id
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null and '' != params.id" >
+        and u.id = #{params.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.loginName != null and '' != params.loginName" >
+        and u.login_name = #{params.loginName,jdbcType=VARCHAR}
+      </if>
+      <if test="params.password != null and '' != params.password" >
+        and u.password = #{params.password,jdbcType=VARCHAR}
+      </if>
+      <if test="params.companyId != null and '' != params.companyId" >
+        and u.company_id = #{params.companyId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.officeId != null and '' != params.officeId" >
+        and u.office_id = #{params.officeId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.workNo != null and '' != params.workNo" >
+        and u.work_no = #{params.workNo,jdbcType=VARCHAR}
+      </if>
+      <if test="params.name != null and '' != params.name" >
+        and u.name = #{params.name,jdbcType=VARCHAR}
+      </if>
+      <if test="params.email != null and '' != params.email" >
+        and u.email = #{params.email,jdbcType=VARCHAR}
+      </if>
+      <if test="params.phone != null and '' != params.phone" >
+        and u.phone = #{params.phone,jdbcType=VARCHAR}
+      </if>
+      <if test="params.mobile != null and '' != params.mobile" >
+        and u.mobile = #{params.mobile,jdbcType=VARCHAR}
+      </if>
+      <if test="params.userType != null and '' != params.userType" >
+        and u.user_type = #{params.userType,jdbcType=VARCHAR}
+      </if>
+      <if test="params.loginFlag != null and '' != params.loginFlag" >
+        and u.login_flag = #{params.loginFlag,jdbcType=VARCHAR}
+      </if>
+      <if test="params.allOfficeFlag != null and '' != params.allOfficeFlag" >
+        and u.all_office_flag = #{params.allOfficeFlag,jdbcType=VARCHAR}
+      </if>
+      <if test="params.allWarehouseFlag != null and '' != params.allWarehouseFlag" >
+        and u.all_warehouse_flag = #{params.allWarehouseFlag,jdbcType=VARCHAR}
+      </if>
+      <if test="params.allAddressFlag != null and '' != params.allAddressFlag" >
+        and u.all_address_flag = #{params.allAddressFlag,jdbcType=VARCHAR}
+      </if>
+      <if test="params.remarks != null and '' != params.remarks" >
+        and u.remarks = #{params.remarks,jdbcType=VARCHAR}
+      </if>
+      <if test="params.createBy != null and '' != params.createBy" >
+        and u.create_by = #{params.createBy,jdbcType=VARCHAR}
+      </if>
+      <if test="params.createDate != null" >
+        and u.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.lastUpdateBy != null and '' != params.lastUpdateBy" >
+        and u.last_update_by = #{params.lastUpdateBy,jdbcType=VARCHAR}
+      </if>
+      <if test="params.lastUpdateDate != null" >
+        and u.last_update_date = #{params.lastUpdateDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.delFlag != null" >
+        and u.del_flag = #{params.delFlag,jdbcType=INTEGER}
+      </if>
+      <if test="params.delFlag == null or '' == params.delFlag or null == params" >
+        and u.del_flag = 0
+      </if>
+      <if test="params.vendorId != null and '' != params.vendorId" >
+        and u.vendor_id = #{params.vendorId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.vendorCode != null and '' != params.vendorCode" >
+        and u.vendor_code = #{params.vendorCode,jdbcType=VARCHAR}
+      </if>
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultType="com.ffzx.commerce.framework.system.entity.SysUser" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user as u 
+    <include refid="joins"/>
+    where u.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParams" resultType="com.ffzx.commerce.framework.system.entity.SysUser" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user as u 
+    <include refid="joins"/>
+    where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from sys_user as u where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultType="com.ffzx.commerce.framework.system.entity.SysUser" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user as u    
+    <include refid="joins"/>
+    where 1=1
+      <if test="params.loginFlag != null and '' != params.loginFlag" >
+        and u.login_flag = #{params.loginFlag,jdbcType=VARCHAR}
+      </if>
+      <if test="params.delFlag != null" >
+        and u.del_flag = #{params.delFlag,jdbcType=INTEGER}
+      </if>
+      <if test="params.userType != null and '' != params.userType" >
+        and u.user_type = #{params.userType,jdbcType=VARCHAR}
+      </if>
+      <if test="params.workNo !=null and '' != params.workNo">
+      	and u.work_no = #{params.workNo,jdbcType=VARCHAR}
+      </if>
+      <if test="params.companyId != null and '' != params.companyId" >
+        AND (company.id = #{params.companyId} OR company.parent_ids LIKE  CONCAT('%,', #{params.companyId}, ',%'))
+      </if>
+      <if test="params.officeId != null and '' != params.officeId" >
+        AND (office.id = #{params.officeId} OR office.parent_ids LIKE  CONCAT('%,', #{params.officeId}, ',%'))
+      </if>
+      <if test="params.loginName != null and '' != params.loginName" >
+        and u.login_name  LIKE  CONCAT('%', #{params.loginName}, '%')
+      </if>
+      <if test="params.loginName_ != null and '' != params.loginName_" >
+        and u.login_name = #{params.loginName_}
+      </if>
+      <if test="params.name != null and '' != params.name" >
+        and u.name LIKE  CONCAT('%', #{params.name}, '%')
+      </if>
+      <if test="params.delFlag == null or '' == params.delFlag or null == params" >
+        and u.del_flag = 0
+      </if>
+    <if test="orderByField != null and ''!=orderByField" >
+      order by u.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from sys_user
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.commerce.framework.system.entity.SysUser" >
+    delete from sys_user
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ffzx.commerce.framework.system.entity.SysUser" >
+    insert into sys_user (id, login_name, password, 
+      company_id, office_id, work_no, 
+      name, email, phone, 
+      mobile, user_type, 
+      login_flag, 
+      all_office_flag,
+      all_warehouse_flag,
+      all_address_flag,
+      remarks, create_by, 
+      create_date, last_update_by, last_update_date, 
+      del_flag, vendor_id, vendor_code)
+    values (#{id,jdbcType=VARCHAR}, #{loginName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{company.id,jdbcType=VARCHAR}, #{office.id,jdbcType=VARCHAR}, #{workNo,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{mobile,jdbcType=VARCHAR}, #{userType,jdbcType=VARCHAR},  
+      #{loginFlag,jdbcType=VARCHAR}, #{allOfficeFlag,jdbcType=VARCHAR},#{allWarehouseFlag,jdbcType=VARCHAR},#{allAddressFlag,jdbcType=VARCHAR},
+      #{remarks,jdbcType=VARCHAR}, #{createBy.id,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{lastUpdateBy.id,jdbcType=VARCHAR}, #{lastUpdateDate,jdbcType=TIMESTAMP}, 
+      #{delFlag,jdbcType=INTEGER}, #{vendorId,jdbcType=VARCHAR}, #{vendorCode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.commerce.framework.system.entity.SysUser" >
+    insert into sys_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="loginName != null" >
+        login_name,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="company != null" >
+        company_id,
+      </if>
+      <if test="office != null" >
+        office_id,
+      </if>
+      <if test="workNo != null" >
+        work_no,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="userType != null" >
+        user_type,
+      </if>
+      <if test="loginFlag != null" >
+        login_flag,
+      </if>
+      <if test="allOfficeFlag != null" >
+        all_office_flag,
+      </if>
+      <if test="allWarehouseFlag != null" >
+        all_warehouse_flag,
+      </if>
+      <if test="allAddressFlag != null" >
+        all_address_flag,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by,
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="vendorId != null" >
+        vendor_id,
+      </if>
+      <if test="vendorCode != null" >
+        vendor_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="loginName != null" >
+        #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null" >
+        #{company.id,jdbcType=VARCHAR},
+      </if>
+      <if test="office != null" >
+        #{office.id,jdbcType=VARCHAR},
+      </if>
+      <if test="workNo != null" >
+        #{workNo,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="loginFlag != null" >
+        #{loginFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="allOfficeFlag != null" >
+        #{allOfficeFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="allWarehouseFlag != null" >
+        #{allWarehouseFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="allAddressFlag != null" >
+        #{allAddressFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null" >
+        #{lastUpdateBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=INTEGER},
+      </if>
+      <if test="vendorId != null" >
+        #{vendorId,jdbcType=INTEGER},
+      </if>
+      <if test="vendorCode != null" >
+        #{vendorCode,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.commerce.framework.system.entity.SysUser" >
+    update sys_user
+    <set >
+      <if test="loginName != null" >
+        login_name = #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null" >
+        company_id = #{company.id,jdbcType=VARCHAR},
+      </if>
+      <if test="office != null" >
+        office_id = #{office.id,jdbcType=VARCHAR},
+      </if>
+      <if test="workNo != null" >
+        work_no = #{workNo,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        user_type = #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="loginFlag != null" >
+        login_flag = #{loginFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="allOfficeFlag != null" >
+        all_office_flag = #{allOfficeFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="allWarehouseFlag != null" >
+        all_warehouse_flag = #{allWarehouseFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="allAddressFlag != null" >
+        all_address_flag = #{allAddressFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=INTEGER},
+      </if>
+      <if test="vendorId != null" >
+        vendor_id = #{vendorId,jdbcType=INTEGER},
+      </if>
+      <if test="vendorCode != null" >
+        vendor_code = #{vendorCode,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.commerce.framework.system.entity.SysUser" >
+    update sys_user
+    set login_name = #{loginName,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      company_id = #{company.id,jdbcType=VARCHAR},
+      office_id = #{office.id,jdbcType=VARCHAR},
+      work_no = #{workNo,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      user_type = #{userType,jdbcType=VARCHAR},
+      login_flag = #{loginFlag,jdbcType=VARCHAR},
+      all_office_flag = #{allOfficeFlag,jdbcType=VARCHAR},
+      all_warehouse_flag = #{allWarehouseFlag,jdbcType=VARCHAR},
+      all_address_flag = #{allAddressFlag,jdbcType=VARCHAR},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      create_by = #{createBy.id,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+      last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      del_flag = #{delFlag,jdbcType=INTEGER},
+      vendor_id = #{vendorId,jdbcType=INTEGER},
+      vendor_code = #{vendorCode,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <!-- 自定义业务sql -->
+  <!-- 通过用户组查询所有用户，并标识已分配 -->
+  <select id="selectAllUserByUserGroupId" resultType="com.ffzx.commerce.framework.system.entity.SysUser" parameterType="map">
+      SELECT DISTINCT 
+            u.id,
+            u.name, 
+            ugu1.user_group_id as "loginFlag"
+        FROM
+          sys_user u 
+          LEFT JOIN 
+            (SELECT 
+              ugu.user_id,
+              ugu.user_group_id 
+            FROM
+              sys_user_group_user ugu 
+            WHERE ugu.user_group_id = #{userGroupId, jdbcType=INTEGER}) ugu1
+            ON u.id = ugu1.user_id      
+		     
+		    <if test="officeId != null and officeId != ''">
+		    LEFT JOIN `base_data_db`.office o ON o.id = u.office_id 
+		        WHERE (o.id = #{officeId} OR o.parent_ids LIKE 
+		                CONCAT('%,', #{officeId}, ',%')) and  u.del_flag = 0
+		    </if>
+		    <if test="officeId == null or officeId == ''">
+            
+                WHERE   u.del_flag = 0
+            </if>
+        ORDER BY u.last_update_date;
+    </select>
+  
+  <select id="getUserListByRole" resultType="com.ffzx.commerce.framework.system.entity.SysUser" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user as u    
+    <include refid="joins"/>
+    LEFT JOIN sys_user_role sur ON sur.user_id = u.id
+    where 1=1
+    	and sur.role_id = #{roleId,jdbcType=VARCHAR}
+      <if test="delFlag != null" >
+        and u.del_flag = #{delFlag,jdbcType=INTEGER}
+      </if>
+      ORDER BY u.name
+  </select>
+  
+  <update id="updateUserPassword" parameterType="map">
+  	update sys_user set password=#{newPassword} where login_name = #{loginName}
+  </update>
+  
+  <update id="updateUserStatusByWorkNo" parameterType="com.ffzx.commerce.framework.system.entity.SysUser">
+  	update sys_user set login_flag= #{loginFlag,jdbcType=VARCHAR} where work_no = #{workNo,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateUserByWorkNo" parameterType="com.ffzx.permission.api.dto.SysUserDto">
+  	update sys_user 
+  	set work_no = #{workNo,jdbcType=VARCHAR},
+      	name = #{name,jdbcType=VARCHAR},
+  		company_id = #{companyId,jdbcType=VARCHAR},
+      	office_id = #{officeId,jdbcType=VARCHAR}, 
+      	mobile = #{mobile,jdbcType=VARCHAR},
+      	email = #{email,jdbcType=VARCHAR},
+      	phone = #{phone,jdbcType=VARCHAR}
+  	where work_no = #{oldWorkNo,jdbcType=VARCHAR}
+  </update>
+  
+	<!--  删除用户所有关联的公司 -->
+	<delete id="deleteUserAllOfficeList" parameterType="java.lang.String">
+		delete
+		from sys_user_office where user_id = #{userId,jdbcType=VARCHAR}
+	</delete>
+	<!-- 添加用户关联的公司 -->
+	<insert id="insertUserOffice" parameterType="java.util.List">
+		insert into sys_user_office ( id, user_id, office_id ) 
+		values 
+	    <foreach collection="list" item="item" index="index" separator="," >
+	        (#{item.id}, #{item.userId}, #{item.officeId})
+	    </foreach>
+	</insert>
+	
+	<!--  删除用户所有关联的地址 -->
+	<delete id="deleteUserAllAddressList" parameterType="java.lang.String">
+		delete
+		from sys_user_address where user_id = #{userId,jdbcType=VARCHAR}
+	</delete>
+	<!-- 添加用户关联的地址 -->
+	<insert id="insertUserAddress" parameterType="java.util.List">
+		insert into sys_user_address ( id, user_id, address_id, address_code ) 
+		values 
+	    <foreach collection="list" item="item" index="index" separator="," >
+	        (#{item.id}, #{item.userId}, #{item.addressId}, #{item.addressCode})
+	    </foreach>
+	</insert>
+	
+	<!--  删除用户所有关联的仓库 -->
+	<delete id="deleteUserAllWarehouseList" parameterType="java.lang.String">
+		delete
+		from sys_user_warehouse where user_id = #{userId,jdbcType=VARCHAR}
+	</delete>
+	<!-- 添加用户关联的仓库 -->
+	<insert id="insertUserWarehouse" parameterType="java.util.List">
+		insert into sys_user_warehouse ( id, user_id, warehouse_id ) 
+		values 
+	    <foreach collection="list" item="item" index="index" separator="," >
+	        (#{item.id}, #{item.userId}, #{item.warehouseId})
+	    </foreach>
+	</insert>
+	
+	<!--  删除用户所有关联的菜单 -->
+	<delete id="deleteUserAllMenuList" parameterType="java.lang.String">
+		delete
+		from sys_user_menu where user_id = #{userId,jdbcType=VARCHAR}
+	</delete>
+	<!-- 添加用户关联的菜单 -->
+	<insert id="insertUserMenu" parameterType="java.util.List">
+		insert into sys_user_menu ( id, user_id, menu_id ) 
+		values 
+	    <foreach collection="list" item="item" index="index" separator="," >
+	        (#{item.id}, #{item.userId}, #{item.menuId})
+	    </foreach>
+	</insert>
+	
+	<!--  根据用户ID，查询用户关联的公司 -->
+	<select id="getUserOfficeByUser" resultType="com.ffzx.permission.model.SysUserOffice" parameterType="java.lang.String">
+		select id, user_id as userId, office_id as officeId
+		from sys_user_office where user_id = #{userId,jdbcType=VARCHAR}
+	</select>
+	<!--  根据用户ID，查询用户关联的地址 -->
+	<select id="getUserAddressByUser" resultType="com.ffzx.permission.model.SysUserAddress" parameterType="java.lang.String">
+		select id, user_id as userId, address_id as addressId, address_code as addressCode
+		from sys_user_address where user_id = #{userId,jdbcType=VARCHAR}
+	</select>
+	<!--  根据用户ID，查询用户关联的仓库 -->
+	<select id="getUserWarehouseByUser" resultType="com.ffzx.permission.model.SysUserWarehouse" parameterType="java.lang.String">
+		select id, user_id as userId, warehouse_id as warehouseId
+		from sys_user_warehouse where user_id = #{userId,jdbcType=VARCHAR}
+	</select>
+</mapper>

@@ -1,0 +1,523 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ffzx.promotion.mapper.CouponGrantMapper" >
+  <resultMap id="BaseResultMap" type="com.ffzx.promotion.api.dto.CouponGrant" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="number" property="number" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="grant_date" property="grantDate" jdbcType="TIMESTAMP" />
+    <result column="grant_mode" property="grantMode" jdbcType="CHAR" />
+    <result column="grant_type" property="grantType" jdbcType="CHAR" />
+    <result column="receive_state" property="receiveState" jdbcType="CHAR" />
+    <result column="receive_limit" property="receiveLimit" jdbcType="INTEGER" />
+    <result column="grant_num" property="grantNum" jdbcType="INTEGER" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="CHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy.id" jdbcType="VARCHAR" />
+    <result column="last_update_by" property="lastUpdateBy.id" jdbcType="VARCHAR" />
+    <result column="last_update_date" property="lastUpdateDate" jdbcType="TIMESTAMP" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+    <result column="surplus_num" property="surplusNum" jdbcType="INTEGER" />
+    <result column="zongnum" property="zongnum" jdbcType="INTEGER" />
+    <result column="receive_num" property="receiveNum" jdbcType="INTEGER" />
+    <result column="is_grant" property="isGrant" jdbcType="CHAR" />
+    <result column="grant_end_date" property="grantEndDate" jdbcType="TIMESTAMP" />
+    <result column="user_type" property="userType" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    t.id, t.number, t.name, t.grant_date, t.grant_mode, t.grant_type, t.receive_state, 
+    t.receive_limit, t.grant_num, t.url, t.state, t.create_date, t.remarks, t.create_by as 'createBy.id', 
+    t.last_update_by as 'lastUpdateBy.id', t.last_update_date, t.del_flag, t.surplus_num, 
+    t.zongnum, t.receive_num, t.is_grant, t.grant_end_date, t.user_type
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null and '' != params.id" >
+        and t.id = #{params.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.number != null and '' != params.number" >
+        and t.number = #{params.number,jdbcType=VARCHAR}
+      </if>
+      <if test="params.grantDate != null" >
+        and t.grant_date = #{params.grantDate,jdbcType=TIMESTAMP}
+      </if>
+      
+      <if test="params.grantMessageDate != null" >
+        and t.grant_date &lt;= #{params.grantMessageDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.grantMode != null and '' != params.grantMode" >
+        and t.grant_mode = #{params.grantMode,jdbcType=CHAR}
+      </if>
+      <if test="params.grantType != null and '' != params.grantType" >
+        and t.grant_type = #{params.grantType,jdbcType=CHAR}
+      </if>
+      <if test="params.receiveState != null and '' != params.receiveState" >
+        and t.receive_state = #{params.receiveState,jdbcType=CHAR}
+      </if>
+      <if test="params.receiveLimit != null" >
+        and t.receive_limit = #{params.receiveLimit,jdbcType=INTEGER}
+      </if>
+      <if test="params.grantNum != null" >
+        and t.grant_num = #{params.grantNum,jdbcType=INTEGER}
+      </if>
+      <if test="params.url != null and '' != params.url" >
+        and t.url = #{params.url,jdbcType=VARCHAR}
+      </if>
+      <if test="params.state != null" >
+        and t.state = #{params.state,jdbcType=CHAR}
+      </if>
+      <if test="params.createDate != null" >
+        and t.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.remarks != null and '' != params.remarks" >
+        and t.remarks = #{params.remarks,jdbcType=VARCHAR}
+      </if>
+      <if test="params.createBy != null and '' != params.createBy" >
+        and t.create_by = #{params.createBy.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.lastUpdateBy != null and '' != params.lastUpdateBy" >
+        and t.last_update_by = #{params.lastUpdateBy.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.lastUpdateDate != null" >
+        and t.last_update_date = #{params.lastUpdateDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.delFlag != null and '' != params.delFlag" >
+        and t.del_flag = #{params.delFlag,jdbcType=CHAR}
+      </if>
+      <if test="params.surplusNum != null" >
+        and t.surplus_num = #{params.surplusNum,jdbcType=INTEGER}
+      </if>
+      <if test="params.zongnum != null" >
+        and t.zongnum = #{params.zongnum,jdbcType=INTEGER}
+      </if>
+      <if test="params.receiveNum != null" >
+        and t.receive_num = #{params.receiveNum,jdbcType=INTEGER}
+      </if>
+      <if test="params.isGrant != null and '' != params.isGrant" >
+        and t.is_grant = #{params.isGrant,jdbcType=CHAR}
+      </if>
+      <if test="params.grantEndDate != null" >
+        and t.grant_end_date = #{params.grantEndDate,jdbcType=TIMESTAMP}
+      </if>
+      <!-- 发放编码模糊查询 -->
+      <if test="params.grantNumber != null and '' != params.grantNumber" >
+        and t.number like '%${params.grantNumber}%'
+      </if>
+      <if test="params.userType != null and '' != params.userType" >
+        and t.user_type = #{params.userType,jdbcType=CHAR}
+      </if>
+      <!-- 发放名称、发放编码模糊查询 -->
+      <if test="params.grantStr != null and '' != params.grantStr" >
+        and (t.name like '%${params.grantStr}%' or t.number like '%${params.grantStr}%')
+      </if>
+      <if test="params.endDate != null" >
+        and (t.grant_end_date is null or t.grant_end_date &gt; now())
+      </if>
+       <if test="params.nowDate != null and ''!= params.nowDate" >
+          <![CDATA[and  now()<t.grant_end_date and now()>=t.grant_date]]>
+      </if>
+
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from coupon_grant t 
+    where t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from coupon_grant t 
+    where 1=1
+    <include refid="condition" />
+  </select>
+  
+   <select id="selectByParamsleftReceive" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from coupon_grant t 
+    <if test="params.leftReceive != null and '' != params.leftReceive" >
+        LEFT JOIN coupon_receive r on r.coupon_grant_id=t.id and r.member_id=#{params.memberId,jdbcType=VARCHAR}
+    </if>
+    where 1=1
+    <if test="params.leftReceive != null and '' != params.leftReceive" >
+        and r.coupon_grant_id is null
+    </if>
+     <!--  <if test="params.memberId != null and '' != params.memberId" >
+       and r.member_id=#{params.memberId,jdbcType=VARCHAR}
+      </if> -->
+    <include refid="condition" />
+    <if test="params.leftReceive != null and '' != params.leftReceive" >
+        GROUP BY r.coupon_grant_id
+    </if>
+  </select>
+  
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from coupon_grant t  where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from coupon_grant t 
+    where 1=1
+    <include refid="condition" />
+    <!-- 分定时发放，和用户领取非定时发放 &gt;大于     &lt;小于 -->
+    
+      <if test="params.userGrant != null and '' != params.userGrant and 0 == params.userGrant"  >
+        and ((t.is_grant = #{params.userGrant,jdbcType=CHAR} and (t.grant_mode='0' or t.grant_mode='2')  ) or 
+        (t.grant_mode='1' and t.grant_date &gt;= now() ))
+      </if>
+      <!-- 已发放 -->
+      <if test="params.userGrant != null and '' != params.userGrant and 1 == params.userGrant"  >
+        and 
+        (t.grant_mode='1'  and t.grant_date &lt; now() and t.grant_end_date &gt; now()  )
+      </if>
+      
+      <!-- 已结束-->
+      <if test="params.userGrant != null and '' != params.userGrant and 2 == params.userGrant"  >
+        and ((t.is_grant = '1' and (t.grant_mode='0' or t.grant_mode='2')  ) or 
+        (t.grant_mode='1'  and t.grant_end_date &lt; now() ))
+      </if>
+    <if test="params.name != null and '' != params.name" >
+    	and (t.name = #{params.name,jdbcType=VARCHAR} or t.name like CONCAT('%', #{params.name}, '%'))
+      </if>
+     <if test="params.beginGrantDateStr != null and '' != params.beginGrantDateStr" >
+        and t.grant_date &gt; #{params.beginGrantDateStr,jdbcType=VARCHAR}
+    </if>
+    <if test="params.endGrantDateStr != null and '' != params.endGrantDateStr" >
+        and t.grant_date &lt; #{params.endGrantDateStr,jdbcType=VARCHAR}
+  	</if>
+  	
+     <if test="params.beginendGrantDateStr != null and '' != params.beginendGrantDateStr" >
+        and t.grant_end_date &gt; #{params.beginendGrantDateStr,jdbcType=VARCHAR}
+    </if>
+      <if test="params.endendGrantDateStr != null and '' != params.endendGrantDateStr" >
+       and t.grant_end_date &lt; #{params.endendGrantDateStr,jdbcType=TIMESTAMP}
+      </if>
+  	<!-- 仅限系统推送和指定用户 -->
+    <if test="params.notUserreceive != null and '' != params.notUserreceive  and 2 == params.notUserreceive" >
+        and (t.grant_mode ='0' or t.grant_mode ='2')
+  	</if>
+    <if test="orderByField != null and ''!=orderByField" >
+      order by t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  
+  
+  <!-- 根据发放id获取优惠券列表 -->
+  <select id="findCouponAdminByGrantId" resultType="Map" parameterType="map" >
+    SELECT *,count(tmp.receiveId) as 'receiveCount' FROM (
+    select 
+		g.id as 'grantId',
+		g.receive_limit as 'receiveLimit',
+		g.number as 'grantNumber',
+		g.grant_num as 'grantNum',
+		g.grant_date as 'grantDate',
+		g.grant_end_date as 'grantEndDate',
+		admin.id as 'adminId',
+		admin.name as 'adminName',
+		admin.face_value as 'faceValue',
+		admin.effective_date_state as 'effectiveDateState',
+		admin.effective_date_start as 'effectiveDateStart',
+		admin.effective_date_end as 'effectiveDateEnd',
+		admin.effective_date_num as 'effectiveDateNum',
+		admin.consumption_limit as 'consumptionLimit',
+		rec.id as 'receiveId',
+		cg.receive_num as 'receiveNum'
+	from coupon_grant g
+	left join coupon_admin_coupon_grant cg on g.id = cg.coupon_grant_id
+	left join coupon_admin admin on cg.coupon_admin_id = admin.id
+	left join coupon_receive rec on g.id = rec.coupon_grant_id and rec.coupon_admin_id = admin.id 
+		and rec.member_id = #{params.uId,jdbcType=VARCHAR}
+	where 1=1
+    <if test="params.grantId != null and '' != params.grantId" >
+       and g.id = #{params.grantId,jdbcType=VARCHAR}
+    </if>
+    ) tmp
+	GROUP BY tmp.adminId,tmp.grantId
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from coupon_grant
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.promotion.api.dto.CouponGrant" >
+    delete from coupon_grant
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ffzx.promotion.api.dto.CouponGrant" >
+    insert into coupon_grant (id, number, name, 
+      grant_date, grant_mode, grant_type, 
+      receive_state, receive_limit, grant_num, 
+      url, state, create_date, 
+      remarks, create_by, last_update_by, 
+      last_update_date, del_flag, surplus_num, 
+      zongnum, receive_num)
+    values (#{id,jdbcType=VARCHAR}, #{number,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{grantDate,jdbcType=TIMESTAMP}, #{grantMode,jdbcType=CHAR}, #{grantType,jdbcType=CHAR}, 
+      #{receiveState,jdbcType=CHAR}, #{receiveLimit,jdbcType=INTEGER}, #{grantNum,jdbcType=INTEGER}, 
+      #{url,jdbcType=VARCHAR}, #{state,jdbcType=CHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{remarks,jdbcType=VARCHAR}, #{createBy.id,jdbcType=VARCHAR}, #{lastUpdateBy.id,jdbcType=VARCHAR}, 
+      #{lastUpdateDate,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=CHAR}, #{surplusNum,jdbcType=INTEGER}, 
+      #{zongnum,jdbcType=INTEGER}, #{receiveNum,jdbcType=INTEGER}), #{isGrant,jdbcType=CHAR}
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.promotion.api.dto.CouponGrant" >
+    insert into coupon_grant
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="number != null" >
+        number,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="grantDate != null" >
+        grant_date,
+      </if>
+      <if test="grantMode != null" >
+        grant_mode,
+      </if>
+      <if test="grantType != null" >
+        grant_type,
+      </if>
+      <if test="receiveState != null" >
+        receive_state,
+      </if>
+      <if test="receiveLimit != null" >
+        receive_limit,
+      </if>
+      <if test="grantNum != null" >
+        grant_num,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by,
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="surplusNum != null" >
+        surplus_num,
+      </if>
+      <if test="zongnum != null" >
+        zongnum,
+      </if>
+      <if test="receiveNum != null" >
+        receive_num,
+      </if>
+      <if test="isGrant != null" >
+        is_grant,
+      </if>
+      <if test="grantEndDate != null" >
+        grant_end_date,
+      </if>
+      <if test="userType != null" >
+        user_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null" >
+        #{number,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="grantDate != null" >
+        #{grantDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="grantMode != null" >
+        #{grantMode,jdbcType=CHAR},
+      </if>
+      <if test="grantType != null" >
+        #{grantType,jdbcType=CHAR},
+      </if>
+      <if test="receiveState != null" >
+        #{receiveState,jdbcType=CHAR},
+      </if>
+      <if test="receiveLimit != null" >
+        #{receiveLimit,jdbcType=INTEGER},
+      </if>
+      <if test="grantNum != null" >
+        #{grantNum,jdbcType=INTEGER},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=CHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy.name,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateBy != null" >
+        #{lastUpdateBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="surplusNum != null" >
+        #{surplusNum,jdbcType=INTEGER},
+      </if>
+      <if test="zongnum != null" >
+        #{zongnum,jdbcType=INTEGER},
+      </if>
+      <if test="receiveNum != null" >
+        #{receiveNum,jdbcType=INTEGER},
+      </if>
+      <if test="isGrant != null" >
+        #{isGrant,jdbcType=CHAR},
+      </if>
+      <if test="grantEndDate != null" >
+        #{grantEndDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userType != null" >
+        #{userType,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByGrant" parameterType="com.ffzx.promotion.api.dto.CouponGrant" >
+    update coupon_grant
+    <set >
+        is_grant ='1',
+    </set>
+    where  
+        is_grant = '0'
+        and grant_date &lt; #{grantDate,jdbcType=TIMESTAMP}
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.promotion.api.dto.CouponGrant" >
+    update coupon_grant
+    <set >
+      <if test="number != null" >
+        number = #{number,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="grantDate != null" >
+        grant_date = #{grantDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="grantMode != null" >
+        grant_mode = #{grantMode,jdbcType=CHAR},
+      </if>
+      <if test="grantType != null" >
+        grant_type = #{grantType,jdbcType=CHAR},
+      </if>
+      <if test="receiveState != null" >
+        receive_state = #{receiveState,jdbcType=CHAR},
+      </if>
+      <if test="receiveLimit != null" >
+        receive_limit = #{receiveLimit,jdbcType=INTEGER},
+      </if>
+      <if test="grantNum != null" >
+        grant_num = #{grantNum,jdbcType=INTEGER},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=CHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="surplusNum != null" >
+        surplus_num = #{surplusNum,jdbcType=INTEGER},
+      </if>
+      <if test="zongnum != null" >
+        zongnum = #{zongnum,jdbcType=INTEGER},
+      </if>
+      <if test="receiveNum != null" >
+        receive_num = #{receiveNum,jdbcType=INTEGER},
+      </if>
+      <if test="isGrant != null" >
+        is_grant = #{isGrant,jdbcType=CHAR},
+      </if>
+      <if test="grantEndDate != null" >
+        grant_end_date = #{grantEndDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userType != null" >
+        user_type = #{userType,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR} 
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.promotion.api.dto.CouponGrant" >
+    update coupon_grant
+    set number = #{number,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      grant_date = #{grantDate,jdbcType=TIMESTAMP},
+      grant_mode = #{grantMode,jdbcType=CHAR},
+      grant_type = #{grantType,jdbcType=CHAR},
+      receive_state = #{receiveState,jdbcType=CHAR},
+      receive_limit = #{receiveLimit,jdbcType=INTEGER},
+      grant_num = #{grantNum,jdbcType=INTEGER},
+      url = #{url,jdbcType=VARCHAR},
+      state = #{state,jdbcType=CHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      create_by = #{createBy.id,jdbcType=VARCHAR},
+      last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+      last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      del_flag = #{delFlag,jdbcType=CHAR},
+      surplus_num = #{surplusNum,jdbcType=INTEGER},
+      zongnum = #{zongnum,jdbcType=INTEGER},
+      receive_num = #{receiveNum,jdbcType=INTEGER},
+      is_grant = #{isGrant,jdbcType=CHAR},
+      grant_end_date = #{grantEndDate,jdbcType=TIMESTAMP},
+      user_type = #{userType,jdbcType=CHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

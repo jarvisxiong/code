@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ffzx.promotion.mapper.OperateRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.ffzx.promotion.model.OperateRecord" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="record_date" property="recordDate" jdbcType="TIMESTAMP" />
+    <result column="record_user" property="recordUser" jdbcType="VARCHAR" />
+    <result column="reward_id" property="rewardId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    t.id, t.content, t.record_date, t.record_user, t.reward_id
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null and '' != params.id" >
+        and t.id = #{params.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.content != null and '' != params.content" >
+        and t.content = #{params.content,jdbcType=VARCHAR}
+      </if>
+      <if test="params.recordDate != null" >
+        and t.record_date = #{params.recordDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.recordUser != null and '' != params.recordUser" >
+        and t.record_user = #{params.recordUser,jdbcType=VARCHAR}
+      </if>
+      <if test="params.rewardId != null and '' != params.rewardId" >
+        and t.reward_id = #{params.rewardId,jdbcType=VARCHAR}
+      </if>
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from operate_record t 
+    where t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from operate_record t 
+    where 1=1
+    <include refid="condition" />
+    <if test="params.orderByField != null and ''!=params.orderByField" >
+      order by t.${params.orderByField} 
+      <if test="params.orderByField" >
+        ${params.orderBy}
+      </if>
+    </if>
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from operate_record t  where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from operate_record t 
+    where 1=1
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from operate_record
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.promotion.model.OperateRecord" >
+    delete from operate_record
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ffzx.promotion.model.OperateRecord" >
+    insert into operate_record (id, content, record_date, 
+      record_user, reward_id)
+    values (#{id,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{recordDate,jdbcType=TIMESTAMP}, 
+      #{recordUser,jdbcType=VARCHAR}, #{rewardId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.promotion.model.OperateRecord" >
+    insert into operate_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="recordDate != null" >
+        record_date,
+      </if>
+      <if test="recordUser != null" >
+        record_user,
+      </if>
+      <if test="rewardId != null" >
+        reward_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="recordDate != null" >
+        #{recordDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="recordUser != null" >
+        #{recordUser,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardId != null" >
+        #{rewardId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.promotion.model.OperateRecord" >
+    update operate_record
+    <set >
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="recordDate != null" >
+        record_date = #{recordDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="recordUser != null" >
+        record_user = #{recordUser,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardId != null" >
+        reward_id = #{rewardId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.promotion.model.OperateRecord" >
+    update operate_record
+    set content = #{content,jdbcType=VARCHAR},
+      record_date = #{recordDate,jdbcType=TIMESTAMP},
+      record_user = #{recordUser,jdbcType=VARCHAR},
+      reward_id = #{rewardId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

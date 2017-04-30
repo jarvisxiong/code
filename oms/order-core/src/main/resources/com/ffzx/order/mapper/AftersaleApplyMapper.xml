@@ -1,0 +1,878 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ffzx.order.mapper.AftersaleApplyMapper" >
+  <resultMap id="BaseResultMap" type="com.ffzx.order.api.dto.AftersaleApply" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="apply_no" property="applyNo" jdbcType="VARCHAR" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="pickup_no" property="pickupNo" jdbcType="VARCHAR" />
+    <result column="refund_no" property="refundNo" jdbcType="VARCHAR" />
+    <result column="exchange_order_no" property="exchangeOrderNo" jdbcType="VARCHAR" />
+    <result column="apply_status" property="applyStatus" jdbcType="VARCHAR" />
+    <result column="apply_type" property="applyType" jdbcType="VARCHAR" />
+    <result column="service_approve_date" property="serviceApproveDate" jdbcType="TIMESTAMP" />
+    <result column="service_approve_desc" property="serviceApproveDesc" jdbcType="VARCHAR" />
+    <result column="storage_approve_date" property="storageApproveDate" jdbcType="TIMESTAMP" />
+    <result column="storage_approve_desc" property="storageApproveDesc" jdbcType="VARCHAR" />
+    <result column="apply_person_id" property="applyPersonId" jdbcType="VARCHAR" />
+    <result column="apply_person_name" property="applyPersonName" jdbcType="VARCHAR" />
+    <result column="apply_person_phone" property="applyPersonPhone" jdbcType="VARCHAR" />
+    <result column="apply_person_address" property="applyPersonAddress" jdbcType="VARCHAR" />
+    <result column="reason_select" property="reasonSelect" jdbcType="VARCHAR" />
+    <result column="reason_explain" property="reasonExplain" jdbcType="VARCHAR" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy.id" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="last_update_by" property="lastUpdateBy.id" jdbcType="VARCHAR" />
+    <result column="last_update_date" property="lastUpdateDate" jdbcType="TIMESTAMP" />
+    <result column="del_flag" property="delFlag" jdbcType="VARCHAR" />
+    <result column="order_id" property="order.id" jdbcType="VARCHAR" />
+    <result column="apply_pic_img" property="applyPicImg" jdbcType="VARCHAR" />
+    <result column="pickup_status" property="pickupStatus" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="ResultMapPart" type="com.ffzx.order.api.dto.AftersaleApply" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="apply_no" property="applyNo" jdbcType="VARCHAR" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="pickup_no" property="pickupNo" jdbcType="VARCHAR" />
+    <result column="refund_no" property="refundNo" jdbcType="VARCHAR" />
+    <result column="exchange_order_no" property="exchangeOrderNo" jdbcType="VARCHAR" />
+    <collection property="aftersaleApplyItems" ofType="com.ffzx.order.api.dto.AftersaleApplyItem">
+    	<id column="itemid" property="id" jdbcType="VARCHAR" />
+	    <result column="commodity_price" property="commodityPrice" jdbcType="DECIMAL" />
+	    <result column="act_pay_amount" property="actPayAmount" jdbcType="DECIMAL" />
+	    <result column="commodity_buy_type" property="commodityBuyType" jdbcType="VARCHAR" />
+	    <result column="commodity_buy_num" property="commodityBuyNum" jdbcType="INTEGER" />
+	    <result column="return_num" property="returnNum" jdbcType="INTEGER" />
+	    <result column="sku_id" property="skuId" jdbcType="VARCHAR" />
+	    <result column="favouredamount" property="favouredAmount" jdbcType="VARCHAR" />
+    </collection>
+  </resultMap>
+  
+    <resultMap id="ApplyResult" type="com.ffzx.order.api.dto.AftersaleApply" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="apply_no" property="applyNo" jdbcType="VARCHAR" />
+    <result column="apply_status" property="applyStatus" jdbcType="VARCHAR" />
+    <result column="apply_type" property="applyType" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    t.id, t.apply_no, t.order_no, t.pickup_no, t.refund_no, t.exchange_order_no, t.apply_status, 
+    t.apply_type, t.service_approve_date, t.service_approve_desc, t.storage_approve_date, 
+    t.storage_approve_desc, t.apply_person_id, t.apply_person_name, t.apply_person_phone, 
+    t.apply_person_address, t.reason_select, t.reason_explain, t.remarks, t.create_by as 'createBy.id', 
+    t.create_date, t.last_update_by as 'lastUpdateBy.id', t.last_update_date, t.del_flag,t.order_id as "orderId",t.apply_pic_img,ap.pickup_status
+  </sql>
+   <sql id="order_Column_List" >
+   t.id, t.apply_no, t.order_no, t.pickup_no, t.refund_no, t.exchange_order_no, t.apply_status, 
+    t.apply_type, t.service_approve_date, t.service_approve_desc, t.storage_approve_date, 
+    t.storage_approve_desc, t.apply_person_id, t.apply_person_name, t.apply_person_phone, 
+    t.apply_person_address, t.reason_select, t.reason_explain, t.remarks, t.create_by as 'createBy.id', 
+    t.create_date, t.last_update_by as 'lastUpdateBy.id', t.last_update_date, t.del_flag,t.order_id,t.apply_pic_img,t.order_id as "orderId",
+    o.status as "order.status",o.pay_type as "order.payType",o.buy_type as "order.buyType",o.member_id as "order.memberId",
+   	o.member_name as "order.memberName",o.member_phone as "order.memberPhone",
+   	o.buy_count as "order.buyCount",o.actual_price as "order.actualPrice",o.favorable_price as "order.favorablePrice",o.pay_time as "order.payTime",
+   	o.send_person as "order.sendPerson",o.address_info as "order.addressInfo",o.is_invoice as "order.isInvoice",o.member_account as "order.memberAccount",
+   	o.send_person_name as "order.sendPersonName",o.send_person_phone as "order.sendPersonPhone",o.service_point as "order.servicePoint",o.create_date as "order.createDate",o.order_pack_status as "order.orderPackStatus",o.id as "order.id",
+   	o.partner_code as "order.partnerCode",o.storage_name as "order.storageName",o.send_cost as "order.sendCost",o.total_price as "order.totalPrice",o.warehouse_code as "order.warehouseCode",o.consign_phone as "order.consignPhone",o.consign_name as "order.consignName",o.region_id as "order.regionId",
+  	o.county_store_id as "order.countyStoreId",o.county_store_code as "order.countyStoreCode",o.county_store_name as "order.countyStoreName",
+  	ap.pickup_status
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null and '' != params.id" >
+        and t.id = #{params.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.applyNo != null and '' != params.applyNo" >
+        and t.apply_no = #{params.applyNo,jdbcType=VARCHAR}
+      </if>
+      <if test="params.orderNo != null and '' != params.orderNo" >
+        and t.order_no = #{params.orderNo,jdbcType=VARCHAR}
+      </if>
+      <if test="params.pickupNo != null and '' != params.pickupNo" >
+        and t.pickup_no = #{params.pickupNo,jdbcType=VARCHAR}
+      </if>
+      <if test="params.refundNo != null and '' != params.refundNo" >
+        and t.refund_no = #{params.refundNo,jdbcType=VARCHAR}
+      </if>
+      
+       <if test="params.applyNo_like != null and '' != params.applyNo_like" >
+        and t.apply_no like CONCAT('%', #{params.applyNo_like,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test="params.orderNo_like != null and '' != params.orderNo_like" >
+        and t.order_no like CONCAT('%', #{params.orderNo_like,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test="params.pickupNo_like != null and '' != params.pickupNo_like" >
+        and t.pickup_no like CONCAT('%', #{params.pickupNo_like,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test="params.refundNo_like != null and '' != params.refundNo_like" >
+         and t.refund_no like CONCAT('%', #{params.refundNo_like,jdbcType=VARCHAR}, '%')
+      </if>
+	   <if test="params.applyPersonPhone_like != null and '' != params.applyPersonPhone_like" >
+         and t.apply_person_phone like CONCAT('%', #{params.applyPersonPhone_like,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test="params.exchangeOrderNo_like != null and '' != params.exchangeOrderNo_like" >
+         and t.exchange_order_no like CONCAT('%', #{params.exchangeOrderNo_like,jdbcType=VARCHAR}, '%')
+      </if>
+      
+      
+      <if test="params.exchangeOrderNo != null and '' != params.exchangeOrderNo" >
+        and t.exchange_order_no like CONCAT('%', #{params.exchangeOrderNo,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test="params.applyStatus != null and '' != params.applyStatus" >
+        and t.apply_status = #{params.applyStatus,jdbcType=VARCHAR}
+      </if>
+      <if test="params.applyType != null and '' != params.applyType" >
+        and t.apply_type = #{params.applyType,jdbcType=VARCHAR}
+      </if>
+      <if test="params.serviceApproveDate != null" >
+        and t.service_approve_date = #{params.serviceApproveDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.serviceApproveDesc != null and '' != params.serviceApproveDesc" >
+        and t.service_approve_desc = #{params.serviceApproveDesc,jdbcType=VARCHAR}
+      </if>
+      <if test="params.storageApproveDate != null" >
+        and t.storage_approve_date = #{params.storageApproveDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.storageApproveDesc != null and '' != params.storageApproveDesc" >
+        and t.storage_approve_desc = #{params.storageApproveDesc,jdbcType=VARCHAR}
+      </if>
+      <if test="params.applyPersonId != null and '' != params.applyPersonId" >
+        and t.apply_person_id = #{params.applyPersonId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.applyPersonName != null and '' != params.applyPersonName" >
+         and t.apply_person_name like CONCAT('%', #{params.applyPersonName}, '%')
+      </if>
+      <if test="params.applyPersonPhone != null and '' != params.applyPersonPhone" >
+        and t.apply_person_phone = #{params.applyPersonPhone,jdbcType=VARCHAR}
+      </if>
+      <if test="params.applyPersonAddress != null and '' != params.applyPersonAddress" >
+        and t.apply_person_address = #{params.applyPersonAddress,jdbcType=VARCHAR}
+      </if>
+      <if test="params.reasonSelect != null and '' != params.reasonSelect" >
+        and t.reason_select = #{params.reasonSelect,jdbcType=VARCHAR}
+      </if>
+      <if test="params.reasonExplain != null and '' != params.reasonExplain" >
+        and t.reason_explain = #{params.reasonExplain,jdbcType=VARCHAR}
+      </if>
+      <if test="params.remarks != null and '' != params.remarks" >
+        and t.remarks = #{params.remarks,jdbcType=VARCHAR}
+      </if>
+      <if test="params.createBy != null and '' != params.createBy" >
+        and t.create_by = #{params.createBy.id,jdbcType=VARCHAR}
+      </if>
+       <if test="params.order != null and '' != params.order" >
+        and t.order_id = #{params.order.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.createDate != null" >
+        and t.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.lastUpdateBy != null and '' != params.lastUpdateBy" >
+        and t.last_update_by = #{params.lastUpdateBy.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.lastUpdateDate != null" >
+        and t.last_update_date = #{params.lastUpdateDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.delFlag != null and '' != params.delFlag" >
+        and t.del_flag = #{params.delFlag,jdbcType=VARCHAR}
+      </if>
+       <if test="params.applyPicImg!= null and '' != params.applyPicImg" >
+        	and t.apply_pic_img = #{params.applyPicImg,jdbcType=VARCHAR}
+      </if>
+      
+       <if test="params.serviceApproveStartDate!= null and '' != params.serviceApproveStartDate" >
+        	<![CDATA[and t.service_approve_date > #{params.serviceApproveStartDate,jdbcType=TIMESTAMP}]]>
+      </if>
+         <if test="params.serviceApproveEndDate!= null and '' != params.serviceApproveEndDate" >
+        	<![CDATA[and t.service_approve_date < #{params.serviceApproveEndDate,jdbcType=TIMESTAMP}]]>
+      </if>      
+       <if test="params.storageApproveStartDate!= null and '' != params.storageApproveStartDate" >
+        	<![CDATA[and t.storage_approve_date > #{params.storageApproveStartDate,jdbcType=TIMESTAMP}]]>
+      </if>
+         <if test="params.storageApproveEndDate!= null and '' != params.storageApproveEndDate" >
+        	<![CDATA[and t.storage_approve_date < #{params.storageApproveEndDate,jdbcType=TIMESTAMP}]]>
+      </if>            
+       <if test="params.applyStartDate!= null and '' != params.applyStartDate" >
+        	<![CDATA[and t.create_date > #{params.applyStartDate,jdbcType=TIMESTAMP}]]>
+      </if>
+         <if test="params.applyEndDate!= null and '' != params.applyEndDate" >
+        	<![CDATA[and t.create_date < #{params.applyEndDate,jdbcType=TIMESTAMP}]]>
+      </if>
+      <if test="params.applyStatusLimit!= null and '' != params.applyStatusLimit" >
+      		and t.apply_status !=2 
+      </if>
+      </if>
+  </sql>
+
+  
+  <select id="findByApplyNo" resultMap="ResultMapPart" parameterType="java.lang.String" >
+    SELECT aa.id,aa.apply_no,aa.order_no,aa.pickup_no,aa.exchange_order_no,aa.refund_no,aai1.id AS 'itemid'
+  ,aai1.commodity_price,aai1.act_pay_amount,aai1.commodity_buy_type,aai1.commodity_buy_num,aai1.return_num,aai1.sku_id,aai1.favouredamount
+  FROM aftersale_apply aa LEFT JOIN aftersale_apply_item aai1 ON aa.id=aai1.apply_id 
+  <where>
+  	 <if test="params.applyNo!= null and '' != params.applyNo" >
+      		aa.apply_no = #{params.applyNo,jdbcType=VARCHAR}
+     </if>
+    <if test="params.applyStatus!= null and '' != params.applyStatus" >
+      	AND	aa.apply_status=#{params.applyStatus,jdbcType=VARCHAR} 
+    </if>
+    <if test="params.exchangeOrderNo!= null and '' != params.exchangeOrderNo" >
+      	AND aa.exchange_order_no=#{params.exchangeOrderNo,jdbcType=VARCHAR} 
+    </if>
+     <if test="params.skuids!=null">
+	      AND aai1.sku_id in 
+				<foreach item="item" collection="params.skuids" separator="," open="(" close=")">
+					#{item}
+				</foreach> 
+	 </if>
+
+  </where>
+  </select>
+
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from aftersale_apply t   LEFT JOIN aftersale_pickup ap ON ap.apply_no=t.apply_no
+    where t.id = #{id,jdbcType=VARCHAR}
+  </select>
+
+	<select id="beforeImportApplyList" resultType="java.lang.Integer">
+		select
+		count(1)
+		FROM aftersale_apply t LEFT JOIN aftersale_apply_item aai ON
+		t.id=aai.apply_id LEFT JOIN oms_order o ON t.order_no=o.order_no
+		where 1=1
+		<include refid="condition" />
+		<if test="params.servicePoint!= null and '' != params.servicePoint">
+			and o.service_point like CONCAT('%',
+			#{params.servicePoint,jdbcType=VARCHAR}, '%')
+		</if>
+	</select>
+
+	<select id="importApplyList_back" resultType="hashmap" parameterType="java.lang.String">
+		SELECT IFNULL(o.pay_time,'') AS 'payTime',IFNULL(t.create_date ,'') AS 'createDate',IFNULL(t.apply_no ,'') AS 'applyNo',(CASE t.apply_type WHEN '0' THEN '退款(没收到货)' WHEN '1' THEN '退货(已收到货)' WHEN '2' THEN '换货(已收到货)' END) AS 'applyType',IFNULL(t.order_no ,'') AS 'orderNo',IFNULL(t.pickup_no ,'') AS 'pickupNo',IFNULL(t.refund_no ,'') AS 'refundNo',IFNULL(t.exchange_order_no ,'') AS 'exchangeOrderNo',IFNULL(
+  aai.commodity_name ,'') AS 'commodityTitle',IFNULL(aai.commodity_attribute_values ,'') AS 'commodityAttributeValues',IFNULL(aai.commodity_barcode ,'') AS 'commodityBarcode',IFNULL(aai.commodity_unit ,'') AS 'commodityUnit',IFNULL(
+  aai.commodity_price ,'') AS 'commodityPrice',IFNULL(aai.act_pay_amount ,'') AS 'actPayAmount',
+IFNULL(  aai.commodity_buy_num ,'') AS 'buyNum',IFNULL(aai.return_num ,'') AS 'returnNum',
+FORMAT((IFNULL(aai.commodity_price,0)*aai.return_num-IFNULL(aai.favouredamount/aai.commodity_buy_num*aai.return_num,0)-IFNULL(IFNULL(aai.red_packet_amount,0) / aai.commodity_buy_num * aai.return_num, 0)+IFNULL(o.send_cost,0)),2) AS 'refundAmount',IFNULL(o.send_person_name ,'') AS 'sendPerson',IFNULL(o.service_point ,'') AS 'servicePoint',IFNULL(
+  t.service_approve_desc ,'') AS 'description',IFNULL(oor2.description ,'') AS 'logisticsState'
+		FROM aftersale_apply t LEFT JOIN aftersale_apply_item aai ON t.id=aai.apply_id LEFT JOIN oms_order o ON t.order_no=o.order_no 
+   LEFT JOIN  (SELECT * FROM (select description,order_no from oms_order_record  WHERE  record_type='1' ORDER BY create_date DESC) AS oo  GROUP BY oo.order_no)  AS oor2 ON t.order_no=oor2.order_no
+		<where>
+			<include refid="condition" />
+			<if test="params.servicePoint!= null and '' != params.servicePoint">
+				and o.service_point like CONCAT('%',
+				#{params.servicePoint,jdbcType=VARCHAR}, '%')
+			</if>
+		</where>
+		ORDER BY t.create_date desc
+	</select>
+
+	<select id="importApplyList" resultType="hashmap" parameterType="java.lang.String">
+	SELECT
+	IFNULL(o.pay_time, '') AS 'payTime',
+	IFNULL(t.create_date, '') AS 'createDate',
+	IFNULL(t.apply_no, '') AS 'applyNo',
+	(
+		CASE t.apply_type
+		WHEN '0' THEN
+			'退款(没收到货)'
+		WHEN '1' THEN
+			'退货(已收到货)'
+		WHEN '2' THEN
+			'换货(已收到货)'
+		END
+	) AS 'applyType',
+	IFNULL(t.order_no, '') AS 'orderNo',
+	IFNULL(t.pickup_no, '') AS 'pickupNo',
+	IFNULL(t.refund_no, '') AS 'refundNo',
+	IFNULL(t.exchange_order_no, '') AS 'exchangeOrderNo',
+	IFNULL(aai.commodity_name, '') AS 'commodityTitle',
+	IFNULL(
+		aai.commodity_attribute_values,
+		''
+	) AS 'commodityAttributeValues',
+	IFNULL(aai.commodity_barcode, '') AS 'commodityBarcode',
+	IFNULL(aai.commodity_unit, '') AS 'commodityUnit',
+	IFNULL(aai.commodity_price, '') AS 'commodityPrice',
+	IFNULL(aai.act_pay_amount, '') AS 'actPayAmount',
+	IFNULL(aai.commodity_buy_num, '') AS 'buyNum',
+	IFNULL(aai.return_num, '') AS 'returnNum',
+	FORMAT(
+		(
+			IFNULL(aai.commodity_price, 0) * aai.return_num - IFNULL(
+				aai.favouredamount / aai.commodity_buy_num * aai.return_num,
+				0
+			) - IFNULL(
+				IFNULL(aai.red_packet_amount, 0) / aai.commodity_buy_num * aai.return_num,
+				0
+			) + IFNULL(o.send_cost, 0)
+		),
+		2
+	) AS 'refundAmount',
+	IFNULL(o.send_person_name, '') AS 'sendPerson',
+	IFNULL(o.service_point, '') AS 'servicePoint',
+	IFNULL(t.service_approve_desc, '') AS 'description',
+	substring_index((
+  SELECT				
+  MAX(CONCAT(r.create_date,'-',r.description))
+	FROM
+		oms_order_record r
+	WHERE
+		r.record_type = '1' 
+		and r.order_no = t.order_no
+),'-',-1)
+AS 'logisticsState'
+FROM
+	aftersale_apply t
+LEFT JOIN aftersale_apply_item aai ON t.id = aai.apply_id
+LEFT JOIN oms_order o ON t.order_no = o.order_no
+		<where>
+			<include refid="condition" />
+			<if test="params.servicePoint!= null and '' != params.servicePoint">
+				and o.service_point like CONCAT('%',
+				#{params.servicePoint,jdbcType=VARCHAR}, '%')
+			</if>
+		</where>
+		ORDER BY t.create_date desc
+	</select>
+
+
+	<select id="importRefundList" resultType="hashmap" parameterType="java.lang.String">
+		 SELECT
+    IFNULL(o.pay_time, '') AS 'payTime',
+    IFNULL(t.create_date, '') AS 'createDate',
+    IFNULL(t.apply_no, '') AS 'applyNo',
+    (CASE t.apply_type WHEN '0' THEN '退款(没收到货)' WHEN '1' THEN '退货(已收到货)' WHEN '2' THEN '换货(已收到货)' END) AS 'applyType',
+    IFNULL(t.order_no, '') AS 'orderNo',
+    IFNULL(o.member_phone, '') AS 'memberPhone',
+    IFNULL(t.pickup_no, '') AS 'pickupNo',
+    IFNULL(t.refund_no, '') AS 'refundNo',
+    IFNULL(ar.pay_date, '') AS 'payDate',
+    IFNULL(t.exchange_order_no, '') AS 'exchangeOrderNo',
+    IFNULL(c.vendor_name,'') AS 'vendorName',
+    IFNULL(c.vendor_code,'') AS 'vendorCode',
+    IFNULL(
+    aai.commodity_name, '') AS 'commodityTitle',
+    IFNULL(aai.commodity_attribute_values, '') AS 'commodityAttributeValues',
+    IFNULL(aai.commodity_barcode, '') AS 'commodityBarcode',
+    IFNULL(aai.commodity_unit, '') AS 'commodityUnit',
+    IFNULL(
+    aai.commodity_price, '') AS 'commodityPrice',
+    IFNULL(aai.act_pay_amount, '') AS 'actPayAmount',
+    IFNULL(aai.commodity_buy_num, '') AS 'buyNum',
+    IFNULL(aai.return_num, '') AS 'returnNum',
+    FORMAT((IFNULL(aai.commodity_price, 0) * aai.return_num - IFNULL(aai.favouredamount / aai.commodity_buy_num * aai.return_num, 0)-IFNULL(IFNULL(aai.red_packet_amount,0) / aai.commodity_buy_num * aai.return_num, 0) + IFNULL(o.send_cost, 0)), 2) AS 'refundAmount',
+    FORMAT(IFNULL(aai.favouredamount / aai.commodity_buy_num * aai.return_num, 0)-IFNULL(IFNULL(aai.red_packet_amount,0) / aai.commodity_buy_num * aai.return_num, 0),2) AS 'favouredAmount',
+    (CASE o.pay_type WHEN 'ALIPAYPC' THEN '支付宝PC' WHEN 'ALIPAYSM' THEN '支付宝扫码' WHEN 'WXPAY' THEN '微信支付' WHEN 'WX_PUB' THEN '微信公众号支付' WHEN 'ALIPAYAPP' THEN '支付宝APP'  WHEN 'TFTFASTPAY' THEN '腾付通快捷支付' END) AS 'payType',
+    IFNULL(o.send_person_name, '') AS 'sendPerson',
+    IFNULL(o.service_point, '') AS 'servicePoint',
+    IFNULL(
+    t.service_approve_desc, '') AS 'description',
+    IFNULL(oor2.description, '') AS 'logisticsState'
+  FROM aftersale_apply t
+    LEFT JOIN aftersale_apply_item aai
+      ON t.id = aai.apply_id
+    LEFT JOIN oms_order o
+      ON t.order_no = o.order_no
+    left join aftersale_refund ar on ar.refund_no=t.refund_no
+    LEFT JOIN cims_db.commodity_sku cs  ON cs.id=aai.sku_id
+    LEFT JOIN cims_db.commodity c ON cs.sku_code=c.sku_code 
+    LEFT JOIN (SELECT
+        *
+      FROM (SELECT
+          description,
+          order_no
+        FROM oms_order_record
+        WHERE record_type = '1'
+        ORDER BY create_date DESC) AS oo
+      GROUP BY oo.order_no) AS oor2
+      ON t.order_no = oor2.order_no
+		<where>
+			<include refid="condition" />
+			<if test="params.servicePoint!= null and '' != params.servicePoint">
+				and o.service_point like CONCAT('%',
+				#{params.servicePoint,jdbcType=VARCHAR}, '%')
+			</if>
+		</where>
+		ORDER BY t.create_date desc
+	</select>
+
+   <select id="selectPageByParamsNew" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="order_Column_List" />
+    from aftersale_apply t left join oms_order o on t.order_id=o.id LEFT JOIN aftersale_pickup ap  ON ap.apply_no=t.apply_no 
+    <if test="params.commodityBarcode!= null and '' != params.commodityBarcode" >
+        LEFT JOIN aftersale_apply_item aai ON t.id = aai.apply_id
+    </if>
+    where 1=1
+    <include refid="condition" />
+    <if test="params.servicePoint!= null and '' != params.servicePoint" >
+        	and o.service_point like CONCAT('%', #{params.servicePoint,jdbcType=VARCHAR}, '%')
+    </if>
+    <if test="params.commodityBarcode!= null and '' != params.commodityBarcode" >
+        	and aai.commodity_barcode like CONCAT('%', #{params.commodityBarcode,jdbcType=VARCHAR}, '%')
+    </if>
+    <if test="orderByField != null and ''!=orderByField" >
+      order by t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+   <select id="findApplyById" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="order_Column_List" />
+    from aftersale_apply t  left join oms_order o on t.order_id=o.id LEFT JOIN aftersale_pickup ap ON ap.apply_no=t.apply_no
+    where t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="findApplyStateById" resultMap="ApplyResult" parameterType="java.lang.String" >
+    select 
+    t.id,t.apply_no,t.apply_type,t.apply_status
+    from aftersale_apply t  
+    where t.id = #{id,jdbcType=VARCHAR}  FOR UPDATE
+  </select>
+  
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from aftersale_apply t LEFT JOIN aftersale_pickup ap ON ap.apply_no=t.apply_no
+    where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from aftersale_apply t  where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from aftersale_apply t LEFT JOIN aftersale_pickup ap ON ap.apply_no=t.apply_no
+    where 1=1
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <select id="selectPageByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="order_Column_List" />
+    from aftersale_apply t left join oms_order o on t.order_id=o.id LEFT JOIN aftersale_pickup ap  ON ap.apply_no=t.apply_no
+    where 1=1
+    <include refid="condition" />
+    <if test="params.isApprove!= null and '' != params.isApprove" >
+        	and t.apply_status !='2'
+      </if>
+    <if test="orderByField != null and ''!=orderByField" >
+      order by o.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from aftersale_apply
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.order.api.dto.AftersaleApply" >
+    delete from aftersale_apply
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ffzx.order.api.dto.AftersaleApply" >
+    insert into aftersale_apply (id, apply_no, order_no, 
+      pickup_no, refund_no, exchange_order_no, 
+      apply_status, apply_type, service_approve_date, 
+      service_approve_desc, storage_approve_date, 
+      storage_approve_desc, apply_person_id, apply_person_name, 
+      apply_person_phone, apply_person_address, reason_select, 
+      reason_explain, remarks, create_by, 
+      create_date, last_update_by, last_update_date, 
+      del_flag,order_id,apply_pic_img)
+    values (#{id,jdbcType=VARCHAR}, #{applyNo,jdbcType=VARCHAR}, #{orderNo,jdbcType=VARCHAR}, 
+      #{pickupNo,jdbcType=VARCHAR}, #{refundNo,jdbcType=VARCHAR}, #{exchangeOrderNo,jdbcType=VARCHAR}, 
+      #{applyStatus,jdbcType=VARCHAR}, #{applyType,jdbcType=VARCHAR}, #{serviceApproveDate,jdbcType=TIMESTAMP}, 
+      #{serviceApproveDesc,jdbcType=VARCHAR}, #{storageApproveDate,jdbcType=TIMESTAMP}, 
+      #{storageApproveDesc,jdbcType=VARCHAR}, #{applyPersonId,jdbcType=VARCHAR}, #{applyPersonName,jdbcType=VARCHAR}, 
+      #{applyPersonPhone,jdbcType=VARCHAR}, #{applyPersonAddress,jdbcType=VARCHAR}, #{reasonSelect,jdbcType=VARCHAR}, 
+      #{reasonExplain,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, #{createBy.id,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{lastUpdateBy.id,jdbcType=VARCHAR}, #{lastUpdateDate,jdbcType=TIMESTAMP}, 
+      #{delFlag,jdbcType=VARCHAR},${order.id,jdbcType=VARCHAR},${applyPicImg,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.order.api.dto.AftersaleApply" >
+    insert into aftersale_apply
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="applyNo != null" >
+        apply_no,
+      </if>
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+      <if test="pickupNo != null" >
+        pickup_no,
+      </if>
+      <if test="refundNo != null" >
+        refund_no,
+      </if>
+      <if test="exchangeOrderNo != null" >
+        exchange_order_no,
+      </if>
+      <if test="applyStatus != null" >
+        apply_status,
+      </if>
+      <if test="applyType != null" >
+        apply_type,
+      </if>
+      <if test="serviceApproveDate != null" >
+        service_approve_date,
+      </if>
+      <if test="serviceApproveDesc != null" >
+        service_approve_desc,
+      </if>
+      <if test="storageApproveDate != null" >
+        storage_approve_date,
+      </if>
+      <if test="storageApproveDesc != null" >
+        storage_approve_desc,
+      </if>
+      <if test="applyPersonId != null" >
+        apply_person_id,
+      </if>
+      <if test="applyPersonName != null" >
+        apply_person_name,
+      </if>
+      <if test="applyPersonPhone != null" >
+        apply_person_phone,
+      </if>
+      <if test="applyPersonAddress != null" >
+        apply_person_address,
+      </if>
+      <if test="reasonSelect != null" >
+        reason_select,
+      </if>
+      <if test="reasonExplain != null" >
+        reason_explain,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by,
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+       <if test="order != null and '' != order" >
+        order_id,
+      </if>
+       <if test="applyPicImg != null and '' != applyPicImg" >
+        apply_pic_img
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="applyNo != null" >
+        #{applyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="pickupNo != null" >
+        #{pickupNo,jdbcType=VARCHAR},
+      </if>
+      <if test="refundNo != null" >
+        #{refundNo,jdbcType=VARCHAR},
+      </if>
+      <if test="exchangeOrderNo != null" >
+        #{exchangeOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="applyStatus != null" >
+        #{applyStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="applyType != null" >
+        #{applyType,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceApproveDate != null" >
+        #{serviceApproveDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="serviceApproveDesc != null" >
+        #{serviceApproveDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="storageApproveDate != null" >
+        #{storageApproveDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="storageApproveDesc != null" >
+        #{storageApproveDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="applyPersonId != null" >
+        #{applyPersonId,jdbcType=VARCHAR},
+      </if>
+      <if test="applyPersonName != null" >
+        #{applyPersonName,jdbcType=VARCHAR},
+      </if>
+      <if test="applyPersonPhone != null" >
+        #{applyPersonPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="applyPersonAddress != null" >
+        #{applyPersonAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="reasonSelect != null" >
+        #{reasonSelect,jdbcType=VARCHAR},
+      </if>
+      <if test="reasonExplain != null" >
+        #{reasonExplain,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy.id,jdbcType=VARCHAR},
+      </if>   
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null" >
+        #{lastUpdateBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="order != null and '' != order">
+        #{order.id,jdbcType=VARCHAR},
+      </if>
+       <if test="applyPicImg != null and ''!=applyPicImg" >
+        #{applyPicImg,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.order.api.dto.AftersaleApply" >
+    update aftersale_apply
+    <set >
+      <if test="applyNo != null" >
+        apply_no = #{applyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="pickupNo != null" >
+        pickup_no = #{pickupNo,jdbcType=VARCHAR},
+      </if>
+      <if test="refundNo != null" >
+        refund_no = #{refundNo,jdbcType=VARCHAR},
+      </if>
+      <if test="exchangeOrderNo != null" >
+        exchange_order_no = #{exchangeOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="applyStatus != null" >
+        apply_status = #{applyStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="applyType != null" >
+        apply_type = #{applyType,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceApproveDate != null" >
+        service_approve_date = #{serviceApproveDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="serviceApproveDesc != null" >
+        service_approve_desc = #{serviceApproveDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="storageApproveDate != null" >
+        storage_approve_date = #{storageApproveDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="storageApproveDesc != null" >
+        storage_approve_desc = #{storageApproveDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="applyPersonId != null" >
+        apply_person_id = #{applyPersonId,jdbcType=VARCHAR},
+      </if>
+      <if test="applyPersonName != null" >
+        apply_person_name = #{applyPersonName,jdbcType=VARCHAR},
+      </if>
+      <if test="applyPersonPhone != null" >
+        apply_person_phone = #{applyPersonPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="applyPersonAddress != null" >
+        apply_person_address = #{applyPersonAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="reasonSelect != null" >
+        reason_select = #{reasonSelect,jdbcType=VARCHAR},
+      </if>
+      <if test="reasonExplain != null" >
+        reason_explain = #{reasonExplain,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=VARCHAR},
+      </if>
+       <if test="order != null" >
+        order_id=#{order.id,jdbcType=VARCHAR},
+      </if>
+       <if test="applyPicImg!= null and '' != applyPicImg" >
+        apply_pic_img = #{applyPicImg,jdbcType=VARCHAR}
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+    <update id="updateByParams" parameterType="com.ffzx.order.api.dto.AftersaleApply" >
+    update aftersale_apply
+    <set >
+      <if test="applyNo != null" >
+        apply_no = #{applyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+        pickup_no = #{pickupNo,jdbcType=VARCHAR},
+        refund_no = #{refundNo,jdbcType=VARCHAR},
+      <if test="exchangeOrderNo != null" >
+        exchange_order_no = #{exchangeOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="applyStatus != null" >
+        apply_status = #{applyStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="applyType != null" >
+        apply_type = #{applyType,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceApproveDate != null" >
+        service_approve_date = #{serviceApproveDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="serviceApproveDesc != null" >
+        service_approve_desc = #{serviceApproveDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="storageApproveDate != null" >
+        storage_approve_date = #{storageApproveDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="storageApproveDesc != null" >
+        storage_approve_desc = #{storageApproveDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="applyPersonId != null" >
+        apply_person_id = #{applyPersonId,jdbcType=VARCHAR},
+      </if>
+      <if test="applyPersonName != null" >
+        apply_person_name = #{applyPersonName,jdbcType=VARCHAR},
+      </if>
+      <if test="applyPersonPhone != null" >
+        apply_person_phone = #{applyPersonPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="applyPersonAddress != null" >
+        apply_person_address = #{applyPersonAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="reasonSelect != null" >
+        reason_select = #{reasonSelect,jdbcType=VARCHAR},
+      </if>
+      <if test="reasonExplain != null" >
+        reason_explain = #{reasonExplain,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=VARCHAR},
+      </if>
+       <if test="order != null" >
+        order_id=#{order.id,jdbcType=VARCHAR},
+      </if>
+       <if test="applyPicImg!= null and '' != applyPicImg" >
+        apply_pic_img = #{applyPicImg,jdbcType=VARCHAR}
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.order.api.dto.AftersaleApply" >
+    update aftersale_apply
+    set apply_no = #{applyNo,jdbcType=VARCHAR},
+      order_no = #{orderNo,jdbcType=VARCHAR},
+      pickup_no = #{pickupNo,jdbcType=VARCHAR},
+      refund_no = #{refundNo,jdbcType=VARCHAR},
+      exchange_order_no = #{exchangeOrderNo,jdbcType=VARCHAR},
+      apply_status = #{applyStatus,jdbcType=VARCHAR},
+      apply_type = #{applyType,jdbcType=VARCHAR},
+      service_approve_date = #{serviceApproveDate,jdbcType=TIMESTAMP},
+      service_approve_desc = #{serviceApproveDesc,jdbcType=VARCHAR},
+      storage_approve_date = #{storageApproveDate,jdbcType=TIMESTAMP},
+      storage_approve_desc = #{storageApproveDesc,jdbcType=VARCHAR},
+      apply_person_id = #{applyPersonId,jdbcType=VARCHAR},
+      apply_person_name = #{applyPersonName,jdbcType=VARCHAR},
+      apply_person_phone = #{applyPersonPhone,jdbcType=VARCHAR},
+      apply_person_address = #{applyPersonAddress,jdbcType=VARCHAR},
+      reason_select = #{reasonSelect,jdbcType=VARCHAR},
+      reason_explain = #{reasonExplain,jdbcType=VARCHAR},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      create_by = #{createBy.id,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+      last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      del_flag = #{delFlag,jdbcType=VARCHAR},
+      order_id=#{order.id,jdbcType=VARCHAR},
+      apply_pic_img = #{applyPicImg,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+   <update id="updateNo" parameterType="map" >
+    update aftersale_apply
+    set 
+     <if test="params.pickupNo!= null and '' != params.pickupNo" >
+        	 pickup_no = #{params.pickupNo,jdbcType=VARCHAR},
+      </if>
+      <if test="params.refundNo!= null and '' != params.refundNo" >
+        	 refund_no = #{params.refundNo,jdbcType=VARCHAR},
+      </if>
+      <if test="params.exchangeOrderNo!= null and '' != params.exchangeOrderNo" >
+        	 exchange_order_no = #{params.exchangeOrderNo,jdbcType=VARCHAR},
+      </if>
+      last_update_date = #{params.lastUpdateDate,jdbcType=TIMESTAMP},
+      storage_approve_date = #{params.storageApproveDate,jdbcType=TIMESTAMP},
+      last_update_by = #{params.lastUpdateBy.id,jdbcType=VARCHAR}
+    where apply_no = #{params.applyNo,jdbcType=VARCHAR}
+  </update>
+</mapper>

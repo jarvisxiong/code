@@ -1,0 +1,132 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.ffzx.order</groupId>
+		<artifactId>order</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<groupId>com.ffzx.commodity.web</groupId>
+	<artifactId>order-web</artifactId>
+	<version>${oms.version}</version>
+	<packaging>war</packaging>
+	<name>order-web Maven Webapp</name>
+	<url>http://maven.apache.org</url>
+	<!--web依赖包版本定义 -->
+	<properties>
+		<jetty.port>8084</jetty.port>
+	</properties>
+	<dependencies>
+			<!-- pms-api引用
+		    <dependency>
+		    	<groupId>com.ffzx.permission.api</groupId>
+		    	<artifactId>pms-api</artifactId>
+		    	<version>0.0.1-SNAPSHOT</version>
+		    </dependency>
+		     -->
+		<!-- parent-web引用 -->
+		<dependency>
+			<groupId>com.ffzx</groupId>
+			<artifactId>parent-web</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+		<!-- order-core引用 -->
+		<dependency>
+			<groupId>com.ffzx.order.core</groupId>
+			<artifactId>order-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<!-- jstl -->
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+		</dependency>
+		
+		<!-- web -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+		</dependency>
+		
+		<!-- EL -->
+		<dependency>  
+		    <groupId>javax.el</groupId>  
+		    <artifactId>javax.el-api</artifactId>  
+		</dependency>
+		
+		<!-- sitemesh -->
+		<dependency>
+		  	<groupId>opensymphony</groupId>
+		  	<artifactId>sitemesh</artifactId>
+		</dependency>
+		
+		<!-- json lib -->
+		<dependency>
+            <groupId>net.sf.json-lib</groupId>
+            <artifactId>json-lib-ext-spring</artifactId>
+        </dependency>
+
+  	</dependencies>
+  
+	<build>
+        <finalName>order-web</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+            </plugin>
+            <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+			</plugin>
+			
+			 <!--  
+		        此plugin可以用  
+		        利用此plugin，把源代码中的xml文件，打包到相应位置，  
+		        这里主要是为了打包打印的模板文件的.jasper文件   
+        	-->  
+	        <plugin>  
+	            <artifactId>maven-resources-plugin</artifactId>  
+	            <version>2.5</version>
+	            <executions>  
+	                <execution>  
+	                    <id>copy-xmls</id>  
+	                    <phase>process-sources</phase>  
+	                    <goals>  
+	                        <goal>copy-resources</goal>  
+	                    </goals>  
+	                    <configuration>  
+	                        <outputDirectory>${basedir}/target/classes</outputDirectory>  
+	                        <resources>  
+	                            <resource>  
+	                                <directory>${basedir}/src/main/java</directory>  
+	                                <includes>  
+	                                    <include>**/*.jasper</include>  
+	                                </includes>  
+	                            </resource>  
+	                        </resources>  
+	                    </configuration>  
+	                </execution>  
+	            </executions>  
+	        </plugin>   
+        </plugins>
+     </build>
+</project>

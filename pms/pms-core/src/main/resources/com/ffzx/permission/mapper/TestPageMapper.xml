@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ffzx.permission.mapper.TestPageMapper" >
+  <resultMap id="BaseResultMap" type="com.ffzx.permission.model.TestPage" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="age" property="age" jdbcType="INTEGER" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy.id" jdbcType="VARCHAR" />
+    <result column="last_update_date" property="lastUpdateDate" jdbcType="TIMESTAMP" />
+    <result column="last_update_by" property="lastUpdateBy.id" jdbcType="VARCHAR" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    o.id, o.name, o.age, o.email, o.create_date, o.create_by as "createBy.id", o.last_update_date, o.last_update_by as "lastUpdateBy.id", o.remarks, o.del_flag,
+    uc.name as "createBy.name",ud.name as "lastUpdateBy.name"    
+  </sql>
+  <sql id="joins">
+  	LEFT JOIN sys_user ud ON ud.id = o.last_update_by
+	LEFT JOIN sys_user uc ON uc.id = o.create_by
+	LEFT JOIN `base_data_db`.office of ON of.id = uc.office_id
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null and '' != params.id" >
+        and o.id = #{params.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.name != null and '' != params.name" >
+        and o.name LIKE CONCAT('%', #{params.name,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test="params.beginAge != null" >
+        and o.age >= #{params.beginAge,jdbcType=INTEGER}
+      </if>
+      <if test="params.endAge != null" >
+        and o.age &lt;= #{params.endAge,jdbcType=INTEGER}
+      </if>
+      <if test="params.email != null and '' != params.email" >
+        and o.email = #{params.email,jdbcType=VARCHAR}
+      </if>
+      <if test="params.beginCreateDate != null and params.endCreateDate != null" >
+        and o.create_date BETWEEN #{params.beginCreateDate,jdbcType=TIMESTAMP} AND #{params.endCreateDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.createBy != null" >
+        and uc.name LIKE CONCAT('%', #{params.createBy.name,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test="params.beginLastUpdateDate != null and params.endLastUpdateDate != null" >
+        and last_update_date BETWEEN #{params.beginLastUpdateDate,jdbcType=TIMESTAMP} AND #{params.endLastUpdateDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.lastUpdateBy != null" >
+        and ud.name LIKE CONCAT('%', #{params.lastUpdateBy.name,jdbcType=VARCHAR}, '%')
+      </if>
+	    <if test="params.createDateBegin != null and ''!=params.createDateBegin" >
+	        and o.create_date &gt;= #{params.createDateBegin,jdbcType=VARCHAR}
+	    </if>
+	    <if test="params.createDateEnd != null and ''!=params.createDateEnd" >
+	        and o.create_date &lt;= #{params.createDateEnd,jdbcType=VARCHAR}
+	    </if>
+	    <if test="params.lastUpdateDateBegin != null and ''!=params.lastUpdateDateBegin" >
+	        and o.last_update_date &gt;= #{params.lastUpdateDateBegin,jdbcType=VARCHAR}
+	    </if>
+	    <if test="params.lastUpdateDateEnd != null and ''!=params.lastUpdateDateEnd" >
+	        and o.last_update_date &lt;= #{params.lastUpdateDateEnd,jdbcType=VARCHAR}
+	    </if>
+	    <if test="params.remarks != null and '' != params.remarks" >
+        	and o.remarks = #{params.remarks,jdbcType=VARCHAR}
+      	</if>
+      	<if test="params.delFlag != null and '' != params.delFlag" >
+        	and o.del_flag = #{params.delFlag,jdbcType=CHAR}
+      	</if>
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from test_page o
+    <include refid="joins" />
+    where o.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from test_page o
+    <include refid="joins" />
+    where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from test_page o
+    <include refid="joins" />
+    where 1=1
+    <include refid="condition" />
+    <if test="params.dsf != null and '' != params.dsf" >
+     	${params.dsf}
+   	</if>
+    <if test="orderByField != null and ''!=orderByField" >
+      order by o.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from test_page
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.permission.model.TestPage" >
+    delete from test_page
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ffzx.permission.model.TestPage" >
+    insert into test_page (id, name, age, 
+      email, create_date, create_by, 
+      last_update_date, last_update_by, remarks, 
+      del_flag)
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, 
+      #{email,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{createBy.id,jdbcType=VARCHAR}, 
+      #{lastUpdateDate,jdbcType=TIMESTAMP}, #{lastUpdateBy.id,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, 
+      #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.permission.model.TestPage" >
+    insert into test_page
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="age != null" >
+        age,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date,
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        #{createBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null" >
+        #{lastUpdateBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.permission.model.TestPage" >
+    update test_page
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.permission.model.TestPage" >
+    update test_page
+    set name = #{name,jdbcType=VARCHAR},
+      age = #{age,jdbcType=INTEGER},
+      email = #{email,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      create_by = #{createBy.id,jdbcType=VARCHAR},
+      last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

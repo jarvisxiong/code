@@ -1,0 +1,573 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ffzx.promotion.mapper.ActivityManagerMapper" >
+  <resultMap id="BaseResultMap" type="com.ffzx.promotion.api.dto.ActivityManager" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="activity_type" property="activityType" jdbcType="VARCHAR" />
+    <result column="activity_no" property="activityNo" jdbcType="VARCHAR" />
+    <result column="release_status" property="releaseStatus" jdbcType="CHAR" />
+    <result column="activity_status" property="activityStatus" jdbcType="CHAR" />
+    <result column="act_status" property="actStatus" jdbcType="CHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
+    <result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
+    <result column="operator" property="operator" jdbcType="VARCHAR" />
+    <result column="show_count_down" property="showCountDown" jdbcType="CHAR" />
+    <result column="pic_path" property="picPath" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy.id" jdbcType="VARCHAR" />
+    <result column="last_update_date" property="lastUpdateDate" jdbcType="TIMESTAMP" />
+    <result column="last_update_by" property="lastUpdateBy.id" jdbcType="VARCHAR" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+    <result column="top_sore" property="topSore" jdbcType="INTEGER" />
+    <result column="app_recommend" property="appRecommend" jdbcType="CHAR" />
+  </resultMap>
+  <resultMap id="BaseResultMapApp" type="com.ffzx.promotion.api.dto.ActivityManager" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
+    <result column="sortdate" property="sortdate" jdbcType="VARCHAR" />
+    <result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    t.id, t.activity_type, t.activity_no, t.release_status, t.activity_status, t.title, 
+    t.start_date, t.end_date, t.operator, t.show_count_down, t.pic_path, t.create_date, 
+    t.create_by as 'createBy.id', t.last_update_date, t.last_update_by as 'lastUpdateBy.id', 
+    t.remarks, t.del_flag, t.top_sore, t.app_recommend
+  </sql>
+  
+  <sql id="App_startdate" >
+    t.id,t.start_date,t.end_date,
+    <!-- t.end_date<now()//已结束3 t.start_date <= now() and t.end_date >= now()
+    	进行中2，未开始1 sortdate-->
+    <!-- 其中已结束的：再次按照结束时间越早，排序越靠前 order_filed -->
+    <!-- 其中进行中的：再次按照开始时间越早，排序越靠前 order_filed -->
+    <!-- 其中即将开始的：再次按照开始时间越早，排序越靠前 order_filed-->
+      <![CDATA[(case when t.start_date <= now() and t.end_date >= now() then 2 
+			   when t.start_date > now() then 1 
+			   else 3 end) as "sortdate",
+			   (case when t.start_date <= now() and t.end_date >= now() then t.start_date 
+			   when t.start_date > now() then t.start_date 
+			   else t.end_date end) as "order_filed"
+			
+      ]]>
+  </sql>
+  
+  <sql id="App_startdate_condition" >
+    <if test="null!=params" >
+      <if test="params.releaseStatus != null and '' != params.releaseStatus" >
+        and t.release_status = #{params.releaseStatus,jdbcType=CHAR}
+      </if>
+      <if test="params.appRecommend != null and '' != params.appRecommend" >
+        and t.app_recommend = #{params.appRecommend,jdbcType=CHAR}
+      </if>
+      
+      <if test="params.activityType != null and '' != params.activityType" >
+        and t.activity_type = #{params.activityType,jdbcType=VARCHAR}
+      </if>
+    </if>
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+    
+      <if test="params.activityids != null and '' != params.activityids" >
+	     and t.id not  in 
+	  	<foreach collection="params.activityids" separator="," open="(" close=")" item="item">
+	       '${item}' 
+	    </foreach>
+      </if>
+      <if test="params.activityIsIds != null and '' != params.activityIsIds" >
+	     and t.id   in 
+	  	<foreach collection="params.activityIsIds" separator="," open="(" close=")" item="item">
+	       '${item}' 
+	    </foreach>
+      </if>
+      <if test="params.id != null and '' != params.id" >
+        and t.id = #{params.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.activityType != null and '' != params.activityType" >
+        and t.activity_type = #{params.activityType,jdbcType=VARCHAR}
+      </if>
+      <if test="params.activityNo != null and '' != params.activityNo" >
+        and t.activity_no = #{params.activityNo,jdbcType=VARCHAR}
+      </if>
+      <if test="params.releaseStatus != null and '' != params.releaseStatus" >
+        and t.release_status = #{params.releaseStatus,jdbcType=CHAR}
+      </if>
+      <if test="params.activityStatus != null and '' != params.activityStatus">
+	   	  <if test="params.activityStatus==0" >
+   				<![CDATA[and t.start_date > #{params.nowDate,jdbcType=TIMESTAMP}]]>
+	   	  </if>
+	   	  <if test="params.activityStatus==1" >
+   				<![CDATA[and t.start_date <= #{params.nowDate,jdbcType=TIMESTAMP}]]>
+   				<![CDATA[and t.end_date >= #{params.nowDate,jdbcType=TIMESTAMP}]]>
+	   	  </if>
+	   	  <if test="params.activityStatus==2">
+   				<![CDATA[and t.end_date < #{params.nowDate,jdbcType=TIMESTAMP}]]>
+	   	  </if>
+	   	  <if test="params.activityStatus==3">
+   				<!-- 除了已结束 -->
+   				<![CDATA[and t.end_date >= #{params.nowDate,jdbcType=TIMESTAMP}]]>
+	   	  </if>
+      </if>
+      <if test="params.title != null and '' != params.title" >
+        and (t.title = #{params.title,jdbcType=VARCHAR} or t.title like CONCAT('%', #{params.title}, '%'))
+      </if>
+      <if test="params.startDate != null" >
+        and t.start_date = #{params.startDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.endDate != null" >
+        and t.end_date = #{params.endDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.operator != null and '' != params.operator" >
+     	and (t.operator = #{params.operator,jdbcType=VARCHAR} or t.operator like CONCAT('%', #{params.operator}, '%'))
+      </if>
+      <if test="params.showCountDown != null and '' != params.showCountDown" >
+        and t.show_count_down = #{params.showCountDown,jdbcType=CHAR}
+      </if>
+      <if test="params.picPath != null and '' != params.picPath" >
+        and t.pic_path = #{params.picPath,jdbcType=VARCHAR}
+      </if>
+      <if test="params.createDate != null" >
+        and t.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.createBy != null and '' != params.createBy" >
+        and t.create_by = #{params.createBy.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.lastUpdateDate != null" >
+        and t.last_update_date = #{params.lastUpdateDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.lastUpdateBy != null and '' != params.lastUpdateBy" >
+        and t.last_update_by = #{params.lastUpdateBy.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.remarks != null and '' != params.remarks" >
+        and t.remarks = #{params.remarks,jdbcType=VARCHAR}
+      </if>
+      <if test="params.delFlag != null and '' != params.delFlag" >
+        and t.del_flag = #{params.delFlag,jdbcType=CHAR}
+      </if>
+      <if test="params.topSore != null" >
+        and t.top_sore = #{params.topSore,jdbcType=INTEGER}
+      </if>
+      <if test="params.status != null and '' != params.status" >
+         and t.activity_status in
+         <foreach collection="params.status" item="item" index="index" 
+		open="(" separator="," close=")">#{item}</foreach>
+      </if>
+      <if test="params.appRecommend != null and '' != params.appRecommend" >
+        and t.app_recommend = #{params.appRecommend,jdbcType=CHAR}
+      </if>
+      <!-- 抢购活动验证活动开始时间是否存在相同的 -->
+      <if test="params.startTime != null" >
+        and DATE_FORMAT(t.start_date,'%Y-%m-%d %H:%i') = DATE_FORMAT(#{params.startTime,jdbcType=TIMESTAMP},'%Y-%m-%d %H:%i')
+      </if>
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from activity_manager t 
+    where t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  
+  <select id="findAppSaleCategory" resultMap="BaseResultMapApp" parameterType="map" >
+    select 
+    <include refid="App_startdate" />
+    from activity_manager t 
+    where 1=1
+    <include refid="App_startdate_condition" />
+    ORDER BY  
+    sortdate ${params.sortdateOrder},  
+    order_filed  ${params.orderFiled} 
+  </select>
+  
+  
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from activity_manager t 
+    where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from activity_manager t  where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from activity_manager t 
+    where 1=1
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <!-- 大麦场列表 -->
+  <select id="selectDMCByPage" resultMap="BaseResultMap" parameterType="map" >
+  	select * from (
+		select 
+			m.id,m.pic_path,m.title,m.start_date,m.end_date, 
+			(case when m.start_date &lt;= now() and m.end_date &gt;= now() then 2 
+			   when m.start_date &gt; now() then 1 else 0 end) as "act_status",
+			(case when m.start_date &lt;= now() and m.end_date &gt;= now() then m.top_sore else 0 end) as "top_sore",
+			(case when m.end_date &gt;= now() then m.start_date else m.end_date end) as "order_filed"
+		from activity_manager m 
+		WHERE 1=1 
+		AND m.release_status = #{params.releaseStatus,jdbcType=CHAR} 
+		AND m.activity_type = #{params.activityType,jdbcType=VARCHAR} 
+	) tmp 
+	where 1=1 
+	<if test="params.actStatus != null and '' != params.actStatus" >
+      and tmp.act_status = #{params.actStatus,jdbcType=CHAR}
+    </if>
+	order by tmp.act_status DESC,tmp.top_sore DESC,tmp.order_filed DESC
+	  	
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from activity_manager
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.promotion.api.dto.ActivityManager" >
+    delete from activity_manager
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ffzx.promotion.api.dto.ActivityManager" >
+    insert into activity_manager (id, activity_type, activity_no, 
+      release_status, activity_status, title, 
+      start_date, end_date, operator, 
+      show_count_down, pic_path, create_date, 
+      create_by, last_update_date, last_update_by, 
+      remarks, del_flag, top_sore, app_recommend)
+    values (#{id,jdbcType=VARCHAR}, #{activityType,jdbcType=VARCHAR}, #{activityNo,jdbcType=VARCHAR}, 
+      #{releaseStatus,jdbcType=CHAR}, #{activityStatus,jdbcType=CHAR}, #{title,jdbcType=VARCHAR}, 
+      #{startDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP}, #{operator,jdbcType=VARCHAR}, 
+      #{showCountDown,jdbcType=CHAR}, #{picPath,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{createBy.id,jdbcType=VARCHAR}, #{lastUpdateDate,jdbcType=TIMESTAMP}, #{lastUpdateBy.id,jdbcType=VARCHAR}, 
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}, #{topSore,jdbcType=INTEGER}, #{appRecommend,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.promotion.api.dto.ActivityManager" >
+    insert into activity_manager
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="activityType != null" >
+        activity_type,
+      </if>
+      <if test="activityNo != null" >
+        activity_no,
+      </if>
+      <if test="releaseStatus != null" >
+        release_status,
+      </if>
+      <if test="activityStatus != null" >
+        activity_status,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="startDate != null" >
+        start_date,
+      </if>
+      <if test="endDate != null" >
+        end_date,
+      </if>
+      <if test="operator != null" >
+        operator,
+      </if>
+      <if test="showCountDown != null" >
+        show_count_down,
+      </if>
+      <if test="picPath != null" >
+        pic_path,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date,
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="topSore != null" >
+        top_sore,
+      </if>
+      <if test="appRecommend != null" >
+        app_recommend,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="activityType != null" >
+        #{activityType,jdbcType=VARCHAR},
+      </if>
+      <if test="activityNo != null" >
+        #{activityNo,jdbcType=VARCHAR},
+      </if>
+      <if test="releaseStatus != null" >
+        #{releaseStatus,jdbcType=CHAR},
+      </if>
+      <if test="activityStatus != null" >
+        #{activityStatus,jdbcType=CHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null" >
+        #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null" >
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="showCountDown != null" >
+        #{showCountDown,jdbcType=CHAR},
+      </if>
+      <if test="picPath != null" >
+        #{picPath,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        #{createBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null" >
+        #{lastUpdateBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="topSore != null" >
+        #{topSore,jdbcType=INTEGER},
+      </if>
+      <if test="appRecommend != null" >
+        #{appRecommend,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.promotion.api.dto.ActivityManager" >
+    update activity_manager
+    <set >
+      <if test="activityType != null" >
+        activity_type = #{activityType,jdbcType=VARCHAR},
+      </if>
+      <if test="activityNo != null" >
+        activity_no = #{activityNo,jdbcType=VARCHAR},
+      </if>
+      <if test="releaseStatus != null" >
+        release_status = #{releaseStatus,jdbcType=CHAR},
+      </if>
+      <if test="activityStatus != null" >
+        activity_status = #{activityStatus,jdbcType=CHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null" >
+        start_date = #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null" >
+        end_date = #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null" >
+        operator = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="showCountDown != null" >
+        show_count_down = #{showCountDown,jdbcType=CHAR},
+      </if>
+      <if test="picPath != null" >
+        pic_path = #{picPath,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="topSore != null" >
+        top_sore = #{topSore,jdbcType=INTEGER},
+      </if>
+      <if test="appRecommend != null" >
+        app_recommend = #{appRecommend,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.promotion.api.dto.ActivityManager" >
+    update activity_manager
+    set activity_type = #{activityType,jdbcType=VARCHAR},
+      activity_no = #{activityNo,jdbcType=VARCHAR},
+      release_status = #{releaseStatus,jdbcType=CHAR},
+      activity_status = #{activityStatus,jdbcType=CHAR},
+      title = #{title,jdbcType=VARCHAR},
+      start_date = #{startDate,jdbcType=TIMESTAMP},
+      end_date = #{endDate,jdbcType=TIMESTAMP},
+      operator = #{operator,jdbcType=VARCHAR},
+      show_count_down = #{showCountDown,jdbcType=CHAR},
+      pic_path = #{picPath,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      create_by = #{createBy.id,jdbcType=VARCHAR},
+      last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR},
+      top_sore = #{topSore,jdbcType=INTEGER},
+      app_recommend = #{appRecommend,jdbcType=CHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <!-- 获取活动 以及明细详情 -->
+  <select id="getActivityDetailList" parameterType="java.util.Map" resultType="com.ffzx.promotion.api.dto.ActivityManager">
+	SELECT
+	    m.id as "id",
+		m.activity_type as "activityType",
+		m.start_date AS "startDate",
+	    m.end_date AS "endDate",
+		c.id as "activityCommodity.id",
+		c.activity_title as "activityCommodity.activityTitle",
+		c.start_date as "activityCommodity.startDate",
+        c.end_date as "activityCommodity.endDate",
+        sku.commodity_no as "activityCommoditySku.commodityNo",
+		sku.activity_price as "activityCommoditySku.activityPrice",
+		sku.commodity_sku_id as "activityCommoditySku.commoditySkuId",
+		sku.selection_start as "activityCommoditySku.selectionStart",
+		sku.selection_end as "activityCommoditySku.selectionEnd"
+	FROM
+		activity_manager m
+		left join activity_commodity c on m.id=c.activity_id
+		left join activity_commodity_sku sku on c.id=sku.activity_commodity_id
+   <where>
+      <if test="params.activityCommodityList != null">
+         and c.id in
+         <foreach collection="params.activityCommodityList" separator="," open="(" close=")" item="item">
+            '${item}'
+         </foreach>
+      </if>
+      <if test="params.skuIds != null">
+         and sku.commodity_sku_id in
+         <foreach collection="params.skuIds" separator="," open="(" close=")" item="item">
+            '${item}'
+         </foreach>
+      </if>
+      <if test="params.commodityCodes != null">
+         and sku.commodity_no in
+         <foreach collection="params.commodityCodes" separator="," open="(" close=")" item="item">
+             '${item}'
+         </foreach>
+      </if>
+   </where>
+   <if test="params.wholeSaleSort != null and params.wholeSaleSort == 'YES'">
+       order by sku.selection_start asc
+   </if>
+  </select>
+  
+  <!-- 查询app推荐列表 -->
+  <select id="selectAppRecommendList" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <![CDATA[(case when t.start_date <= now() and t.end_date >= now() then 1 
+			   when t.start_date > now() then 2 else 0 end) as "sortdate",
+			(case when t.start_date <= now() and t.end_date >= now() then t.start_date 
+			   when t.start_date > now() then t.start_date else t.end_date end) as "order_filed"
+      ]]>
+    from activity_manager t 
+    where 1=1
+    <include refid="condition" />
+    ORDER BY sortdate,order_filed
+  </select>
+  
+  <!-- 验证app推荐数据 -->
+  <select id="findPanicBuyActivityList" resultMap="BaseResultMap" parameterType="map" >
+  	select 
+  		t.id, t.title, t.app_recommend, t.del_flag, t.release_status  
+  	from activity_manager t 
+  	where 1 = 1 
+  	and t.activity_type = #{params.activityType,jdbcType=VARCHAR}
+  	<if test="params.ids != null">
+  	and t.id in 
+  	<foreach collection="params.ids" separator="," open="(" close=")" item="item">
+       '${item}'
+    </foreach>
+    </if>
+  </select>
+  
+  <!-- 修改抢购活动为app推荐 -->
+  <update id="updateAppRecommend" parameterType="java.util.Map" >
+  	update activity_manager
+    set 
+    	app_recommend = #{params.appRecommend,jdbcType=CHAR}
+    where 1=1 
+    <if test="params.ids != null">
+  	and id in 
+  	<foreach collection="params.ids" separator="," open="(" close=")" item="item">
+       '${item}'
+    </foreach>
+    </if>
+  </update>
+  
+  <!-- 验证抢购活动是否存在重叠时间 -->
+  <select id="selectActivityByDate" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from activity_manager t 
+    where 1=1
+    and ((t.start_date &lt;= #{params.startDate,jdbcType=TIMESTAMP} and t.end_date &gt;= #{params.startDate,jdbcType=TIMESTAMP})
+    	or (t.start_date &lt;= #{params.EndDate,jdbcType=TIMESTAMP} and t.end_date &gt;= #{params.EndDate,jdbcType=TIMESTAMP})
+    	or (t.start_date &gt;= #{params.startDate,jdbcType=TIMESTAMP} and t.end_date &lt;= #{params.EndDate,jdbcType=TIMESTAMP})
+    	)
+    and t.activity_type = #{params.activityType,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 根据id查询活动名称 -->
+  <select id="findActivityNameList" parameterType="list" resultType="String">
+  select 
+  t.title
+  from activity_manager t 
+  where 1=1
+  <if test="list != null">
+     and t.id in
+	 <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+	    #{item,jdbcType=VARCHAR}
+	 </foreach>
+  </if>
+  </select>
+</mapper>

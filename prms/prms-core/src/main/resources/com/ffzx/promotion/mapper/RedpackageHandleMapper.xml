@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ffzx.promotion.mapper.RedpackageHandleMapper" >
+  <resultMap id="BaseResultMap" type="com.ffzx.promotion.api.dto.RedpackageHandle" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="handle_date" property="handleDate" jdbcType="TIMESTAMP" />
+    <result column="handle_message" property="handleMessage" jdbcType="VARCHAR" />
+    <result column="handle_name" property="handleName" jdbcType="VARCHAR" />
+    <result column="redpackage_id" property="redpackageId" jdbcType="VARCHAR" />
+    <result column="redpackage_grant_id" property="redpackageGrantId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    t.id, t.handle_date, t.handle_message, t.handle_name, t.redpackage_id, t.redpackage_grant_id
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null and '' != params.id" >
+        and t.id = #{params.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.handleDate != null" >
+        and t.handle_date = #{params.handleDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.handleMessage != null and '' != params.handleMessage" >
+        and t.handle_message = #{params.handleMessage,jdbcType=VARCHAR}
+      </if>
+      <if test="params.handleName != null and '' != params.handleName" >
+        and t.handle_name = #{params.handleName,jdbcType=VARCHAR}
+      </if>
+      <if test="params.redpackageId != null and '' != params.redpackageId" >
+        and t.redpackage_id = #{params.redpackageId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.redpackageGrantId != null and '' != params.redpackageGrantId" >
+        and t.redpackage_grant_id = #{params.redpackageGrantId,jdbcType=VARCHAR}
+      </if>
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from redpackage_handle t 
+    where t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from redpackage_handle t 
+    where 1=1
+    <include refid="condition" />
+    <if test="params.orderByField != null and ''!=params.orderByField" >
+      order by t.${params.orderByField} 
+      <if test="params.orderByField" >
+        ${params.orderBy}
+      </if>
+     </if>
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from redpackage_handle t  where 1=1
+    <include refid="condition" />
+    
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from redpackage_handle t 
+    where 1=1
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from redpackage_handle
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.promotion.api.dto.RedpackageHandle" >
+    delete from redpackage_handle
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ffzx.promotion.api.dto.RedpackageHandle" >
+    insert into redpackage_handle (id, handle_date, handle_message, 
+      handle_name, redpackage_id, redpackage_grant_id
+      )
+    values (#{id,jdbcType=VARCHAR}, #{handleDate,jdbcType=TIMESTAMP}, #{handleMessage,jdbcType=VARCHAR}, 
+      #{handleName,jdbcType=VARCHAR}, #{redpackageId,jdbcType=VARCHAR}, #{redpackageGrantId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.promotion.api.dto.RedpackageHandle" >
+    insert into redpackage_handle
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="handleDate != null" >
+        handle_date,
+      </if>
+      <if test="handleMessage != null" >
+        handle_message,
+      </if>
+      <if test="handleName != null" >
+        handle_name,
+      </if>
+      <if test="redpackageId != null" >
+        redpackage_id,
+      </if>
+      <if test="redpackageGrantId != null" >
+        redpackage_grant_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="handleDate != null" >
+        #{handleDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="handleMessage != null" >
+        #{handleMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="handleName != null" >
+        #{handleName,jdbcType=VARCHAR},
+      </if>
+      <if test="redpackageId != null" >
+        #{redpackageId,jdbcType=VARCHAR},
+      </if>
+      <if test="redpackageGrantId != null" >
+        #{redpackageGrantId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.promotion.api.dto.RedpackageHandle" >
+    update redpackage_handle
+    <set >
+      <if test="handleDate != null" >
+        handle_date = #{handleDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="handleMessage != null" >
+        handle_message = #{handleMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="handleName != null" >
+        handle_name = #{handleName,jdbcType=VARCHAR},
+      </if>
+      <if test="redpackageId != null" >
+        redpackage_id = #{redpackageId,jdbcType=VARCHAR},
+      </if>
+      <if test="redpackageGrantId != null" >
+        redpackage_grant_id = #{redpackageGrantId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.promotion.api.dto.RedpackageHandle" >
+    update redpackage_handle
+    set handle_date = #{handleDate,jdbcType=TIMESTAMP},
+      handle_message = #{handleMessage,jdbcType=VARCHAR},
+      handle_name = #{handleName,jdbcType=VARCHAR},
+      redpackage_id = #{redpackageId,jdbcType=VARCHAR},
+      redpackage_grant_id = #{redpackageGrantId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

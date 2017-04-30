@@ -1,0 +1,2411 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ffzx.order.mapper.OmsOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.ffzx.order.api.dto.OmsOrder" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="pay_order_no" property="payOrderNo" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="pay_type" property="payType" jdbcType="VARCHAR" />
+    <result column="buy_type" property="buyType" jdbcType="VARCHAR" />
+    <result column="member_id" property="memberId" jdbcType="VARCHAR" />
+    <result column="member_name" property="memberName" jdbcType="VARCHAR" />
+    <result column="member_phone" property="memberPhone" jdbcType="VARCHAR" />
+    <result column="buy_count" property="buyCount" jdbcType="INTEGER" />
+    <result column="partner_id" property="partnerId" jdbcType="VARCHAR" />
+    <result column="total_price" property="totalPrice" jdbcType="DECIMAL" />
+    <result column="send_cost" property="sendCost" jdbcType="DECIMAL" />
+    <result column="favorable_price" property="favorablePrice" jdbcType="DECIMAL" />
+    <result column="actual_price" property="actualPrice" jdbcType="DECIMAL" />
+    <result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
+    <result column="charge_back_time" property="chargeBackTime" jdbcType="TIMESTAMP" />
+    <result column="finish_time" property="finishTime" jdbcType="TIMESTAMP" />
+    <result column="send_commodity_time" property="sendCommodityTime" jdbcType="TIMESTAMP" />
+    <result column="pre_send_commodity_time" property="preSendCommodityTime" jdbcType="TIMESTAMP" />
+    <result column="last_print_time" property="lastPrintTime" jdbcType="TIMESTAMP" />
+    <result column="print_count" property="printCount" jdbcType="INTEGER" />
+    <result column="storage_id" property="storageId" jdbcType="VARCHAR" />
+    <result column="send_person" property="sendPerson" jdbcType="VARCHAR" />
+    <result column="charge_back_opr" property="chargeBackOpr" jdbcType="VARCHAR" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="area" property="area" jdbcType="VARCHAR" />
+    <result column="address_info" property="addressInfo" jdbcType="VARCHAR" />
+    <result column="consign_phone" property="consignPhone" jdbcType="VARCHAR" />
+    <result column="consign_name" property="consignName" jdbcType="VARCHAR" />
+    <result column="charge_id" property="chargeId" jdbcType="VARCHAR" />
+    <result column="is_invoice" property="isInvoice" jdbcType="VARCHAR" />
+    <result column="invoice_desc" property="invoiceDesc" jdbcType="VARCHAR" />
+    <result column="allocation_error" property="allocationError" jdbcType="VARCHAR" />
+    <result column="coupon_id" property="couponId" jdbcType="VARCHAR" />
+    <result column="coupon_name" property="couponName" jdbcType="VARCHAR" />
+    <result column="coupon_amount" property="couponAmount" jdbcType="DECIMAL" />
+    <result column="order_source" property="orderSource" jdbcType="VARCHAR" />
+    <result column="cur_loistics_status" property="curLoisticsStatus" jdbcType="VARCHAR" />
+    <result column="out_order_status" property="outOrderStatus" jdbcType="VARCHAR" />
+    <result column="activity_no" property="activityNo" jdbcType="VARCHAR" />
+    <result column="order_type" property="orderType" jdbcType="VARCHAR" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy.id" jdbcType="VARCHAR" />
+    <result column="last_update_date" property="lastUpdateDate" jdbcType="TIMESTAMP" />
+    <result column="last_update_by" property="lastUpdateBy.id" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+    <result column="member_account" property="memberAccount" jdbcType="VARCHAR" />
+    <result column="send_person_name" property="sendPersonName" jdbcType="VARCHAR" />
+    <result column="send_person_phone" property="sendPersonPhone" jdbcType="VARCHAR" />
+    <result column="service_point" property="servicePoint" jdbcType="VARCHAR" />
+    <result column="warehouse_code" property="warehouseCode" jdbcType="VARCHAR" />
+    
+    <result column="region_id" property="regionId" jdbcType="VARCHAR" />
+    <result column="region_name" property="regionName" jdbcType="VARCHAR" />
+    <result column="detailed_address" property="detailedAddress" jdbcType="VARCHAR" />
+    <result column="partner_code" property="partnerCode" jdbcType="VARCHAR" />
+    <result column="storage_name" property="storageName" jdbcType="VARCHAR" />
+    <result column="over_time" property="overTime" jdbcType="TIMESTAMP" />
+    <result column="is_supplier" property="isSupplier" jdbcType="VARCHAR" />
+    <result column="distribution_date" property="distributionDate" jdbcType="TIMESTAMP" />
+    <result column="operation_Record" property="operationRecord" jdbcType="VARCHAR"/>
+    <result column="operation_Date" property="operationDate" jdbcType="TIMESTAMP"/>
+    <result column="tran_time" property="tranTime" jdbcType="TIMESTAMP"/>
+    
+    <result column="county_store_id" property="countyStoreId" jdbcType="VARCHAR" />
+    <result column="county_store_code" property="countyStoreCode" jdbcType="VARCHAR" />
+    <result column="county_store_name" property="countyStoreName" jdbcType="VARCHAR" />
+    <result column="del_for_user" property="delForUser" jdbcType="CHAR" />
+    
+    <result column="supply_flag" property="supplyFlag" jdbcType="CHAR" />
+    <result column="supply_date" property="supplyDate" jdbcType="TIMESTAMP"/>
+    
+    <result column="total_red_amount" property="totalRedAmount" jdbcType="DECIMAL" />
+    
+    <result column="service_station_id" property="serviceStationId" jdbcType="VARCHAR" />
+    <result column="service_station_code" property="serviceStationCode" jdbcType="VARCHAR" />
+    <result column="service_station_name" property="serviceStationName" jdbcType="VARCHAR" />
+    <result column="is_partner_order" property="isPartnerOrder" jdbcType="VARCHAR" />
+    
+  </resultMap>
+  
+	<resultMap type="com.ffzx.order.api.dto.OmsOrder" id="unionDetailsResultMap" extends="BaseResultMap">
+		<collection property="detailList"  ofType="com.ffzx.order.api.dto.OmsOrderdetail" >
+	    <id column="did" property="id" jdbcType="VARCHAR" />
+	    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+	    <result column="d_order_no" property="orderNo" jdbcType="VARCHAR" />
+	    <result column="commodity_no" property="commodityNo" jdbcType="VARCHAR" />
+	    <result column="commodity_title" property="commodityTitle" jdbcType="VARCHAR" />
+	    <result column="commodity_image" property="commodityImage" jdbcType="VARCHAR" />
+	    <result column="commodity_barcode" property="commodityBarcode" jdbcType="VARCHAR" />
+	    <result column="commodity_specifications" property="commoditySpecifications" jdbcType="VARCHAR" />
+	    <result column="commodity_unit" property="commodityUnit" jdbcType="VARCHAR" />
+	    <result column="commodity_price" property="commodityPrice" jdbcType="DECIMAL" />
+	    <result column="act_pay_amount" property="actPayAmount" jdbcType="DECIMAL" />
+	    <result column="buy_num" property="buyNum" jdbcType="INTEGER" />
+	    <result column="ready_send_time" property="readySendTime" jdbcType="TIMESTAMP" />
+	    <result column="activity_commodity_item_id" property="activityCommodityItemId" jdbcType="VARCHAR" />
+	    <result column="activity_id" property="activityId" jdbcType="VARCHAR" />
+	    <result column="d_member_id" property="memberId" jdbcType="VARCHAR" />
+	    <result column="order_detail_status" property="orderDetailStatus" jdbcType="VARCHAR" />
+	    <result column="commodity_attribute_values" property="commodityAttributeValues" jdbcType="VARCHAR" />
+	    <result column="sku_id" property="skuId" jdbcType="VARCHAR" />
+	    <result column="sku_code" property="skuCode" jdbcType="VARCHAR" />
+	    <result column="favoured_amount" property="favouredAmount" jdbcType="DECIMAL" />
+	    <result column="d_buy_type" property="buyType" jdbcType="VARCHAR" />
+	    <result column="act_sale_price" property="actSalePrice" jdbcType="DECIMAL" />
+	    <result column="warehouse_id" property="warehouseId" jdbcType="VARCHAR" />
+	    <result column="d_warehouse_code" property="warehouseCode" jdbcType="VARCHAR" />
+	    <result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+	    
+	    <result column="trigger_num" property="triggerNum" jdbcType="INTEGER" />
+   		<result column="single_gift_num" property="singleGiftNum" jdbcType="INTEGER" />
+        <result column="warehouse_appoint" property="warehouseAppoint" jdbcType="VARCHAR" />
+        <result column="buy_gifts" property="buyGifts" jdbcType="VARCHAR" />
+        <result column="promotions" property="promotions" jdbcType="VARCHAR" />
+    
+        <result column="red_packet_ids" property="redPacketIds" jdbcType="VARCHAR" />
+        <result column="red_packet_use_ids" property="redPacketUseIds" jdbcType="VARCHAR" />
+        <result column="red_packet_names" property="redPacketNames" jdbcType="VARCHAR" />
+        <result column="red_packet_amount" property="redPacketAmount" jdbcType="DECIMAL" />
+
+        <result column="virtual_gd_id" property="virtualGdId" jdbcType="VARCHAR" />
+        <result column="virtual_gd_code" property="virtualGdCode" jdbcType="VARCHAR" />
+        <result column="virtual_gd_name" property="virtualGdName" jdbcType="VARCHAR" />
+		<association property="order" resultMap="BaseResultMap"></association>
+		</collection>
+	</resultMap>
+  
+  <resultMap type="com.ffzx.order.api.dto.OmsOrder" id="unionDetailsResultMap_export" extends="BaseResultMap">
+		<collection property="detailList"  ofType="com.ffzx.order.api.dto.OmsOrderdetail" >
+	    <id column="did" property="id" jdbcType="VARCHAR" />
+	    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+	    <result column="d_order_no" property="orderNo" jdbcType="VARCHAR" />
+	    <result column="commodity_no" property="commodityNo" jdbcType="VARCHAR" />
+	    <result column="commodity_title" property="commodityTitle" jdbcType="VARCHAR" />
+	    <result column="commodity_image" property="commodityImage" jdbcType="VARCHAR" />
+	    <result column="commodity_barcode" property="commodityBarcode" jdbcType="VARCHAR" />
+	    <result column="commodity_specifications" property="commoditySpecifications" jdbcType="VARCHAR" />
+	    <result column="commodity_unit" property="commodityUnit" jdbcType="VARCHAR" />
+	    <result column="commodity_price" property="commodityPrice" jdbcType="DECIMAL" />
+	    <result column="act_pay_amount" property="actPayAmount" jdbcType="DECIMAL" />
+	    <result column="buy_num" property="buyNum" jdbcType="INTEGER" />
+	    <result column="ready_send_time" property="readySendTime" jdbcType="TIMESTAMP" />
+	    <result column="activity_commodity_item_id" property="activityCommodityItemId" jdbcType="VARCHAR" />
+	    <result column="activity_id" property="activityId" jdbcType="VARCHAR" />
+	    <result column="d_member_id" property="memberId" jdbcType="VARCHAR" />
+	    <result column="order_detail_status" property="orderDetailStatus" jdbcType="VARCHAR" />
+	    <result column="commodity_attribute_values" property="commodityAttributeValues" jdbcType="VARCHAR" />
+	    <result column="sku_id" property="skuId" jdbcType="VARCHAR" />
+	    <result column="sku_code" property="skuCode" jdbcType="VARCHAR" />
+	    <result column="favoured_amount" property="favouredAmount" jdbcType="DECIMAL" />
+	    <result column="d_buy_type" property="buyType" jdbcType="VARCHAR" />
+	    <result column="act_sale_price" property="actSalePrice" jdbcType="DECIMAL" />
+	    <result column="warehouse_id" property="warehouseId" jdbcType="VARCHAR" />
+	    <result column="d_warehouse_code" property="warehouseCode" jdbcType="VARCHAR" />
+	    <result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+	    
+	    <result column="c_id" property="commodity.id" jdbcType="VARCHAR" />
+	    <result column="c_name" property="commodity.name" jdbcType="VARCHAR" />
+	    <result column="c_vendor_id" property="commodity.vendorId" jdbcType="VARCHAR" />
+	    <result column="c_vendor_name" property="commodity.vendorName" jdbcType="VARCHAR" />
+	    <result column="c_vendor_code" property="commodity.vendorCode" jdbcType="VARCHAR" />
+	    
+		<association property="order" resultMap="BaseResultMap"></association>
+		</collection>
+	</resultMap>
+
+  <sql id="Base_Column_List" >
+    t.id, t.order_no, t.pay_order_no, t.status, t.pay_type, t.buy_type, t.member_id, 
+    t.member_name, t.member_phone, t.buy_count, t.partner_id, t.total_price, t.send_cost, 
+    t.favorable_price, t.actual_price, t.pay_time, t.charge_back_time, t.finish_time, 
+    t.send_commodity_time, t.pre_send_commodity_time, t.last_print_time, t.print_count, 
+    t.storage_id, t.send_person, t.charge_back_opr, t.province, t.city, t.area, t.address_info, 
+    t.consign_phone, t.consign_name, t.charge_id, t.is_invoice, t.invoice_desc,t.allocation_error, t.coupon_id, 
+    t.coupon_name, t.coupon_amount, t.order_source, t.cur_loistics_status, t.out_order_status, 
+    t.activity_no, t.order_type, t.remarks, t.create_date, t.create_by as 'createBy.id', 
+    t.last_update_date, t.last_update_by as 'lastUpdateBy.id', t.del_flag, t.member_account
+    , t.send_person_name,t.send_person_phone,t.service_point, t.warehouse_code,t.region_id,t.region_name,
+    t.detailed_address,t.partner_code,t.storage_name,t.over_time,t.is_supplier,t.distribution_date,t.operation_Record
+    ,t.operation_Date,t.tran_time,t.county_store_id,t.county_store_code,t.county_store_name,t.del_for_user,
+    t.supply_flag,t.supply_date,total_red_amount
+    ,t.service_station_id
+	,t.service_station_code
+	,t.service_station_name
+	,t.is_partner_order
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null and '' != params.id" >
+        and t.id = #{params.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.ids != null and '' != params.ids" >
+        and t.id in (${params.ids})
+      </if>
+      <if test="params.orderNo_like != null and '' != params.orderNo_like" >
+        and t.order_no like '%${params.orderNo_like}%'
+      </if>
+       <if test="params.memberPhone_like != null and '' != params.memberPhone_like" >
+        and t.member_phone like concat('%', #{params.memberPhone_like,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="params.orderNo != null and '' != params.orderNo" >
+        and t.order_no = #{params.orderNo,jdbcType=VARCHAR}
+      </if>
+      <if test="params.payOrderNo != null and '' != params.payOrderNo" >
+        and t.pay_order_no = #{params.payOrderNo,jdbcType=VARCHAR}
+      </if>
+      <if test="params.status != null and '' != params.status" >
+        and t.status = #{params.status,jdbcType=VARCHAR}
+      </if>
+      <if test="params.statusStr != null and '' != params.statusStr" >
+        and t.status in ${params.statusStr}
+      </if>
+      <if test="params.payType != null and '' != params.payType" >
+        and t.pay_type = #{params.payType,jdbcType=VARCHAR}
+      </if>
+      <if test="params.buyType != null and '' != params.buyType" >
+        and t.buy_type = #{params.buyType,jdbcType=VARCHAR}
+      </if>
+      <if test="params.memberId != null and '' != params.memberId" >
+        and t.member_id = #{params.memberId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.memberName != null and '' != params.memberName" >
+        and t.member_name = #{params.memberName,jdbcType=VARCHAR}
+      </if>
+      <if test="params.memberPhone != null and '' != params.memberPhone" >
+        and t.member_phone = #{params.memberPhone,jdbcType=VARCHAR}
+      </if>
+      <if test="params.buyCount != null" >
+        and t.buy_count = #{params.buyCount,jdbcType=INTEGER}
+      </if>
+      <if test="params.partnerId != null and '' != params.partnerId" >
+        and t.partner_id = #{params.partnerId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.totalPrice != null" >
+        and t.total_price = #{params.totalPrice,jdbcType=DECIMAL}
+      </if>
+      <if test="params.sendCost != null" >
+        and t.send_cost = #{params.sendCost,jdbcType=DECIMAL}
+      </if>
+      <if test="params.favorablePrice != null" >
+        and t.favorable_price = #{params.favorablePrice,jdbcType=DECIMAL}
+      </if>
+      <if test="params.actualPrice != null" >
+        and t.actual_price = #{params.actualPrice,jdbcType=DECIMAL}
+      </if>
+      <if test="params.payTime != null" >
+        and t.pay_time = #{params.payTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.payTimeNotNull != null" >
+        and t.pay_time != null
+      </if>
+      <if test="params.payDay != null" >
+        and DATE_FORMAT(t.pay_time,'%Y-%m-%d') &lt;= #{params.payDay ,jdbcType=VARCHAR}
+      </if>
+      <if test="params.payTimeStart != null and '' != params.payTimeStart">
+			and t.pay_time &gt;= #{params.payTimeStart,jdbcType=TIMESTAMP}
+	  </if>
+	  <if test="params.payTimeEnd != null and '' != params.payTimeEnd">
+			and t.pay_time &lt;= #{params.payTimeEnd,jdbcType=TIMESTAMP}
+	  </if>
+      <if test="params.chargeBackTime != null" >
+        and t.charge_back_time = #{params.chargeBackTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.finishTime != null" >
+        and t.finish_time = #{params.finishTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.sendCommodityTime != null" >
+        and t.send_commodity_time = #{params.sendCommodityTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.preSendCommodityTime != null" >
+        and t.pre_send_commodity_time = #{params.preSendCommodityTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.lastPrintTime != null" >
+        and t.last_print_time = #{params.lastPrintTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.printCount != null" >
+        and t.print_count = #{params.printCount,jdbcType=INTEGER}
+      </if>
+      <if test="params.storageId != null and '' != params.storageId" >
+        and t.storage_id = #{params.storageId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.sendPerson !=null and params.sendPerson !='' ">
+        and t.send_person = #{params.sendPerson,jdbcType=VARCHAR}
+      </if>
+      <if test="params.isPerson == 1">
+        and (t.send_person is  null or t.send_person = '')
+      </if>
+      <if test="params.chargeBackOpr != null and '' != params.chargeBackOpr" >
+        and t.charge_back_opr = #{params.chargeBackOpr,jdbcType=VARCHAR}
+      </if>
+      <if test="params.province != null and '' != params.province" >
+        and t.province = #{params.province,jdbcType=VARCHAR}
+      </if>
+      <if test="params.city != null and '' != params.city" >
+        and t.city = #{params.city,jdbcType=VARCHAR}
+      </if>
+      <if test="params.area != null and '' != params.area" >
+        and t.area = #{params.area,jdbcType=VARCHAR}
+      </if>
+      <if test="params.addressInfo != null and '' != params.addressInfo" >
+        and t.address_info = #{params.addressInfo,jdbcType=VARCHAR}
+      </if>
+      <if test="params.consignPhone != null and '' != params.consignPhone" >
+        and t.consign_phone = #{params.consignPhone,jdbcType=VARCHAR}
+      </if>
+      <if test="params.consignName != null and '' != params.consignName" >
+        and t.consign_name = #{params.consignName,jdbcType=VARCHAR}
+      </if>
+      <if test="params.chargeId != null and '' != params.chargeId" >
+        and t.charge_id = #{params.chargeId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.isInvoice != null and '' != params.isInvoice" >
+        and t.is_invoice = #{params.isInvoice,jdbcType=VARCHAR}
+      </if>
+      <if test="params.invoiceDesc != null and '' != params.invoiceDesc" >
+        and t.invoice_desc = #{params.invoiceDesc,jdbcType=VARCHAR}
+      </if>
+      <if test="params.allocationError != null and '' != params.allocationError" >
+        and t.allocation_error = #{params.allocationError,jdbcType=VARCHAR}
+      </if>
+      <if test="params.couponId != null and '' != params.couponId" >
+        and t.coupon_id = #{params.couponId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.couponName != null and '' != params.couponName" >
+        and t.coupon_name = #{params.couponName,jdbcType=VARCHAR}
+      </if>
+      <if test="params.couponAmount != null" >
+        and t.coupon_amount = #{params.couponAmount,jdbcType=DECIMAL}
+      </if>
+      <if test="params.orderSource != null and '' != params.orderSource" >
+        and t.order_source = #{params.orderSource,jdbcType=VARCHAR}
+      </if>
+      <if test="params.curLoisticsStatus != null and '' != params.curLoisticsStatus" >
+        and t.cur_loistics_status = #{params.curLoisticsStatus,jdbcType=VARCHAR}
+      </if>
+      <if test="params.outOrderStatus != null and '' != params.outOrderStatus" >
+        and t.out_order_status = #{params.outOrderStatus,jdbcType=VARCHAR}
+      </if>
+      <if test="params.activityNo != null and '' != params.activityNo" >
+        and t.activity_no = #{params.activityNo,jdbcType=VARCHAR}
+      </if>
+      <if test="params.orderType != null and '' != params.orderType" >
+        and t.order_type = #{params.orderType,jdbcType=VARCHAR}
+      </if>
+      <if test="params.remarks != null and '' != params.remarks" >
+        and t.remarks = #{params.remarks,jdbcType=VARCHAR}
+      </if>
+      <if test="params.createDate != null" >
+        and t.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.createDateStart != null and '' != params.createDateStart">
+			and t.create_date &gt;= #{params.createDateStart,jdbcType=TIMESTAMP}
+	  </if>
+	  <if test="params.createDateEnd != null and '' != params.createDateEnd">
+			and t.create_date &lt;= #{params.createDateEnd,jdbcType=TIMESTAMP}
+	  </if>
+      <if test="params.createBy != null and '' != params.createBy" >
+        and t.create_by = #{params.createBy.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.lastUpdateDate != null" >
+        and t.last_update_date = #{params.lastUpdateDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.lastUpdateBy != null and '' != params.lastUpdateBy" >
+        and t.last_update_by = #{params.lastUpdateBy.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.delFlag != null and '' != params.delFlag" >
+        and t.del_flag = #{params.delFlag,jdbcType=CHAR}
+      </if>
+      <if test="params.addressInfo_like != null and '' != params.addressInfo_like" >
+        and t.address_info like CONCAT('%','${params.addressInfo_like}','%' ) 
+      </if>
+      
+      <if test="params.actualPriceStart != null and '' != params.actualPriceStart" >
+        and t.actual_price &gt;= #{params.actualPriceStart,jdbcType=DECIMAL}
+      </if>
+      <if test="params.actualPriceEnd != null and '' != params.actualPriceEnd" >
+        and t.actual_price &lt;= #{params.actualPriceEnd,jdbcType=DECIMAL}
+      </if>
+       <if test="params.partnerCode != null and '' != params.partnerCode" >
+        and t.partner_code &lt;= #{params.partnerCode,jdbcType=DECIMAL}
+      </if>
+       <if test="params.storageName != null and '' != params.storageName" >
+        and t.storage_name &lt;= #{params.storageName,jdbcType=DECIMAL}
+      </if>
+      <if test="params.overTime != null and '' != params.overTime">
+		and t.over_time = #{params.overTime,jdbcType=TIMESTAMP}
+	  </if>
+	  <if test="params.isSupplier != null and '' != params.isSupplier" >
+        and t.is_supplier = #{params.isSupplier,jdbcType=VARCHAR}
+      </if>
+      <if test="params.operationRecord != null and '' != params.operationRecord">
+      	and t.operation_Record = #{params.operationRecord,jdbcType=VARCHAR}
+      </if>
+      <if test="params.operationDate != null and '' != params.operationDate">
+      	and t.operation_Date = #{params.operationDate,jdbcType=TIMESTAMP}
+      </if>
+       <if test="params.tranTime!= null and '' != params.tranTime">
+      	and t.tran_time = #{params.tranTime,jdbcType=TIMESTAMP}
+      </if>
+      
+       <if test="params.countyStoreId != null  and '' != params.countyStoreId">
+			and t.county_store_id=#{countyStoreId,jdbcType=VARCHAR}
+		</if>
+		<if test="params.countyStoreCode != null   and '' != params.countyStoreCode">
+			and t.county_store_code=#{countyStoreCode,jdbcType=VARCHAR}
+		</if>
+		<if test="params.countyStoreName != null  and '' != params.countyStoreName">
+			and t.county_store_name=#{countyStoreName,jdbcType=VARCHAR}
+		</if>
+		<if test="params.delForUser != null  and '' != params.delForUser">
+			and t.del_for_user=#{delForUser,jdbcType=CHAR}
+		</if>
+		<if test="params.unDeletedByUser != null  and '' != params.unDeletedByUser">
+            and (t.del_for_user is null or t.del_for_user='0')
+        </if>
+        <if test="params.afterSaleNo != null and '' != params.afterSaleNo">
+            and t.order_no in (
+              select order_no from aftersale_apply where apply_no=#{params.afterSaleNo,jdbcType=VARCHAR}
+            )
+        </if>
+        
+      <if test="params.orderIdList != null and '' != params.orderIdList " >
+         and t.id in
+         <foreach collection="params.orderIdList " item="item" index="index" 
+		open="(" separator="," close=")">#{item}</foreach>
+      </if>
+        
+       <if test="params.supplyFlag != null and '' != params.supplyFlag">
+      	and t.supply_flag = #{params.supplyFlag,jdbcType=CHAR}
+      </if>
+      
+      <if test="params.totalRedAmount != null and '' != params.totalRedAmount">
+      	and t.total_red_amount = #{params.totalRedAmount,jdbcType=CHAR}
+      </if>
+      <if test="params.tranTimeStart != null and '' != params.tranTimeStart">
+			and t.tran_time &gt;= #{params.tranTimeStart,jdbcType=TIMESTAMP}
+	  </if>
+	  <if test="params.tranTimeEnd != null and '' != params.tranTimeStart">
+			and t.tran_time &lt;= #{params.tranTimeStart,jdbcType=TIMESTAMP}
+	  </if>
+	   <if test="params.endDateCode != null and '' != params.endDateCode">
+       and  to_days(now())-to_days(t.tran_time) &lt;15
+      </if>
+       <if test="params.settlementFlag2No != null">
+       and  (t.settlement_flag !=1 or t.settlement_flag is null)
+      </if>
+      <if test="params.notPartnerOrder != null">
+	  and (t.is_partner_order !='1'or t.is_partner_order is null)
+	  </if>
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from oms_order t 
+    where t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+    <select id="selectByPrimayOrderNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from oms_order t 
+    where t.order_no = #{orderNo,jdbcType=VARCHAR}
+  </select>
+  
+  
+    <select id="selectByKey" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from oms_order t 
+     where 1=1
+    <include refid="condition" />
+  </select>
+  
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from oms_order t 
+    where 1=1
+    <include refid="condition" />
+       <if test="null!=params" >
+    <if test="null!=params.detailSettlementFlag2No or null!=params.commodityTitle_like or null!=params.orderDetailStatus or null!=params.skubarcode_like or null!=params.od_orderDetailStatusList or null!=params.od_title_bar_like or null!=params.od_buyTypeList">
+	and EXISTS (select 1 from oms_orderdetail d where d.order_no=t.order_no
+		<if test="params.detailSettlementFlag2No != null">
+       and  (d.settlement_flag !=1 or t.settlement_flag is null) and d.pifa_price is not null
+       </if>
+		
+		<if test="null!=params.od_title_bar_like and ''!=params.od_title_bar_like" >
+			and (d.commodity_title like '%${params.od_title_bar_like}%' or d.commodity_barcode like '%${params.od_title_bar_like}%')
+		</if>
+		<if test="null!=params.commodityTitle_like and ''!=params.commodityTitle_like" >
+			and d.commodity_title like '%${params.commodityTitle_like}%'
+		</if>
+		<if test="null!=params.skubarcode_like and ''!=params.skubarcode_like" >
+			and d.commodity_barcode like '%${params.skubarcode_like}%'
+		</if>
+		<if test="params.orderDetailStatus != null and '' != params.orderDetailStatus" >
+        	and d.order_detail_status = #{params.orderDetailStatus,jdbcType=VARCHAR}
+      	</if>
+      	<if test="params.commodityType != null and '' != params.commodityType" >
+        	and d.commodity_type = #{params.commodityType,jdbcType=VARCHAR}
+      	</if>
+      	<if test="params.od_orderDetailStatusList != null and '' != params.od_orderDetailStatusList" >
+        	and d.order_detail_status in
+        	 <foreach collection="params.od_orderDetailStatusList" item="item" separator="," open="(" close=")">
+              #{item}
+         	</foreach>
+      	</if>
+      	<if test="params.od_buyTypeList != null and '' != params.od_buyTypeList" >
+        	and d.buy_type in
+        	 <foreach collection="params.od_buyTypeList" item="item" separator="," open="(" close=")">
+              #{item}
+         	</foreach>
+      	</if>
+      	)
+	</if>
+	 </if>
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from oms_order t  where 1=1
+    <include refid="condition" />
+  </select>
+  
+    <select id="selectStatusCount" resultType="map" >
+      SELECT
+	ifnull(SUM(
+		CASE
+		WHEN t. STATUS = '0' THEN
+			1
+		ELSE
+			0
+		END
+	),0) AS "unpayCount",
+	ifnull(SUM(
+		CASE
+		WHEN t. STATUS = '1' THEN
+			1
+		ELSE
+			0
+		END
+	),0) AS "unreceiptCount"
+		from oms_order t where 1=1
+    <include refid="condition" />
+  </select>
+  <!-- 统计售后数量  -->
+  <select id="selectAfterSaleCount_old" resultType="map" >
+ 	SELECT ifnull(COUNT(1),0) AS "refundCount"  
+ 	FROM  aftersale_apply t 
+	where 1=1
+	<if test="null!=params" >
+      <if test="params.memberId != null and '' != params.memberId" >
+        and t.apply_person_id = #{params.memberId,jdbcType=VARCHAR}
+      </if>
+	</if>
+    and t.apply_status !=2
+  </select>
+  <select id="selectAfterSaleCount" resultType="map" >
+ 	SELECT 
+		ifnull(COUNT(1),0) AS "refundCount" 
+	from 
+	(
+	SELECT
+	DISTINCT apply.apply_no
+	FROM
+	aftersale_apply_item _item
+	LEFT JOIN aftersale_apply apply ON apply.apply_no = _item.apply_no
+	where 1=1
+	<if test="null!=params" >
+      <if test="params.memberId != null and '' != params.memberId" >
+        and apply.apply_person_id = #{params.memberId,jdbcType=VARCHAR}
+      </if>
+	</if>
+	and apply.apply_status !=2
+	and _item.aftersale_status not  in ('3','4')
+	)tmp 
+  </select>
+
+
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from oms_order t 
+    where 1=1
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <select id="selectPageOrder"  resultMap="unionDetailsResultMap" parameterType="map">
+       SELECT
+			t.id,
+			t.order_no,
+			t.pay_order_no,
+			t. STATUS,
+			t.pay_type,
+			t.buy_type,
+			t.member_id,
+			t.member_name,
+			t.member_phone,
+			t.buy_count,
+			t.partner_id,
+			t.total_price,
+			t.send_cost,
+			t.favorable_price,
+			t.actual_price,
+			t.pay_time,
+			t.charge_back_time,
+			t.finish_time,
+			t.send_commodity_time,
+			t.pre_send_commodity_time,
+			t.last_print_time,
+			t.print_count,
+			t.storage_id,
+			t.send_person,
+			t.charge_back_opr,
+			t.province,
+			t.city,
+			t.area,
+			t.address_info,
+			t.consign_phone,
+			t.consign_name,
+			t.charge_id,
+			t.is_invoice,
+			t.invoice_desc,
+			t.allocation_error,
+			t.coupon_id,
+			t.coupon_name,
+			t.coupon_amount,
+			t.order_source,
+			t.cur_loistics_status,
+			t.out_order_status,
+			t.activity_no,
+			t.order_type,
+			t.remarks,
+			t.create_date,
+			t.create_by AS 'createBy.id',
+			t.last_update_date,
+			t.last_update_by AS 'lastUpdateBy.id',
+			t.del_flag,
+			t.member_account,
+			t.send_person_name,
+			t.send_person_phone,
+			t.service_point,
+			t.warehouse_code,
+			t.region_id,
+			t.region_name,
+			t.detailed_address,
+			t.partner_code,
+			t.storage_name,
+			t.over_time,
+			t.is_supplier,
+			t.distribution_date,
+			t.operation_Record,
+			t.operation_Date,
+			t.tran_time,
+			t.supply_flag,
+			t.supply_date,
+			t.total_red_amount
+			,t.service_station_id
+			,t.service_station_code
+			,t.service_station_name
+		FROM
+			oms_order t
+	where 1=1
+    <include refid="condition" />
+    <if test="null!=params" >
+    <if test="null!=params.detailSettlementFlag2No or null!=params.commodityTitle_like or null!=params.orderDetailStatus or null!=params.skubarcode_like or null!=params.od_orderDetailStatusList or null!=params.od_title_bar_like or null!=params.od_buyTypeList">
+	and EXISTS (select 1 from oms_orderdetail d where d.order_no=t.order_no
+		<if test="params.detailSettlementFlag2No != null">
+       and  (d.settlement_flag !=1 or d.settlement_flag is null) and d.pifa_price is not null
+       </if>
+		
+		<if test="null!=params.od_title_bar_like and ''!=params.od_title_bar_like" >
+			and (d.commodity_title like '%${params.od_title_bar_like}%' or d.commodity_barcode like '%${params.od_title_bar_like}%')
+		</if>
+		<if test="null!=params.commodityTitle_like and ''!=params.commodityTitle_like" >
+			and d.commodity_title like '%${params.commodityTitle_like}%'
+		</if>
+		<if test="null!=params.skubarcode_like and ''!=params.skubarcode_like" >
+			and d.commodity_barcode like '%${params.skubarcode_like}%'
+		</if>
+		<if test="params.orderDetailStatus != null and '' != params.orderDetailStatus" >
+        	and d.order_detail_status = #{params.orderDetailStatus,jdbcType=VARCHAR}
+      	</if>
+      	<if test="params.commodityType != null and '' != params.commodityType" >
+        	and d.commodity_type = #{params.commodityType,jdbcType=VARCHAR}
+      	</if>
+      	<if test="params.od_orderDetailStatusList != null and '' != params.od_orderDetailStatusList" >
+        	and d.order_detail_status in
+        	 <foreach collection="params.od_orderDetailStatusList" item="item" separator="," open="(" close=")">
+              #{item}
+         	</foreach>
+      	</if>
+      	<if test="params.od_buyTypeList != null and '' != params.od_buyTypeList" >
+        	and d.buy_type in
+        	 <foreach collection="params.od_buyTypeList" item="item" separator="," open="(" close=")">
+              #{item}
+         	</foreach>
+      	</if>
+      	)
+	</if>
+	 <if test="null!=params.orderBy and ''!=params.orderBy">
+		 order by  ${params.orderBy}
+	 </if>
+	 </if>	
+  </select>
+  <select id="getOrderDetialList" resultMap="unionDetailsResultMap" parameterType="map">
+     SELECT
+			d.id as did,
+			d.order_id,
+			d.order_no as d_order_no,
+			d.commodity_no,
+			d.commodity_title,
+			d.commodity_image,
+			d.commodity_barcode,
+			d.commodity_specifications,
+			d.commodity_unit,
+			d.commodity_price,
+			d.act_pay_amount,
+			d.buy_num,
+			d.ready_send_time,
+			d.activity_commodity_item_id,
+			d.activity_id,
+			d.member_id as d_member_id,
+			d.order_detail_status,
+			d.commodity_attribute_values,
+			d.sku_id,
+			d.sku_code,
+			d.favoured_amount,
+			d.buy_type as d_buy_type,
+			d.act_sale_price,
+			d.warehouse_id,
+			d.warehouse_code as d_warehouse_code,
+			d.warehouse_name
+		FROM
+		   oms_orderdetail d 
+		<where>
+		 1=1
+          <if test="params.orderNoList != null">
+            and d.order_no in 
+            <foreach collection="params.orderNoList" item="item" separator="," open="(" close=")">
+              #{item}
+            </foreach>
+          </if>
+        </where>
+  </select>
+    <select id="select" resultMap="unionDetailsResultMap" parameterType="map" >
+		SELECT
+			t.id,
+			t.order_no,
+			t.pay_order_no,
+			t. STATUS,
+			t.pay_type,
+			t.buy_type,
+			t.member_id,
+			t.member_name,
+			t.member_phone,
+			t.buy_count,
+			t.partner_id,
+			t.total_price,
+			t.send_cost,
+			t.favorable_price,
+			t.actual_price,
+			t.pay_time,
+			t.charge_back_time,
+			t.finish_time,
+			t.send_commodity_time,
+			t.pre_send_commodity_time,
+			t.last_print_time,
+			t.print_count,
+			t.storage_id,
+			t.send_person,
+			t.charge_back_opr,
+			t.province,
+			t.city,
+			t.area,
+			t.address_info,
+			t.consign_phone,
+			t.consign_name,
+			t.charge_id,
+			t.is_invoice,
+			t.invoice_desc,
+			t.allocation_error,
+			t.coupon_id,
+			t.coupon_name,
+			t.coupon_amount,
+			t.order_source,
+			t.cur_loistics_status,
+			t.out_order_status,
+			t.activity_no,
+			t.order_type,
+			t.remarks,
+			t.create_date,
+			t.create_by AS 'createBy.id',
+			t.last_update_date,
+			t.last_update_by AS 'lastUpdateBy.id',
+			t.del_flag,
+			t.member_account,
+			t.send_person_name,
+			t.send_person_phone,
+			t.service_point,
+			t.warehouse_code,
+			t.region_id,
+			t.region_name,
+			t.detailed_address,
+			t.partner_code,
+			t.storage_name,
+			t.over_time,
+			t.is_supplier,
+			t.distribution_date,
+			t.operation_Record,
+			t.operation_Date,
+			t.tran_time,
+			t.service_station_id
+			,t.service_station_code
+			,t.service_station_name,
+			d.id as did,
+			d.order_id,
+			d.order_no as d_order_no,
+			d.commodity_no,
+			d.commodity_title,
+			d.commodity_image,
+			d.commodity_barcode,
+			d.commodity_specifications,
+			d.commodity_unit,
+			d.commodity_price,
+			d.act_pay_amount,
+			d.buy_num,
+			d.ready_send_time,
+			d.activity_commodity_item_id,
+			d.activity_id,
+			d.member_id as d_member_id,
+			d.order_detail_status,
+			d.commodity_attribute_values,
+			d.sku_id,
+			d.sku_code,
+			d.favoured_amount,
+			d.buy_type as d_buy_type,
+			d.act_sale_price,
+			d.warehouse_id,
+			d.warehouse_code as d_warehouse_code,
+			d.warehouse_name,
+		
+      		d.red_packet_ids,
+      		d.red_packet_use_ids,
+      		d.red_packet_names,
+      		d.red_packet_amount,
+      		d.virtual_gd_id,
+      		d.virtual_gd_code,
+      		d.virtual_gd_name
+		FROM
+			oms_order t
+		INNER JOIN oms_orderdetail d ON t.id = d.order_id
+    <include refid="condition" />
+    <if test="null!=params" >
+    <if test="null!=params.commodityTitle_like or null!=params.orderDetailStatus or null!=params.skubarcode_like or null!=params.od_orderDetailStatusList or null!=params.od_title_bar_like"  >
+		and EXISTS (select 1 from oms_orderdetail d where d.order_no=t.order_no
+		<if test="null!=od_title_bar_like and ''!=params.od_title_bar_like" >
+			and (d.commodity_title like '%${params.od_title_bar_like}%' or d.commodity_barcode like '%${params.od_title_bar_like}%')
+		</if>
+		<if test="null!=params.commodityTitle_like and ''!=params.commodityTitle_like" >
+			and d.commodity_title like '%${params.commodityTitle_like}%'
+		</if>
+		<if test="null!=params.skubarcode_like and ''!=params.skubarcode_like" >
+			and d.commodity_barcode like '%${params.skubarcode_like}%'
+		</if>
+		<if test="params.orderDetailStatus != null and '' != params.orderDetailStatus" >
+        	and d.order_detail_status = #{params.orderDetailStatus,jdbcType=VARCHAR}
+      	</if>
+      	<if test="params.od_orderDetailStatusList != null and '' != params.od_orderDetailStatusList" >
+        	and d.order_detail_status in
+        	 <foreach collection="params.od_orderDetailStatusList" item="item" separator="," open="(" close=")">
+              #{item}
+         	</foreach>
+      	</if>
+
+      	)
+	</if>
+	 <if test="null!=params.orderBy and ''!=params.orderBy">
+		 order by  ${params.orderBy}
+	 </if>
+	 </if>	
+  </select>
+  
+  
+  <select id="select_export" resultMap="unionDetailsResultMap_export" parameterType="map" >
+		SELECT
+			t.id,
+			t.order_no,
+			t.pay_order_no,
+			t. STATUS,
+			t.pay_type,
+			t.buy_type,
+			t.member_id,
+			t.member_name,
+			t.member_phone,
+			t.buy_count,
+			t.partner_id,
+			t.total_price,
+			t.send_cost,
+			t.favorable_price,
+			t.actual_price,
+			t.pay_time,
+			t.charge_back_time,
+			t.finish_time,
+			t.send_commodity_time,
+			t.pre_send_commodity_time,
+			t.last_print_time,
+			t.print_count,
+			t.storage_id,
+			t.send_person,
+			t.charge_back_opr,
+			t.province,
+			t.city,
+			t.area,
+			t.address_info,
+			t.consign_phone,
+			t.consign_name,
+			t.charge_id,
+			t.is_invoice,
+			t.invoice_desc,
+			t.allocation_error,
+			t.coupon_id,
+			t.coupon_name,
+			t.coupon_amount,
+			t.order_source,
+			t.cur_loistics_status,
+			t.out_order_status,
+			t.activity_no,
+			t.order_type,
+			t.remarks,
+			t.create_date,
+			t.create_by AS 'createBy.id',
+			t.last_update_date,
+			t.last_update_by AS 'lastUpdateBy.id',
+			t.del_flag,
+			t.member_account,
+			t.send_person_name,
+			t.send_person_phone,
+			t.service_point,
+			t.warehouse_code,
+			t.region_id,
+			t.region_name,
+			t.detailed_address,
+			t.partner_code,
+			t.storage_name,
+			t.over_time,
+			t.is_supplier,
+			t.distribution_date,
+			t.operation_Record,
+			t.operation_Date,
+			t.tran_time,
+			d.id as did,
+			d.order_id,
+			d.order_no as d_order_no,
+			d.commodity_no,
+			d.commodity_title,
+			d.commodity_image,
+			d.commodity_barcode,
+			d.commodity_specifications,
+			d.commodity_unit,
+			d.commodity_price,
+			d.act_pay_amount,
+			d.buy_num,
+			d.ready_send_time,
+			d.activity_commodity_item_id,
+			d.activity_id,
+			d.member_id as d_member_id,
+			d.order_detail_status,
+			d.commodity_attribute_values,
+			d.sku_id,
+			d.sku_code,
+			d.favoured_amount,
+			d.buy_type as d_buy_type,
+			d.act_sale_price,
+			d.warehouse_id,
+			d.warehouse_code as d_warehouse_code,
+			d.warehouse_name,
+			c.id as c_id,
+			c.name as c_name,
+			c.vendor_id as c_vendor_id,
+			c.vendor_name as c_vendor_name,
+			c.vendor_code as c_vendor_code
+		FROM
+			oms_order t
+		INNER JOIN oms_orderdetail d ON t.id = d.order_id
+		LEFT JOIN cims_db.commodity c on c.`code` = d.commodity_no
+    <include refid="condition" />
+    <if test="null!=params" >
+    <if test="null!=params.commodityTitle_like or null!=params.orderDetailStatus"  >
+		<if test="null!=params.commodityTitle_like and ''!=params.commodityTitle_like" >
+			and d.commodity_title like '%${params.commodityTitle_like}%'
+		</if>
+		 <if test="params.orderDetailStatus != null and '' != params.orderDetailStatus" >
+        	and d.order_detail_status = #{params.orderDetailStatus,jdbcType=VARCHAR}
+      	</if>
+	</if>
+	 <if test="null!=params.orderBy and ''!=params.orderBy">
+		 order by  ${params.orderBy}
+	 </if>
+	 </if>	
+  </select>
+  
+  <!-- 换货订单列表 -->
+  <select id="selectExchangeOrder" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from oms_order t 
+    left join aftersale_apply a on a.order_id = t.id
+    where 1=1
+    	and t.order_type = #{params.orderType,jdbcType=VARCHAR}
+    <if test="params.phone!= null and '' != params.phone" >
+    	and (t.member_phone = #{params.phone,jdbcType=VARCHAR} or t.consign_phone = #{params.phone,jdbcType=VARCHAR})
+    </if>
+    <if test="params.orderNo != null and '' != params.orderNo" >
+      	and t.order_no = #{params.orderNo,jdbcType=VARCHAR}
+    </if>
+    
+    <if test="params.phone_like!= null and '' != params.phone_like" >
+    	and (t.member_phone like concat('%', #{params.phone_like,jdbcType=VARCHAR},'%') or t.consign_phone like concat('%', #{params.phone_like,jdbcType=VARCHAR},'%'))
+    </if>
+    <if test="params.orderNo_like != null and '' != params.orderNo_like" >
+      	and t.order_no like concat('%', #{params.orderNo_like,jdbcType=VARCHAR},'%')
+    </if>
+    
+    <if test="params.payTimeStart != null and '' != params.payTimeStart">
+		and t.pay_time &gt;= #{params.payTimeStart,jdbcType=TIMESTAMP}
+	</if>
+	<if test="params.payTimeEnd != null and '' != params.payTimeEnd">
+		and t.pay_time &lt;= #{params.payTimeEnd,jdbcType=TIMESTAMP}
+	</if>
+	 order by t.create_date DESC
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from oms_order
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.order.api.dto.OmsOrder" >
+    delete from oms_order
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ffzx.order.api.dto.OmsOrder" >
+    insert into oms_order (id, order_no, pay_order_no, 
+      status, pay_type, buy_type, 
+      member_id, member_name, member_phone, 
+      buy_count, partner_id, total_price, 
+      send_cost, favorable_price, actual_price, 
+      pay_time, charge_back_time, finish_time, 
+      send_commodity_time, pre_send_commodity_time, 
+      last_print_time, print_count, storage_id, 
+      send_person, charge_back_opr, province, 
+      city, area, address_info, 
+      consign_phone, consign_name, charge_id, 
+      is_invoice, invoice_desc,allocation_error,coupon_id, 
+      coupon_name, coupon_amount, order_source, 
+      cur_loistics_status, out_order_status, activity_no, 
+      order_type, remarks, create_date, 
+      create_by, last_update_date, last_update_by, 
+      del_flag,member_account,
+    send_person_name,send_person_phone,service_point,warehouse_code,
+    region_id,region_name,detailed_address,partner_code,storage_name,over_time,is_supplier,
+    operation_Record,operation_Date,tran_time,county_store_id,county_store_code,county_store_name,
+    del_for_user,
+    total_red_amount
+    ,is_partner_order
+    )
+    values (#{id,jdbcType=VARCHAR}, #{orderNo,jdbcType=VARCHAR}, #{payOrderNo,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{payType,jdbcType=VARCHAR}, #{buyType,jdbcType=VARCHAR}, 
+      #{memberId,jdbcType=VARCHAR}, #{memberName,jdbcType=VARCHAR}, #{memberPhone,jdbcType=VARCHAR}, 
+      #{buyCount,jdbcType=INTEGER}, #{partnerId,jdbcType=VARCHAR}, #{totalPrice,jdbcType=DECIMAL}, 
+      #{sendCost,jdbcType=DECIMAL}, #{favorablePrice,jdbcType=DECIMAL}, #{actualPrice,jdbcType=DECIMAL}, 
+      #{payTime,jdbcType=TIMESTAMP}, #{chargeBackTime,jdbcType=TIMESTAMP}, #{finishTime,jdbcType=TIMESTAMP}, 
+      #{sendCommodityTime,jdbcType=TIMESTAMP}, #{preSendCommodityTime,jdbcType=TIMESTAMP}, 
+      #{lastPrintTime,jdbcType=TIMESTAMP}, #{printCount,jdbcType=INTEGER}, #{storageId,jdbcType=VARCHAR}, 
+      #{sendPerson,jdbcType=VARCHAR}, #{chargeBackOpr,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, 
+      #{city,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, #{addressInfo,jdbcType=VARCHAR}, 
+      #{consignPhone,jdbcType=VARCHAR}, #{consignName,jdbcType=VARCHAR}, #{chargeId,jdbcType=VARCHAR}, 
+      #{isInvoice,jdbcType=VARCHAR}, #{invoiceDesc,jdbcType=VARCHAR},#{allocationError,jdbcType=VARCHAR},#{couponId,jdbcType=VARCHAR}, 
+      #{couponName,jdbcType=VARCHAR}, #{couponAmount,jdbcType=DECIMAL}, #{orderSource,jdbcType=VARCHAR}, 
+      #{curLoisticsStatus,jdbcType=VARCHAR}, #{outOrderStatus,jdbcType=VARCHAR}, #{activityNo,jdbcType=VARCHAR}, 
+      #{orderType,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{createBy.id,jdbcType=VARCHAR}, #{lastUpdateDate,jdbcType=TIMESTAMP}, #{lastUpdateBy.id,jdbcType=VARCHAR}, 
+      #{delFlag,jdbcType=CHAR}), #{memberAccount,jdbcType=VARCHAR},#{sendPersonName,jdbcType=VARCHAR},#{sendPersonPhone,jdbcType=VARCHAR},
+      #{servicePoint,jdbcType=VARCHAR},#{warehouseCode,jdbcType=VARCHAR},#{regionId,jdbcType=VARCHAR},
+      #{regionName,jdbcType=VARCHAR},#{detailedAddress,jdbcType=VARCHAR},#{partnerCode,jdbcType=VARCHAR},#{storageName,jdbcType=VARCHAR},
+      #{overTime,jdbcType=TIMESTAMP},#{isSupplier,jdbcType=VARCHAR},
+      #{operationRecord,jdbcType=VARCHAR},#{operationDate,jdbcType=TIMESTAMP},#{tranTime,jdbcType=TIMESTAMP},
+      #{countyStoreId,jdbcType=VARCHAR},#{countyStoreCode,jdbcType=VARCHAR},
+      #{countyStoreName,jdbcType=VARCHAR},
+      #{delForUser,jdbcType=CHAR},
+      #{totalRedAmount,jdbcType=DECIMAL},
+      #{isPartnerOrder,jdbcType=VARCHAR}
+      
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.order.api.dto.OmsOrder" >
+    insert into oms_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+      <if test="payOrderNo != null" >
+        pay_order_no,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="payType != null" >
+        pay_type,
+      </if>
+      <if test="buyType != null" >
+        buy_type,
+      </if>
+      <if test="memberId != null" >
+        member_id,
+      </if>
+      <if test="memberName != null" >
+        member_name,
+      </if>
+      <if test="memberPhone != null" >
+        member_phone,
+      </if>
+      <if test="buyCount != null" >
+        buy_count,
+      </if>
+      <if test="partnerId != null" >
+        partner_id,
+      </if>
+      <if test="totalPrice != null" >
+        total_price,
+      </if>
+      <if test="sendCost != null" >
+        send_cost,
+      </if>
+      <if test="favorablePrice != null" >
+        favorable_price,
+      </if>
+      <if test="actualPrice != null" >
+        actual_price,
+      </if>
+      <if test="payTime != null" >
+        pay_time,
+      </if>
+      <if test="chargeBackTime != null" >
+        charge_back_time,
+      </if>
+      <if test="finishTime != null" >
+        finish_time,
+      </if>
+      <if test="sendCommodityTime != null" >
+        send_commodity_time,
+      </if>
+      <if test="preSendCommodityTime != null" >
+        pre_send_commodity_time,
+      </if>
+      <if test="lastPrintTime != null" >
+        last_print_time,
+      </if>
+      <if test="printCount != null" >
+        print_count,
+      </if>
+      <if test="storageId != null" >
+        storage_id,
+      </if>
+      <if test="sendPerson != null" >
+        send_person,
+      </if>
+      <if test="chargeBackOpr != null" >
+        charge_back_opr,
+      </if>
+      <if test="province != null" >
+        province,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="area != null" >
+        area,
+      </if>
+      <if test="addressInfo != null" >
+        address_info,
+      </if>
+      <if test="consignPhone != null" >
+        consign_phone,
+      </if>
+      <if test="consignName != null" >
+        consign_name,
+      </if>
+      <if test="chargeId != null" >
+        charge_id,
+      </if>
+      <if test="isInvoice != null" >
+        is_invoice,
+      </if>
+      <if test="invoiceDesc != null" >
+        invoice_desc,
+      </if>
+      <if test="allocationError != null" >
+        allocation_error,
+      </if>
+      <if test="couponId != null" >
+        coupon_id,
+      </if>
+      <if test="couponName != null" >
+        coupon_name,
+      </if>
+      <if test="couponAmount != null" >
+        coupon_amount,
+      </if>
+      <if test="orderSource != null" >
+        order_source,
+      </if>
+      <if test="curLoisticsStatus != null" >
+        cur_loistics_status,
+      </if>
+      <if test="outOrderStatus != null" >
+        out_order_status,
+      </if>
+      <if test="activityNo != null" >
+        activity_no,
+      </if>
+      <if test="orderType != null" >
+        order_type,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date,
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+       <if test="memberAccount != null" >
+        member_account,
+      </if>
+      <if test="sendPersonName != null" >
+        send_person_name,
+      </if>
+      <if test="sendPersonPhone != null" >
+        send_person_phone,
+      </if>
+       <if test="servicePoint != null" >
+        service_point,
+      </if>
+      <if test="warehouseCode != null" >
+        warehouse_code,
+      </if>
+      <if test="regionId != null" >
+        region_id,
+      </if>
+      <if test="regionName != null" >
+        region_name,
+      </if>
+      <if test="detailedAddress != null" >
+        detailed_address,
+      </if>
+      <if test="partnerCode != null" >
+        partner_code,
+      </if>
+      <if test="storageName != null" >
+        storage_name,
+      </if>
+      <if test="overTime != null" >
+        over_time,
+      </if>
+      <if test="isSupplier != null" >
+        is_supplier,
+      </if>
+      <if test="operationRecord != null">
+      	operation_Record,
+      </if>
+      <if test="operationDate != null">
+       operation_Date,
+      </if>
+      <if test="tranTime != null">
+       tran_time,
+      </if>
+		<if test="countyStoreId != null">
+			county_store_id,
+		</if>
+		<if test="countyStoreCode != null">
+			county_store_code,
+		</if>
+		<if test="countyStoreName != null">
+			county_store_name,
+		</if>
+		<if test="delForUser != null">
+			del_for_user,
+		</if>
+		<if test="totalRedAmount != null">
+			total_red_amount,
+		</if>
+		<if test="serviceStationId != null" >service_station_id,</if>
+		<if test="serviceStationCode != null" >service_station_code,</if>
+		<if test="serviceStationName != null" >service_station_name,</if>
+		<if test="isPartnerOrder != null" >is_partner_order,</if>
+		
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payOrderNo != null" >
+        #{payOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null" >
+        #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="buyType != null" >
+        #{buyType,jdbcType=VARCHAR},
+      </if>
+      <if test="memberId != null" >
+        #{memberId,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null" >
+        #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberPhone != null" >
+        #{memberPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="buyCount != null" >
+        #{buyCount,jdbcType=INTEGER},
+      </if>
+      <if test="partnerId != null" >
+        #{partnerId,jdbcType=VARCHAR},
+      </if>
+      <if test="totalPrice != null" >
+        #{totalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="sendCost != null" >
+        #{sendCost,jdbcType=DECIMAL},
+      </if>
+      <if test="favorablePrice != null" >
+        #{favorablePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="actualPrice != null" >
+        #{actualPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="payTime != null" >
+        #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="chargeBackTime != null" >
+        #{chargeBackTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finishTime != null" >
+        #{finishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendCommodityTime != null" >
+        #{sendCommodityTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="preSendCommodityTime != null" >
+        #{preSendCommodityTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastPrintTime != null" >
+        #{lastPrintTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="printCount != null" >
+        #{printCount,jdbcType=INTEGER},
+      </if>
+      <if test="storageId != null" >
+        #{storageId,jdbcType=VARCHAR},
+      </if>
+      <if test="sendPerson != null" >
+        #{sendPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeBackOpr != null" >
+        #{chargeBackOpr,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="addressInfo != null" >
+        #{addressInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="consignPhone != null" >
+        #{consignPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="consignName != null" >
+        #{consignName,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeId != null" >
+        #{chargeId,jdbcType=VARCHAR},
+      </if>
+      <if test="isInvoice != null" >
+        #{isInvoice,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceDesc != null" >
+        #{invoiceDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="allocationError != null" >
+        #{allocationError,jdbcType=VARCHAR},
+      </if>
+      <if test="couponId != null" >
+        #{couponId,jdbcType=VARCHAR},
+      </if>
+      <if test="couponName != null" >
+        #{couponName,jdbcType=VARCHAR},
+      </if>
+      <if test="couponAmount != null" >
+        #{couponAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="orderSource != null" >
+        #{orderSource,jdbcType=VARCHAR},
+      </if>
+      <if test="curLoisticsStatus != null" >
+        #{curLoisticsStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="outOrderStatus != null" >
+        #{outOrderStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="activityNo != null" >
+        #{activityNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderType != null" >
+        #{orderType,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        #{createBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null" >
+        #{lastUpdateBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="memberAccount != null" >
+        #{memberAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="sendPersonName != null" >
+        #{sendPersonName,jdbcType=VARCHAR},
+      </if>
+      <if test="sendPersonPhone != null" >
+      #{sendPersonPhone,jdbcType=VARCHAR},
+      </if>
+       <if test="servicePoint != null" >
+        #{servicePoint,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseCode != null" >
+        #{warehouseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="regionId != null" >
+        #{regionId,jdbcType=VARCHAR},
+      </if>
+      <if test="regionName != null" >
+        #{regionName,jdbcType=VARCHAR},
+      </if>
+      <if test="detailedAddress != null" >
+        #{detailedAddress,jdbcType=VARCHAR},
+      </if>
+       <if test="partnerCode != null" >
+        #{partnerCode,jdbcType=VARCHAR},
+      </if>
+       <if test="storageName != null" >
+        #{storageName,jdbcType=VARCHAR},
+      </if>
+       <if test="overTime != null" >
+        #{overTime,jdbcType=TIMESTAMP},
+      </if>
+       <if test="isSupplier != null" >
+        #{isSupplier,jdbcType=VARCHAR},
+      </if>
+       <if test="operationRecord != null">
+        #{operationRecord,jdbcType=VARCHAR},
+      </if>
+      <if test="operationDate != null">
+       #{operationDate,jdbcType=TIMESTAMP},
+      </if>
+       <if test="tranTime != null">
+       #{tranTime,jdbcType=TIMESTAMP},
+      </if>
+      
+       <if test="countyStoreId != null" >
+        #{countyStoreId,jdbcType=VARCHAR},
+      </if>
+       <if test="countyStoreCode != null">
+        #{countyStoreCode,jdbcType=VARCHAR},
+      </if>
+      <if test="countyStoreName != null">
+       #{countyStoreName,jdbcType=VARCHAR},
+      </if>
+       <if test="delForUser != null">
+       #{delForUser,jdbcType=CHAR},
+      </if>
+      <if test="totalRedAmount != null">
+       #{totalRedAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="serviceStationId != null" >#{serviceStationId,jdbcType=VARCHAR},</if>
+	  <if test="serviceStationCode != null" >#{serviceStationCode,jdbcType=VARCHAR},</if>
+	  <if test="serviceStationName != null" >#{serviceStationName,jdbcType=VARCHAR},</if>
+	  <if test="isPartnerOrder != null" >#{isPartnerOrder,jdbcType=VARCHAR},</if>
+	 
+    </trim>
+  </insert>
+	<update id="replenishmentOrders" parameterType="Map">
+		update oms_order oo
+		<set>
+			oo.supply_date =
+			#{message.receiptDate,jdbcType=TIMESTAMP},
+
+			<if test="message.receiptType != null">
+				oo.supply_flag = #{message.receiptType,jdbcType=CHAR},
+			</if>
+		</set>
+		<where>
+			oo.order_no IN
+			<foreach collection="message.orderNo" open="(" separator=","
+				close=")" item="item">
+				#{item}
+			</foreach>
+		</where>
+	</update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.order.api.dto.OmsOrder" >
+    update oms_order
+    <set >
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payOrderNo != null" >
+        pay_order_no = #{payOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null" >
+        pay_type = #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="buyType != null" >
+        buy_type = #{buyType,jdbcType=VARCHAR},
+      </if>
+      <if test="memberId != null" >
+        member_id = #{memberId,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null" >
+        member_name = #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberPhone != null" >
+        member_phone = #{memberPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="buyCount != null" >
+        buy_count = #{buyCount,jdbcType=INTEGER},
+      </if>
+      <if test="partnerId != null" >
+        partner_id = #{partnerId,jdbcType=VARCHAR},
+      </if>
+      <if test="totalPrice != null" >
+        total_price = #{totalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="sendCost != null" >
+        send_cost = #{sendCost,jdbcType=DECIMAL},
+      </if>
+      <if test="favorablePrice != null" >
+        favorable_price = #{favorablePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="actualPrice != null" >
+        actual_price = #{actualPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="payTime != null" >
+        pay_time = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="chargeBackTime != null" >
+        charge_back_time = #{chargeBackTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finishTime != null" >
+        finish_time = #{finishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendCommodityTime != null" >
+        send_commodity_time = #{sendCommodityTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="preSendCommodityTime != null" >
+        pre_send_commodity_time = #{preSendCommodityTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastPrintTime != null" >
+        last_print_time = #{lastPrintTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="printCount != null" >
+        print_count = #{printCount,jdbcType=INTEGER},
+      </if>
+      <if test="storageId != null" >
+        storage_id = #{storageId,jdbcType=VARCHAR},
+      </if>
+      <if test="sendPerson != null" >
+        send_person = #{sendPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeBackOpr != null" >
+        charge_back_opr = #{chargeBackOpr,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="addressInfo != null" >
+        address_info = #{addressInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="consignPhone != null" >
+        consign_phone = #{consignPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="consignName != null" >
+        consign_name = #{consignName,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeId != null" >
+        charge_id = #{chargeId,jdbcType=VARCHAR},
+      </if>
+      <if test="isInvoice != null" >
+        is_invoice = #{isInvoice,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceDesc != null" >
+        invoice_desc = #{invoiceDesc,jdbcType=VARCHAR},
+      </if>
+       <if test="allocationError != null" >
+        allocation_error = #{allocationError,jdbcType=VARCHAR},
+      </if>
+      <if test="couponId != null" >
+        coupon_id = #{couponId,jdbcType=VARCHAR},
+      </if>
+      <if test="couponName != null" >
+        coupon_name = #{couponName,jdbcType=VARCHAR},
+      </if>
+      <if test="couponAmount != null" >
+        coupon_amount = #{couponAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="orderSource != null" >
+        order_source = #{orderSource,jdbcType=VARCHAR},
+      </if>
+      <if test="curLoisticsStatus != null" >
+        cur_loistics_status = #{curLoisticsStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="outOrderStatus != null" >
+        out_order_status = #{outOrderStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="activityNo != null" >
+        activity_no = #{activityNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderType != null" >
+        order_type = #{orderType,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+       <if test="memberAccount != null" >
+        member_account = #{memberAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="sendPersonName != null" >
+       send_person_name = #{sendPersonName,jdbcType=VARCHAR},
+      </if>
+      <if test="sendPersonPhone != null" >
+      send_person_phone = #{sendPersonPhone,jdbcType=VARCHAR},
+      </if>
+       <if test="servicePoint != null" >
+        service_point = #{servicePoint,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseCode != null" >
+        warehouse_code = #{warehouseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="regionId != null" >
+        region_id = #{regionId,jdbcType=VARCHAR},
+      </if>
+      <if test="regionName != null" >
+        region_name = #{regionName,jdbcType=VARCHAR},
+      </if>
+      <if test="detailedAddress != null" >
+        detailed_address = #{detailedAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerCode != null" >
+        partner_code = #{partnerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="storageName != null" >
+        storage_name = #{storageName,jdbcType=VARCHAR},
+      </if>
+      <if test="overTime != null" >
+        over_time = #{overTime,jdbcType=TIMESTAMP},
+      </if>
+       <if test="isSupplier != null" >
+        is_supplier = #{isSupplier,jdbcType=VARCHAR},
+      </if>
+      
+      <if test="operationRecord != null">
+      	operation_Record = #{operationRecord,jdbcType=VARCHAR},
+      </if>
+      <if test="operationDate != null">
+     	 operation_Date = #{operationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="outboundTime != null">
+     	 outbound_time = #{outboundTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tranTime != null">
+     	  tran_time=#{tranTime,jdbcType=TIMESTAMP},
+      </if>
+      	<if test="countyStoreId != null">
+			county_store_id=#{countyStoreId,jdbcType=VARCHAR},
+		</if>
+		<if test="countyStoreCode != null">
+			county_store_code=#{countyStoreCode,jdbcType=VARCHAR},
+		</if>
+		<if test="countyStoreName != null">
+			county_store_name=#{countyStoreName,jdbcType=VARCHAR},
+		</if>
+		<if test="delForUser != null">
+			del_for_user=#{delForUser,jdbcType=CHAR},
+		</if>
+		<if test="totalRedAmount != null">
+			total_red_amount=#{totalRedAmount,jdbcType=DECIMAL},
+		</if>
+		<if test="isPartnerOrder != null">
+			is_partner_order=#{isPartnerOrder,jdbcType=VARCHAR},
+		</if>
+		<if test="payExtra != null">
+			pay_extra=#{payExtra,jdbcType=VARCHAR},
+		</if>
+	  </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+    <update id="updateByPrimaryKeySelectiveByOrderNo" parameterType="com.ffzx.order.api.dto.OmsOrder" >
+    update oms_order
+    <set >
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payOrderNo != null" >
+        pay_order_no = #{payOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null" >
+        pay_type = #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="buyType != null" >
+        buy_type = #{buyType,jdbcType=VARCHAR},
+      </if>
+      <if test="memberId != null" >
+        member_id = #{memberId,jdbcType=VARCHAR},
+      </if>
+      <if test="memberName != null" >
+        member_name = #{memberName,jdbcType=VARCHAR},
+      </if>
+      <if test="memberPhone != null" >
+        member_phone = #{memberPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="buyCount != null" >
+        buy_count = #{buyCount,jdbcType=INTEGER},
+      </if>
+      <if test="partnerId != null" >
+        partner_id = #{partnerId,jdbcType=VARCHAR},
+      </if>
+      <if test="totalPrice != null" >
+        total_price = #{totalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="sendCost != null" >
+        send_cost = #{sendCost,jdbcType=DECIMAL},
+      </if>
+      <if test="favorablePrice != null" >
+        favorable_price = #{favorablePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="actualPrice != null" >
+        actual_price = #{actualPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="payTime != null" >
+        pay_time = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="chargeBackTime != null" >
+        charge_back_time = #{chargeBackTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finishTime != null" >
+        finish_time = #{finishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendCommodityTime != null" >
+        send_commodity_time = #{sendCommodityTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="preSendCommodityTime != null" >
+        pre_send_commodity_time = #{preSendCommodityTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastPrintTime != null" >
+        last_print_time = #{lastPrintTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="printCount != null" >
+        print_count = #{printCount,jdbcType=INTEGER},
+      </if>
+      <if test="storageId != null" >
+        storage_id = #{storageId,jdbcType=VARCHAR},
+      </if>
+      <if test="sendPerson != null" >
+        send_person = #{sendPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeBackOpr != null" >
+        charge_back_opr = #{chargeBackOpr,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="addressInfo != null" >
+        address_info = #{addressInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="consignPhone != null" >
+        consign_phone = #{consignPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="consignName != null" >
+        consign_name = #{consignName,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeId != null" >
+        charge_id = #{chargeId,jdbcType=VARCHAR},
+      </if>
+      <if test="isInvoice != null" >
+        is_invoice = #{isInvoice,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceDesc != null" >
+        invoice_desc = #{invoiceDesc,jdbcType=VARCHAR},
+      </if>
+       <if test="allocationError != null" >
+        allocation_error = #{allocationError,jdbcType=VARCHAR},
+      </if>
+      <if test="couponId != null" >
+        coupon_id = #{couponId,jdbcType=VARCHAR},
+      </if>
+      <if test="couponName != null" >
+        coupon_name = #{couponName,jdbcType=VARCHAR},
+      </if>
+      <if test="couponAmount != null" >
+        coupon_amount = #{couponAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="orderSource != null" >
+        order_source = #{orderSource,jdbcType=VARCHAR},
+      </if>
+      <if test="curLoisticsStatus != null" >
+        cur_loistics_status = #{curLoisticsStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="outOrderStatus != null" >
+        out_order_status = #{outOrderStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="activityNo != null" >
+        activity_no = #{activityNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderType != null" >
+        order_type = #{orderType,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+       <if test="memberAccount != null" >
+        member_account = #{memberAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="sendPersonName != null" >
+       send_person_name = #{sendPersonName,jdbcType=VARCHAR},
+      </if>
+      <if test="sendPersonPhone != null" >
+      send_person_phone = #{sendPersonPhone,jdbcType=VARCHAR},
+      </if>
+       <if test="servicePoint != null" >
+        service_point = #{servicePoint,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseCode != null" >
+        warehouse_code = #{warehouseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="regionId != null" >
+        region_id = #{regionId,jdbcType=VARCHAR},
+      </if>
+      <if test="regionName != null" >
+        region_name = #{regionName,jdbcType=VARCHAR},
+      </if>
+      <if test="detailedAddress != null" >
+        detailed_address = #{detailedAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerCode != null" >
+        partner_code = #{partnerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="storageName != null" >
+        storage_name = #{storageName,jdbcType=VARCHAR},
+      </if>
+      <if test="overTime != null" >
+        over_time = #{overTime,jdbcType=TIMESTAMP},
+      </if>
+       <if test="isSupplier != null" >
+        is_supplier = #{isSupplier,jdbcType=VARCHAR},
+      </if>
+      
+      <if test="operationRecord != null">
+      	operation_Record = #{operationRecord,jdbcType=VARCHAR},
+      </if>
+      <if test="operationDate != null">
+     	 operation_Date = #{operationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="outboundTime != null">
+     	 outbound_time = #{outboundTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tranTime != null">
+     	  tran_time=#{tranTime,jdbcType=TIMESTAMP},
+      </if>
+      	<if test="countyStoreId != null">
+			county_store_id=#{countyStoreId,jdbcType=VARCHAR},
+		</if>
+		<if test="countyStoreCode != null">
+			county_store_code=#{countyStoreCode,jdbcType=VARCHAR},
+		</if>
+		<if test="countyStoreName != null">
+			county_store_name=#{countyStoreName,jdbcType=VARCHAR},
+		</if>
+		<if test="delForUser != null">
+			del_for_user=#{delForUser,jdbcType=CHAR},
+		</if>
+		<if test="totalRedAmount != null">
+			total_red_amount=#{totalRedAmount,jdbcType=DECIMAL},
+		</if>
+		<if test="settlementFlag != null">
+        settlement_flag=#{settlementFlag,jdbcType=VARCHAR},
+        </if>
+        <if test="isPartnerOrder != null">
+			is_partner_order=#{isPartnerOrder,jdbcType=VARCHAR},
+		</if>
+		<if test="payExtra != null">
+			pay_extra=#{payExtra,jdbcType=VARCHAR},
+		</if>
+	  </set>
+    where order_no = #{orderNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.order.api.dto.OmsOrder" >
+    update oms_order
+    set order_no = #{orderNo,jdbcType=VARCHAR},
+      pay_order_no = #{payOrderNo,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      pay_type = #{payType,jdbcType=VARCHAR},
+      buy_type = #{buyType,jdbcType=VARCHAR},
+      member_id = #{memberId,jdbcType=VARCHAR},
+      member_name = #{memberName,jdbcType=VARCHAR},
+      member_phone = #{memberPhone,jdbcType=VARCHAR},
+      buy_count = #{buyCount,jdbcType=INTEGER},
+      partner_id = #{partnerId,jdbcType=VARCHAR},
+      total_price = #{totalPrice,jdbcType=DECIMAL},
+      send_cost = #{sendCost,jdbcType=DECIMAL},
+      favorable_price = #{favorablePrice,jdbcType=DECIMAL},
+      actual_price = #{actualPrice,jdbcType=DECIMAL},
+      pay_time = #{payTime,jdbcType=TIMESTAMP},
+      charge_back_time = #{chargeBackTime,jdbcType=TIMESTAMP},
+      finish_time = #{finishTime,jdbcType=TIMESTAMP},
+      send_commodity_time = #{sendCommodityTime,jdbcType=TIMESTAMP},
+      pre_send_commodity_time = #{preSendCommodityTime,jdbcType=TIMESTAMP},
+      last_print_time = #{lastPrintTime,jdbcType=TIMESTAMP},
+      print_count = #{printCount,jdbcType=INTEGER},
+      storage_id = #{storageId,jdbcType=VARCHAR},
+      send_person = #{sendPerson,jdbcType=VARCHAR},
+      charge_back_opr = #{chargeBackOpr,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      area = #{area,jdbcType=VARCHAR},
+      address_info = #{addressInfo,jdbcType=VARCHAR},
+      consign_phone = #{consignPhone,jdbcType=VARCHAR},
+      consign_name = #{consignName,jdbcType=VARCHAR},
+      charge_id = #{chargeId,jdbcType=VARCHAR},
+      is_invoice = #{isInvoice,jdbcType=VARCHAR},
+      invoice_desc = #{invoiceDesc,jdbcType=VARCHAR},
+      allocation_error = #{allocationError,jdbcType=VARCHAR},
+      coupon_id = #{couponId,jdbcType=VARCHAR},
+      coupon_name = #{couponName,jdbcType=VARCHAR},
+      coupon_amount = #{couponAmount,jdbcType=DECIMAL},
+      order_source = #{orderSource,jdbcType=VARCHAR},
+      cur_loistics_status = #{curLoisticsStatus,jdbcType=VARCHAR},
+      out_order_status = #{outOrderStatus,jdbcType=VARCHAR},
+      activity_no = #{activityNo,jdbcType=VARCHAR},
+      order_type = #{orderType,jdbcType=VARCHAR},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      create_by = #{createBy.id,jdbcType=VARCHAR},
+      last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR},
+      member_account = #{memberAccount,jdbcType=VARCHAR},
+      send_person_name = #{sendPersonName,jdbcType=VARCHAR},
+      send_person_phone = #{sendPersonPhone,jdbcType=VARCHAR},
+      service_point = #{servicePoint,jdbcType=VARCHAR},
+      warehouse_code = #{warehouseCode,jdbcType=VARCHAR},
+      region_id = #{regionId,jdbcType=VARCHAR},
+      region_name = #{regionName,jdbcType=VARCHAR},
+      detailed_address = #{detailedAddress,jdbcType=VARCHAR},
+      storage_name = #{storageName,jdbcType=VARCHAR},
+      partner_code = #{partnerCode,jdbcType=VARCHAR},
+      over_time = #{overTime,jdbcType=TIMESTAMP},
+      is_supplier = #{isSupplier,jdbcType=VARCHAR},
+      operation_Record = #{operationRecord,jdbcType=VARCHAR},
+      operation_Date = #{operationDate,jdbcType=TIMESTAMP},
+      tran_time = #{tranTime,jdbcType=TIMESTAMP},
+	county_store_id=#{countyStoreId,jdbcType=VARCHAR},
+	county_store_code=#{countyStoreCode,jdbcType=VARCHAR},
+	county_store_name=#{countyStoreName,jdbcType=VARCHAR},
+	del_for_user=#{delForUser,jdbcType=CHAR},
+	total_red_amount=#{totalRedAmount,jdbcType=DECIMAL},
+	service_station_id =#{serviceStationId,jdbcType=VARCHAR},
+	service_station_code=#{serviceStationCode,jdbcType=VARCHAR},
+	service_station_name = #{serviceStationName,jdbcType=VARCHAR},
+	is_partner_order = #{isPartnerOrder,jdbcType=VARCHAR}
+
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 订单申请售后更新语句 -->
+   <update id="updateOrderByShouhou" parameterType="com.ffzx.order.api.dto.OmsOrder" >
+    UPDATE oms_order t
+    SET 
+     	 t.status = #{status,jdbcType=VARCHAR},
+       <if test="params.chargeBackTime != null" >
+         t.charge_back_time = #{chargeBackTime,jdbcType=TIMESTAMP},
+       </if>
+       <if test="params.finishTime != null" >
+         t.finish_time = #{finishTime,jdbcType=TIMESTAMP}
+      </if>
+     WHERE t.order_no = #{orderNo,jdbcType=VARCHAR}   
+  </update>
+  
+   <!-- 更新订单状态-->
+   <update id="updateOrderStatus" parameterType="com.ffzx.order.api.dto.OmsOrder" >
+    UPDATE oms_order t
+    SET 
+     	t.status = #{status}
+     	<if test="outOrderStatus!=null and ''!=outOrderStatus">
+     		,t.out_Order_Status = #{outOrderStatus}
+     	</if>
+     	<if test="operationRecord!=null and ''!=operationRecord">
+     		,t.operation_Record = #{operationRecord}
+     	</if>
+     	<if test="operationDate!= null and ''!=operationDate">
+     		,t.operation_Date = #{operationDate}
+     	</if>
+     	<if test="tranTime != null and ''!=tranTime">
+     	 	,t.tran_time=#{tranTime,jdbcType=TIMESTAMP}
+       </if>
+    WHERE 1=1 
+    <if test="orderNo!=null and ''!=orderNo">
+    	AND t.order_no = #{orderNo}   
+    </if>
+    <if test="id!=null and ''!=id">
+    	AND t.id = #{id}
+    </if>
+  </update>
+  
+  <!-- 更新订单是否删除标识 -->
+   <update id="updateOrderDelFlag" parameterType="com.ffzx.order.api.dto.OmsOrder" >
+    UPDATE oms_order t
+    SET 
+    	t.del_flag = #{delFlag,jdbcType=CHAR}
+    WHERE t.order_no = #{orderNo,jdbcType=VARCHAR}   
+  </update>
+  
+  <!-- 更新用户删除订单删除标识 -->
+   <update id="updateOrderDelFlagByUser" parameterType="com.ffzx.order.api.dto.OmsOrder" >
+    UPDATE oms_order t
+    SET 
+    	t.del_for_user = #{delForUser,jdbcType=CHAR}
+    WHERE t.order_no = #{orderNo,jdbcType=VARCHAR}   
+  </update>
+  
+  <select id="getTotalMoney"  resultType="Double" parameterType="map" >
+  	select SUM(actual_price) from oms_order t where 1=1
+  	<include refid="condition" />
+  </select>
+ 
+  <select id="findLastOrderUser"  resultMap="BaseResultMap" parameterType="map" >
+  	SELECT 
+  		o.member_name as "member_name",o.member_phone as "member_phone",o.pay_time as "pay_time" 
+  	FROM 
+		oms_order o 
+	LEFT JOIN oms_orderdetail d ON o.id = d.order_id 
+	WHERE o.status !='0' 
+	and d.commodity_no = (SELECT c.`code` FROM cims_db.commodity c where c.id=#{params.commodityId,jdbcType=VARCHAR})
+	and o.pay_time is not null
+ 	<if test="params.activityStartTime != null and '' != params.activityStartTime">
+		and o.pay_time &gt;= #{params.activityStartTime,jdbcType=TIMESTAMP}
+  	</if>
+  	<if test="params.acitivityCommodityId != null and '' != params.acitivityCommodityId">
+		and d.activity_commodity_item_id &gt;= #{params.acitivityCommodityId}
+  	</if>
+	order by o.pay_time DESC
+  </select>
+  
+  <!-- 取得符合自动取消订单条件的订单数据 ying.cai -->
+  <select id="selectToAutoCancelOrder" resultMap="BaseResultMap" parameterType="map">
+  	SELECT 
+  		O.ID,
+  		O.ORDER_NO ,
+  		O.STATUS,
+  		O.CHARGE_ID,
+  		O.COUPON_ID,
+ 		O.member_id,
+  		O.region_id
+  	FROM OMS_ORDER O
+  	WHERE O.PAY_TIME IS NULL 
+  	AND O.OVER_TIME IS NOT NULL 
+  	AND O.OVER_TIME &lt;NOW()
+  	AND O.STATUS = 0
+  </select>
+  
+  <!-- 根据指定参数验证某个订单记录是否存在 ying.cai -->
+  <select id="validOrderByParams" resultType="int" parameterType="Map">
+  	SELECT 
+  		COUNT(1)
+  	FROM OMS_ORDER o
+  	WHERE 1=1 
+  	<if test="params.id!=null and ''!=params.id">
+  		AND o.id = #{params.id}
+  	</if>
+  	<if test="params.partnerId!=null and ''!=params.partnerId">
+  		AND o.partner_Id = #{params.partnerId}
+  	</if>
+  	<if test="params.outOrderStatus!=null and ''!=params.outOrderStatus">
+  		AND o.out_order_status = #{params.outOrderStatus}
+  	</if>
+  	
+  </select>
+  
+  <!-- 查询相关信息提供给配送APP使用 ying.cai -->
+  <select id="findOrderInfoToSendApp" resultMap="BaseResultMap" parameterType="Map">
+  	SELECT 
+		o.id,
+		o.order_no,
+		o.pay_time,
+		o.consign_Name,
+		o.consign_Phone,
+		o.address_Info,
+		o.out_order_status,
+		o.status 
+	FROM oms_order o 
+	WHERE 1=1 AND o.id = #{id}
+  </select>
+   <!-- 订单对外查询接口数据 -->
+  <select id="queryMemberPay" parameterType="java.util.Map" resultType="com.ffzx.order.api.vo.OmsOrderVo">
+     	SELECT 
+			COUNT(o.id) AS "id",
+			SUM(o.actual_price)  AS "actualPrice"
+		FROM oms_order o 
+		<where>
+		   <if test="params.memberID !=null and params.memberID !='' ">
+		   		and o.member_id=#{params.memberID}
+		   </if>
+		   	<if test="params.orderState !=null and params.orderState !='' ">
+		   		and o.status=#{params.orderState}
+		   </if>
+		</where>
+  </select> 
+  <!-- 订单对外查询接口数据 -->
+  <select id="queryDistributionPage" parameterType="java.util.Map" resultType="com.ffzx.order.api.vo.OmsOrderVo">
+	    SELECT 
+			o.id as "id",
+			o.order_no as "orderNo",
+			o.consign_Name as "consignName",
+			o.consign_Phone as "consignPhone",
+			o.address_Info as "addressInfo",
+			o.create_date  as "createDate",
+			o.status as "orderState",
+			o.pay_time as "payTime",
+			o.buy_count as "buyCount",
+			o.out_order_status as "outOrderStatus",
+			o.actual_price  as "actualPrice",
+			o.distribution_date as "distributionDate" 
+		FROM oms_order o 
+		<where>
+			(o.allocation_Error=0 OR o.allocation_Error IS NULL) 
+		   <if test="params.orderNoList != null">
+		       and o.order_no in
+		       <foreach collection="params.orderNoList" open="(" separator="," close=")" item="item">
+		          '${item}'
+		       </foreach>
+		   </if>
+		   <if test="params.statusList != null">
+		       and o.status in
+		       <foreach collection="params.statusList" open="(" separator="," close=")" item="item">
+		          '${item}'
+		       </foreach>
+		   </if>
+		   <if test="params.keyWords != null and params.keyWords != ''">
+		       and (instr(o.order_no,#{params.keyWords}) &gt; 0  
+		       or instr(o.consign_name,#{params.keyWords}) &gt; 0  
+		        or instr(o.consign_phone,#{params.keyWords}) &gt; 0) 
+		   </if>
+		   <if test="params.partnerId != null and params.partnerId != ''">
+		       and o.partner_id = #{params.partnerId}
+		   </if>
+		   <if test="params.todayUnDist != null and params.todayUnDist != ''">
+		       and o.del_flag = '0' and o.status!='0' and o.status!='2' and o.status!='3'  and o.status!='5' 
+		       and (o.out_Order_Status!='1' OR o.out_order_status IS NULL)  
+		       and (o.distribution_date is null or o.distribution_date='0000-00-00 00:00:00'  or  o.distribution_date &gt;= #{params.todayUnDist,jdbcType=TIMESTAMP}) 
+		   </if>
+		   <if test="params.missingDist != null and params.missingDist != ''">
+		       and o.del_flag = '0' and o.status!='0' and o.status!='2' and o.status!='3'  and o.status!='5'
+		       and o.out_Order_Status='0'  
+		       and o.distribution_date &lt; #{params.missingDist,jdbcType=TIMESTAMP}
+		   </if>
+		   <if test="params.outOrderStatus != null and params.outOrderStatus != '' and params.outOrderStatus != 2">
+		       and o.out_order_status=#{params.outOrderStatus} 
+		       and o.status!='2' and o.status!='3'
+		   </if>
+		   <if test="params.outOrderStatus != null and params.outOrderStatus == 2">
+               and o.out_order_status IS NULL
+               and o.del_flag = '0' and o.status!='0' and o.status!='2' and o.status!='3'  and o.status!='5'
+           </if>
+		   <if test="params.memberID!=null and params.memberID!=''">
+		   		and o.member_id=#{params.memberID}
+		   </if>
+		   	<if test="params.orderState!=null and params.orderState!=''">
+		   		and o.status=#{params.orderState}
+		   </if>
+		   <if test="params.deliveryStartDate!=null and params.deliveryStartDate!=''">
+		    <![CDATA[ 
+                and DATE_FORMAT(o.tran_time, '%Y-%m-%d') >= DATE_FORMAT(#{params.deliveryStartDate}, '%Y-%m-%d')
+            ]]>
+           </if>
+            <if test="params.deliveryEndDate!=null and params.deliveryEndDate!=''">
+            <![CDATA[
+                and DATE_FORMAT(o.tran_time, '%Y-%m-%d') <= DATE_FORMAT(#{params.deliveryEndDate}, '%Y-%m-%d')
+             ]]>
+           </if>
+		</where>
+		ORDER BY o.pay_time DESC
+  </select>
+  
+  <!-- 当合伙人确认收货后更新订单distributionDate字段  ying.cai -->
+  <update id="updateDistributionDate" parameterType="Map" > 
+  		UPDATE oms_order o
+  		SET o.distribution_Date = NOW(),o.out_Order_Status=0
+  		WHERE o.order_no in ${orderNos}
+  </update>
+
+  <!-- 查询合伙人 待配送 已配送 订单数量 -->
+  <select id="queryEachDistCount" parameterType="java.util.Map" resultType="com.ffzx.order.api.vo.OmsOrderVo">
+     select 
+     0 as "todayUnDisCount",
+     count(case when o.del_flag = '0' and o.status!='0' and o.status!='2'  and o.status!='3' and o.status!='5' and o.status!='4'
+     			AND o.out_Order_Status='0'  
+                then 1 else null end) as "historyUnDisCount",
+     count(case when o.status in ('2','3') then 1 else null end) as "backCount",
+     count(case when o.out_order_status='1' then 1 else null end) as "alreadyDisCount"                
+     from oms_order o
+     <where>
+     	(o.allocation_Error=0 OR o.allocation_Error IS NULL) 
+        <if test="params.partnerId != null and params.partnerId != ''">
+           and o.partner_id=#{params.partnerId}
+        </if>
+     </where>
+  </select>
+  
+  <!-- 获得配送员销量报表 -->
+  <select id="findSaleOrderBi" parameterType="Map" resultType="com.ffzx.order.api.vo.OrderBiVo">
+  
+   SELECT
+		SUM(o.actual_price) AS salesTotal,
+		DATE_FORMAT(o.pay_time, '%m') AS MONTH,
+		sum(tmp.return_amount) AS refundTotal
+	FROM
+		oms_order o
+	LEFT JOIN (
+		SELECT
+			ap.order_no AS "order_no",
+			IFNULL(
+				sum(
+					ai.act_pay_amount * return_num / commodity_buy_num
+				),
+				0
+			) AS "return_amount"
+		FROM
+			aftersale_apply ap
+		LEFT JOIN aftersale_apply_item ai ON ap.apply_no = ai.apply_no
+		WHERE
+			ap.apply_type IN ('0', '1')
+		AND ap.apply_status IN ('0', '1')
+		GROUP BY
+			ap.order_no
+	) tmp ON o.order_no = tmp.order_no
+	WHERE
+		o.pay_time IS NOT NULL
+	and o.del_flag='0'
+	AND o.partner_id = #{partnerId}
+	and o.order_type!='EXCHANGE_ORDER'
+	GROUP BY
+		DATE_FORMAT(o.pay_time, '%y年%m月')
+	ORDER BY
+		DATE_FORMAT(o.pay_time, '%y年%m月') DESC
+  </select>
+  
+  <!-- 批量确认送达sql ying.cai-->
+  <update id="batchAutoConfirmOrder" parameterType="Map">
+  	 UPDATE oms_order t
+     SET 
+	     t.status = "4",
+	     t.out_Order_Status = "1"
+	 WHERE 1=1 AND t.order_no in ${orderNos}
+  </update>
+  
+  
+   <update id="updateSettlement" parameterType="Map">
+  	UPDATE oms_order
+  	SET 
+		settlement_flag=#{params.settlementFlag,jdbcType=VARCHAR}
+    WHERE id in <foreach collection="params.idList" item="item" separator="," open="(" close=")">
+              #{item}
+            </foreach>
+  </update>
+  
+  <!-- 取得符合自动确认收货的订单集合  ying.cai-->
+  <select id="findAutoConfirmOrderList" resultType="com.ffzx.order.api.dto.OmsOrder" parameterType="Map">
+  	SELECT
+  		O.ID AS "id",
+  		O.ORDER_NO AS "orderNo"
+  	FROM OMS_ORDER O 
+  	WHERE 1=1 AND O.status='1' AND O.OUTBOUND_TIME IS NOT NULL
+  	<if test="time!=null and ''!=time">AND O.OUTBOUND_TIME &lt; #{time}</if>
+  </select>
+	<select id="selectListNotInWms" resultType="com.ffzx.order.api.dto.OmsOrder"
+		parameterType="Map">
+		SELECT
+		o.order_no AS "orderNo"
+		FROM
+		order_db.oms_order o
+		WHERE
+		1 = 1
+		<if test="params!=null and params.createDate!=null and ''!=params.createDate">
+		AND O.create_date &gt;= #{params.createDate,jdbcType=TIMESTAMP}
+		</if>
+		AND O.pay_time IS NOT NULL
+		AND o.del_flag = 0
+		AND o.order_no NOT IN (
+		SELECT
+		os.sales_order_no
+		FROM
+		wms_db.outbound_sales_delivery os
+		<if test="params!=null and params.createDate!=null and ''!=params.createDate">
+		where os.order_time &gt;= #{params.createDate,jdbcType=TIMESTAMP}
+		</if>
+		)
+	</select>
+</mapper>

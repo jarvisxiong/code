@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ffzx.promotion.mapper.ActivityCommoditySkuMapper" >
+  <resultMap id="BaseResultMap" type="com.ffzx.promotion.api.dto.ActivityCommoditySku" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="activity_no" property="activityNo" jdbcType="VARCHAR" />
+    <result column="activity_price" property="activityPrice" jdbcType="DECIMAL" />
+    <result column="commodity_sku_id" property="commoditySkuId" jdbcType="VARCHAR" />
+    <result column="commodity_sku_no" property="commoditySkuNo" jdbcType="VARCHAR" />
+    <result column="commodity_sku_barcode" property="commoditySkuBarcode" jdbcType="VARCHAR" />
+    <result column="commodity_sku_title" property="commoditySkuTitle" jdbcType="VARCHAR" />
+    <result column="selection_start" property="selectionStart" jdbcType="INTEGER" />
+    <result column="selection_end" property="selectionEnd" jdbcType="INTEGER" />
+    <result column="attr_group" property="attrGroup" jdbcType="VARCHAR" />
+    <result column="activity_type" property="activityType" jdbcType="VARCHAR" />
+    <result column="limit_count" property="limitCount" jdbcType="INTEGER" />
+    <result column="activity_commodity_id" property="activityCommodity.id" jdbcType="VARCHAR" />
+    <result column="activity_id" property="activity.id" jdbcType="VARCHAR" />
+    <result column="commodity_sku_price" property="commoditySkuPrice" jdbcType="DECIMAL" />
+    <result column="activitystartDate" property="activity.startDate" jdbcType="TIMESTAMP" />
+    <result column="activityendDate" property="activity.endDate" jdbcType="TIMESTAMP" />
+    <result column="activityactivityNo" property="activity.activityNo" jdbcType="VARCHAR" />
+    <result column="commodity_no" property="commodityNo" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="BaseResultMapAll" type="com.ffzx.promotion.api.dto.ActivityCommoditySku" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="activity_no" property="activityNo" jdbcType="VARCHAR" />
+    <result column="activity_price" property="activityPrice" jdbcType="DECIMAL" />
+    <result column="commodity_sku_id" property="commoditySkuId" jdbcType="VARCHAR" />
+    <result column="commodity_sku_no" property="commoditySkuNo" jdbcType="VARCHAR" />
+    <result column="commodity_sku_barcode" property="commoditySkuBarcode" jdbcType="VARCHAR" />
+    <result column="commodity_sku_title" property="commoditySkuTitle" jdbcType="VARCHAR" />
+    <result column="selection_start" property="selectionStart" jdbcType="INTEGER" />
+    <result column="selection_end" property="selectionEnd" jdbcType="INTEGER" />
+    <result column="attr_group" property="attrGroup" jdbcType="VARCHAR" />
+    <result column="activity_type" property="activityType" jdbcType="VARCHAR" />
+    <result column="limit_count" property="limitCount" jdbcType="INTEGER" />
+    <result column="activity_commodity_id" property="activityCommodity.id" jdbcType="VARCHAR" />
+    <result column="activity_id" property="activity.id" jdbcType="VARCHAR" />
+    <result column="commodity_sku_price" property="commoditySkuPrice" jdbcType="DECIMAL" />
+    <result column="commodity_no" property="commodityNo" jdbcType="VARCHAR" />
+    
+    <result column="commodityactivity_no" property="activityCommodity.activityNo" jdbcType="VARCHAR" />
+    <result column="commoditypic_path" property="activityCommodity.picPath" jdbcType="VARCHAR" />
+    <result column="commodityactivity_type" property="activityCommodity.activityType" jdbcType="VARCHAR" />
+    <result column="commoditycommodity_no" property="activityCommodity.commodityNo" jdbcType="VARCHAR" />
+    <result column="commoditycommodity_id" property="activityCommodity.commodityId" jdbcType="VARCHAR" />
+    <result column="commodityactivity_title" property="activityCommodity.activityTitle" jdbcType="VARCHAR" />
+    <result column="commoditycommodity_barcode" property="activityCommodity.commodityBarcode" jdbcType="VARCHAR" />
+    <result column="commodityshow_price" property="activityCommodity.showPrice" jdbcType="VARCHAR" />
+    <result column="commoditystart_date" property="activityCommodity.startDate" jdbcType="TIMESTAMP" />
+    <result column="commodityend_date" property="activityCommodity.endDate" jdbcType="TIMESTAMP" />
+    <result column="commoditysort_top_no" property="activityCommodity.sortTopNo" jdbcType="INTEGER" />
+    <result column="commoditysort_no" property="activityCommodity.sortNo" jdbcType="INTEGER" />
+    <result column="commodityis_recommend" property="activityCommodity.isRecommend" jdbcType="VARCHAR" />
+    <result column="commodityrecommend_sort" property="activityCommodity.recommendSort" jdbcType="INTEGER" />
+    <result column="commodityid_limit_count" property="activityCommodity.idLimitCount" jdbcType="INTEGER" />
+    <result column="commoditylimit_count" property="activityCommodity.limitCount" jdbcType="INTEGER" />
+    <result column="commoditysale_increase" property="activityCommodity.saleIncrease" jdbcType="INTEGER" />
+    <result column="commodityenable_special_count" property="activityCommodity.enableSpecialCount" jdbcType="VARCHAR" />
+    <result column="commodityspecial_count" property="activityCommodity.specialCount" jdbcType="INTEGER" />
+    <result column="commodityactivity_id" property="activityCommodity.activity.id" jdbcType="VARCHAR" />
+    <result column="commoditydeliver_date" property="activityCommodity.deliverDate" jdbcType="TIMESTAMP" />
+    <result column="commodityislimit" property="activityCommodity.islimit" jdbcType="CHAR" />
+    <result column="commodityis_neworder" property="activityCommodity.isNeworder" jdbcType="CHAR" />
+    <result column="commoditybuy_count" property="activityCommodity.buyCount" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    t.id, t.activity_no, t.activity_price, t.commodity_sku_id, t.commodity_sku_no, t.commodity_sku_barcode, 
+    t.commodity_sku_title, t.selection_start, t.selection_end, t.attr_group, t.activity_type, 
+    t.limit_count, t.activity_commodity_id, t.activity_id, t.commodity_sku_price, t.commodity_no 
+  </sql>
+  <sql id="Base_Column_ListOther">
+    <include refid="Base_Column_List" />,
+    ac.activity_no as "commodityactivity_no", ac.pic_path as "commoditypic_path", ac.activity_type as "commodityactivity_type", ac.commodity_no as "commoditycommodity_no", ac.commodity_id as "commoditycommodity_id", ac.activity_title as "commodityactivity_title", 
+    ac.commodity_barcode as "commoditycommodity_barcode", ac.show_price as "commodityshow_price", ac.start_date as "commoditystart_date", ac.end_date as "commodityend_date", ac.sort_top_no as "commodity", ac.sort_no as "commoditysort_no", 
+    ac.is_recommend as "commodityis_recommend", ac.recommend_sort as "commodityrecommend_sort", ac.id_limit_count as "commodityid_limit_count", ac.limit_count as "commoditylimit_count", ac.sale_increase as "commoditysale_increase", 
+    ac.enable_special_count as "commodityenable_special_count", ac.special_count as "commodityspecial_count",  ac.deliver_date as "commoditydeliver_date", ac.islimit as "commodityislimit", 
+    ac.is_neworder as "commodityis_neworder",ac.buy_count as "commoditybuy_count"
+  </sql>
+  
+  
+  <sql id="conditionPifaPrice" >
+    <if test="null!=params" >
+      <if test="params.commodityNo != null and '' != params.commodityNo" >
+        and t.commodity_no = #{params.commodityNo,jdbcType=VARCHAR}
+      </if>
+    </if>
+    </sql>
+     <sql id="conditionSkuPrice" >
+    <if test="null!=activityIdList" >
+      and 
+         <foreach collection="activityIdList" separator="or" open="(" close=")" item="item">
+            (t.activity_commodity_id= '${item.activityId}' and t.commodity_sku_id= '${item.skuId}') 
+         </foreach>
+    </if>
+    </sql>
+    
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null and '' != params.id" >
+        and t.id = #{params.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.activityNo != null and '' != params.activityNo" >
+        and t.activity_no = #{params.activityNo,jdbcType=VARCHAR}
+      </if>
+      <if test="params.activityPrice != null" >
+        and t.activity_price = #{params.activityPrice,jdbcType=DECIMAL}
+      </if>
+      <if test="params.commoditySkuId != null and '' != params.commoditySkuId" >
+        and (t.commodity_sku_id = #{params.commoditySkuId,jdbcType=VARCHAR} 
+        
+        <if test="params.orcommodityno != null and '' != params.orcommodityno" >
+        or t.commodity_no = #{params.orcommodityno,jdbcType=VARCHAR}
+        </if>
+        )
+      
+      </if>
+      <if test="params.commoditySkuNo != null and '' != params.commoditySkuNo" >
+        and t.commodity_sku_no = #{params.commoditySkuNo,jdbcType=VARCHAR}
+      </if>
+      <if test="params.commoditySkuBarcode != null and '' != params.commoditySkuBarcode" >
+        and t.commodity_sku_barcode = #{params.commoditySkuBarcode,jdbcType=VARCHAR}
+      </if>
+      <if test="params.commoditySkuTitle != null and '' != params.commoditySkuTitle" >
+        and t.commodity_sku_title = #{params.commoditySkuTitle,jdbcType=VARCHAR}
+      </if>
+      <if test="params.selectionStart != null" >
+        and t.selection_start = #{params.selectionStart,jdbcType=INTEGER}
+      </if>
+      <if test="params.selectionEnd != null" >
+        and t.selection_end = #{params.selectionEnd,jdbcType=INTEGER}
+      </if>
+      <if test="params.attrGroup != null and '' != params.attrGroup" >
+        and t.attr_group = #{params.attrGroup,jdbcType=VARCHAR}
+      </if>
+      <if test="params.activityType != null and '' != params.activityType" >
+        and t.activity_type = #{params.activityType,jdbcType=VARCHAR}
+      </if>
+      <if test="params.limitCount != null" >
+        and t.limit_count = #{params.limitCount,jdbcType=INTEGER}
+      </if>
+      <if test="params.activityCommodity != null and '' != params.activityCommodity" >
+      <if test="params.activityCommodity.id != null and '' != params.activityCommodity.id" >
+        and t.activity_commodity_id = #{params.activityCommodity.id,jdbcType=VARCHAR}
+      </if>
+      </if>
+      <if test="params.activity != null and '' != params.activity" >
+      <if test="params.activity.id != null and '' != params.activity.id" >
+        and t.activity_id = #{params.activity.id,jdbcType=VARCHAR}
+      </if>
+      </if>
+      <if test="params.commoditySkuPrice != null" >
+        and t.commodity_sku_price = #{params.commoditySkuPrice,jdbcType=DECIMAL}
+      </if>
+      <if test="params.commodityNo != null and '' != params.commodityNo" >
+        and t.commodity_no = #{params.commodityNo,jdbcType=VARCHAR}
+      </if>
+      <if test="params.skuIds != null and '' != params.skuIds" >
+         and t.commodity_sku_id in
+         <foreach collection="params.skuIds" item="item" index="index" 
+		open="(" separator="," close=")">#{item}</foreach>
+      </if>
+    </if>
+  </sql>
+  
+  <sql id="joins">
+  	Left join activity_commodity ac on ac.id=t.activity_commodity_id
+  </sql> 
+  
+  <sql id="joinsAll">
+    <include refid="joins"/>
+  	Left join activity_manager am on am.id=t.activity_id
+  </sql> 
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from activity_commodity_sku t 
+    where t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMapAll" parameterType="map" >
+    select 
+    <include refid="Base_Column_ListOther" />
+    from activity_commodity_sku t 
+    <include refid="joins"/>
+    where 1=1
+    <include refid="condition" />
+    order by t.selection_start asc
+  </select>
+  
+  
+  <select id="selectActivitySkuPrice" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from activity_commodity_sku t 
+    where 1=1
+    <include refid="conditionSkuPrice" />
+  </select>
+  
+  <select id="selectPifaPrice" resultType="java.lang.Integer"  parameterType="map" >
+    select 
+    commodity_sku_price
+    from activity_commodity_sku t 
+    where 1=1
+    <include refid="conditionPifaPrice" />
+  </select>
+  <select id="selectByParamsAll" resultMap="BaseResultMapAll" parameterType="map" >
+    select 
+    <include refid="Base_Column_ListOther" />
+    from activity_commodity_sku t 
+    <include refid="joinsAll"/>
+    where 1=1
+    and  am.id= #{params.activitiId,jdbcType=VARCHAR} 
+     <![CDATA[and ac.start_date <= #{params.stateenddate,jdbcType=TIMESTAMP}]]>
+     <![CDATA[and ac.end_date >= #{params.stateenddate,jdbcType=TIMESTAMP}]]>
+    <include refid="condition" />
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from activity_commodity_sku t  where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from activity_commodity_sku t 
+    where 1=1
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from activity_commodity_sku
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimaryKeycommodity" parameterType="java.lang.String" >
+    delete from activity_commodity_sku
+    where activity_commodity_id = #{commodityid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.promotion.api.dto.ActivityCommoditySku" >
+    delete from activity_commodity_sku
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ffzx.promotion.api.dto.ActivityCommoditySku" >
+    insert into activity_commodity_sku (id, activity_no, activity_price, 
+      commodity_sku_id, commodity_sku_no, commodity_sku_barcode, 
+      commodity_sku_title, selection_start, selection_end, 
+      attr_group, activity_type, limit_count, 
+      activity_commodity_id, activity_id, commodity_sku_price, commodity_no)
+    values (#{id,jdbcType=VARCHAR}, #{activityNo,jdbcType=VARCHAR}, #{activityPrice,jdbcType=DECIMAL}, 
+      #{commoditySkuId,jdbcType=VARCHAR}, #{commoditySkuNo,jdbcType=VARCHAR}, #{commoditySkuBarcode,jdbcType=VARCHAR}, 
+      #{commoditySkuTitle,jdbcType=VARCHAR}, #{selectionStart,jdbcType=INTEGER}, #{selectionEnd,jdbcType=INTEGER}, 
+      #{attrGroup,jdbcType=VARCHAR}, #{activityType,jdbcType=VARCHAR}, #{limitCount,jdbcType=INTEGER}, 
+      #{activityCommodity.id,jdbcType=VARCHAR}, #{activity.id,jdbcType=VARCHAR}, #{commoditySkuPrice,jdbcType=DECIMAL},
+      #{commodityNo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.promotion.api.dto.ActivityCommoditySku" >
+    insert into activity_commodity_sku
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="activityNo != null" >
+        activity_no,
+      </if>
+      <if test="activityPrice != null" >
+        activity_price,
+      </if>
+      <if test="commoditySkuId != null" >
+        commodity_sku_id,
+      </if>
+      <if test="commoditySkuNo != null" >
+        commodity_sku_no,
+      </if>
+      <if test="commoditySkuBarcode != null" >
+        commodity_sku_barcode,
+      </if>
+      <if test="commoditySkuTitle != null" >
+        commodity_sku_title,
+      </if>
+      <if test="selectionStart != null" >
+        selection_start,
+      </if>
+      <if test="selectionEnd != null" >
+        selection_end,
+      </if>
+      <if test="attrGroup != null" >
+        attr_group,
+      </if>
+      <if test="activityType != null" >
+        activity_type,
+      </if>
+      <if test="limitCount != null" >
+        limit_count,
+      </if>
+      <if test="activityCommodity.id != null" >
+        activity_commodity_id,
+      </if>
+      <if test="activity.id != null" >
+        activity_id,
+      </if>
+      <if test="commoditySkuPrice != null" >
+        commodity_sku_price,
+      </if>
+      <if test="commodityNo != null" >
+        commodity_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="activityNo != null" >
+        #{activityNo,jdbcType=VARCHAR},
+      </if>
+      <if test="activityPrice != null" >
+        #{activityPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="commoditySkuId != null" >
+        #{commoditySkuId,jdbcType=VARCHAR},
+      </if>
+      <if test="commoditySkuNo != null" >
+        #{commoditySkuNo,jdbcType=VARCHAR},
+      </if>
+      <if test="commoditySkuBarcode != null" >
+        #{commoditySkuBarcode,jdbcType=VARCHAR},
+      </if>
+      <if test="commoditySkuTitle != null" >
+        #{commoditySkuTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="selectionStart != null" >
+        #{selectionStart,jdbcType=INTEGER},
+      </if>
+      <if test="selectionEnd != null" >
+        #{selectionEnd,jdbcType=INTEGER},
+      </if>
+      <if test="attrGroup != null" >
+        #{attrGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="activityType != null" >
+        #{activityType,jdbcType=VARCHAR},
+      </if>
+      <if test="limitCount != null" >
+        #{limitCount,jdbcType=INTEGER},
+      </if>
+      <if test="activityCommodity.id != null" >
+        #{activityCommodity.id,jdbcType=VARCHAR},
+      </if>
+      <if test="activity.id != null" >
+        #{activity.id,jdbcType=VARCHAR},
+      </if>
+      <if test="commoditySkuPrice != null" >
+        #{commoditySkuPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="commodityNo != null" >
+        #{commodityNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.promotion.api.dto.ActivityCommoditySku" >
+    update activity_commodity_sku
+    <set >
+      <if test="activityNo != null" >
+        activity_no = #{activityNo,jdbcType=VARCHAR},
+      </if>
+      <if test="activityPrice != null" >
+        activity_price = #{activityPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="commoditySkuId != null" >
+        commodity_sku_id = #{commoditySkuId,jdbcType=VARCHAR},
+      </if>
+      <if test="commoditySkuNo != null" >
+        commodity_sku_no = #{commoditySkuNo,jdbcType=VARCHAR},
+      </if>
+      <if test="commoditySkuBarcode != null" >
+        commodity_sku_barcode = #{commoditySkuBarcode,jdbcType=VARCHAR},
+      </if>
+      <if test="commoditySkuTitle != null" >
+        commodity_sku_title = #{commoditySkuTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="selectionStart != null" >
+        selection_start = #{selectionStart,jdbcType=INTEGER},
+      </if>
+      <if test="selectionEnd != null" >
+        selection_end = #{selectionEnd,jdbcType=INTEGER},
+      </if>
+      <if test="attrGroup != null" >
+        attr_group = #{attrGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="activityType != null" >
+        activity_type = #{activityType,jdbcType=VARCHAR},
+      </if>
+      <if test="limitCount != null" >
+        limit_count = #{limitCount,jdbcType=INTEGER},
+      </if>
+      <if test="activityCommodity.id != null" >
+        activity_commodity_id = #{activityCommodity.id,jdbcType=VARCHAR},
+      </if>
+      <if test="activity.id != null" >
+        activity_id = #{activity.id,jdbcType=VARCHAR},
+      </if>
+      <if test="commoditySkuPrice != null" >
+        commodity_sku_price = #{commoditySkuPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="commodityNo != null" >
+        commodity_no = #{commodityNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.promotion.api.dto.ActivityCommoditySku" >
+    update activity_commodity_sku
+    set activity_no = #{activityNo,jdbcType=VARCHAR},
+      activity_price = #{activityPrice,jdbcType=DECIMAL},
+      commodity_sku_id = #{commoditySkuId,jdbcType=VARCHAR},
+      commodity_sku_no = #{commoditySkuNo,jdbcType=VARCHAR},
+      commodity_sku_barcode = #{commoditySkuBarcode,jdbcType=VARCHAR},
+      commodity_sku_title = #{commoditySkuTitle,jdbcType=VARCHAR},
+      selection_start = #{selectionStart,jdbcType=INTEGER},
+      selection_end = #{selectionEnd,jdbcType=INTEGER},
+      attr_group = #{attrGroup,jdbcType=VARCHAR},
+      activity_type = #{activityType,jdbcType=VARCHAR},
+      limit_count = #{limitCount,jdbcType=INTEGER},
+      activity_commodity_id = #{activityCommodity.id,jdbcType=VARCHAR},
+      activity_id = #{activity.id,jdbcType=VARCHAR},
+      commodity_sku_price = #{commoditySkuPrice,jdbcType=DECIMAL},
+      commodity_no = #{commodityNo,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 根据活动ID获得该活动下的所有sku子活动的数据 ying.cai -->
+  <select id="findActivitySkuByActivityId" resultType="com.ffzx.promotion.api.dto.ActivityCommoditySku" parameterType="Map">
+  	SELECT 
+		sk.id AS "id",
+		sk.activity_price AS "activityPrice",
+		sk.limit_count AS "limitCount",
+		sk.commodity_sku_id AS "commoditySkuId",
+		sk.commodity_no AS "commodityNo"
+	FROM activity_commodity_sku sk
+	WHERE 1=1
+	<if test="activityId!=null and ''!=activityId">
+		AND sk.activity_commodity_id = #{activityId} 
+	</if>
+	AND (sk.commodity_sku_id in ${commoditySkuIds} OR sk.commodity_no = #{commodityCode})
+  </select>
+</mapper>

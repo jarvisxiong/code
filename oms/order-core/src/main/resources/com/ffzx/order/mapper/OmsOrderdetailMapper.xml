@@ -1,0 +1,1049 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ffzx.order.mapper.OmsOrderdetailMapper" >
+  <resultMap id="BaseResultMap" type="com.ffzx.order.api.dto.OmsOrderdetail" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="commodity_no" property="commodityNo" jdbcType="VARCHAR" />
+    <result column="commodity_title" property="commodityTitle" jdbcType="VARCHAR" />
+    <result column="commodity_image" property="commodityImage" jdbcType="VARCHAR" />
+    <result column="commodity_barcode" property="commodityBarcode" jdbcType="VARCHAR" />
+    <result column="commodity_specifications" property="commoditySpecifications" jdbcType="VARCHAR" />
+    <result column="commodity_unit" property="commodityUnit" jdbcType="VARCHAR" />
+    <result column="commodity_price" property="commodityPrice" jdbcType="DECIMAL" />
+    <result column="act_pay_amount" property="actPayAmount" jdbcType="DECIMAL" />
+    <result column="buy_num" property="buyNum" jdbcType="INTEGER" />
+    <result column="ready_send_time" property="readySendTime" jdbcType="TIMESTAMP" />
+    <result column="activity_commodity_item_id" property="activityCommodityItemId" jdbcType="VARCHAR" />
+    <result column="gift_commodity_item_id" property="giftCommodityItemId" jdbcType="VARCHAR" />
+    <result column="activity_id" property="activityId" jdbcType="VARCHAR" />
+    <result column="member_id" property="memberId" jdbcType="VARCHAR" />
+    <result column="order_detail_status" property="orderDetailStatus" jdbcType="VARCHAR" />
+    <result column="commodity_attribute_values" property="commodityAttributeValues" jdbcType="VARCHAR" />
+    <result column="sku_id" property="skuId" jdbcType="VARCHAR" />
+    <result column="sku_code" property="skuCode" jdbcType="VARCHAR" />
+    <result column="favoured_amount" property="favouredAmount" jdbcType="DECIMAL" />
+    <result column="buy_type" property="buyType" jdbcType="VARCHAR" />
+    <result column="act_sale_price" property="actSalePrice" jdbcType="DECIMAL" />
+    <result column="warehouse_id" property="warehouseId" jdbcType="VARCHAR" />
+    <result column="warehouse_code" property="warehouseCode" jdbcType="VARCHAR" />
+    <result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+
+    
+    <result column="orderdetail_id" property="orderdetailId" jdbcType="VARCHAR" />
+    <result column="trigger_num" property="triggerNum" jdbcType="INTEGER" />
+    <result column="single_gift_num" property="singleGiftNum" jdbcType="INTEGER" />
+    <result column="warehouse_appoint" property="warehouseAppoint" jdbcType="VARCHAR" />
+    <result column="buy_gifts" property="buyGifts" jdbcType="VARCHAR" />
+    <result column="promotions" property="promotions" jdbcType="VARCHAR" />
+    
+    <result column="red_packet_ids" property="redPacketIds" jdbcType="VARCHAR" />
+    <result column="red_packet_use_ids" property="redPacketUseIds" jdbcType="VARCHAR" />
+    <result column="red_packet_names" property="redPacketNames" jdbcType="VARCHAR" />
+    <result column="red_packet_amount" property="redPacketAmount" jdbcType="DECIMAL" />
+
+    <result column="virtual_gd_id" property="virtualGdId" jdbcType="VARCHAR" />
+    <result column="virtual_gd_code" property="virtualGdCode" jdbcType="VARCHAR" />
+    <result column="virtual_gd_name" property="virtualGdName" jdbcType="VARCHAR" />
+    <result column="return_num" property="return_num" jdbcType="INTEGER" />
+    <result column="commodity_type" property="commodityType" jdbcType="VARCHAR" />
+    
+    <result column="pifa_price" property="pifaPrice" jdbcType="DECIMAL" />
+	<result column="balance" property="balance" jdbcType="DECIMAL" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    t.id, t.order_id, t.order_no, t.commodity_no, t.commodity_title, t.commodity_image, 
+    t.commodity_barcode, t.commodity_specifications, t.commodity_unit, t.commodity_price, 
+    t.act_pay_amount, t.buy_num, t.ready_send_time, t.activity_commodity_item_id,t.gift_commodity_item_id,t.activity_id, t.member_id,t.order_detail_status,t.commodity_attribute_values,
+    t.sku_id,t.sku_code,t.favoured_amount,t.buy_type,t.act_sale_price,t.warehouse_id,t.warehouse_code,t.warehouse_name,
+    t.orderdetail_id,t.trigger_num,t.single_gift_num,t.warehouse_appoint,t.buy_gifts,t.promotions,
+    t.red_packet_ids,
+    t.red_packet_use_ids,
+    t.red_packet_names,
+    t.red_packet_amount
+    ,t.virtual_gd_id
+    ,t.virtual_gd_code
+    ,t.virtual_gd_name
+    ,t.commodity_type
+    ,t.pifa_price
+    ,t.balance
+
+  </sql>
+
+    <sql id="Base_Column_List_aftersale" >
+    oo.id,oo.order_id,oo.order_no,oo.commodity_no,oo.commodity_title,oo.commodity_image, 
+oo.commodity_barcode,oo.commodity_specifications,oo.commodity_unit,oo.commodity_price, 
+oo.act_pay_amount,oo.ready_send_time,oo.activity_commodity_item_id,oo.activity_id,oo.member_id,oo.order_detail_status,oo.commodity_attribute_values,
+oo.sku_id,oo.sku_code,oo.favoured_amount,oo.buy_type,oo.act_sale_price,oo.warehouse_id,oo.warehouse_code,oo.warehouse_name,
+oo.orderdetail_id,oo.trigger_num,oo.single_gift_num,oo.warehouse_appoint,oo.buy_gifts,oo.promotions,aftersale.return_num ,oo.red_packet_amount,oo.buy_num
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null and '' != params.id" >
+        and t.id = #{params.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.orderId != null and '' != params.orderId" >
+        and t.order_id = #{params.orderId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.orderNo != null and '' != params.orderNo" >
+        and t.order_no = #{params.orderNo,jdbcType=VARCHAR}
+      </if>
+      <if test="params.orderNoLike != null and '' != params.orderNoLike" >
+        and t.order_no like '${params.orderNoLike}%'
+      </if>
+      <if test="params.orderNos != null">
+        and t.order_no in 
+          <foreach collection="params.orderNos" separator="," open="(" close=")" item="item">
+             '${item}'
+          </foreach>
+      </if>
+      <if test="params.commodityNo != null and '' != params.commodityNo" >
+        and t.commodity_no = #{params.commodityNo,jdbcType=VARCHAR}
+      </if>
+      <if test="params.commodityTitle != null and '' != params.commodityTitle" >
+        and t.commodity_title = #{params.commodityTitle,jdbcType=VARCHAR}
+      </if>
+      <if test="params.commodityImage != null and '' != params.commodityImage" >
+        and t.commodity_image = #{params.commodityImage,jdbcType=VARCHAR}
+      </if>
+      <if test="params.commodityBarcode != null and '' != params.commodityBarcode" >
+        and t.commodity_barcode = #{params.commodityBarcode,jdbcType=VARCHAR}
+      </if>
+      <if test="params.commoditySpecifications != null and '' != params.commoditySpecifications" >
+        and t.commodity_specifications = #{params.commoditySpecifications,jdbcType=VARCHAR}
+      </if>
+      <if test="params.commodityUnit != null and '' != params.commodityUnit" >
+        and t.commodity_unit = #{params.commodityUnit,jdbcType=VARCHAR}
+      </if>
+      <if test="params.commodityPrice != null" >
+        and t.commodity_price = #{params.commodityPrice,jdbcType=DECIMAL}
+      </if>
+      <if test="params.actPayAmount != null" >
+        and t.act_pay_amount = #{params.actPayAmount,jdbcType=DECIMAL}
+      </if>
+      <if test="params.buyNum != null" >
+        and t.buy_num = #{params.buyNum,jdbcType=INTEGER}
+      </if>
+      <if test="params.readySendTime != null" >
+        and t.ready_send_time = #{params.readySendTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.activityCommodityItemId != null and '' != params.activityCommodityItemId" >
+        and t.activity_commodity_item_id = #{params.activityCommodityItemId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.activityId != null and '' != params.activityCommodityItemId" >
+        and t.activity_id = #{params.activityId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.memberId != null and '' != params.memberId" >
+        and t.member_id = #{params.memberId,jdbcType=VARCHAR}
+      </if>
+        <if test="params.orderDetailStatus != null and '' != params.orderDetailStatus" >
+        and t.order_detail_status = #{params.orderDetailStatus,jdbcType=VARCHAR}
+      </if>
+      
+      <if test="params.skuId != null and '' != params.skuId" >
+        and t.sku_id = #{params.skuId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.skuCode != null and '' != params.skuCode" >
+        and t.sku_code = #{params.skuCode,jdbcType=VARCHAR}
+      </if>
+      <if test="params.favouredAmount != null and '' != params.favouredAmount" >
+        and t.favoured_amount = #{params.favouredAmount,jdbcType=DECIMAL}
+      </if>
+      <if test="params.buyType != null and '' != params.buyType" >
+        and t.buy_type = #{params.buyType,jdbcType=VARCHAR}
+      </if>
+      <if test="params.actSalePrice != null and '' != params.actSalePrice" >
+        and t.act_sale_price = #{params.actSalePrice,jdbcType=DECIMAL}
+      </if>
+      
+      <if test="params.order_statusIn != null and '' != params.orderDetailStatus" >
+        and t.order_detail_status = #{params.orderDetailStatus,jdbcType=VARCHAR}
+      </if>
+
+       <if test="params.memberIds != null and '' != params.memberIds" >
+        and oms_order.member_id = #{params.memberIds,jdbcType=VARCHAR}
+      </if>
+      <if test="params.order_status != null and '' != params.order_status">
+        and oms_order.status = #{params.order_status,jdbcType=VARCHAR}
+      </if>
+      <if test="params.order_statusIn != null and '' != params.order_statusIn">
+        and oms_order.status in (${params.order_statusIn})
+      </if>
+      <if test="params.order_notnullpaytime != null and '' != params.order_notnullpaytime" >
+        and oms_order.pay_time != null
+      </if>
+      <if test="params.order_delFlag != null and '' != params.order_delFlag" >
+        and oms_order.del_flag = #{params.order_delFlag,jdbcType=CHAR}
+      </if>
+      <if test="params.order_memberId != null and '' != params.order_memberId" >
+        and oms_order.member_id = #{params.order_memberId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.status!= null and '' != params.status" >
+        and oms_order.status != 5
+      </if>
+      <if test="params.warehouseId != null and '' != params.warehouseId">
+        and t.warehouse_id= #{params.warehouseId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.warehouseCode != null and '' != params.warehouseCode">
+        and t.warehouse_code= #{params.warehouseCode,jdbcType=VARCHAR}
+      </if>
+      
+      <if test="params.warehouseCode != null and '' != params.warehouseCode">
+        and t.warehouse_code= #{params.warehouseCode,jdbcType=VARCHAR}
+      </if>
+      <if test="params.giftCommodityItemId != null and '' != params.giftCommodityItemId">
+        and t.gift_commodity_item_id= #{params.giftCommodityItemId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.buyGifts != null and '' != params.buyGifts">
+        and t.buy_gifts= #{params.buyGifts,jdbcType=VARCHAR}
+      </if>
+      <if test="params.orderNoList != null">
+            and t.order_no in 
+            <foreach collection="params.orderNoList" item="item" separator="," open="(" close=")">
+              #{item}
+            </foreach>
+       </if>
+      <if test="params.redPacketIds != null and '' != params.redPacketIds">
+        and t.red_packet_ids= #{params.redPacketIds,jdbcType=VARCHAR}
+      </if>
+      <if test="params.redPacketUseIds != null and '' != params.redPacketUseIds">
+        and t.red_packet_use_ids= #{params.redPacketUseIds,jdbcType=VARCHAR}
+      </if>
+      <if test="params.redPacketNames != null and '' != params.redPacketNames">
+        and t.red_packet_names= #{params.redPacketNames,jdbcType=VARCHAR}
+      </if>
+      <if test="params.redPacketAmount != null and '' != params.redPacketAmount ">
+        and t.red_packet_amount= #{params.redPacketAmount,jdbcType=DECIMAL}
+      </if>
+      <if test="params.commodityType != null and '' != params.commodityType">
+        and t.commodity_type= #{params.commodityType,jdbcType=VARCHAR}
+      </if>
+      <if test="null!=params.od_title_bar_like and ''!=params.od_title_bar_like" >
+			and (t.commodity_title like '%${params.od_title_bar_like}%' or t.commodity_barcode like '%${params.od_title_bar_like}%')
+	  </if>
+      <if test="params.od_orderDetailStatusList != null and '' != params.od_orderDetailStatusList" >
+        	and t.order_detail_status in
+        	 <foreach collection="params.od_orderDetailStatusList" item="item" separator="," open="(" close=")">
+              #{item}
+         	</foreach>
+      	</if>
+      	<if test="params.od_buyTypeList != null and '' != params.od_buyTypeList" >
+        	and t.buy_type in
+        	 <foreach collection="params.od_buyTypeList" item="item" separator="," open="(" close=")">
+              #{item}
+         	</foreach>
+      	</if>
+      <if test="params.commodityTypeCode != null and '' != params.commodityTypeCode">
+        AND t.virtual_gd_id is NULL
+      </if> 
+      
+      <if test="params.pifaPrice != null and '' != params.pifaPrice">
+        and t.pifa_price= #{params.pifaPrice,jdbcType=DECIMAL}
+      </if> 
+      <if test="params.pifaPrice != null and '' != params.pifaPrice">
+        and t.balance= #{params.balance,jdbcType=DECIMAL}
+      </if> 
+      <if test="params.detailSettlementFlag2No != null">
+       and  (t.settlement_flag !=1 or t.settlement_flag is null) and t.pifa_price is not null
+       </if>
+    </if>
+  </sql>
+  
+   <select id="getOrderDetailListByApplyId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List_aftersale" />
+     FROM (SELECT aai.sku_id,aai.return_num,aai.apply_id,aai.apply_no,aa.order_no FROM aftersale_apply_item aai LEFT JOIN aftersale_apply aa ON aai.apply_id=aa.id WHERE aa.id=#{applyId,jdbcType=VARCHAR}) AS aftersale
+  LEFT JOIN  oms_orderdetail oo 
+  ON oo.order_no=aftersale.order_no AND oo.sku_id=aftersale.sku_id;
+  </select>
+  
+  <select id="getdetailByIDList" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from oms_orderdetail t 
+    where t.orderdetail_id = #{mainCommodityId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from oms_orderdetail t 
+    where t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByCode" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from oms_orderdetail t 
+    where  
+     <if test="params.orderNo != null and '' != params.orderNo" >
+       	t.order_no = #{params.orderNo,jdbcType=VARCHAR}
+      </if>
+       <if test="params.commodityNo != null and '' != params.commodityNo" >
+         and t.commodity_no=#{params.commodityNo,jdbcType=VARCHAR}
+      </if>
+       <if test="params.skuId != null and '' != params.skuId" >
+        and t.sku_id=#{params.skuId,jdbcType=VARCHAR}
+      </if>
+       
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from oms_orderdetail t 
+    where 1=1
+    <include refid="condition" />
+  </select>
+  
+    <select id="selectByCountPriceSettlment" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+     ,(t.buy_num -IFNULL(tmp.return_num,0)) as "return_num"
+    from oms_orderdetail t 
+    oms_orderdetail od
+		LEFT JOIN ( 
+		SELECT  
+		aai.return_num as "return_num",
+		aai.sku_id as "sku_id",
+		aa.order_no as "order_no"
+		from 
+ 		aftersale_apply_item aai  
+		left JOIN aftersale_apply  aa on aa.id = aai.apply_id
+		where 1=1
+		and aa.apply_status = '1'
+		)tmp on tmp.order_no =od.order_no and tmp.sku_id = od.sku_id
+    where 1=1
+    <include refid="condition" />
+  </select>
+  
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from oms_orderdetail t left join  oms_order oms_order on t.order_id  = oms_order.id  where 1=1 
+    <include refid="condition" />
+  </select>
+   <select id="selectBuyCount" resultType="java.lang.Integer"   parameterType="java.util.Map">
+    select IFNULL(sum(t.buy_num),0) as s from oms_orderdetail t left join  oms_order oms_order on t.order_id  = oms_order.id  where 1=1 
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from oms_orderdetail t 
+    where 1=1
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from oms_orderdetail
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+    
+    <select id="selectJoinSkuByParams" resultType="com.ffzx.order.api.dto.OmsOrderdetail" parameterType="map" >
+     select 
+      t.order_id as "orderId",
+      t.order_no as "orderNo",
+      t.commodity_no as "commodityNo",
+      t.commodity_title as "commodityTitle",
+      t.commodity_image as "commodityImage",
+      t.commodity_barcode as "commodityBarcode",
+      t.commodity_specifications as "commoditySpecifications",
+      t.commodity_unit as "commodityUnit",
+      t.commodity_price as "commodityPrice",
+      t.act_sale_price as "actSalePrice",
+      t.act_pay_amount as "actPayAmount",
+      t.buy_num as "buyNum",
+      t.ready_send_time as "readySendTime",
+      t.activity_commodity_item_id as "activityCommodityItemId",
+      t.gift_commodity_item_id as "giftCommodityItemId",
+      t.activity_id as "activityId",
+      t.member_id as "memberId",
+      t.order_detail_status as "orderDetailStatus",
+      t.commodity_attribute_values as "commodityAttributeValues", 
+      t.sku_id as "skuId",
+      t.sku_code as "skuCode",
+      t.favoured_amount as "favouredAmount",
+      t.buy_type as "buyType",
+      t.warehouse_id as "warehouseId",
+      t.warehouse_code as "warehouseCode",
+      t.warehouse_name as "warehouseName",
+      
+      t.orderdetail_id as "orderdetailId",
+      t.warehouse_appoint as "warehouseAppoint",
+      t.buy_gifts as "buyGifts",
+      t.promotions as "promotions",
+      t.trigger_num as "triggerNum",
+      t.single_gift_num as "singleGiftNum",
+      
+      t.virtual_gd_id as "virtualGdId",
+      t.virtual_gd_code as "virtualGdCode",
+      t.virtual_gd_name as "virtualGdName",
+
+      sku.id as "commoditySku.id",
+      sku.act_flag as "commoditySku.actFlag",
+      sku.del_flag as "commoditySku.delFlag"
+    from oms_orderdetail t 
+    left join cims_db.commodity_sku sku on sku.sku_code = t.commodity_no
+    where 1=1
+    <include refid="condition" />
+    </select>
+    
+    <!-- 按仓库、供应商分组 -->
+  <select id="selectJoinOrderRemind" resultType="com.ffzx.order.api.dto.OmsOrderdetail"  parameterType="map"  >
+	  	SELECT
+	  	  	o.warehouse_code as "warehouseCode",
+			c.vendor_id as "commodity.vendorId",
+		 	o.order_no as "orderNo" 	
+	  	FROM oms_orderdetail d 
+		INNER  JOIN oms_order o ON o.id = d.order_id 
+		INNER JOIN cims_db.commodity c ON c.`code` = d.commodity_no 
+		WHERE o.warehouse_code is not null 
+		AND c.vendor_id is not null 
+		<if test="null!=params" >
+		 <if test="params.pushDateStart != null and '' != params.pushDateStart">
+				and o.pay_time &gt;= #{params.pushDateStart,jdbcType=TIMESTAMP}
+		  </if>
+		  <if test="params.pushDateEnd != null and '' != params.pushDateEnd">
+				and o.pay_time &lt; #{params.pushDateEnd,jdbcType=TIMESTAMP}
+		  </if>
+		 </if> 
+		AND d.order_detail_status = '0' 
+		AND o.`status` ='1' 
+		AND c.warehouse = '0'
+		GROUP BY o.warehouse_code, c.vendor_id, d.order_no
+  </select>
+  
+  <!-- 获取sku数据、购买数量 -->
+  <select id="selectJoinOrderRemindGroupBySku" resultType="com.ffzx.order.api.dto.OmsOrderdetail"  parameterType="map"  >
+	  	SELECT
+	  	  	o.warehouse_code as "warehouseCode",
+		  	c.vendor_id as "commodity.vendorId",
+	 		d.sku_code as "skuCode",
+			sum(d.buy_num) as "buyNum"	
+	  	FROM oms_orderdetail d 
+		INNER  JOIN oms_order o ON o.id = d.order_id 
+		INNER JOIN cims_db.commodity c ON c.`code` = d.commodity_no 
+		WHERE o.warehouse_code is not null 
+		AND c.vendor_id is not null 
+		<if test="null!=params" >
+		 <if test="params.pushDateStart != null and '' != params.pushDateStart">
+				and o.pay_time &gt;= #{params.pushDateStart,jdbcType=TIMESTAMP}
+		  </if>
+		  <if test="params.pushDateEnd != null and '' != params.pushDateEnd">
+				and o.pay_time &lt; #{params.pushDateEnd,jdbcType=TIMESTAMP}
+		  </if>
+		 </if> 
+		AND d.order_detail_status = '0' 
+		AND o.`status` ='1' 
+		AND c.warehouse = '0'
+		GROUP BY o.warehouse_code, c.vendor_id,d.sku_code
+		order by d.order_no
+  </select>
+  
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.order.api.dto.OmsOrderdetail" >
+    delete from oms_orderdetail
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ffzx.order.api.dto.OmsOrderdetail" >
+    insert into oms_orderdetail (id, order_id, order_no, 
+      commodity_no, commodity_title, commodity_image, 
+      commodity_barcode, commodity_specifications, 
+      commodity_unit, commodity_price, act_pay_amount, 
+      buy_num, ready_send_time, activity_commodity_item_id,gift_commodity_item_id,activity_id,
+      member_id,order_detail_status,commodity_attribute_values,sku_id,sku_code,favoured_amount,buy_type,act_sale_price,
+      warehouse_id,warehouse_code,warehouse_name,orderdetail_id,warehouse_appoint,buy_gifts,promotions
+      ,trigger_num,
+      ,single_gift_num,
+      ,red_packet_ids,
+      ,red_packet_use_ids,
+      ,red_packet_names,
+      ,red_packet_amount
+      ,virtual_gd_id
+      ,virtual_gd_code
+      ,virtual_gd_name
+      ,commodity_type
+      ,pifa_price
+      ,balance
+
+      )   
+    values (#{id,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR}, #{orderNo,jdbcType=VARCHAR},
+      #{commodityNo,jdbcType=VARCHAR}, #{commodityTitle,jdbcType=VARCHAR}, #{commodityImage,jdbcType=VARCHAR}, 
+      #{commodityBarcode,jdbcType=VARCHAR}, #{commoditySpecifications,jdbcType=VARCHAR}, 
+      #{commodityUnit,jdbcType=VARCHAR}, #{commodityPrice,jdbcType=DECIMAL}, #{actPayAmount,jdbcType=DECIMAL}, 
+      #{buyNum,jdbcType=INTEGER}, #{readySendTime,jdbcType=TIMESTAMP}, #{activityCommodityItemId,jdbcType=VARCHAR}, #{giftCommodityItemId,jdbcType=VARCHAR}, #{activityId,jdbcType=VARCHAR},  
+      #{memberId,jdbcType=VARCHAR},#{orderDetailStatus,jdbcType=VARCHAR},#{commodityAttributeValues,jdbcType=VARCHAR}
+      ,#{skuId,jdbcType=VARCHAR}
+      ,#{skuCode,jdbcType=VARCHAR}
+      ,#{favouredAmount,jdbcType=VARCHAR}
+      ,#{buy_type,jdbcType=VARCHAR}
+      ,#{actSalePrice,jdbcType=DECIMAL}
+      ,#{warehouseId,jdbcType=VARCHAR}
+      ,#{warehouseCode,jdbcType=VARCHAR}
+      ,#{warehouseName,jdbcType=VARCHAR}
+      ,#{orderdetailId,jdbcType=VARCHAR}
+      ,#{warehouseAppoint,jdbcType=VARCHAR}
+      ,#{buyGifts,jdbcType=VARCHAR}
+      ,#{promotions,jdbcType=VARCHAR}
+      ,#{triggerNum,jdbcType=INTEGER}
+      ,#{singleGiftNum,jdbcType=INTEGER}
+      ,#{redPacketIds,jdbcType=VARCHAR}
+      ,#{redPacketUseIds,jdbcType=VARCHAR}
+      ,#{redPacketNames,jdbcType=VARCHAR}
+      ,#{redPacketIds,jdbcType=DECIMAL}
+      ,#{virtualGdId,jdbcType=VARCHAR}
+      ,#{virtualGdCode,jdbcType=VARCHAR}
+      ,#{virtualGdName,jdbcType=VARCHAR}
+      ,#{commodityType,jdbcType=VARCHAR}
+      ,#{pifaPrice,jdbcType=DECIMAL}
+      ,#{balance,jdbcType=DECIMAL}
+
+      )
+      
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.ffzx.order.api.dto.OmsOrderdetail" >
+    insert into oms_orderdetail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+      <if test="commodityNo != null" >
+        commodity_no,
+      </if>
+      <if test="commodityTitle != null" >
+        commodity_title,
+      </if>
+      <if test="commodityImage != null" >
+        commodity_image,
+      </if>
+      <if test="commodityBarcode != null" >
+        commodity_barcode,
+      </if>
+      <if test="commoditySpecifications != null" >
+        commodity_specifications,
+      </if>
+      <if test="commodityUnit != null" >
+        commodity_unit,
+      </if>
+      <if test="commodityPrice != null" >
+        commodity_price,
+      </if>
+      <if test="actPayAmount != null" >
+        act_pay_amount,
+      </if>
+      <if test="buyNum != null" >
+        buy_num,
+      </if>
+      <if test="readySendTime != null" >
+        ready_send_time,
+      </if>
+      <if test="activityCommodityItemId != null" >
+        activity_commodity_item_id,
+      </if>
+      <if test="giftCommodityItemId != null" >
+        gift_commodity_item_id,
+      </if>
+      
+      <if test="activityId != null" >
+        activity_id,
+      </if>
+      <if test="memberId != null" >
+        member_id,
+      </if>
+      <if test="orderDetailStatus != null" >
+        order_detail_status,
+      </if>
+      <if test="commodityAttributeValues != null" >
+        commodity_attribute_values,
+      </if>
+  	  <if test="skuId != null" >
+        sku_id,
+      </if>
+      <if test="skuCode != null" >
+       sku_code,
+      </if>
+      <if test="favouredAmount != null" >
+        favoured_amount,
+      </if>
+       <if test="buyType != null" >
+        buy_type,
+      </if>
+      <if test="actSalePrice != null" >
+        act_sale_price,
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id,
+      </if>
+      <if test="warehouseCode != null" >
+        warehouse_code,
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name,
+      </if>
+      <if test="orderdetailId != null" >
+        orderdetail_id,
+      </if>
+      <if test="warehouseAppoint != null" >
+        warehouse_appoint,
+      </if>
+      <if test="buyGifts != null" >
+        buy_gifts,
+      </if>
+      
+      <if test="promotions != null" >
+        promotions,
+      </if>
+      <if test="triggerNum != null" >
+        trigger_num,
+      </if>
+      <if test="singleGiftNum != null" >
+        single_gift_num,
+      </if>
+
+      <if test="redPacketIds != null" >
+        red_packet_ids,
+      </if>
+      <if test="redPacketUseIds != null" >
+        red_packet_use_ids,
+      </if>
+      <if test="redPacketNames != null" >
+        red_packet_names,
+      </if>
+      <if test="redPacketAmount != null" >
+        red_packet_amount,
+      </if>
+
+      <if test="virtualGdId != null" >
+        virtual_gd_id,
+      </if>
+      <if test="virtualGdCode != null" >
+        virtual_gd_code,
+      </if>
+      <if test="virtualGdName != null" >
+        virtual_gd_name,
+      </if>   
+ 	  <if test="commodityType != null" >
+        commodity_type,
+      </if>
+      <if test="pifaPrice != null" >
+        pifa_price,
+      </if>
+      <if test="balance != null" >
+        balance,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityNo != null" >
+        #{commodityNo,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityTitle != null" >
+        #{commodityTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityImage != null" >
+        #{commodityImage,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityBarcode != null" >
+        #{commodityBarcode,jdbcType=VARCHAR},
+      </if>
+      <if test="commoditySpecifications != null" >
+        #{commoditySpecifications,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityUnit != null" >
+        #{commodityUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityPrice != null" >
+        #{commodityPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="actPayAmount != null" >
+        #{actPayAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="buyNum != null" >
+        #{buyNum,jdbcType=INTEGER},
+      </if>
+      <if test="readySendTime != null" >
+        #{readySendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="activityCommodityItemId != null" >
+        #{activityCommodityItemId,jdbcType=VARCHAR},
+      </if>
+      <if test="giftCommodityItemId != null" >
+        #{giftCommodityItemId,jdbcType=VARCHAR},
+      </if>
+      <if test="activityId != null" >
+        #{activityId,jdbcType=VARCHAR},
+      </if>
+      <if test="memberId != null" >
+        #{memberId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderDetailStatus != null" >
+        #{orderDetailStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityAttributeValues != null" >
+        #{commodityAttributeValues,jdbcType=VARCHAR},
+      </if>
+ 	  <if test="skuId != null" >
+         #{skuId,jdbcType=VARCHAR},
+      </if>
+      <if test="skuCode != null" >
+         #{skuCode,jdbcType=VARCHAR},
+      </if>
+      <if test="favouredAmount != null" >
+        #{favouredAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="buyType != null" >
+        #{buyType,jdbcType=VARCHAR},
+      </if>
+      <if test="actSalePrice != null" >
+        #{actSalePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="warehouseId != null" >
+        #{warehouseId,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseCode != null" >
+        #{warehouseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseName != null" >
+        #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderdetailId != null" >
+        #{orderdetailId,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseAppoint != null" >
+        #{warehouseAppoint,jdbcType=VARCHAR},
+      </if>
+      <if test="buyGifts != null" >
+        #{buyGifts,jdbcType=VARCHAR},
+      </if>
+      <if test="promotions != null" >
+        #{promotions,jdbcType=VARCHAR},
+      </if>
+      <if test="triggerNum != null" >
+        #{triggerNum,jdbcType=INTEGER},
+      </if>
+      <if test="singleGiftNum != null" >
+        #{singleGiftNum,jdbcType=INTEGER},
+      </if>
+
+      <if test="redPacketIds != null" >
+        #{redPacketIds,jdbcType=VARCHAR},
+      </if>   
+      <if test="redPacketUseIds != null" >
+        #{redPacketUseIds,jdbcType=VARCHAR},
+      </if>  
+      <if test="redPacketNames != null" >
+        #{redPacketNames,jdbcType=VARCHAR},
+      </if>
+      <if test="redPacketAmount != null" >
+        #{redPacketAmount,jdbcType=DECIMAL},
+      </if>
+	
+	  <if test="virtualGdId != null" >
+        #{virtualGdId,jdbcType=VARCHAR},
+      </if>
+ 	  <if test="virtualGdCode != null" >
+        #{virtualGdCode,jdbcType=VARCHAR},
+      </if>
+      <if test="virtualGdName != null" >
+        #{virtualGdName,jdbcType=VARCHAR},
+      </if>
+	  <if test="commodityType != null" >
+        #{commodityType,jdbcType=VARCHAR},
+      </if>
+      
+      <if test="pifaPrice != null" >
+        #{pifaPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="balance != null" >
+        #{balance,jdbcType=DECIMAL},
+      </if>    
+
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.order.api.dto.OmsOrderdetail" >
+    update oms_orderdetail
+    <set >
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityNo != null" >
+        commodity_no = #{commodityNo,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityTitle != null" >
+        commodity_title = #{commodityTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityImage != null" >
+        commodity_image = #{commodityImage,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityBarcode != null" >
+        commodity_barcode = #{commodityBarcode,jdbcType=VARCHAR},
+      </if>
+      <if test="commoditySpecifications != null" >
+        commodity_specifications = #{commoditySpecifications,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityUnit != null" >
+        commodity_unit = #{commodityUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityPrice != null" >
+        commodity_price = #{commodityPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="actPayAmount != null" >
+        act_pay_amount = #{actPayAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="buyNum != null" >
+        buy_num = #{buyNum,jdbcType=INTEGER},
+      </if>
+      <if test="readySendTime != null" >
+        ready_send_time = #{readySendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="activityCommodityItemId != null" >
+        activity_commodity_item_id = #{activityCommodityItemId,jdbcType=VARCHAR},
+      </if>
+      <if test="giftCommodityItemId != null" >
+        gift_commodity_item_id = #{giftCommodityItemId,jdbcType=VARCHAR},
+      </if>
+      <if test="activityId != null" >
+        activity_id = #{activityId,jdbcType=VARCHAR},
+      </if>
+      <if test="memberId != null" >
+        member_id = #{memberId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderDetailStatus != null" >
+        order_detail_status=#{orderDetailStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityAttributeValues != null" >
+        commodity_attribute_values=#{commodityAttributeValues,jdbcType=VARCHAR},
+      </if>
+      <if test="skuId != null" >
+        sku_id = #{skuId,jdbcType=VARCHAR},
+      </if>
+      <if test="skuCode != null" >
+        sku_code = #{skuCode,jdbcType=VARCHAR},
+      </if>
+      <if test="favouredAmount != null" >
+        favoured_amount = #{favouredAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="buyType != null and '' != buyType" >
+        buy_type = #{buyType,jdbcType=VARCHAR},
+      </if>
+      <if test="actSalePrice != null" >
+        act_sale_price = #{actSalePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id = #{warehouseId,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseCode != null" >
+        warehouse_code = #{warehouseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      
+      <if test="orderdetailId != null" >
+        orderdetail_id = #{orderdetailId,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseAppoint != null" >
+        warehouse_appoint = #{warehouseAppoint,jdbcType=VARCHAR},
+      </if>
+      <if test="buyGifts != null" >
+        buy_gifts = #{buyGifts,jdbcType=VARCHAR},
+      </if>
+      <if test="promotions != null" >
+        promotions = #{promotions,jdbcType=VARCHAR},
+      </if>
+      <if test="triggerNum != null" >
+        trigger_num = #{triggerNum,jdbcType=INTEGER},
+      </if>
+      <if test="singleGiftNum != null" >
+        single_gift_num = #{singleGiftNum,jdbcType=INTEGER},
+      </if>
+      
+      <if test="redPacketIds != null">
+        red_packet_ids= #{redPacketIds,jdbcType=VARCHAR},
+      </if>
+      <if test="redPacketUseIds != null">
+        red_packet_use_ids= #{redPacketUseIds,jdbcType=VARCHAR},
+      </if>
+      <if test="redPacketNames != null">
+        red_packet_names= #{redPacketNames,jdbcType=VARCHAR},
+      </if>
+      <if test="redPacketAmount != null">
+        red_packet_amount= #{redPacketAmount,jdbcType=DECIMAL},
+      </if>
+      
+      <if test="virtualGdId != null" >
+        virtual_gd_id = #{virtualGdId,jdbcType=VARCHAR},
+      </if>
+      
+      <if test="virtualGdCode != null" >
+        virtual_gd_code = #{virtualGdCode,jdbcType=VARCHAR},
+      </if>
+      
+      <if test="virtualGdName != null" >
+        virtual_gd_name = #{virtualGdName,jdbcType=VARCHAR},
+      </if>
+		
+	  <if test="commodityType != null" >
+        commodity_type = #{commodityType,jdbcType=VARCHAR},
+      </if>
+	
+	  <if test="pifaPrice != null" >
+        pifa_price = #{pifaPrice,jdbcType=DECIMAL},
+      </if>
+      	
+	  <if test="balance != null" >
+        balance = #{balance,jdbcType=DECIMAL},
+      </if>
+      <if test="settlementFlag != null">
+        settlement_flag=#{settlementFlag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateStatusByPrimaryKey" parameterType="com.ffzx.order.api.dto.OmsOrderdetail">
+  	UPDATE oms_orderdetail
+  	SET 
+		order_detail_status=#{orderDetailStatus,jdbcType=VARCHAR}
+    WHERE id = #{id,jdbcType=VARCHAR}
+  </update>
+
+   <update id="updateSettlement" parameterType="Map">
+  	UPDATE oms_orderdetail
+  	SET 
+		settlement_flag=#{params.settlementFlag,jdbcType=VARCHAR}
+    WHERE id in <foreach collection="params.idList" item="item" separator="," open="(" close=")">
+              #{item}
+            </foreach>
+  </update>
+  
+   <update id="updateOrderDetailStatusByOrderNoAndSkuId" parameterType="com.ffzx.order.api.dto.OmsOrderdetail">
+  	UPDATE oms_orderdetail
+  	SET 
+		order_detail_status=0
+    WHERE order_no = #{orderNo,jdbcType=VARCHAR} AND sku_id = #{skuId,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.order.api.dto.OmsOrderdetail" >
+    update oms_orderdetail
+    set order_id = #{orderId,jdbcType=VARCHAR},
+      order_no = #{orderNo,jdbcType=VARCHAR},
+      commodity_no = #{commodityNo,jdbcType=VARCHAR},
+      commodity_title = #{commodityTitle,jdbcType=VARCHAR},
+      commodity_image = #{commodityImage,jdbcType=VARCHAR},
+      commodity_barcode = #{commodityBarcode,jdbcType=VARCHAR},
+      commodity_specifications = #{commoditySpecifications,jdbcType=VARCHAR},
+      commodity_unit = #{commodityUnit,jdbcType=VARCHAR},
+      commodity_price = #{commodityPrice,jdbcType=DECIMAL},
+      act_pay_amount = #{actPayAmount,jdbcType=DECIMAL},
+      buy_num = #{buyNum,jdbcType=INTEGER},
+      ready_send_time = #{readySendTime,jdbcType=TIMESTAMP},
+      activity_commodity_item_id = #{activityCommodityItemId,jdbcType=VARCHAR},
+      gift_commodity_item_id = #{giftCommodityItemId,jdbcType=VARCHAR},
+      activity_id = #{activityId,jdbcType=VARCHAR},
+      member_id = #{memberId,jdbcType=VARCHAR},
+      order_detail_status=#{orderDetailStatus,jdbcType=VARCHAR},
+      commodity_attribute_values=#{commodityAttributeValues,jdbcType=VARCHAR},
+      sku_id = #{skuId,jdbcType=VARCHAR},
+      sku_code = #{skuCode,jdbcType=VARCHAR},
+      favoured_amount = #{favouredAmount,jdbcType=DECIMAL},
+      buy_type = #{buyType,jdbcType=VARCHAR},
+      act_sale_price = #{actSalePrice,jdbcType=DECIMAL},
+      warehouse_id = #{warehouseId,jdbcType=VARCHAR},
+      warehouse_code = #{warehouseCode,jdbcType=VARCHAR},
+      warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      
+      orderdetail_id = #{orderdetailId,jdbcType=VARCHAR},
+      warehouse_appoint = #{warehouseAppoint,jdbcType=VARCHAR},
+      buy_gifts = #{buyGifts,jdbcType=VARCHAR},
+      promotions = #{promotions,jdbcType=VARCHAR},
+      trigger_num = #{triggerNum,jdbcType=INTEGER},
+
+      single_gift_num = #{singleGiftNum,jdbcType=INTEGER},
+      red_packet_ids= #{redPacketIds,jdbcType=VARCHAR},
+      red_packet_use_ids= #{redPacketUseIds,jdbcType=VARCHAR},
+      red_packet_names= #{redPacketNames,jdbcType=VARCHAR},
+      red_packet_amount= #{redPacketAmount,jdbcType=DECIMAL},
+
+      virtual_gd_id = #{virtualGdId,jdbcType=VARCHAR},
+      virtual_gd_code = #{virtualGdCode,jdbcType=VARCHAR},
+      virtual_gd_name = #{virtualGdName,jdbcType=VARCHAR},
+      commodity_type = #{commodityType,jdbcType=VARCHAR},
+
+	  pifa_price= #{pifaPrice,jdbcType=DECIMAL},
+      balance= #{balance,jdbcType=DECIMAL}    
+
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateDetBySplit" parameterType="com.ffzx.order.api.dto.OmsOrderdetail">
+  	UPDATE oms_orderdetail
+  	SET 
+  		order_id = #{orderId,jdbcType=VARCHAR},
+        order_no = #{orderNo,jdbcType=VARCHAR}
+    WHERE id = #{id,jdbcType=VARCHAR}
+  </update>
+  <!-- 获取销量数据 -->
+  <select id="getDailySalesData" parameterType="java.util.Map" resultType="com.ffzx.order.api.dto.OmsOrderdetail">
+	  SELECT
+		  d.commodity_no as "commodityNo",
+		  d.sku_code as "skuCode",
+		  d.buy_num as "buyNum",
+		  o.create_date as "order.createDate",
+		  o.`status` as "order.status"
+		FROM
+			oms_order o
+		INNER JOIN oms_orderdetail d ON o.order_no = d.order_no
+		<where>
+		  and o.`status` in ('0','1','4')
+		  <if test="params.start_date != null">
+		     and o.create_date &gt;= #{params.start_date}
+		  </if>
+		  <if test="params.end_date != null">
+		     and o.create_date &lt;= #{params.end_date}
+		  </if>
+		  and d.sku_code is not null 
+		  and d.commodity_no is not null
+		</where>
+  </select>
+  
+  <select id="findDetailToSendApp" parameterType="Map" resultType="com.ffzx.order.api.dto.OmsOrderdetail">
+	SELECT 
+		det.commodity_Title AS "commodityTitle",
+		det.buy_Num AS "buyNum",
+		det.commodity_Image AS "commodityImage",
+		det.commodity_Specifications AS "commoditySpecifications",
+		sku.commodity_attributes AS "skuNames",
+		sku.commodity_attribute_values AS "skuValues"
+	FROM oms_orderdetail det
+	LEFT JOIN cims_db.commodity_sku sku ON det.sku_code = sku.sku_code
+	WHERE det.order_no = #{orderNo}
+  </select>
+  
+  <select id="updateOrderDetailStatus" parameterType="java.util.Map">
+  	UPDATE oms_orderdetail
+  	SET 
+  		order_detail_status=#{params.orderDetailStatus,jdbcType=VARCHAR}
+    WHERE order_no = #{params.orderNo,jdbcType=VARCHAR}
+    	AND sku_id = #{params.skuId,jdbcType=VARCHAR}
+  </select>
+</mapper>

@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.ffzx.order</groupId>
+    <artifactId>order</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <groupId>com.ffzx.order.api</groupId>
+  <artifactId>order-api</artifactId>
+  <version>${oms.version}</version>
+  <packaging>jar</packaging>
+  <name>order-api</name>
+  <url>http://maven.apache.org</url>
+  
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  
+  <dependencies>
+    <!-- 不参与编译  因为所有系统都会依赖framework -->
+	<dependency>
+        <groupId>com.ffzx.framework</groupId>  
+        <artifactId>framework</artifactId>  
+        <version>1.0.0-SNAPSHOT</version>  
+		<scope>provided</scope>
+	</dependency>
+	<!-- ping++ sdk  -->
+		<dependency>
+        <groupId>Pingplusplus</groupId>
+        <artifactId>pingpp-java</artifactId>
+        <version>2.0.10</version>
+        <type>jar</type>
+       </dependency>
+       
+       <dependency>
+			<groupId>com.ffzx.wms.api</groupId>
+			<artifactId>wms-api</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>		    
+	        <groupId>com.ffzx.base-data.api</groupId>
+	        <artifactId>base-data-api</artifactId>
+	        <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+  </dependencies>
+  
+  	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+</project>

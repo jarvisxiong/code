@@ -1,0 +1,160 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.ffzx.order</groupId>
+    <artifactId>order</artifactId>
+     <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <groupId>com.ffzx.order.core</groupId>
+  <artifactId>order-core</artifactId>
+  <version>${oms.version}</version>
+  <name>order-core</name>
+  <url>http://maven.apache.org</url>
+  
+	<dependencies>
+		<!-- framework -->
+		<dependency>
+			<groupId>com.ffzx.framework</groupId>
+			<artifactId>framework</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.ffzx.order.api</groupId>
+			<artifactId>order-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+   		<!-- commodity-api引用 -->
+    	<dependency>
+    	 <groupId>com.ffzx.commodity.api</groupId>
+  		 <artifactId>cims-api</artifactId>
+         <version>0.0.1-SNAPSHOT</version>
+   		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+		</dependency>
+		
+		<!-- base-data-api引用 -->
+		<dependency>		    
+	        <groupId>com.ffzx.base-data.api</groupId>
+	        <artifactId>base-data-api</artifactId>
+	        <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        
+        <!--uc api -->
+		<dependency>
+		  <groupId>com.ffzx.uc.api</groupId>
+		  <artifactId>uc-api</artifactId>
+			<version>1.0.2-SNAPSHOT</version>
+		</dependency>
+		
+		<!-- prms-ap引用  -->
+		<dependency>
+			<groupId>com.ffzx.promotion.api</groupId>
+			<artifactId>prms-api</artifactId>
+			<version>1.0.6-SNAPSHOT</version>
+		</dependency>
+		
+		<!-- bms-api引用  新库存 -->
+		<dependency>
+		  <groupId>com.ffzx.bms.api</groupId>
+  			<artifactId>bms-api</artifactId>
+  			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		<!-- wms-ap引用 -->		
+		<dependency>
+			<groupId>com.ffzx.wms.api</groupId>
+			<artifactId>wms-api</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<!-- pay-api引用 -->
+		<!-- app-server-api -->
+		<dependency>
+			<groupId>com.ffzx.pay.api</groupId>
+			<artifactId>pay-api</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.ffzx.appserver.api</groupId> 
+			<artifactId>app-server-api</artifactId> 
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency> 
+		
+		<dependency>
+			<groupId>org.springframework.amqp</groupId>
+			<artifactId>spring-amqp</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.amqp</groupId>
+			<artifactId>spring-rabbit</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>DistributedLock</groupId>
+			<artifactId>DistributedLock</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+			<version>5.6.0</version>
+			  <exclusions>
+			  	<exclusion>
+			  	 <groupId>com.lowagie</groupId>
+				  <artifactId>itext</artifactId>
+			  	</exclusion>
+			  </exclusions>
+		</dependency>
+	 	<dependency>
+		  <groupId>com.lowagie</groupId>
+		  <artifactId>itext</artifactId>
+		  <version>2.1.7</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.olap4j</groupId>
+		  <artifactId>olap4j</artifactId>
+		  <version>0.9.7.309-JS-3</version>
+		</dependency>
+		<dependency>
+		  <groupId>groovy-all</groupId>
+		  <artifactId>groovy-all</artifactId>
+		  <version>2.0.1</version>
+		</dependency>
+		<dependency>
+		  <groupId>simsun</groupId>
+		  <artifactId>simsun</artifactId>
+		  <version>1.0</version>
+		</dependency>
+		<dependency>
+		  <groupId>barbecue</groupId>
+		  <artifactId>barbecue</artifactId>
+		  <version>1.1</version>
+		</dependency>
+		
+	</dependencies>
+	  
+  	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.m2e</groupId>
+				<artifactId>lifecycle-mapping</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

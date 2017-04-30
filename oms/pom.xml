@@ -1,0 +1,36 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.ffzx</groupId>
+		<artifactId>parent-pom</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+		<relativePath>../parent-pom/pom.xml</relativePath>
+	</parent>
+	
+	<properties>
+
+	  <oms.version>1.0.13-SNAPSHOT</oms.version>
+	  <oms.desprition>服务站  差价</oms.desprition>
+
+	</properties>
+	<groupId>com.ffzx.order</groupId>
+	<artifactId>order</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>order</name>
+	<url>http://maven.apache.org</url>
+	
+   <!-- 公共依赖管理定义,子项目继承公共依赖包 -->
+   <dependencies>
+   </dependencies>
+  
+	<modules>
+		<module>order-api</module>
+		<module>order-core</module>
+		<module>order-web</module>
+		<module>order-jsw</module>
+ 	</modules>
+
+
+</project>

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ffzx.promotion.mapper.ActivityPreSaleTagMapper" >
+  <resultMap id="BaseResultMap" type="com.ffzx.promotion.api.dto.ActivityPreSaleTag" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="number" property="number" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="del_flag" property="delFlag" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    t.id, t.number, t.name, t.create_date, t.del_flag
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null and '' != params.id" >
+        and t.id = #{params.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.number != null" >
+        and t.number = #{params.number,jdbcType=INTEGER}
+      </if>
+      <if test="params.name != null and '' != params.name" >
+        and t.name = #{params.name,jdbcType=VARCHAR}
+      </if>
+      <if test="params.createDate != null" >
+        and t.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.delFlag != null" >
+        and t.del_flag = #{params.delFlag,jdbcType=INTEGER}
+      </if>
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from activity_pre_sale_tag t 
+    where t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+   <select id="getTagByNumber" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from activity_pre_sale_tag t 
+    where t.number = #{number,jdbcType=VARCHAR}
+  </select>
+  
+    <select id="selectByNameOrId" resultMap="BaseResultMap" parameterType="com.ffzx.promotion.model.PreSaleTag">
+    select 
+    <include refid="Base_Column_List" />
+    from activity_pre_sale_tag t     
+    where t.del_flag=0 and  
+    <if test="params.name != null and '' != params.name and params.number == null " >
+          t.name = #{params.name,jdbcType=VARCHAR}
+    </if>
+    <if test="params.name == null and params.number != null " >
+           t.number = #{params.number,jdbcType=INTEGER}
+    </if>
+    <if test="params.number != null  and params.name != null and '' != params.name">
+          ( t.number = #{params.number,jdbcType=INTEGER} or  t.name = #{params.name,jdbcType=VARCHAR})
+     </if>
+  </select>
+  
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from activity_pre_sale_tag t 
+    <if test="params.activityType != null and '' != params.activityType and params.activityType=='PRE_SALE' " >
+    	left join activity_commodity a on a.pre_sale_tag_id=t.id 
+    	left join activity_manager m on m.id=a.activity_id
+    </if>
+    where 1=1
+    <include refid="condition" />
+    <if test="params.activityType != null and '' != params.activityType and params.activityType=='PRE_SALE' " >
+    	and m.release_status=1 
+		and NOW() &gt;=m.start_date
+		and NOW() &lt; m.end_date
+		and NOW() &gt;=a.start_date
+    	and a.pre_sale_tag_id is not null GROUP BY t.id
+    </if>
+     <if test="params.orderByField != null and ''!=params.orderByField" >
+      order by t.${params.orderByField} 
+        ${params.orderBy}
+    </if>
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from activity_pre_sale_tag t  where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from activity_pre_sale_tag t 
+    where 1=1
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from activity_pre_sale_tag
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteById" parameterType="java.lang.String" >
+  	update activity_pre_sale_tag set del_flag=1 
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+ 
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.promotion.api.dto.ActivityPreSaleTag" >
+    delete from activity_pre_sale_tag
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ffzx.promotion.api.dto.ActivityPreSaleTag" >
+    insert into activity_pre_sale_tag (id, number, name, 
+      create_date, del_flag)
+    values (#{id,jdbcType=VARCHAR}, #{number,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.promotion.api.dto.ActivityPreSaleTag" >
+    insert into activity_pre_sale_tag
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="number != null" >
+        number,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null" >
+        #{number,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.promotion.api.dto.ActivityPreSaleTag" >
+    update activity_pre_sale_tag
+    <set >
+      <if test="number != null" >
+        number = #{number,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.promotion.api.dto.ActivityPreSaleTag" >
+    update activity_pre_sale_tag
+    set number = #{number,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      del_flag = #{delFlag,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

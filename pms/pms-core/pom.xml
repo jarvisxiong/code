@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.ffzx.permission</groupId>
+    <artifactId>pms</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <groupId>com.ffzx.permission.core</groupId>
+  <artifactId>pms-core</artifactId>
+  <name>pms-core</name>
+  <url>http://maven.apache.org</url>
+	  <dependencies>
+	    <!-- Test -->
+	    <dependency>
+	      <groupId>junit</groupId>
+	      <artifactId>junit</artifactId>
+	      <scope>test</scope>
+	    </dependency>
+	    <dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		
+	    <!-- framework -->
+	  	<dependency>  
+	        <groupId>com.ffzx.framework</groupId>  
+	        <artifactId>framework</artifactId>  
+	        <version>2.0.0-SNAPSHOT</version>
+	    </dependency>
+		<!-- pms-api引用 -->
+	    <dependency>
+	    	<groupId>com.ffzx.permission.api</groupId>
+	    	<artifactId>pms-api</artifactId>
+	    	<version>0.0.1-SNAPSHOT</version>
+	    </dependency>		    
+	    <dependency>		    
+	        <groupId>com.ffzx.base-data.api</groupId>
+	        <artifactId>base-data-api</artifactId>
+	        <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+		  	<groupId>com.ffzx.uc.api</groupId>
+		  	<artifactId>uc-api</artifactId>
+		  	<version>1.0.5-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+		  	<groupId>com.ffzx.wms.api</groupId>
+  			<artifactId>wms-api</artifactId>
+		  	<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+	  </dependencies>
+	  
+	  <build>
+		<plugins>
+			<!--<plugin>
+				<groupId>org.eclipse.m2e</groupId>
+				<artifactId>lifecycle-mapping</artifactId>
+			</plugin>-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+			</plugin>
+			
+			
+			 <plugin>
+                <groupId>org.eclipse.m2e</groupId>
+                <artifactId>lifecycle-mapping</artifactId>
+                <version>1.0.0</version>
+                <configuration>
+                    <lifecycleMappingMetadata>
+                        <pluginExecutions>
+                            <pluginExecution>
+                                <pluginExecutionFilter>
+                                    <groupId>org.apache.maven.plugins</groupId>
+                                    <artifactId>maven-resources-plugin</artifactId>
+                                    <versionRange>[2.0,)</versionRange>
+                                    <goals>
+                                        <goal>resources</goal>
+                                        <goal>testResources</goal>
+                                    </goals>
+                                </pluginExecutionFilter>
+                                <action>
+                                    <ignore />
+                                </action>
+                            </pluginExecution>
+                        </pluginExecutions>
+                    </lifecycleMappingMetadata>
+                </configuration>
+            </plugin>
+            
+		</plugins>
+	  </build>
+
+</project>

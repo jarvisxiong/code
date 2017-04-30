@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ffzx.order.mapper.MemberSummaryMapper">
+  <sql id="Base_Column_List" >
+		t.id, 
+		t.remarks AS "remarks",
+		t.create_by AS "createBy.id",
+		t.create_date AS "createDate",
+		t.last_update_by AS "lastUpdateBy.id",
+		t.last_update_date AS "lastUpdateDate",
+		t.del_flag AS "delFlag",
+		t.member_id AS "memberId",
+		t.total_price AS "totalPrice",
+		t.total_order_count AS "totalOrderCount",
+		t.pay_year AS "payYear",
+		t.pay_month AS "payMonth",
+		t.pay_day AS "payDay"
+
+  </sql>  
+  <sql id="joins">
+
+  </sql> 
+  <sql id="condition" >
+	<if test="null!=params" >
+		<if test="params.id != null and '' != params.id">
+			and t.id = #{params.id,jdbcType=VARCHAR}
+		</if>
+		<if test="params.remarks != null and '' != params.remarks">
+			and t.remarks = #{params.remarks,jdbcType=VARCHAR}
+		</if>
+		<if test="params.createBy != null and '' != params.createBy">
+			and t.create_by = #{params.createBy.id,jdbcType=VARCHAR}
+		</if>
+		<if test="params.createDate != null and '' != params.createDate">
+			and t.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+		</if>
+		<if test="params.lastUpdateBy != null and '' != params.lastUpdateBy">
+			and t.last_update_by = #{params.lastUpdateBy.id,jdbcType=VARCHAR}
+		</if>
+		<if test="params.lastUpdateDate != null and '' != params.lastUpdateDate">
+			and t.last_update_date = #{params.lastUpdateDate,jdbcType=TIMESTAMP}
+		</if>
+		<if test="params.delFlag != null and '' != params.delFlag">
+			and t.del_flag = #{params.delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="params.memberId != null and '' != params.memberId">
+			and t.member_id = #{params.memberId,jdbcType=VARCHAR}
+		</if>
+		<if test="params.totalPrice != null and '' != params.totalPrice">
+			and t.total_price = #{params.totalPrice,jdbcType=NUMERIC}
+		</if>
+		<if test="params.totalOrderCount_more != null and '' != params.totalOrderCount_more">
+			and t.total_order_count &gt;= #{params.totalOrderCount_more,jdbcType=INTEGER}
+		</if>
+		<if test="params.totalOrderCount_less != null and '' != params.totalOrderCount_less">
+			and t.total_order_count &lt;= #{params.totalOrderCount_less,jdbcType=INTEGER}
+		</if>
+		<if test="params.totalOrderCount != null and '' != params.totalOrderCount">
+			and t.total_order_count = #{params.totalOrderCount,jdbcType=INTEGER}
+		</if>
+		<if test="params.payYear != null and '' != params.payYear">
+			and t.pay_year = #{params.payYear,jdbcType=VARCHAR}
+		</if>
+		<if test="params.payMonth != null and '' != params.payMonth">
+			and t.pay_month = #{params.payMonth,jdbcType=VARCHAR}
+		</if>
+		<if test="params.payDay != null and '' != params.payDay">
+			and t.pay_day = #{params.payDay,jdbcType=VARCHAR}
+		</if>
+		<if test="params.delFlag == null or '' == params.delFlag or null == params" >
+			and t.del_flag = 0
+		</if>
+	</if>
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultType="com.ffzx.order.api.dto.MemberSummary" parameterType="java.lang.String" >
+   	select 
+    <include refid="Base_Column_List" />
+    from order_member_summary as t 
+    <include refid="joins"/>
+    where  t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParams" resultType="com.ffzx.order.api.dto.MemberSummary" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from order_member_summary as  t 
+    <include refid="joins"/>
+    where 1=1 
+    <include refid="condition"/>
+  </select>
+
+	<select id="selectByPageFromOrder" resultType="com.ffzx.order.api.dto.MemberSummary"
+		parameterType="map">
+		SELECT
+		d.member_id AS "memberId",
+		sum(d.actual_price) AS "totalPrice",
+		COUNT(d.order_no) AS "totalOrderCount",
+		DATE_FORMAT(.pay_time,"%Y-%m") AS "payMonth"
+		FROM
+		oms_order d
+		where 1=1
+		and d.del_flag = '0'
+		<if test="null!=params" >
+		<if test="params.payMonth != null and '' != params.payMonth">
+		and DATE_FORMAT(d.pay_time,"%Y-%m") = #{params.payMonth,jdbcType=VARCHAR}
+		</if>
+		<if test="params.monthlyAmount != null and '' != params.monthlyAmount">
+			and d.actual_price &gt;= #{params.monthlyAmount,jdbcType=NUMERIC}
+		</if>
+		</if>
+		GROUP BY d.member_id
+		ORDER BY d.member_id
+	</select>
+  
+  <select id="selectCount" resultType="java.lang.Integer" >
+   select count(1) as s from order_member_summary as  t where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultType="com.ffzx.order.api.dto.MemberSummary" parameterType="map" >
+   select 
+    <include refid="Base_Column_List" />
+    from order_member_summary as  t    
+    <include refid="joins"/>
+    where 1=1      
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by  t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    	DELETE FROM order_member_summary WHERE id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.order.api.dto.MemberSummary" >
+    	DELETE FROM order_member_summary WHERE id = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.ffzx.order.api.dto.MemberSummary" >
+   	INSERT INTO order_member_summary
+		(
+			id,
+			remarks,
+			create_by,
+			create_date,
+			last_update_by,
+			last_update_date,
+			del_flag,
+			member_id,
+			total_price,
+			total_order_count,
+			pay_year,
+			pay_month,
+			pay_day
+		) VALUES
+		(
+			#{id,jdbcType=VARCHAR},
+			#{remarks,jdbcType=VARCHAR},
+			#{createBy.id,jdbcType=VARCHAR},
+			#{createDate,jdbcType=TIMESTAMP},
+			#{lastUpdateBy.id,jdbcType=VARCHAR},
+			#{lastUpdateDate,jdbcType=TIMESTAMP},
+			#{delFlag,jdbcType=VARCHAR},
+			#{memberId,jdbcType=VARCHAR},
+			#{totalPrice,jdbcType=NUMERIC},
+			#{totalOrderCount,jdbcType=INTEGER},
+			#{payYear,jdbcType=VARCHAR},
+			#{payMonth,jdbcType=VARCHAR},
+			#{payDay,jdbcType=VARCHAR}
+		)
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.order.api.dto.MemberSummary" >
+   	INSERT INTO order_member_summary 
+	<trim prefix="(" suffix=")" suffixOverrides="," >
+		<if test="id != null">id,</if>
+		<if test="remarks != null" >remarks,</if>
+		<if test="createBy != null" >create_by,</if>
+		<if test="createDate != null" >create_date,</if>
+		<if test="lastUpdateBy != null" >last_update_by,</if>
+		<if test="lastUpdateDate != null" >last_update_date,</if>
+		<if test="delFlag != null" >del_flag,</if>
+		<if test="memberId != null" >member_id,</if>
+		<if test="totalPrice != null" >total_price,</if>
+		<if test="totalOrderCount != null" >total_order_count,</if>
+		<if test="payYear != null" >pay_year,</if>
+		<if test="payMonth != null" >pay_month,</if>
+		<if test="payDay != null" >pay_day,</if>
+	</trim>
+	<trim prefix="values (" suffix=")" suffixOverrides="," >
+		<if test="id != null">#{id,jdbcType=VARCHAR},</if>
+		<if test="remarks != null" >#{remarks,jdbcType=VARCHAR},</if>
+		<if test="createBy != null" >#{createBy.id,jdbcType=VARCHAR},</if>
+		<if test="createDate != null" >#{createDate,jdbcType=TIMESTAMP},</if>
+		<if test="lastUpdateBy != null" >#{lastUpdateBy.id,jdbcType=VARCHAR},</if>
+		<if test="lastUpdateDate != null" >#{lastUpdateDate,jdbcType=TIMESTAMP},</if>
+		<if test="delFlag != null" >#{delFlag,jdbcType=VARCHAR},</if>
+		<if test="memberId != null" >#{memberId,jdbcType=VARCHAR},</if>
+		<if test="totalPrice != null" >#{totalPrice,jdbcType=NUMERIC},</if>
+		<if test="totalOrderCount != null" >#{totalOrderCount,jdbcType=INTEGER},</if>
+		<if test="payYear != null" >#{payYear,jdbcType=VARCHAR},</if>
+		<if test="payMonth != null" >#{payMonth,jdbcType=VARCHAR},</if>
+		<if test="payDay != null" >#{payDay,jdbcType=VARCHAR},</if>
+	</trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.order.api.dto.MemberSummary" >
+   	UPDATE order_member_summary
+	<set>
+		<if test="remarks != null" >
+			remarks = #{remarks,jdbcType=VARCHAR},
+		</if>
+		<if test="createBy != null" >
+			create_by = #{createBy.id,jdbcType=VARCHAR},
+		</if>
+		<if test="createDate != null" >
+			create_date = #{createDate,jdbcType=TIMESTAMP},
+		</if>
+		<if test="lastUpdateBy != null" >
+			last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+		</if>
+		<if test="lastUpdateDate != null" >
+			last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+		</if>
+		<if test="delFlag != null" >
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="memberId != null" >
+			member_id = #{memberId,jdbcType=VARCHAR},
+		</if>
+		<if test="totalPrice != null" >
+			total_price = #{totalPrice,jdbcType=NUMERIC},
+		</if>
+		<if test="totalOrderCount != null" >
+			total_order_count = #{totalOrderCount,jdbcType=INTEGER},
+		</if>
+		<if test="payYear != null" >
+			pay_year = #{payYear,jdbcType=VARCHAR},
+		</if>
+		<if test="payMonth != null" >
+			pay_month = #{payMonth,jdbcType=VARCHAR},
+		</if>
+		<if test="payDay != null" >
+			pay_day = #{payDay,jdbcType=VARCHAR},
+		</if>
+	</set>
+	where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.order.api.dto.MemberSummary" >
+   	UPDATE order_member_summary
+		<set>
+			remarks = #{remarks,jdbcType=VARCHAR},
+			create_by = #{createBy.id,jdbcType=VARCHAR},
+			create_date = #{createDate,jdbcType=TIMESTAMP},
+			last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+			last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+			member_id = #{memberId,jdbcType=VARCHAR},
+			total_price = #{totalPrice,jdbcType=NUMERIC},
+			total_order_count = #{totalOrderCount,jdbcType=INTEGER},
+			pay_year = #{payYear,jdbcType=VARCHAR},
+			pay_month = #{payMonth,jdbcType=VARCHAR},
+			pay_day = #{payDay,jdbcType=VARCHAR}
+		</set>
+		WHERE id = #{id,jdbcType=VARCHAR} 
+  </update>
+</mapper>

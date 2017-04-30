@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ffzx.promotion.mapper.RewardLuckNoMapper" >
+  <resultMap id="BaseResultMap" type="com.ffzx.promotion.api.dto.RewardLuckNo" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="luck_no" property="luckNo" jdbcType="VARCHAR" />
+    <result column="reward_id" property="rewardId" jdbcType="VARCHAR" />
+    <result column="take_count" property="takeCount" jdbcType="INTEGER" />
+    <result column="one_value" property="oneValue" jdbcType="VARCHAR" />
+    <result column="two_value" property="twoValue" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="last_update_date" property="lastUpdateDate" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy.id" jdbcType="VARCHAR" />
+    <result column="create_name" property="createName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    t.id, t.luck_no, t.reward_id, t.take_count, t.one_value, t.two_value, t.create_date, 
+    t.last_update_date, t.create_by as 'createBy.id', t.create_name
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null and '' != params.id" >
+        and t.id = #{params.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.luckNo != null and '' != params.luckNo" >
+        and t.luck_no = #{params.luckNo,jdbcType=VARCHAR}
+      </if>
+      <if test="params.rewardId != null and '' != params.rewardId" >
+        and t.reward_id = #{params.rewardId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.takeCount != null" >
+        and t.take_count = #{params.takeCount,jdbcType=INTEGER}
+      </if>
+      <if test="params.oneValue != null and '' != params.oneValue" >
+        and t.one_value = #{params.oneValue,jdbcType=VARCHAR}
+      </if>
+      <if test="params.twoValue != null and '' != params.twoValue" >
+        and t.two_value = #{params.twoValue,jdbcType=VARCHAR}
+      </if>
+      <if test="params.createDate != null" >
+        and t.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.lastUpdateDate != null" >
+        and t.last_update_date = #{params.lastUpdateDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.createBy != null and '' != params.createBy" >
+        and t.create_by = #{params.createBy.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.createName != null and '' != params.createName" >
+        and t.create_name = #{params.createName,jdbcType=VARCHAR}
+      </if>
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from reward_luck_no t 
+    where t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectluckNoByid" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from reward_luck_no t 
+    where t.reward_id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from reward_luck_no t 
+    where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from reward_luck_no t  where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from reward_luck_no t 
+    where 1=1
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from reward_luck_no
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.promotion.api.dto.RewardLuckNo" >
+    delete from reward_luck_no
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ffzx.promotion.api.dto.RewardLuckNo" >
+    insert into reward_luck_no (id, luck_no, reward_id, 
+      take_count, one_value, two_value, 
+      create_date, last_update_date, create_by, 
+      create_name)
+    values (#{id,jdbcType=VARCHAR}, #{luckNo,jdbcType=VARCHAR}, #{rewardId,jdbcType=VARCHAR}, 
+      #{takeCount,jdbcType=INTEGER}, #{oneValue,jdbcType=VARCHAR}, #{twoValue,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{lastUpdateDate,jdbcType=TIMESTAMP}, #{createBy.id,jdbcType=VARCHAR}, 
+      #{createName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.promotion.api.dto.RewardLuckNo" >
+    insert into reward_luck_no
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="luckNo != null" >
+        luck_no,
+      </if>
+      <if test="rewardId != null" >
+        reward_id,
+      </if>
+      <if test="takeCount != null" >
+        take_count,
+      </if>
+      <if test="oneValue != null" >
+        one_value,
+      </if>
+      <if test="twoValue != null" >
+        two_value,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createName != null" >
+        create_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="luckNo != null" >
+        #{luckNo,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardId != null" >
+        #{rewardId,jdbcType=VARCHAR},
+      </if>
+      <if test="takeCount != null" >
+        #{takeCount,jdbcType=INTEGER},
+      </if>
+      <if test="oneValue != null" >
+        #{oneValue,jdbcType=VARCHAR},
+      </if>
+      <if test="twoValue != null" >
+        #{twoValue,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateDate != null" >
+        #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        #{createBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null" >
+        #{createName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.promotion.api.dto.RewardLuckNo" >
+    update reward_luck_no
+    <set >
+      <if test="luckNo != null" >
+        luck_no = #{luckNo,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardId != null" >
+        reward_id = #{rewardId,jdbcType=VARCHAR},
+      </if>
+      <if test="takeCount != null" >
+        take_count = #{takeCount,jdbcType=INTEGER},
+      </if>
+      <if test="oneValue != null" >
+        one_value = #{oneValue,jdbcType=VARCHAR},
+      </if>
+      <if test="twoValue != null" >
+        two_value = #{twoValue,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null" >
+        create_name = #{createName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.promotion.api.dto.RewardLuckNo" >
+    update reward_luck_no
+    set luck_no = #{luckNo,jdbcType=VARCHAR},
+      reward_id = #{rewardId,jdbcType=VARCHAR},
+      take_count = #{takeCount,jdbcType=INTEGER},
+      one_value = #{oneValue,jdbcType=VARCHAR},
+      two_value = #{twoValue,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      create_by = #{createBy.id,jdbcType=VARCHAR},
+      create_name = #{createName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

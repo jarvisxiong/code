@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ffzx.permission.mapper.SysRoleMenuMapper" >
+  <resultMap id="BaseResultMap" type="com.ffzx.permission.model.SysRoleMenu" >
+    <id column="role_id" property="roleId" jdbcType="VARCHAR" />
+    <id column="menu_id" property="menuId" jdbcType="VARCHAR" />
+<!--     <result column="created_date" property="createdDate" jdbcType="TIMESTAMP" /> -->
+<!--     <result column="created_by" property="createdBy" jdbcType="VARCHAR" /> -->
+<!--     <result column="last_updated_date" property="lastUpdatedDate" jdbcType="TIMESTAMP" /> -->
+<!--     <result column="last_updated_by" property="lastUpdatedBy" jdbcType="VARCHAR" /> -->
+  </resultMap>
+  <sql id="Base_Column_List" >
+    role_id, menu_id
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.roleId != null" >
+        and role_id = #{params.roleId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.menuId != null" >
+        and menu_id = #{params.menuId,jdbcType=VARCHAR}
+      </if>
+<!--       <if test="params.createdDate != null" > -->
+<!--         and created_date = #{params.createdDate,jdbcType=TIMESTAMP} -->
+<!--       </if> -->
+<!--       <if test="params.createdBy != null" > -->
+<!--         and created_by = #{params.createdBy,jdbcType=VARCHAR} -->
+<!--       </if> -->
+<!--       <if test="params.lastUpdatedDate != null" > -->
+<!--         and last_updated_date = #{params.lastUpdatedDate,jdbcType=TIMESTAMP} -->
+<!--       </if> -->
+<!--       <if test="params.lastUpdatedBy != null" > -->
+<!--         and last_updated_by = #{params.lastUpdatedBy,jdbcType=VARCHAR} -->
+<!--       </if> -->
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_role_menu
+    where role_id = #{roleId,jdbcType=VARCHAR}
+      and menu_id = #{menuId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_role_menu
+    where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from sys_role_menu where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_role_menu
+    where 1=1
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by ${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="map" >
+    delete from sys_role_menu
+    where role_id = #{roleId,jdbcType=VARCHAR}
+      and menu_id = #{menuId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.permission.model.SysRoleMenu" >
+    delete from sys_role_menu
+    where role_id = #{roleId,jdbcType=VARCHAR}
+      and menu_id = #{menuId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ffzx.permission.model.SysRoleMenu" >
+    insert into sys_role_menu (role_id, menu_id)
+    values (#{roleId,jdbcType=VARCHAR}, #{menuId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.permission.model.SysRoleMenu" >
+    insert into sys_role_menu
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="roleId != null" >
+        role_id,
+      </if>
+      <if test="menuId != null" >
+        menu_id,
+      </if>
+     
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="roleId != null" >
+        #{roleId,jdbcType=VARCHAR},
+      </if>
+      <if test="menuId != null" >
+        #{menuId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+<!--   <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.permission.model.SysRoleMenu" > -->
+<!--     update sys_role_menu -->
+<!--     <set > -->
+<!--       <if test="createdDate != null" > -->
+<!--         created_date = #{createdDate,jdbcType=TIMESTAMP}, -->
+<!--       </if> -->
+<!--       <if test="createdBy != null" > -->
+<!--         created_by = #{createdBy,jdbcType=VARCHAR}, -->
+<!--       </if> -->
+<!--       <if test="lastUpdatedDate != null" > -->
+<!--         last_updated_date = #{lastUpdatedDate,jdbcType=TIMESTAMP}, -->
+<!--       </if> -->
+<!--       <if test="lastUpdatedBy != null" > -->
+<!--         last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR}, -->
+<!--       </if> -->
+<!--     </set> -->
+<!--     where role_id = #{roleId,jdbcType=VARCHAR} -->
+<!--       and menu_id = #{menuId,jdbcType=VARCHAR} -->
+<!--   </update> -->
+<!--   <update id="updateByPrimaryKey" parameterType="com.ffzx.permission.model.SysRoleMenu" > -->
+<!--     update sys_role_menu -->
+<!--     set created_date = #{createdDate,jdbcType=TIMESTAMP}, -->
+<!--       created_by = #{createdBy,jdbcType=VARCHAR}, -->
+<!--       last_updated_date = #{lastUpdatedDate,jdbcType=TIMESTAMP}, -->
+<!--       last_updated_by = #{lastUpdatedBy,jdbcType=VARCHAR} -->
+<!--     where role_id = #{roleId,jdbcType=VARCHAR} -->
+<!--       and menu_id = #{menuId,jdbcType=VARCHAR} -->
+<!--   </update> -->
+</mapper>

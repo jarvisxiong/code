@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ffzx.promotion.mapper.CouponGrantMemberMapper" >
+  <resultMap id="BaseResultMap" type="com.ffzx.promotion.api.dto.CouponGrantMember" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="coupon_grant_id" property="couponGrant.id" jdbcType="VARCHAR" />
+    <result column="member_id" property="memberId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    t.id, t.coupon_grant_id, t.member_id
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null and '' != params.id" >
+        and t.id = #{params.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.couponGrant.id != null and '' != params.couponGrant.id" >
+        and t.coupon_grant_id = #{params.couponGrant.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.memberId != null and '' != params.memberId" >
+        and t.member_id = #{params.memberId,jdbcType=VARCHAR}
+      </if>
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from coupon_grant_member t 
+    where t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from coupon_grant_member t 
+    where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectMemberid" resultType="java.lang.String"  parameterType="java.lang.String" >
+  
+    select 
+    t.member_id
+    from coupon_grant_member t 
+    where t.coupon_grant_id=#{couponGrantId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from coupon_grant_member t  where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from coupon_grant_member t 
+    where 1=1
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from coupon_grant_member
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <delete id="deleteByCouponGrantId" parameterType="java.lang.String" >
+    delete from coupon_grant_member
+    where coupon_grant_id = #{couponGrantId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.promotion.api.dto.CouponGrantMember" >
+    delete from coupon_grant_member
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ffzx.promotion.api.dto.CouponGrantMember" >
+    insert into coupon_grant_member (id, coupon_grant_id, member_id
+      )
+    values (#{id,jdbcType=VARCHAR}, #{couponGrant.id,jdbcType=VARCHAR}, #{memberId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.promotion.api.dto.CouponGrantMember" >
+    insert into coupon_grant_member
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="couponGrant.id != null" >
+        coupon_grant_id,
+      </if>
+      <if test="memberId != null" >
+        member_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="couponGrant.id != null" >
+        #{couponGrant.id,jdbcType=VARCHAR},
+      </if>
+      <if test="memberId != null" >
+        #{memberId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.promotion.api.dto.CouponGrantMember" >
+    update coupon_grant_member
+    <set >
+      <if test="couponGrant.id != null" >
+        coupon_grant_id = #{couponGrant.id,jdbcType=VARCHAR},
+      </if>
+      <if test="memberId != null" >
+        member_id = #{memberId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.promotion.api.dto.CouponGrantMember" >
+    update coupon_grant_member
+    set coupon_grant_id = #{couponGrant.id,jdbcType=VARCHAR},
+      member_id = #{memberId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

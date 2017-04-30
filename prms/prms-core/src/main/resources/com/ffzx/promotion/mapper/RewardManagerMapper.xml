@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ffzx.promotion.mapper.RewardManagerMapper" >
+  <resultMap id="BaseResultMap" type="com.ffzx.promotion.api.dto.RewardManager" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="reward_no" property="rewardNo" jdbcType="VARCHAR" />
+    <result column="date_no" property="dateNo" jdbcType="VARCHAR" />
+    <result column="send_staus" property="sendStaus" jdbcType="CHAR" />
+    <result column="reward_status" property="rewardStatus" jdbcType="CHAR" />
+    <result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
+    <result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
+    <result column="reward_date" property="rewardDate" jdbcType="TIMESTAMP" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy.id" jdbcType="VARCHAR" />
+    <result column="create_name" property="createName" jdbcType="VARCHAR" />
+    <result column="last_update_date" property="lastUpdateDate" jdbcType="TIMESTAMP" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.ffzx.promotion.api.dto.RewardManager" extends="BaseResultMap" >
+    <result column="show_image" property="showImage" jdbcType="LONGVARCHAR" />
+    <result column="detail_image" property="detailImage" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    t.id, t.title, t.reward_no, t.date_no, t.send_staus, t.start_date, 
+    t.end_date, t.reward_date, t.create_date, t.create_by as 'createBy.id', t.create_name, 
+    t.last_update_date, t.del_flag, t.price
+  </sql>
+  <sql id="Base_Column_case">
+  	<![CDATA[CASE WHEN t.start_date > now() THEN 0
+	WHEN t.start_date <=now() and now()<t.end_date THEN 1
+	WHEN t.end_date <=now() and t.reward_date >now() THEN 2
+	WHEN now()>=t.reward_date THEN 3
+	END AS reward_status]]>
+  </sql>
+  <sql id="Blob_Column_List" >
+    show_image, detail_image
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null and '' != params.id" >
+        and t.id = #{params.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.title != null and '' != params.title" >
+        and t.title like CONCAT('%', #{params.title}, '%')
+      </if>
+      <if test="params.rewardNo != null and '' != params.rewardNo" >
+        and t.reward_no like CONCAT('%', #{params.rewardNo}, '%')
+      </if>
+      <if test="params.dateNo != null and '' != params.dateNo" >
+        and t.date_no = #{params.dateNo,jdbcType=VARCHAR}
+      </if>
+      <if test="params.sendStaus != null and '' != params.sendStaus" >
+        and t.send_staus = #{params.sendStaus,jdbcType=CHAR}
+      </if>
+     <!--  <if test="params.rewardStatus != null and '' != params.rewardStatus" >
+        and t.reward_status = #{params.rewardStatus,jdbcType=CHAR}
+      </if> -->
+      <if test="params.startDateStartStr != null" >
+        <![CDATA[and t.start_date >= #{params.startDateStartStr,jdbcType=TIMESTAMP}]]>
+      </if>
+      <if test="params.startDateEndStr != null" >
+        <![CDATA[and t.start_date <= #{params.startDateEndStr,jdbcType=TIMESTAMP}]]>
+      </if>
+      
+      <if test="params.endDateStartStr != null" >
+        <![CDATA[and t.end_date >= #{params.endDateStartStr,jdbcType=TIMESTAMP}]]>
+      </if>
+      <if test="params.endDateEndStr != null" >
+        <![CDATA[and t.end_date <= #{params.endDateEndStr,jdbcType=TIMESTAMP}]]>
+      </if>
+      
+      <if test="params.rewardDateEndStr != null" >
+        <![CDATA[and t.reward_date >= #{params.rewardDateStartStr,jdbcType=TIMESTAMP}]]>
+      </if>
+      <if test="params.rewardDateEndStr != null" >
+        <![CDATA[and t.reward_date <= #{params.rewardDateEndStr,jdbcType=TIMESTAMP}]]>
+      </if>
+      
+      <if test="params.createDate != null" >
+        and t.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.createBy != null and '' != params.createBy" >
+        and t.create_by = #{params.createBy.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.createName != null and '' != params.createName" >
+        and t.create_name  like CONCAT('%', #{params.createName}, '%')
+      </if>
+      <if test="params.lastUpdateDate != null" >
+        and t.last_update_date = #{params.lastUpdateDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.delFlag != null and '' != params.delFlag" >
+        and t.del_flag = #{params.delFlag,jdbcType=CHAR}
+      </if>
+      <if test="params.price != null" >
+        and t.price = #{params.price,jdbcType=DECIMAL}
+      </if>
+      <if test="params.showImage != null and '' != params.showImage" >
+        and t.show_image = #{params.showImage,jdbcType=LONGVARCHAR}
+      </if>
+      
+      <if test="params.detailImage != null and '' != params.detailImage" >
+        and t.detail_image = #{params.detailImage,jdbcType=LONGVARCHAR}
+      </if>
+		 <if test="params.rewardStatus != null and '' != params.rewardStatus" >
+		   	  <if test="params.rewardStatus==0" >
+	   				<![CDATA[and  t.start_date >now()]]>
+		   	  </if>
+		   	  <if test="params.rewardStatus==1" >
+	   				<![CDATA[and now()>=t.start_date and now()< t.end_date]]>
+		   	  </if>
+		   	  <if test="params.rewardStatus==2">
+	   				<![CDATA[and t.end_date <= now() and now()<t.reward_date]]>
+		   	  </if>
+		   	  <if test="params.rewardStatus==3">
+	   				<![CDATA[and now()>= t.reward_date ]]>
+		   	  </if>
+		</if>
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    ,<include refid="Base_Column_case" />
+    from reward_manager t 
+    where t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  
+  
+  <select id="selectByParams" resultMap="ResultMapWithBLOBs" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+     ,<include refid="Base_Column_case" />
+    from reward_manager t 
+    where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from reward_manager t  where 1=1
+    <include refid="condition" />
+  </select>
+  
+  <select id="selectLuckNoCount" resultType="java.lang.Integer" >
+    select count(1) as s from reward_manager t left join reward_luck_no o on o.reward_id = t.id  where 1=1 and <![CDATA[ NOW() >= t.end_date AND NOW() < t.reward_date]]>
+    <include refid="condition" />
+  </select>
+  
+  <select id="selectByPage" resultMap="ResultMapWithBLOBs" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    ,<include refid="Base_Column_case" />
+    from reward_manager t 
+    where 1=1
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  
+    <select id="selectPageByOrderBy" resultMap="ResultMapWithBLOBs" parameterType="map" >
+	SELECT * FROM (
+		SELECT
+			  <include refid="Base_Column_List" /> ,
+		  	  <include refid="Blob_Column_List" />,
+			   <![CDATA[CASE WHEN t.start_date <=now() and now()<t.end_date THEN 1	END AS reward_status ]]>
+		FROM
+			reward_manager t
+		WHERE  <![CDATA[NOW() < t.end_date AND NOW() >= t.start_date ]]> <include refid="condition" /> ORDER BY t.start_date DESC
+		)tmp
+		UNION
+		SELECT * FROM (
+		SELECT
+			 <include refid="Base_Column_List" /> ,
+		  	  <include refid="Blob_Column_List" />,
+		   	 <![CDATA[CASE WHEN t.start_date > now() THEN 0	END AS reward_status ]]>
+		FROM
+			reward_manager t
+		WHERE <![CDATA[ NOW() < t.start_date]]> <include refid="condition" /> ORDER BY t.start_date ASC
+		)tmp2
+		UNION
+		SELECT * FROM (
+		SELECT
+		 <include refid="Base_Column_List" /> ,
+		 <include refid="Blob_Column_List" />,
+		 <![CDATA[CASE  WHEN t.end_date <=now() and t.reward_date >now() THEN 2 END AS reward_status ]]>
+		FROM
+			reward_manager t
+		WHERE  <![CDATA[ NOW() >= t.end_date AND NOW() < t.reward_date]]> <include refid="condition" />  ORDER BY t.reward_date ASC
+		)tmp3
+		UNION
+		SELECT * FROM (
+		SELECT
+		 <include refid="Base_Column_List" /> ,
+		 <include refid="Blob_Column_List" />,
+		<![CDATA[CASE  WHEN now()>=t.reward_date THEN 3 END AS reward_status ]]>
+		FROM
+			reward_manager t
+		WHERE   <![CDATA[NOW() >= t.reward_date]]> <include refid="condition" />  ORDER BY t.end_date DESC
+		)tmp4 
+		<if test="params.pageIndex!= null and '' != params.pageIndex" >
+        LIMIT #{params.pageIndex,jdbcType=VARCHAR},#{params.pageSize,jdbcType=VARCHAR}
+      </if>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from reward_manager
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.promotion.api.dto.RewardManager" >
+    delete from reward_manager
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ffzx.promotion.api.dto.RewardManager" >
+    insert into reward_manager (id, title, reward_no, 
+      date_no, send_staus, reward_status, 
+      start_date, end_date, reward_date, 
+      create_date, create_by, create_name, 
+      last_update_date, del_flag, price, 
+      show_image, detail_image)
+    values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{rewardNo,jdbcType=VARCHAR}, 
+      #{dateNo,jdbcType=VARCHAR}, #{sendStaus,jdbcType=CHAR}, #{rewardStatus,jdbcType=CHAR}, 
+      #{startDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP}, #{rewardDate,jdbcType=TIMESTAMP}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{createBy.id,jdbcType=VARCHAR}, #{createName,jdbcType=VARCHAR}, 
+      #{lastUpdateDate,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=CHAR}, #{price,jdbcType=DECIMAL}, 
+      #{showImage,jdbcType=LONGVARCHAR}, #{detailImage,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.promotion.api.dto.RewardManager" >
+    insert into reward_manager
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="rewardNo != null" >
+        reward_no,
+      </if>
+      <if test="dateNo != null" >
+        date_no,
+      </if>
+      <if test="sendStaus != null" >
+        send_staus,
+      </if>
+      <if test="rewardStatus != null" >
+        reward_status,
+      </if>
+      <if test="startDate != null" >
+        start_date,
+      </if>
+      <if test="endDate != null" >
+        end_date,
+      </if>
+      <if test="rewardDate != null" >
+        reward_date,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createName != null" >
+        create_name,
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="showImage != null" >
+        show_image,
+      </if>
+      <if test="detailImage != null" >
+        detail_image,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardNo != null" >
+        #{rewardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="dateNo != null" >
+        #{dateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="sendStaus != null" >
+        #{sendStaus,jdbcType=CHAR},
+      </if>
+      <if test="rewardStatus != null" >
+        #{rewardStatus,jdbcType=CHAR},
+      </if>
+      <if test="startDate != null" >
+        #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rewardDate != null" >
+        #{rewardDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        #{createBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null" >
+        #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="showImage != null" >
+        #{showImage,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="detailImage != null" >
+        #{detailImage,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.promotion.api.dto.RewardManager" >
+    update reward_manager
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardNo != null" >
+        reward_no = #{rewardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="dateNo != null" >
+        date_no = #{dateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="sendStaus != null" >
+        send_staus = #{sendStaus,jdbcType=CHAR},
+      </if>
+      <if test="rewardStatus != null" >
+        reward_status = #{rewardStatus,jdbcType=CHAR},
+      </if>
+      <if test="startDate != null" >
+        start_date = #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null" >
+        end_date = #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rewardDate != null" >
+        reward_date = #{rewardDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null" >
+        create_name = #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="showImage != null" >
+        show_image = #{showImage,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="detailImage != null" >
+        detail_image = #{detailImage,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ffzx.promotion.api.dto.RewardManager" >
+    update reward_manager
+    set title = #{title,jdbcType=VARCHAR},
+      reward_no = #{rewardNo,jdbcType=VARCHAR},
+      date_no = #{dateNo,jdbcType=VARCHAR},
+      send_staus = #{sendStaus,jdbcType=CHAR},
+      reward_status = #{rewardStatus,jdbcType=CHAR},
+      start_date = #{startDate,jdbcType=TIMESTAMP},
+      end_date = #{endDate,jdbcType=TIMESTAMP},
+      reward_date = #{rewardDate,jdbcType=TIMESTAMP},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      create_by = #{createBy.id,jdbcType=VARCHAR},
+      create_name = #{createName,jdbcType=VARCHAR},
+      last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      del_flag = #{delFlag,jdbcType=CHAR},
+      price = #{price,jdbcType=DECIMAL},
+      show_image = #{showImage,jdbcType=LONGVARCHAR},
+      detail_image = #{detailImage,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.promotion.api.dto.RewardManager" >
+    update reward_manager
+    set title = #{title,jdbcType=VARCHAR},
+      reward_no = #{rewardNo,jdbcType=VARCHAR},
+      date_no = #{dateNo,jdbcType=VARCHAR},
+      send_staus = #{sendStaus,jdbcType=CHAR},
+      reward_status = #{rewardStatus,jdbcType=CHAR},
+      start_date = #{startDate,jdbcType=TIMESTAMP},
+      end_date = #{endDate,jdbcType=TIMESTAMP},
+      reward_date = #{rewardDate,jdbcType=TIMESTAMP},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      create_by = #{createBy.id,jdbcType=VARCHAR},
+      create_name = #{createName,jdbcType=VARCHAR},
+      last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      del_flag = #{delFlag,jdbcType=CHAR},
+      price = #{price,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

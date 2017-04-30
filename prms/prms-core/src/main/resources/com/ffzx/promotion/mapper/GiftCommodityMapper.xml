@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ffzx.promotion.mapper.GiftCommodityMapper" >
+  <resultMap id="BaseResultMap" type="com.ffzx.promotion.api.dto.GiftCommodity" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="commodity_id" property="commodityId" jdbcType="VARCHAR" />
+    <result column="commodity_barcode" property="commodityBarcode" jdbcType="VARCHAR" />
+    <result column="give_id" property="giveId" jdbcType="VARCHAR" />
+    <result column="give_commodity_id" property="giveCommodityId" jdbcType="VARCHAR" />
+    <result column="commodity_no" property="commodityNo" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="thumbnail" property="thumbnail" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    t.id, t.commodity_id, t.commodity_barcode, t.give_id, t.give_commodity_id, t.commodity_no, 
+    t.del_flag
+  </sql>
+  <sql id="conditionDelete" >
+      <if test="id != null and '' != id" >
+        and id = #{id,jdbcType=VARCHAR}
+      </if>
+      
+      <if test="giveId != null and '' != giveId" >
+        and give_id = #{giveId,jdbcType=VARCHAR}
+      </if>
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null and '' != params.id" >
+        and t.id = #{params.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.commodityId != null and '' != params.commodityId" >
+        and t.commodity_id = #{params.commodityId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.commodityBarcode != null and '' != params.commodityBarcode" >
+        and t.commodity_barcode = #{params.commodityBarcode,jdbcType=VARCHAR}
+      </if>
+      <if test="params.giveId != null and '' != params.giveId" >
+        and t.give_id = #{params.giveId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.giveCommodityId != null and '' != params.giveCommodityId" >
+        and t.give_commodity_id = #{params.giveCommodityId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.commodityNo != null and '' != params.commodityNo" >
+        and t.commodity_no = #{params.commodityNo,jdbcType=VARCHAR}
+      </if>
+      <if test="params.delFlag != null and '' != params.delFlag" >
+        and t.del_flag = #{params.delFlag,jdbcType=CHAR}
+      </if>
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from gift_commodity t 
+    where t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from gift_commodity t 
+    where 1=1
+    <include refid="condition" />
+  </select>
+  
+  <select id="selectCommodityByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    ,c.title
+    ,c.thumbnail
+    from gift_commodity t 
+    left join cims_db.commodity c on c.id=t.commodity_id
+    where 1=1
+    <include refid="condition" />
+  </select>
+  
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from gift_commodity t  where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from gift_commodity t 
+    where 1=1
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from gift_commodity
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.promotion.api.dto.GiftCommodity" >
+    DELETE gift_commodity,gift_commodity_sku from gift_commodity,gift_commodity_sku where 
+gift_commodity.id=gift_commodity_sku.gift_commodity_id
+    
+    <include refid="conditionDelete" />
+  </delete>
+  
+  <insert id="insert" parameterType="com.ffzx.promotion.api.dto.GiftCommodity" >
+    insert into gift_commodity (id, commodity_id, commodity_barcode, 
+      give_id, give_commodity_id, commodity_no, 
+      del_flag)
+    values (#{id,jdbcType=VARCHAR}, #{commodityId,jdbcType=VARCHAR}, #{commodityBarcode,jdbcType=VARCHAR}, 
+      #{giveId,jdbcType=VARCHAR}, #{giveCommodityId,jdbcType=VARCHAR}, #{commodityNo,jdbcType=VARCHAR}, 
+      #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.promotion.api.dto.GiftCommodity" >
+    insert into gift_commodity
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="commodityId != null" >
+        commodity_id,
+      </if>
+      <if test="commodityBarcode != null" >
+        commodity_barcode,
+      </if>
+      <if test="giveId != null" >
+        give_id,
+      </if>
+      <if test="giveCommodityId != null" >
+        give_commodity_id,
+      </if>
+      <if test="commodityNo != null" >
+        commodity_no,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityId != null" >
+        #{commodityId,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityBarcode != null" >
+        #{commodityBarcode,jdbcType=VARCHAR},
+      </if>
+      <if test="giveId != null" >
+        #{giveId,jdbcType=VARCHAR},
+      </if>
+      <if test="giveCommodityId != null" >
+        #{giveCommodityId,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityNo != null" >
+        #{commodityNo,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.promotion.api.dto.GiftCommodity" >
+    update gift_commodity
+    <set >
+      <if test="commodityId != null" >
+        commodity_id = #{commodityId,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityBarcode != null" >
+        commodity_barcode = #{commodityBarcode,jdbcType=VARCHAR},
+      </if>
+      <if test="giveId != null" >
+        give_id = #{giveId,jdbcType=VARCHAR},
+      </if>
+      <if test="giveCommodityId != null" >
+        give_commodity_id = #{giveCommodityId,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityNo != null" >
+        commodity_no = #{commodityNo,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.promotion.api.dto.GiftCommodity" >
+    update gift_commodity
+    set commodity_id = #{commodityId,jdbcType=VARCHAR},
+      commodity_barcode = #{commodityBarcode,jdbcType=VARCHAR},
+      give_id = #{giveId,jdbcType=VARCHAR},
+      give_commodity_id = #{giveCommodityId,jdbcType=VARCHAR},
+      commodity_no = #{commodityNo,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

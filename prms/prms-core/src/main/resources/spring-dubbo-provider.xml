@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans.xsd
+	 http://code.alibabatech.com/schema/dubbo	http://code.alibabatech.com/schema/dubbo/dubbo.xsd"
+	 default-lazy-init="true">    
+
+	 <!-- 子系统暴露服务接口 -->
+    <dubbo:service interface="com.ffzx.promotion.api.service.MemberCouponApiService"
+        version="1.0" ref="memberCouponApiService" registry="zookeeperService"/>
+    <bean id="memberCouponApiService" class="com.ffzx.promotion.api.service.impl.MemberCouponApiServiceImpl"/>
+    
+    <dubbo:service interface="com.ffzx.promotion.api.service.CouponGrantApiService" version="1.0" ref="couponGrantApiService" registry="zookeeperService"/>
+    <bean id="couponGrantApiService" class="com.ffzx.promotion.api.service.impl.CouponGrantApiServiceImpl"/>
+    
+    <!-- 广告接口  -->
+    <dubbo:service interface="com.ffzx.promotion.api.service.AdvertApiService" version="1.0" ref="advertApiService" registry="zookeeperService"/>
+    <bean id="advertApiService" class="com.ffzx.promotion.api.service.impl.AdvertApiServiceImpl"/>
+    
+    <!-- 优惠券领取接口  -->
+    <dubbo:service interface="com.ffzx.promotion.api.service.CouponReceiveApiService" version="1.0" ref="couponReceiveApiService" registry="zookeeperService"/>
+    <bean id="couponReceiveApiService" class="com.ffzx.promotion.api.service.impl.CouponReceiveApiServiceImpl"/>
+    
+    
+    <!-- 活动接口  -->
+    <dubbo:service interface="com.ffzx.promotion.api.service.ActivityManagerApiService" version="1.0" ref="activityManagerApiService" registry="zookeeperService"/>
+    <bean id="activityManagerApiService" class="com.ffzx.promotion.api.service.impl.ActivityManagerApiServiceImpl"/>
+    <!-- 活动commodity详情接口  -->
+    <dubbo:service interface="com.ffzx.promotion.api.service.ActivityCommodityApiService" version="1.0" ref="activityCommodityApiService" registry="zookeeperService"/>
+    <bean id="activityCommodityApiService" class="com.ffzx.promotion.api.service.impl.ActivityCommodityApiServiceImpl"/>
+    <!-- 活动sku详情接口  -->
+    <dubbo:service interface="com.ffzx.promotion.api.service.ActivityCommoditySkuApiService" version="1.0" ref="activityCommoditySkuApiService" registry="zookeeperService"/>
+    <bean id="activityCommoditySkuApiService" class="com.ffzx.promotion.api.service.impl.ActivityCommoditySkuApiServiceImpl"/>
+    
+    <dubbo:service interface="com.ffzx.promotion.api.service.ActivityCategoryApiService" version="1.0" ref="activityCategoryApiService" registry="zookeeperService"/>
+    <bean id="activityCategoryApiService" class="com.ffzx.promotion.api.service.impl.ActivityCategoryApiServiceImpl"/>
+    
+    <!-- app启动页接口 -->
+    <dubbo:service interface="com.ffzx.promotion.api.service.APPStartPageApiService" version="1.0" ref="aPPStartPageApiService" registry="zookeeperService"/>
+    <bean id="aPPStartPageApiService" class="com.ffzx.promotion.api.service.impl.APPStartPageApiServiceImpl"/>
+    
+    <dubbo:service interface="com.ffzx.promotion.api.service.ActivityGiveApiService" version="1.0" ref="activityGiveApiService" registry="zookeeperService"/>
+    <bean id="activityGiveApiService" class="com.ffzx.promotion.api.service.impl.ActivityGiveApiServiceImpl"/>
+
+    
+    <dubbo:service interface="com.ffzx.promotion.api.service.RewardManagerApiService" version="1.0" ref="rewardManagerApiService" registry="zookeeperService"/>
+    <bean id="rewardManagerApiService" class="com.ffzx.promotion.api.service.impl.RewardManagerApiServiceImpl"/>
+    
+    <dubbo:service interface="com.ffzx.promotion.api.service.ActivityOrderApiService" version="1.0" ref="activityOrderApiService" registry="zookeeperService"/>
+    <bean id="activityOrderApiService" class="com.ffzx.promotion.api.service.impl.ActivityOrderApiServiceImpl"/>
+    	
+    <!-- 搜索引擎服务==>>>根据商品id获取活动信息  -->
+    <dubbo:service interface="com.ffzx.promotion.api.service.ActivityEsApiService" version="1.0" ref="activityEsApiService" registry="zookeeperService"/>
+    <bean id="activityEsApiService" class="com.ffzx.promotion.api.service.impl.ActivityEsApiServiceImpl"/>
+    <!-- 发放红包消息定时 -->
+    <dubbo:service interface="com.ffzx.promotion.api.service.RedpackageGrantApiService" version="1.0" ref="redpackageGrantApiService" registry="zookeeperService"/>
+    <bean id="redpackageGrantApiService" class="com.ffzx.promotion.api.service.impl.RedpackageGrantApiServiceImpl"/>
+    <!-- 红包统计定时 -->
+    <dubbo:service interface="com.ffzx.promotion.api.service.RedpackageCountApiService" version="1.0" ref="redpackageCountApiService" registry="zookeeperService"/>
+    <bean id="redpackageCountApiService" class="com.ffzx.promotion.api.service.impl.RedpackageCountApiServiceImpl"/>
+
+    <!-- 优惠券创建dubbo接口 -->
+    <dubbo:service interface="com.ffzx.promotion.api.service.CouponApiService" version="1.0" ref="couponApiService" registry="zookeeperService"/>
+    <bean id="couponApiService" class="com.ffzx.promotion.api.service.impl.CouponApiServiceImpl"/>
+
+    
+    <dubbo:service interface="com.ffzx.promotion.api.service.RedPackageApiService" version="1.0" ref="redPackageApiService" registry="zookeeperService"/>
+    <bean id="redPackageApiService" class="com.ffzx.promotion.api.service.impl.RedPackageApiServiceImpl"/>
+    
+</beans>

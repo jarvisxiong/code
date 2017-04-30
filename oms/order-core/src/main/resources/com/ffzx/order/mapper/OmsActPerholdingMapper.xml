@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ffzx.order.mapper.OmsActPerholdingMapper" >
+  <resultMap id="BaseResultMap" type="com.ffzx.order.model.OmsActPerholding" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="member_id" property="memberId" jdbcType="VARCHAR" />
+    <result column="member_phone" property="memberPhone" jdbcType="VARCHAR" />
+    <result column="commodity_sku_code" property="commoditySkuCode" jdbcType="VARCHAR" />
+    <result column="activity_commodity_sku_id" property="activityCommoditySkuId" jdbcType="VARCHAR" />
+    <result column="preholding_num" property="preholdingNum" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    t.id, t.member_id, t.member_phone, t.commodity_sku_code, t.activity_commodity_sku_id, 
+    t.preholding_num
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null and '' != params.id" >
+        and t.id = #{params.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.memberId != null and '' != params.memberId" >
+        and t.member_id = #{params.memberId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.memberPhone != null and '' != params.memberPhone" >
+        and t.member_phone = #{params.memberPhone,jdbcType=VARCHAR}
+      </if>
+      <if test="params.commoditySkuCode != null and '' != params.commoditySkuCode" >
+        and t.commodity_sku_code = #{params.commoditySkuCode,jdbcType=VARCHAR}
+      </if>
+      <if test="params.activityCommoditySkuId != null and '' != params.activityCommoditySkuId" >
+        and t.activity_commodity_sku_id = #{params.activityCommoditySkuId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.preholdingNum != null" >
+        and t.preholding_num = #{params.preholdingNum,jdbcType=INTEGER}
+      </if>
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from oms_act_perholding t 
+    where t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from oms_act_perholding t 
+    where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from oms_act_perholding t  where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from oms_act_perholding t 
+    where 1=1
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from oms_act_perholding
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.order.model.OmsActPerholding" >
+    delete from oms_act_perholding
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ffzx.order.model.OmsActPerholding" >
+    insert into oms_act_perholding (id, member_id, member_phone, 
+      commodity_sku_code, activity_commodity_sku_id, 
+      preholding_num)
+    values (#{id,jdbcType=VARCHAR}, #{memberId,jdbcType=VARCHAR}, #{memberPhone,jdbcType=VARCHAR}, 
+      #{commoditySkuCode,jdbcType=VARCHAR}, #{activityCommoditySkuId,jdbcType=VARCHAR}, 
+      #{preholdingNum,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.order.model.OmsActPerholding" >
+    insert into oms_act_perholding
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="memberId != null" >
+        member_id,
+      </if>
+      <if test="memberPhone != null" >
+        member_phone,
+      </if>
+      <if test="commoditySkuCode != null" >
+        commodity_sku_code,
+      </if>
+      <if test="activityCommoditySkuId != null" >
+        activity_commodity_sku_id,
+      </if>
+      <if test="preholdingNum != null" >
+        preholding_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="memberId != null" >
+        #{memberId,jdbcType=VARCHAR},
+      </if>
+      <if test="memberPhone != null" >
+        #{memberPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="commoditySkuCode != null" >
+        #{commoditySkuCode,jdbcType=VARCHAR},
+      </if>
+      <if test="activityCommoditySkuId != null" >
+        #{activityCommoditySkuId,jdbcType=VARCHAR},
+      </if>
+      <if test="preholdingNum != null" >
+        #{preholdingNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.order.model.OmsActPerholding" >
+    update oms_act_perholding
+    <set >
+      <if test="memberId != null" >
+        member_id = #{memberId,jdbcType=VARCHAR},
+      </if>
+      <if test="memberPhone != null" >
+        member_phone = #{memberPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="commoditySkuCode != null" >
+        commodity_sku_code = #{commoditySkuCode,jdbcType=VARCHAR},
+      </if>
+      <if test="activityCommoditySkuId != null" >
+        activity_commodity_sku_id = #{activityCommoditySkuId,jdbcType=VARCHAR},
+      </if>
+      <if test="preholdingNum != null" >
+        preholding_num = #{preholdingNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.order.model.OmsActPerholding" >
+    update oms_act_perholding
+    set member_id = #{memberId,jdbcType=VARCHAR},
+      member_phone = #{memberPhone,jdbcType=VARCHAR},
+      commodity_sku_code = #{commoditySkuCode,jdbcType=VARCHAR},
+      activity_commodity_sku_id = #{activityCommoditySkuId,jdbcType=VARCHAR},
+      preholding_num = #{preholdingNum,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

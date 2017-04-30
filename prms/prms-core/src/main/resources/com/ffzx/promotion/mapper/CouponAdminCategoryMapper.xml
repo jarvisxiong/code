@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ffzx.promotion.mapper.CouponAdminCategoryMapper" >
+  <resultMap id="BaseResultMap" type="com.ffzx.promotion.api.dto.CouponAdminCategory" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="category_id" property="categoryId" jdbcType="VARCHAR" />
+    <result column="coupon_admin_id" property="couponAdmin.id" jdbcType="VARCHAR" />
+    <result column="commodity_id" property="commodityId" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="activity_manager_id" property="activityManagerId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    t.id, t.category_id, t.coupon_admin_id, t.commodity_id, t.type, t.activity_manager_id
+  </sql>
+  <sql id="Column_List_CategoryCommodity">
+  <if test="params.goodsSelect != null and '' != params.goodsSelect" >
+      <if test="params.goodsSelect == 1" >
+	  t.activity_manager_id
+	  </if>
+	  <if test="params.goodsSelect == 2" >
+	  t.commodity_id
+	  </if>
+	  <if test="params.goodsSelect ==3" >
+	  t.category_id
+   	  </if>
+   </if>
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null and '' != params.id" >
+        and t.id = #{params.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.categoryId != null and '' != params.categoryId" >
+        and t.category_id = #{params.categoryId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.couponAdmin != null and '' != params.couponAdmin" >
+	      <if test="params.couponAdmin.id != null and '' != params.couponAdmin.id" >
+	        and t.coupon_admin_id = #{params.couponAdmin.id,jdbcType=VARCHAR}
+	      </if>
+      </if>
+      <if test="params.commodityId != null and '' != params.commodityId" >
+        and t.commodity_id = #{params.commodityId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.type != null and '' != params.type" >
+        and t.type = #{params.type,jdbcType=VARCHAR}
+      </if>
+       <if test="params.couponId != null and '' != params.couponId" >
+       	 and t.coupon_admin_id = #{params.couponId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.activityManagerId != null and '' != params.activityManagerId" >
+        and t.activity_manager_id = #{params.activityManagerId,jdbcType=VARCHAR}
+      </if>
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from coupon_admin_category t 
+    where t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByCategoryCommodity" resultType="java.lang.String" parameterType="map" >
+    select 
+    <include refid="Column_List_CategoryCommodity" />
+    from coupon_admin_category t 
+    where t.coupon_admin_id = #{params.couponAdminId,jdbcType=VARCHAR}
+    <if test="params.goodsSelect != null and '' != params.goodsSelect">
+    	and t.type = #{params.goodsSelect,jdbcType=VARCHAR}
+    </if>
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from coupon_admin_category t 
+    where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from coupon_admin_category t  where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from coupon_admin_category t 
+    where 1=1
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from coupon_admin_category
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.promotion.api.dto.CouponAdminCategory" >
+    delete from coupon_admin_category
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ffzx.promotion.api.dto.CouponAdminCategory" >
+    insert into coupon_admin_category (id, category_id, coupon_admin_id, 
+      commodity_id, type)
+    values (#{id,jdbcType=VARCHAR}, #{categoryId,jdbcType=VARCHAR}, #{couponAdmin.id,jdbcType=VARCHAR}, 
+      #{commodityId,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR})
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.ffzx.promotion.api.dto.CouponAdminCategory" >
+    insert into coupon_admin_category
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="categoryId != null" >
+        category_id,
+      </if>
+      <if test="couponAdmin.id != null" >
+        coupon_admin_id,
+      </if>
+      <if test="commodityId != null" >
+        commodity_id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="activityManagerId != null" >
+        activity_manager_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryId != null" >
+        #{categoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="couponAdmin.id != null" >
+        #{couponAdmin.id,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityId != null" >
+        #{commodityId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="activityManagerId != null" >
+        #{activityManagerId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.promotion.api.dto.CouponAdminCategory" >
+    update coupon_admin_category
+    <set >
+      <if test="categoryId != null" >
+        category_id = #{categoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="couponAdmin.id != null" >
+        coupon_admin_id = #{couponAdmin.id,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityId != null" >
+        commodity_id = #{commodityId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="activityManagerId != null" >
+        activity_manager_id = #{activityManagerId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.promotion.api.dto.CouponAdminCategory" >
+    update coupon_admin_category
+    set category_id = #{categoryId,jdbcType=VARCHAR},
+      coupon_admin_id = #{couponAdmin.id,jdbcType=VARCHAR},
+      commodity_id = #{commodityId,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      activity_manager_id = #{activityManagerId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  
+     <select id="findCommodity" resultMap="BaseResultMap" parameterType="map" >
+    SELECT
+    	t.id,
+		t.category_id,
+		t.commodity_id,
+		t.type,
+		t.coupon_admin_id as "couponAdmin.id"
+	FROM
+	coupon_admin_category t
+    where 1=1
+     <if test="null!=params and ''!= params" >
+	       <if test="params.couponIds!= null and '' != params.couponIds" >
+	        and t.coupon_admin_id in
+	         <foreach collection="params.couponIds" item="item" index="index" 
+					open="(" separator="," close=")">#{item}</foreach>
+	      </if>
+    </if>
+  </select>
+  <!-- 通过商品ids查询商品数据 -->
+  <select id="findCommodityName" resultType="java.lang.String" parameterType="map" >
+    SELECT
+    	c.name
+	FROM
+	coupon_admin_category t
+	left join cims_db.commodity c ON t.commodity_id = c.id
+    where 1=1
+     <if test="null!=params and ''!= params" >
+       <if test="params.goodsIds!= null and '' != params.goodsIds" >
+        and t.commodity_id in
+         <foreach collection="params.goodsIds" item="item" index="index" 
+				open="(" separator="," close=")">#{item}</foreach>
+       </if>
+       <if test="params.couponAdminId!= null and '' != params.couponAdminId" >
+       	and t.coupon_admin_id = #{params.couponAdminId,jdbcType=VARCHAR}
+       </if>
+    </if>
+  </select>
+  
+  <delete id = "deletesome" parameterType = "java.util.List">  
+    <![CDATA[  
+       delete from coupon_admin_category where id in  
+    ]]>  
+    <foreach collection="list" item = "item" open="(" separator="," close=")">
+    ${ item}    
+    </foreach>  
+</delete>
+</mapper>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+		<groupId>com.ffzx</groupId>
+		<artifactId>parent-pom</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+		<relativePath>../parent-pom/pom.xml</relativePath>
+	</parent>
+	
+	<groupId>com.ffzx.promotion</groupId>
+	<artifactId>prms</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>prms</name>
+	<url>http://maven.apache.org</url>
+	<!-- 定义统一版本号 -->
+	<properties>
+		<prms.version>1.0.6-SNAPSHOT</prms.version>
+	</properties>
+
+   <!-- 公共依赖管理定义,子项目继承公共依赖包 -->
+   <dependencies>
+   </dependencies>
+  
+	<modules>
+		<module>prms-api</module>
+		<module>prms-core</module>
+		<module>prms-web</module>
+		<module>prms-jsw</module>
+ 	</modules>
+</project>

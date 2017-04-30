@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p" xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:util="http://www.springframework.org/schema/util" xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.1.xsd
+		http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit-1.5.xsd">
+
+	<!-- #################################################################### -->
+	<!-- # RabbitMQ 消息转换器 -->
+	<!-- #################################################################### -->
+	<bean id="rabbitMessageConverter" class="org.springframework.amqp.support.converter.Jackson2JsonMessageConverter">
+		<property name="classMapper">
+			<bean class="org.springframework.amqp.support.converter.DefaultJackson2JavaTypeMapper" />
+		</property>
+	</bean>
+
+	<!-- #################################################################### -->
+	<!-- # RabbitMQ 异常处理程序 -->
+	<!-- #################################################################### -->
+	<bean id="logAndPropagateErrorHandler" class="org.springframework.beans.factory.config.FieldRetrievingFactoryBean">
+		<property name="staticField">
+			<value>org.springframework.scheduling.support.TaskUtils.LOG_AND_PROPAGATE_ERROR_HANDLER</value>
+		</property>
+	</bean>
+
+	<!-- #################################################################### -->
+	<!-- # RabbitMQ 线程池（供创建连接使用） -->
+	<!-- #################################################################### -->
+	<bean id="rabbitExecutor" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="staticMethod">
+			<value>java.util.concurrent.Executors.newFixedThreadPool</value>
+		</property>
+		<property name="arguments">
+			<array>
+				<value>10</value>
+			</array>
+		</property>
+	</bean>
+
+	<!-- #################################################################### -->
+	<!-- # rabbit 连接工厂 -->
+	<!-- #################################################################### -->
+	<rabbit:connection-factory id="rabbitConnectionFactory" addresses="${rabbit.host}" username="${rabbit.username}" password="${rabbit.password}"
+		executor="rabbitExecutor" />
+
+	<!-- #################################################################### -->
+	<!-- # RabbitMQ 管理员 -->
+	<!-- #################################################################### -->
+	<rabbit:admin id="rabbitAdmin" connection-factory="rabbitConnectionFactory" />
+
+	<!-- #################################################################### -->
+	<!-- # RabbitMQ 队列 -->
+	<!-- #################################################################### -->
+
+	<!-- 测试消息队列 -->
+	<rabbit:queue id="queues.oms.test" name="queues.oms.test">
+		<rabbit:queue-arguments>
+			<!-- 开启集群环境镜像队列 -->
+			<entry key="x-ha-policy" value="all" />
+		</rabbit:queue-arguments>
+	</rabbit:queue>
+
+	<!-- 售后入库申请 -->
+	<rabbit:queue id="QUEUE_INBOUND_AFTERSALE_REQ" name="QUEUE_INBOUND_AFTERSALE_REQ">
+		<rabbit:queue-arguments>
+			<!-- 开启集群环境镜像队列 -->
+			<entry key="x-ha-policy" value="all" />
+		</rabbit:queue-arguments>
+	</rabbit:queue>
+	
+	<!-- 售后入库申请 -->
+	<rabbit:queue id="QUEUE_WMS_AFTERSALE_QUALITY" name="QUEUE_WMS_AFTERSALE_QUALITY">
+		<rabbit:queue-arguments>
+			<!-- 开启集群环境镜像队列 -->
+			<entry key="x-ha-policy" value="all" />
+		</rabbit:queue-arguments>
+	</rabbit:queue>
+		<!-- 雷，2016-09-20订单补货 -->
+	<rabbit:queue id="QUEUE_PURCHASE_REPLENISHMENT_ORDERS" name="QUEUE_PURCHASE_REPLENISHMENT_ORDERS">
+		<rabbit:queue-arguments>
+			<!-- 开启集群环境镜像队列 -->
+			<entry key="x-ha-policy" value="all" />
+		</rabbit:queue-arguments>
+	</rabbit:queue>
+	<!-- 发货订单数据推送 -->
+	<rabbit:queue id="QUEUE_WMS_OUTBOUND_SALES_DELIVERY" name="QUEUE_WMS_OUTBOUND_SALES_DELIVERY">
+		<rabbit:queue-arguments>
+			<!-- 开启集群环境镜像队列 -->
+			<entry key="x-ha-policy" value="all" />
+		</rabbit:queue-arguments>
+	</rabbit:queue>
+	
+	<!-- 1.3	订单取消状态推送 -->
+	<rabbit:queue id="QUEUE_WMS_OUTBOUND_DELIVERY_CANCEL" name="QUEUE_WMS_OUTBOUND_DELIVERY_CANCEL">
+		<rabbit:queue-arguments>
+			<!-- 开启集群环境镜像队列 -->
+			<entry key="x-ha-policy" value="all" />
+		</rabbit:queue-arguments>
+	</rabbit:queue>
+	 
+	<!--订单推送采购 -->
+	<rabbit:queue id="QUEUE_OMS_PURCHASE_ORDER" name="QUEUE_OMS_PURCHASE_ORDER">
+		<rabbit:queue-arguments>
+			<entry key="x-ha-policy" value="all" />
+		</rabbit:queue-arguments>
+	</rabbit:queue>
+	
+	
+	<!-- 1.3	订单取消状态推送 -->
+	<rabbit:queue id="QUEUE_WMS_OUTBOUND_ORDER_STATUS" name="QUEUE_WMS_OUTBOUND_ORDER_STATUS">
+		<rabbit:queue-arguments>
+			<!-- 开启集群环境镜像队列 -->
+			<entry key="x-ha-policy" value="all" />
+		</rabbit:queue-arguments>
+	</rabbit:queue>
+	
+	<!-- 1.3	商品出入库推送 -->
+	<rabbit:queue id="QUEUE_WMS_OUTBOUND_INVENTORY" name="QUEUE_WMS_OUTBOUND_INVENTORY">
+		<rabbit:queue-arguments>
+			<!-- 开启集群环境镜像队列 -->
+			<entry key="x-ha-policy" value="all" />
+		</rabbit:queue-arguments>
+	</rabbit:queue>
+	
+	<rabbit:queue id="QUEUE_WMS_OUTBOUND_CUSTOMER_ORDER" name="QUEUE_WMS_OUTBOUND_CUSTOMER_ORDER">
+		<rabbit:queue-arguments>
+			<!-- 开启集群环境镜像队列 -->
+			<entry key="x-ha-policy" value="all" />
+		</rabbit:queue-arguments>
+	</rabbit:queue>
+	<!-- #################################################################### -->
+	<!-- # RabbitMQ Exchange -->
+	<!-- # PS：RabbitMQ 中所有生产者提交的消息都由 Exchange 来接受，再由 Exchange 按照特定的策略转发到 Queue 进行存储/处理 -->
+	<!-- # 策略规则：pattern 表达式中 # 表示0个或若干个关键字， * 表示一个关键字 -->
+	<!-- # 示例A：queues.# 能匹配 queues.sample 也能匹配 queues.sample.one -->
+	<!-- # 示例B：queues.* 能匹配 queues.sample 不能匹配 queues.sample.one -->
+	<!-- #################################################################### -->
+	<rabbit:topic-exchange name="amq.topic">
+		<rabbit:bindings>
+			<rabbit:binding queue="queues.oms.test" pattern="queues.oms.test" />
+			<!--  售后入库申请  -->
+			<rabbit:binding queue="QUEUE_INBOUND_AFTERSALE_REQ" pattern="QUEUE_INBOUND_AFTERSALE_REQ" />
+			<rabbit:binding queue="QUEUE_OMS_PURCHASE_ORDER" pattern="QUEUE_OMS_PURCHASE_ORDER" />
+			<rabbit:binding queue="QUEUE_WMS_AFTERSALE_QUALITY" pattern="QUEUE_WMS_AFTERSALE_QUALITY" />
+			<rabbit:binding queue="QUEUE_WMS_OUTBOUND_SALES_DELIVERY" pattern="QUEUE_WMS_OUTBOUND_SALES_DELIVERY" />
+			<rabbit:binding queue="QUEUE_WMS_OUTBOUND_DELIVERY_CANCEL" pattern="QUEUE_WMS_OUTBOUND_DELIVERY_CANCEL" />
+			<rabbit:binding queue="QUEUE_WMS_OUTBOUND_ORDER_STATUS" pattern="QUEUE_WMS_OUTBOUND_ORDER_STATUS" />
+			<rabbit:binding queue="QUEUE_WMS_OUTBOUND_INVENTORY" pattern="QUEUE_WMS_OUTBOUND_INVENTORY" />
+			<rabbit:binding queue="QUEUE_WMS_OUTBOUND_CUSTOMER_ORDER" pattern="QUEUE_WMS_OUTBOUND_CUSTOMER_ORDER" />
+			<rabbit:binding queue="QUEUE_PURCHASE_REPLENISHMENT_ORDERS" pattern="QUEUE_PURCHASE_REPLENISHMENT_ORDERS" />
+		</rabbit:bindings>
+	</rabbit:topic-exchange>
+	
+
+	<!-- #################################################################### -->
+	<!-- # RabbitMQ 模板（生产者） -->
+	<!-- #################################################################### -->
+	<rabbit:template id="rabbitTemplate" connection-factory="rabbitConnectionFactory" channel-transacted="false" message-converter="rabbitMessageConverter" />
+	
+</beans>

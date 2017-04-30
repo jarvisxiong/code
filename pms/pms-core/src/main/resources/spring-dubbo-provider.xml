@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans.xsd
+	 http://code.alibabatech.com/schema/dubbo	http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!-- 声明需要暴露的服务接口 -->
+    <dubbo:service interface="com.ffzx.permission.api.service.SysPermissionApiService" version="1.0"
+                   ref="sysPermissionApiService" registry="zookeeperService"/>
+
+    <!-- 和本地bean一样实现服务 -->
+    <bean id="sysPermissionApiService" class="com.ffzx.permission.api.service.impl.SysPermissionApiServiceImpl"/>
+
+    <!-- 声明需要暴露的服务接口 -->
+    <dubbo:service interface="com.ffzx.permission.api.service.SysUserApiService" version="1.0" ref="sysUserApiService"
+                   registry="zookeeperService"/>
+
+    <!-- 和本地bean一样实现服务 -->
+    <bean id="sysUserApiService" class="com.ffzx.permission.api.service.impl.SysUserApiServiceImpl"/>
+
+    <!-- Job测试服务，声明需要暴露的服务接口 -->
+    <dubbo:service interface="com.ffzx.permission.api.service.TestJobApiService" version="1.0" ref="testJobApiService"
+                   registry="zookeeperService"/>
+    <!-- Job测试服务，和本地bean一样实现服务 -->
+    <bean id="testJobApiService" class="com.ffzx.permission.api.service.impl.TestJobApiServiceImpl"/>
+
+</beans>

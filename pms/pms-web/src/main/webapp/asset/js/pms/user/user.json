@@ -1,0 +1,177 @@
+{
+	"draw": 0,
+	"recordsTotal": 57,
+	"recordsFiltered": 57,
+	"data": [
+		{
+			"indexNo": 1,
+			"checkbox": "",
+			"name": "李长路",
+			"loginName": "lichanglu",
+			"workNo": "TZH00800",
+			"companyName": "河南天之合电子商务有限公司",
+			"officeName": "仓储部",
+			"email": "lichanglu@dmc800.com",
+			"phone": "",
+			"mobile": "15517593305",
+			"userType": "总监",
+			"loginFlag": "1",
+			"clmAction": {
+				"id": "008046e61695438db82af450b45cd5b6"
+			}
+		},
+		{
+			"indexNo": 2,
+			"checkbox": "",
+			"name": "杨兆俄",
+			"loginName": "yangzhaoe",
+			"workNo": "TZH00371",
+			"companyName": "河南天之合电子商务有限公司",
+			"officeName": "仓储部",
+			"email": "yangzhaoe@dmc800.com",
+			"phone": "",
+			"mobile": "15136260739",
+			"userType": "总监",
+			"loginFlag": "1",
+			"clmAction": {
+				"id": "0131ee97a8054974b55ca5b9d85929c2"
+			}
+		},
+		{
+			"indexNo": 3,
+			"checkbox": "",
+			"name": "王子博",
+			"loginName": "wangzibo",
+			"workNo": "TZH00867",
+			"companyName": "河南天之合电子商务有限公司",
+			"officeName": "企划部",
+			"email": "wangzibo@dmc800.com",
+			"phone": "",
+			"mobile": "18638691882",
+			"userType": "总监",
+			"loginFlag": "1",
+			"clmAction": {
+				"id": "029057f6fd884bb88f7a3610acb86ca6"
+			}
+		},
+		{
+			"indexNo": 4,
+			"checkbox": "",
+			"name": "杨东霞",
+			"loginName": "yangdongxia",
+			"workNo": "TZH00569",
+			"companyName": "长葛市天之合信息科技有限公司",
+			"officeName": "仓储部",
+			"email": "yangdongxia@dmc800.com",
+			"phone": "",
+			"mobile": "15038985425",
+			"userType": "总监",
+			"loginFlag": "1",
+			"clmAction": {
+				"id": "02b5ecc4ef274c9f9ba56648dbe752d4"
+			}
+		},
+		{
+			"indexNo": 5,
+			"checkbox": "",
+			"name": "申梦丽",
+			"loginName": "shenmengli",
+			"workNo": "TZH00116",
+			"companyName": "河南天之合电子商务有限公司",
+			"officeName": "企划部",
+			"email": "shenmengli@dmc800.com",
+			"phone": "",
+			"mobile": "18339279701",
+			"userType": "总监",
+			"loginFlag": "1",
+			"clmAction": {
+				"id": "032fcea062554967b3c0a98b59f6c065"
+			}
+		},
+		{
+			"indexNo": 6,
+			"checkbox": "",
+			"name": "高海全",
+			"loginName": "gaohaiquan",
+			"workNo": "TZH00078",
+			"companyName": "河南天之合电子商务有限公司",
+			"officeName": "招商部",
+			"email": "gaohaiquan@dmc800.com",
+			"phone": "",
+			"mobile": "15515806730",
+			"userType": "总监",
+			"loginFlag": "1",
+			"clmAction": {
+				"id": "042d2fd8ba0c43c0a77f0b829e89b706"
+			}
+		},
+		{
+			"indexNo": 7,
+			"checkbox": "",
+			"name": "张少杰",
+			"loginName": "zhangshaojie",
+			"workNo": "TZH00803",
+			"companyName": "河南天之合电子商务有限公司",
+			"officeName": "企划部",
+			"email": "zhangshaojie@dmc800.com",
+			"phone": "",
+			"mobile": "18530851906",
+			"userType": "总监",
+			"loginFlag": "1",
+			"clmAction": {
+				"id": "07e72630917049eaa4e541a8a4499680"
+			}
+		},
+		{
+			"indexNo": 8,
+			"checkbox": "",
+			"name": "张高超",
+			"loginName": "zhanggaochao",
+			"workNo": "TZH00127",
+			"companyName": "河南天之合电子商务有限公司",
+			"officeName": "市场部",
+			"email": "zhanggaochao@dmc800.com",
+			"phone": "",
+			"mobile": "18603835990",
+			"userType": "总监",
+			"loginFlag": "1",
+			"clmAction": {
+				"id": "0971dcb4fc6b4b928cc261a93610fa3a"
+			}
+		},
+		{
+			"indexNo": 9,
+			"checkbox": "",
+			"name": "乔培",
+			"loginName": "qiaopei",
+			"workNo": "TZH00805",
+			"companyName": "河南天之合电子商务有限公司",
+			"officeName": "仓储部",
+			"email": "qiaopei@dmc800.com",
+			"phone": "",
+			"mobile": "13140115152",
+			"userType": "总监",
+			"loginFlag": "1",
+			"clmAction": {
+				"id": "0afa3f884ba942b2b6a2c8150c861703"
+			}
+		},
+		{
+			"indexNo": 10,
+			"checkbox": "",
+			"name": "岳巧玲",
+			"loginName": "yueqiaoling",
+			"workNo": "TZH00008",
+			"companyName": "河南天之合电子商务有限公司",
+			"officeName": "总经办",
+			"email": "yueqiaoling@dmc800.com",
+			"phone": "",
+			"mobile": "18736095469",
+			"userType": "总监",
+			"loginFlag": "0",
+			"clmAction": {
+				"id": "0c32ab5c0c7548d3b0014ba5ada8fbbc"
+			}
+		}
+	]
+}

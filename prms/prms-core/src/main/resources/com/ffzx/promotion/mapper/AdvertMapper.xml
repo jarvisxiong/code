@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ffzx.promotion.mapper.AdvertMapper">
+  <sql id="Base_Column_List" >
+		d.id, 
+		d.remarks AS "remarks",
+		d.create_by AS "createBy.id",
+		d.create_by_name AS "createBy.name",
+		d.create_date AS "createDate",
+		d.last_update_by AS "lastUpdateBy.id",
+		d.last_update_date AS "lastUpdateDate",
+		d.del_flag AS "delFlag",
+		d.title AS "title",
+		d.region_id AS "region.id",
+		region.name AS "region.name",
+		d.start_date AS "startDate",
+		d.end_date AS "endDate",
+		d.is_system AS "isSystem",
+		d.is_backup AS "isBackup",
+		d.location_index AS "locationIndex",
+		d.url AS "url",
+		d.obj_id AS "objId",
+		d.activity_id AS "activityId",
+		d.obj_name AS "objName",
+		d.advert_type AS "advertType",
+		d.photo_path AS "photoPath",
+		d.photo_path_2 AS "photoPath2",
+		d.status AS "status"
+
+  </sql>  
+  <sql id="joins">
+		left join advertregion as region on region.id = d.region_id
+  </sql> 
+  <sql id="condition" >
+	<if test="null!=params" >
+		<if test="params.id != null and '' != params.id">
+			and d.id = #{params.id,jdbcType=VARCHAR}
+		</if>
+		<if test="params.neqId != null and '' != params.neqId">
+			and d.id != #{params.neqId,jdbcType=VARCHAR}
+		</if>
+		<if test="params.remarks != null and '' != params.remarks">
+			and d.remarks = #{params.remarks,jdbcType=VARCHAR}
+		</if>
+		<if test="params.createBy != null and '' != params.createBy">
+			and d.create_by = #{params.createBy.id,jdbcType=VARCHAR}
+		</if>
+		<if test="params.createDate != null and '' != params.createDate">
+			and d.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+		</if>
+		<if test="params.lastUpdateBy != null and '' != params.lastUpdateBy">
+			and d.last_update_by = #{params.lastUpdateBy.id,jdbcType=VARCHAR}
+		</if>
+		<if test="params.lastUpdateDate != null and '' != params.lastUpdateDate">
+			and d.last_update_date = #{params.lastUpdateDate,jdbcType=TIMESTAMP}
+		</if>
+		<if test="params.delFlag != null and '' != params.delFlag">
+			and d.del_flag = #{params.delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="params.title != null and '' != params.title">
+			and d.title = #{params.title,jdbcType=VARCHAR}
+		</if>
+		<if test="params.keyWords != null and '' != params.keyWords">
+			and d.title like '%${params.keyWords}%'
+		</if>
+		<if test="params.region != null and '' != params.region">
+			and d.region_id = #{params.region.id,jdbcType=VARCHAR}
+		</if>
+		<if test="params.regionId != null and '' != params.regionId">
+			and d.region_id = #{params.regionId,jdbcType=VARCHAR}
+		</if>
+		<if test="params.parent_regionIds != null and '' != params.parent_regionIds">
+			and region.parent_ids like '${params.parent_regionIds}%' 
+		</if>
+		<if test="params.startDate != null and '' != params.startDate">
+			and d.start_date &gt;= #{params.startDate,jdbcType=TIMESTAMP}
+		</if>
+		<if test="params.endDate != null and '' != params.endDate">
+			and d.end_date &lt;= #{params.endDate,jdbcType=TIMESTAMP}
+		</if>
+		<if test="params.isSystem != null and '' != params.isSystem">
+			and d.is_system = #{params.isSystem,jdbcType=INTEGER}
+		</if>
+		<if test="params.isBackup != null and '' != params.isBackup">
+			and d.is_backup = #{params.isBackup,jdbcType=INTEGER}
+		</if>
+		<if test="params.locationIndex != null and '' != params.locationIndex">
+			and d.location_index = #{params.locationIndex,jdbcType=INTEGER}
+		</if>
+		<if test="params.url != null and '' != params.url">
+			and d.url = #{params.url,jdbcType=VARCHAR}
+		</if>
+		<if test="params.objId != null and '' != params.objId">
+			and d.obj_id = #{params.objId,jdbcType=VARCHAR}
+		</if>
+		<if test="params.activityId != null and '' != params.activityId">
+			and d.activity_id = #{params.activityId,jdbcType=VARCHAR}
+		</if>
+		<if test="params.objName != null and '' != params.objName">
+			and d.obj_name  like '${params.objName}%'
+		</if>
+		<if test="params.advertType != null and '' != params.advertType">
+			and d.advert_type = #{params.advertType,jdbcType=VARCHAR}
+		</if>
+		<if test="params.photoPath != null and '' != params.photoPath">
+			and d.photo_path = #{params.photoPath,jdbcType=VARCHAR}
+		</if>
+		<if test="params.photoPath2 != null and '' != params.photoPath2">
+			and d.photo_path_2 = #{params.photoPath2,jdbcType=VARCHAR}
+		</if>
+		<if test="params.status != null and '' != params.status">
+			and d.status = #{params.status,jdbcType=VARCHAR}
+		</if>
+		<if test="params.delFlag == null or '' == params.delFlag or null == params" >
+			and d.del_flag = 0
+		</if>
+		<if test="params.orderBy != null and '' != params.orderBy " >
+			order by ${params.orderBy}
+		</if>
+	</if>
+
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultType="com.ffzx.promotion.api.dto.Advert" parameterType="java.lang.String" >
+   	select 
+    <include refid="Base_Column_List" />
+    from advert as d 
+    <include refid="joins"/>
+    where  d.id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectCount" resultType="java.lang.Integer" >
+   select count(1) as s from advert as  d where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultType="com.ffzx.promotion.api.dto.Advert" parameterType="map" >
+   select 
+    <include refid="Base_Column_List" />
+    from advert as  d    
+    <include refid="joins"/>
+    where 1=1      
+    <include refid="condition" />
+  </select>
+  
+    <select id="selectByUpdateStatus" resultType="com.ffzx.promotion.api.dto.Advert" parameterType="java.lang.String" >
+   	select 
+		d.id, 
+		d.start_date AS "startDate",
+		d.end_date AS "endDate",
+		d.is_backup AS "isBackup",
+		d.region_id AS "region.id",
+		d.location_index AS "locationIndex",
+		d.status AS "status"
+    from advert as d 
+    where 1=1
+    AND d.status IN ('SOONSTART','STARTTING')
+	ORDER BY d.region_id,d.location_index,d.is_backup,d.start_date 
+  </select>
+  <select id="selectByParams" resultType="com.ffzx.promotion.api.dto.Advert" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from advert as  d 
+    <include refid="joins"/>
+    where 1=1 
+    <include refid="condition"/>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    	DELETE FROM advert WHERE id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.promotion.api.dto.Advert" >
+    	DELETE FROM advert WHERE id = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.ffzx.promotion.api.dto.Advert" >
+   	INSERT INTO advert
+		(
+			id,
+			remarks,
+			create_by,
+			create_date,
+			last_update_by,
+			d.create_by_name,
+			last_update_date,
+			del_flag,
+			title,
+			region_id,
+			start_date,
+			end_date,
+			is_system,
+			is_backup,
+			location_index,
+			url,
+			obj_id,
+			d.activity_id,
+			obj_name,
+			advert_type,
+			photo_path,
+			photo_path_2,
+			d.status
+		) VALUES
+		(
+			#{id,jdbcType=VARCHAR},
+			#{remarks,jdbcType=VARCHAR},
+			#{createBy.id,jdbcType=VARCHAR},
+			#{createBy.createBy.name,jdbcType=VARCHAR},
+			#{createDate,jdbcType=TIMESTAMP},
+			#{lastUpdateBy.id,jdbcType=VARCHAR},
+			#{lastUpdateDate,jdbcType=TIMESTAMP},
+			#{delFlag,jdbcType=VARCHAR},
+			#{title,jdbcType=VARCHAR},
+			#{region.id,jdbcType=VARCHAR},
+			#{startDate,jdbcType=TIMESTAMP},
+			#{endDate,jdbcType=TIMESTAMP},
+			#{isSystem,jdbcType=INTEGER},
+			#{isBackup,jdbcType=INTEGER},
+			#{locationIndex,jdbcType=INTEGER},
+			#{url,jdbcType=VARCHAR},
+			#{objId,jdbcType=VARCHAR},
+			#{activityId,jdbcType=VARCHAR},
+			#{objName,jdbcType=VARCHAR},
+			#{advertType,jdbcType=VARCHAR},
+			#{photoPath,jdbcType=VARCHAR},
+			#{photoPath2,jdbcType=VARCHAR},
+			#{status,jdbcType=VARCHAR}
+		)
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.promotion.api.dto.Advert" >
+   	INSERT INTO advert 
+	<trim prefix="(" suffix=")" suffixOverrides="," >
+		<if test="id != null">id,</if>
+		<if test="remarks != null" >remarks,</if>
+		<if test="createBy != null" >create_by,</if>
+		<if test="createByName != null" >create_by_name,</if>
+		<if test="createDate != null" >create_date,</if>
+		<if test="lastUpdateBy != null" >last_update_by,</if>
+		<if test="lastUpdateDate != null" >last_update_date,</if>
+		<if test="delFlag != null" >del_flag,</if>
+		<if test="title != null" >title,</if>
+		<if test="region != null" >region_id,</if>
+		<if test="startDate != null" >start_date,</if>
+		<if test="endDate != null" >end_date,</if>
+		<if test="isSystem != null" >is_system,</if>
+		<if test="isBackup != null" >is_backup,</if>
+		<if test="locationIndex != null" >location_index,</if>
+		<if test="url != null" >url,</if>
+		<if test="objId != null" >obj_id,</if>
+		<if test="activityId != null" >activity_id,</if>
+		<if test="objName != null" >obj_name,</if>
+		<if test="advertType != null" >advert_type,</if>
+		<if test="photoPath != null" >photo_path,</if>
+		<if test="photoPath2 != null" >photo_path_2,</if>
+		<if test="status != null" >status,</if>
+	</trim>
+	<trim prefix="values (" suffix=")" suffixOverrides="," >
+		<if test="id != null">#{id,jdbcType=VARCHAR},</if>
+		<if test="remarks != null" >#{remarks,jdbcType=VARCHAR},</if>
+		<if test="createBy != null" >#{createBy.id,jdbcType=VARCHAR},</if>
+		<if test="createByName != null" >#{createBy.name,jdbcType=VARCHAR},</if>
+		<if test="createDate != null" >#{createDate,jdbcType=TIMESTAMP},</if>
+		<if test="lastUpdateBy != null" >#{lastUpdateBy.id,jdbcType=VARCHAR},</if>
+		<if test="lastUpdateDate != null" >#{lastUpdateDate,jdbcType=TIMESTAMP},</if>
+		<if test="delFlag != null" >#{delFlag,jdbcType=VARCHAR},</if>
+		<if test="title != null" >#{title,jdbcType=VARCHAR},</if>
+		<if test="region != null" >#{region.id,jdbcType=VARCHAR},</if>
+		<if test="startDate != null" >#{startDate,jdbcType=TIMESTAMP},</if>
+		<if test="endDate != null" >#{endDate,jdbcType=TIMESTAMP},</if>
+		<if test="isSystem != null" >#{isSystem,jdbcType=INTEGER},</if>
+		<if test="isBackup != null" >#{isBackup,jdbcType=INTEGER},</if>
+		<if test="locationIndex != null" >#{locationIndex,jdbcType=INTEGER},</if>
+		<if test="url != null" >#{url,jdbcType=VARCHAR},</if>
+		<if test="objId != null" >#{objId,jdbcType=VARCHAR},</if>
+		<if test="activityId != null" >#{activityId,jdbcType=VARCHAR},</if>
+		<if test="objName != null" >#{objName,jdbcType=VARCHAR},</if>
+		<if test="advertType != null" >#{advertType,jdbcType=VARCHAR},</if>
+		<if test="photoPath != null" >#{photoPath,jdbcType=VARCHAR},</if>
+		<if test="photoPath2 != null" >#{photoPath2,jdbcType=VARCHAR},</if>
+		<if test="status != null" >#{status,jdbcType=VARCHAR},</if>
+	</trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.promotion.api.dto.Advert" >
+   	UPDATE advert
+	<set>
+		<if test="remarks != null" >
+			remarks = #{remarks,jdbcType=VARCHAR},
+		</if>
+		<if test="createBy != null" >
+			create_by = #{createBy.id,jdbcType=VARCHAR},
+		</if>
+		<if test="createByName != null" >
+			create_by_name = #{createBy.name,jdbcType=VARCHAR},
+		</if>
+		<if test="createDate != null" >
+			create_date = #{createDate,jdbcType=TIMESTAMP},
+		</if>
+		<if test="lastUpdateBy != null" >
+			last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+		</if>
+		<if test="lastUpdateDate != null" >
+			last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+		</if>
+		<if test="delFlag != null" >
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="title != null" >
+			title = #{title,jdbcType=VARCHAR},
+		</if>
+		<if test="region != null" >
+			region_id = #{region.id,jdbcType=VARCHAR},
+		</if>
+		<if test="startDate != null" >
+			start_date = #{startDate,jdbcType=TIMESTAMP},
+		</if>
+		<if test="endDate != null" >
+			end_date = #{endDate,jdbcType=TIMESTAMP},
+		</if>
+		<if test="isSystem != null" >
+			is_system = #{isSystem,jdbcType=INTEGER},
+		</if>
+		<if test="isBackup != null" >
+			is_backup = #{isBackup,jdbcType=INTEGER},
+		</if>
+		<if test="locationIndex != null" >
+			location_index = #{locationIndex,jdbcType=INTEGER},
+		</if>
+		<if test="url != null" >
+			url = #{url,jdbcType=VARCHAR},
+		</if>
+		<if test="objId != null" >
+			obj_id = #{objId,jdbcType=VARCHAR},
+		</if>
+		<if test="activityId != null" >
+			activity_id = #{activityId,jdbcType=VARCHAR},
+		</if>
+		<if test="objName != null" >
+			obj_name = #{objName,jdbcType=VARCHAR},
+		</if>
+		<if test="advertType != null" >
+			advert_type = #{advertType,jdbcType=VARCHAR},
+		</if>
+		<if test="photoPath != null" >
+			photo_path = #{photoPath,jdbcType=VARCHAR},
+		</if>
+		<if test="photoPath2 != null" >
+			photo_path_2 = #{photoPath2,jdbcType=VARCHAR},
+		</if>
+		<if test="status != null" >
+			status = #{status,jdbcType=VARCHAR},
+		</if>
+	</set>
+	where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.promotion.api.dto.Advert" >
+   	UPDATE advert
+		<set>
+			remarks = #{remarks,jdbcType=VARCHAR},
+			create_by = #{createBy.id,jdbcType=VARCHAR},
+			create_by_name = #{createBy.name,jdbcType=VARCHAR},
+			create_date = #{createDate,jdbcType=TIMESTAMP},
+			last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+			last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+			title = #{title,jdbcType=VARCHAR},
+			region_id = #{region.id,jdbcType=VARCHAR},
+			start_date = #{startDate,jdbcType=TIMESTAMP},
+			end_date = #{endDate,jdbcType=TIMESTAMP},
+			is_system = #{isSystem,jdbcType=INTEGER},
+			is_backup = #{isBackup,jdbcType=INTEGER},
+			location_index = #{locationIndex,jdbcType=INTEGER},
+			url = #{url,jdbcType=VARCHAR},
+			obj_id = #{objId,jdbcType=VARCHAR},
+			activity_id = #{activityId,jdbcType=VARCHAR},
+			obj_name = #{objName,jdbcType=VARCHAR},
+			advert_type = #{advertType,jdbcType=VARCHAR},
+			photo_path = #{photoPath,jdbcType=VARCHAR},
+			photo_path_2 = #{photoPath2,jdbcType=VARCHAR},
+			status = #{status,jdbcType=VARCHAR}
+		</set>
+		WHERE id = #{id,jdbcType=VARCHAR} 
+  </update>
+</mapper>

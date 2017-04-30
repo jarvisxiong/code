@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ffzx.order.mapper.CollectionRecordMapper">
+  <sql id="Base_Column_List" >
+		t.id, 
+		t.remarks AS "remarks",
+		t.create_by AS "createBy.id",
+		t.create_date AS "createDate",
+		t.last_update_by AS "lastUpdateBy.id",
+		t.last_update_date AS "lastUpdateDate",
+		t.del_flag AS "delFlag",
+		t.running_code AS "runningCode",
+		t.services_no AS "servicesNo",
+		t.services_name AS "servicesName",
+		t.partner_id AS "partnerId",
+		t.partner_name AS "partnerName",
+		t.partner_code AS "partnerCode",
+		t.partner_phone AS "partnerPhone",
+		t.receivable AS "receivable",
+		t.actual_fines AS "actualFines",
+		t.paid_change AS "paidChange",
+		t.tab AS "tab",
+		t.remark AS "remark"
+
+  </sql>  
+  <sql id="joins">
+
+  </sql> 
+  <sql id="condition" >
+	<if test="null!=params" >
+		<if test="params.id != null and '' != params.id">
+			and t.id = #{params.id,jdbcType=VARCHAR}
+		</if>
+		<if test="params.remarks != null and '' != params.remarks">
+			and t.remarks = #{params.remarks,jdbcType=VARCHAR}
+		</if>
+		<if test="params.createBy != null and '' != params.createBy">
+			and t.create_by = #{params.createBy.id,jdbcType=VARCHAR}
+		</if>
+		<if test="params.createDate != null and '' != params.createDate">
+			and t.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+		</if>
+	    <if test="params.createDateStart != null and '' != params.createDateStart">
+			and t.create_date &gt;= #{params.createDateStart,jdbcType=TIMESTAMP}
+	    </if>
+	    <if test="params.createDateEnd != null and '' != params.createDateEnd">
+		 	and t.create_date &lt;= #{params.createDateEnd,jdbcType=TIMESTAMP}
+	    </if>
+		<if test="params.createDay != null and '' != params.createDay">
+			and date_format(t.create_date,'%Y-%m-%d') = #{params.createDay,jdbcType=VARCHAR}
+		</if>
+		<if test="params.lastUpdateBy != null and '' != params.lastUpdateBy">
+			and t.last_update_by = #{params.lastUpdateBy.id,jdbcType=VARCHAR}
+		</if>
+		<if test="params.lastUpdateDate != null and '' != params.lastUpdateDate">
+			and t.last_update_date = #{params.lastUpdateDate,jdbcType=TIMESTAMP}
+		</if>
+		<if test="params.delFlag != null and '' != params.delFlag">
+			and t.del_flag = #{params.delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="params.runningCode != null and '' != params.runningCode">
+			and t.running_code = #{params.runningCode,jdbcType=VARCHAR}
+		</if>
+		<if test="params.servicesNo != null and '' != params.servicesNo">
+			and t.services_no = #{params.servicesNo,jdbcType=VARCHAR}
+		</if>
+		<if test="params.servicesName != null and '' != params.servicesName">
+			and t.services_name = #{params.servicesName,jdbcType=VARCHAR}
+		</if>
+		<if test="params.partnerId != null and '' != params.partnerId">
+			and t.partner_id = #{params.partnerId,jdbcType=VARCHAR}
+		</if>
+		<if test="params.partnerName != null and '' != params.partnerName">
+			and t.partner_name = #{params.partnerName,jdbcType=VARCHAR}
+		</if>
+		<if test="params.partnerCode != null and '' != params.partnerCode">
+			and t.partner_code = #{params.partnerCode,jdbcType=VARCHAR}
+		</if>
+		<if test="params.partnerPhone != null and '' != params.partnerPhone">
+			and t.partner_phone = #{params.partnerPhone,jdbcType=VARCHAR}
+		</if>
+		<if test="params.receivable != null and '' != params.receivable">
+			and t.receivable = #{params.receivable,jdbcType=NUMERIC}
+		</if>
+		<if test="params.actualFines != null and '' != params.actualFines">
+			and t.actual_fines = #{params.actualFines,jdbcType=NUMERIC}
+		</if>
+		<if test="params.paidChange != null and '' != params.paidChange">
+			and t.paid_change = #{params.paidChange,jdbcType=NUMERIC}
+		</if>
+
+		<if test="params.tab != null and '' != params.tab">
+			and t.tab = #{params.tab,jdbcType=VARCHAR}
+		</if>
+
+		<if test="params.remark != null and '' != params.remark">
+			and t.remark = #{params.remark,jdbcType=VARCHAR}
+		</if>
+		<if test="params.delFlag == null or '' == params.delFlag or null == params" >
+			and t.del_flag = 0
+		</if>
+	</if>
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultType="com.ffzx.order.api.dto.CollectionRecord" parameterType="java.lang.String" >
+   	select 
+    <include refid="Base_Column_List" />
+    from collection_record as t 
+    <include refid="joins"/>
+    where  t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParams" resultType="com.ffzx.order.api.dto.CollectionRecord" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from collection_record as  t 
+    <include refid="joins"/>
+    where 1=1 
+    <include refid="condition"/>
+  </select>
+  
+   <select id="selectTotalActualFines" resultType="java.math.BigDecimal" parameterType="map">
+   select sum(t.receivable) as s from collection_record as  t where 1=1
+   <include refid="condition" />
+   </select>
+  
+  <select id="selectCount" resultType="java.lang.Integer" >
+   select count(1) as s from collection_record as  t where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultType="com.ffzx.order.api.dto.CollectionRecord" parameterType="map" >
+   select 
+    <include refid="Base_Column_List" />
+    from collection_record as  t    
+    <include refid="joins"/>
+    where 1=1      
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by  t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    	DELETE FROM collection_record WHERE id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.order.api.dto.CollectionRecord" >
+    	DELETE FROM collection_record WHERE id = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.ffzx.order.api.dto.CollectionRecord" >
+   	INSERT INTO collection_record
+		(
+			id,
+			remarks,
+			create_by,
+			create_date,
+			last_update_by,
+			last_update_date,
+			del_flag,
+			running_code,
+			services_no,
+			services_name,
+			partner_id,
+			partner_name,
+			partner_code,
+			partner_phone,
+			receivable,
+			actual_fines,
+			paid_change,
+			tab,
+			remark
+		) VALUES
+		(
+			#{id,jdbcType=VARCHAR},
+			#{remarks,jdbcType=VARCHAR},
+			#{createBy.id,jdbcType=VARCHAR},
+			#{createDate,jdbcType=TIMESTAMP},
+			#{lastUpdateBy.id,jdbcType=VARCHAR},
+			#{lastUpdateDate,jdbcType=TIMESTAMP},
+			#{delFlag,jdbcType=VARCHAR},
+			#{runningCode,jdbcType=VARCHAR},
+			#{servicesNo,jdbcType=VARCHAR},
+			#{servicesName,jdbcType=VARCHAR},
+			#{partnerId,jdbcType=VARCHAR},
+			#{partnerName,jdbcType=VARCHAR},
+			#{partnerCode,jdbcType=VARCHAR},
+			#{partnerPhone,jdbcType=VARCHAR},
+			#{receivable,jdbcType=NUMERIC},
+			#{actualFines,jdbcType=NUMERIC},
+			#{paidChange,jdbcType=NUMERIC},
+			#{tab,jdbcType=VARCHAR},
+			#{remark,jdbcType=VARCHAR}
+		) 
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.order.api.dto.CollectionRecord" >
+   	INSERT INTO collection_record 
+	<trim prefix="(" suffix=")" suffixOverrides="," >
+		<if test="id != null">id,</if>
+		<if test="remarks != null" >remarks,</if>
+		<if test="createBy != null" >create_by,</if>
+		<if test="createDate != null" >create_date,</if>
+		<if test="lastUpdateBy != null" >last_update_by,</if>
+		<if test="lastUpdateDate != null" >last_update_date,</if>
+		<if test="delFlag != null" >del_flag,</if>
+		<if test="runningCode != null" >running_code,</if>
+		<if test="servicesNo != null" >services_no,</if>
+		<if test="servicesName != null" >services_name,</if>
+		<if test="partnerId != null" >partner_id,</if>
+		<if test="partnerName != null" >partner_name,</if>
+		<if test="partnerCode != null" >partner_code,</if>
+		<if test="partnerPhone != null" >partner_phone,</if>
+		<if test="receivable != null" >receivable,</if>
+		<if test="actualFines != null" >actual_fines,</if>
+		<if test="paidChange != null" >paid_change,</if>
+		<if test="tab != null" >tab,</if>
+		<if test="remark != null" >remark,</if>
+	</trim>
+	<trim prefix="values (" suffix=")" suffixOverrides="," >
+		<if test="id != null">#{id,jdbcType=VARCHAR},</if>
+		<if test="remarks != null" >#{remarks,jdbcType=VARCHAR},</if>
+		<if test="createBy != null" >#{createBy.id,jdbcType=VARCHAR},</if>
+		<if test="createDate != null" >#{createDate,jdbcType=TIMESTAMP},</if>
+		<if test="lastUpdateBy != null" >#{lastUpdateBy.id,jdbcType=VARCHAR},</if>
+		<if test="lastUpdateDate != null" >#{lastUpdateDate,jdbcType=TIMESTAMP},</if>
+		<if test="delFlag != null" >#{delFlag,jdbcType=VARCHAR},</if>
+		<if test="runningCode != null" >#{runningCode,jdbcType=VARCHAR},</if>
+		<if test="servicesNo != null" >#{servicesNo,jdbcType=VARCHAR},</if>
+		<if test="servicesName != null" >#{servicesName,jdbcType=VARCHAR},</if>
+		<if test="partnerId != null" >#{partnerId,jdbcType=VARCHAR},</if>
+		<if test="partnerName != null" >#{partnerName,jdbcType=VARCHAR},</if>
+		<if test="partnerCode != null" >#{partnerCode,jdbcType=VARCHAR},</if>
+		<if test="partnerPhone != null" >#{partnerPhone,jdbcType=VARCHAR},</if>
+		<if test="receivable != null" >#{receivable,jdbcType=NUMERIC},</if>
+		<if test="actualFines != null" >#{actualFines,jdbcType=NUMERIC},</if>
+		<if test="paidChange != null" >#{paidChange,jdbcType=NUMERIC},</if>
+		<if test="tab != null" >#{tab,jdbcType=VARCHAR},</if>
+		<if test="remark != null" >#{remark,jdbcType=VARCHAR},</if>
+	</trim>
+
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.order.api.dto.CollectionRecord" >
+   	UPDATE collection_record
+	<set>
+		<if test="remarks != null" >
+			remarks = #{remarks,jdbcType=VARCHAR},
+		</if>
+		<if test="createBy != null" >
+			create_by = #{createBy.id,jdbcType=VARCHAR},
+		</if>
+		<if test="createDate != null" >
+			create_date = #{createDate,jdbcType=TIMESTAMP},
+		</if>
+		<if test="lastUpdateBy != null" >
+			last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+		</if>
+		<if test="lastUpdateDate != null" >
+			last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+		</if>
+		<if test="delFlag != null" >
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="runningCode != null" >
+			running_code = #{runningCode,jdbcType=VARCHAR},
+		</if>
+		<if test="servicesNo != null" >
+			services_no = #{servicesNo,jdbcType=VARCHAR},
+		</if>
+		<if test="servicesName != null" >
+			services_name = #{servicesName,jdbcType=VARCHAR},
+		</if>
+		<if test="partnerId != null" >
+			partner_id = #{partnerId,jdbcType=VARCHAR},
+		</if>
+		<if test="partnerName != null" >
+			partner_name = #{partnerName,jdbcType=VARCHAR},
+		</if>
+		<if test="partnerCode != null" >
+			partner_code = #{partnerCode,jdbcType=VARCHAR},
+		</if>
+		<if test="partnerPhone != null" >
+			partner_phone = #{partnerPhone,jdbcType=VARCHAR},
+		</if>
+		<if test="receivable != null" >
+			receivable = #{receivable,jdbcType=NUMERIC},
+		</if>
+		<if test="actualFines != null" >
+			actual_fines = #{actualFines,jdbcType=NUMERIC},
+		</if>
+		<if test="paidChange != null" >
+			paid_change = #{paidChange,jdbcType=NUMERIC},
+		</if>
+
+		<if test="tab != null" >
+			tab = #{tab,jdbcType=VARCHAR},
+		</if>
+		<if test="remark != null" >
+			remark = #{remark,jdbcType=VARCHAR},
+		</if>
+	</set>
+	where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.order.api.dto.CollectionRecord" >
+   	UPDATE collection_record
+		<set>
+			remarks = #{remarks,jdbcType=VARCHAR},
+			create_by = #{createBy.id,jdbcType=VARCHAR},
+			create_date = #{createDate,jdbcType=TIMESTAMP},
+			last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+			last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+			running_code = #{runningCode,jdbcType=VARCHAR},
+			services_no = #{servicesNo,jdbcType=VARCHAR},
+			services_name = #{servicesName,jdbcType=VARCHAR},
+			partner_id = #{partnerId,jdbcType=VARCHAR},
+			partner_name = #{partnerName,jdbcType=VARCHAR},
+			partner_code = #{partnerCode,jdbcType=VARCHAR},
+			partner_phone = #{partnerPhone,jdbcType=VARCHAR},
+			receivable = #{receivable,jdbcType=NUMERIC},
+			actual_fines = #{actualFines,jdbcType=NUMERIC},
+			paid_change = #{paidChange,jdbcType=NUMERIC},
+
+			tab = #{tab,jdbcType=VARCHAR},
+
+			remark = #{remark,jdbcType=VARCHAR}
+		</set>
+		WHERE id = #{id,jdbcType=VARCHAR} 
+  </update>
+</mapper>

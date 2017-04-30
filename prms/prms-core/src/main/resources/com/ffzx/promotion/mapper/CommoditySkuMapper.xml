@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ffzx.promotion.mapper.CommoditySkuMapper" >
+  <resultMap id="BaseResultMap" type="com.ffzx.promotion.api.dto.CommoditySku" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="commodity_code" property="commodityCode" jdbcType="VARCHAR" />
+    <result column="sku_code" property="skuCode" jdbcType="VARCHAR" />
+    <result column="barcode" property="barcode" jdbcType="VARCHAR" />
+    <result column="is_show" property="isShow" jdbcType="CHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="favourable_price" property="favourablePrice" jdbcType="DECIMAL" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy.id" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="last_update_by" property="lastUpdateBy.id" jdbcType="VARCHAR" />
+    <result column="last_update_date" property="lastUpdateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="act_flag" property="actFlag" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+    <result column="small_image" property="smallImage" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.ffzx.promotion.api.dto.CommoditySku" extends="BaseResultMap" >
+    <result column="commodity_attribute_value_ids" property="commodityAttributeValueIds" jdbcType="LONGVARCHAR" />
+    <result column="commodity_attribute_values" property="commodityAttributeValues" jdbcType="LONGVARCHAR" />
+    <result column="commodity_attribute_ids" property="commodityAttributeIds" jdbcType="LONGVARCHAR" />
+    <result column="commodity_attributes" property="commodityAttributes" jdbcType="LONGVARCHAR" />
+    <result column="discount_plan_id" property="discountPlanId" jdbcType="VARBINARY" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    t.id, t.commodity_code, t.sku_code, t.barcode, t.is_show, t.price, t.favourable_price, 
+    t.sort, t.status, t.create_by as 'createBy.id', t.create_date, t.last_update_by as 'lastUpdateBy.id', 
+    t.last_update_date, t.remarks, t.act_flag, t.del_flag, t.small_image
+  </sql>
+  <sql id="Blob_Column_List" >
+    commodity_attribute_value_ids, commodity_attribute_values, commodity_attribute_ids, 
+    commodity_attributes, discount_plan_id
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null and '' != params.id" >
+        and t.id = #{params.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.commodityCode != null and '' != params.commodityCode" >
+        and t.commodity_code = #{params.commodityCode,jdbcType=VARCHAR}
+      </if>
+      <if test="params.skuCode != null and '' != params.skuCode" >
+        and t.sku_code = #{params.skuCode,jdbcType=VARCHAR}
+      </if>
+      <if test="params.barcode != null and '' != params.barcode" >
+        and t.barcode = #{params.barcode,jdbcType=VARCHAR}
+      </if>
+      <if test="params.isShow != null and '' != params.isShow" >
+        and t.is_show = #{params.isShow,jdbcType=CHAR}
+      </if>
+      <if test="params.price != null" >
+        and t.price = #{params.price,jdbcType=DECIMAL}
+      </if>
+      <if test="params.favourablePrice != null" >
+        and t.favourable_price = #{params.favourablePrice,jdbcType=DECIMAL}
+      </if>
+      <if test="params.sort != null" >
+        and t.sort = #{params.sort,jdbcType=INTEGER}
+      </if>
+      <if test="params.status != null and '' != params.status" >
+        and t.status = #{params.status,jdbcType=VARCHAR}
+      </if>
+      <if test="params.createBy != null and '' != params.createBy" >
+        and t.create_by = #{params.createBy.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.createDate != null" >
+        and t.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.lastUpdateBy != null and '' != params.lastUpdateBy" >
+        and t.last_update_by = #{params.lastUpdateBy.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.lastUpdateDate != null" >
+        and t.last_update_date = #{params.lastUpdateDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.remarks != null and '' != params.remarks" >
+        and t.remarks = #{params.remarks,jdbcType=VARCHAR}
+      </if>
+      <if test="params.actFlag != null and '' != params.actFlag" >
+        and t.act_flag = #{params.actFlag,jdbcType=VARCHAR}
+      </if>
+      <if test="params.delFlag != null and '' != params.delFlag" >
+        and t.del_flag = #{params.delFlag,jdbcType=CHAR}
+      </if>
+      <if test="params.commodityAttributeValueIds != null and '' != params.commodityAttributeValueIds" >
+        and t.commodity_attribute_value_ids = #{params.commodityAttributeValueIds,jdbcType=LONGVARCHAR}
+      </if>
+      <if test="params.commodityAttributeValues != null and '' != params.commodityAttributeValues" >
+        and t.commodity_attribute_values = #{params.commodityAttributeValues,jdbcType=LONGVARCHAR}
+      </if>
+      <if test="params.commodityAttributeIds != null and '' != params.commodityAttributeIds" >
+        and t.commodity_attribute_ids = #{params.commodityAttributeIds,jdbcType=LONGVARCHAR}
+      </if>
+      <if test="params.commodityAttributes != null and '' != params.commodityAttributes" >
+        and t.commodity_attributes = #{params.commodityAttributes,jdbcType=LONGVARCHAR}
+      </if>
+      <if test="params.discountPlanId != null" >
+        and t.discount_plan_id = #{params.discountPlanId,jdbcType=VARBINARY}
+      </if>
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from cims_db.commodity_sku t 
+    where t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParams" resultMap="ResultMapWithBLOBs" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from cims_db.commodity_sku t 
+    where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from cims_db.commodity_sku t  where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="ResultMapWithBLOBs" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from cims_db.commodity_sku t 
+    where 1=1
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from cims_db.commodity_sku
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.promotion.api.dto.CommoditySku" >
+    delete from cims_db.commodity_sku
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ffzx.promotion.api.dto.CommoditySku" >
+    insert into cims_db.commodity_sku (id, commodity_code, sku_code, 
+      barcode, is_show, price, 
+      favourable_price, sort, status, 
+      create_by, create_date, last_update_by, 
+      last_update_date, remarks, act_flag, 
+      del_flag, commodity_attribute_value_ids, commodity_attribute_values, 
+      commodity_attribute_ids, commodity_attributes, 
+      discount_plan_id)
+    values (#{id,jdbcType=VARCHAR}, #{commodityCode,jdbcType=VARCHAR}, #{skuCode,jdbcType=VARCHAR}, 
+      #{barcode,jdbcType=VARCHAR}, #{isShow,jdbcType=CHAR}, #{price,jdbcType=DECIMAL}, 
+      #{favourablePrice,jdbcType=DECIMAL}, #{sort,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR}, 
+      #{createBy.id,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{lastUpdateBy.id,jdbcType=VARCHAR}, 
+      #{lastUpdateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{actFlag,jdbcType=VARCHAR}, 
+      #{delFlag,jdbcType=CHAR}, #{commodityAttributeValueIds,jdbcType=LONGVARCHAR}, #{commodityAttributeValues,jdbcType=LONGVARCHAR}, 
+      #{commodityAttributeIds,jdbcType=LONGVARCHAR}, #{commodityAttributes,jdbcType=LONGVARCHAR}, 
+      #{discountPlanId,jdbcType=VARBINARY})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.promotion.api.dto.CommoditySku" >
+    insert into cims_db.commodity_sku
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="commodityCode != null" >
+        commodity_code,
+      </if>
+      <if test="skuCode != null" >
+        sku_code,
+      </if>
+      <if test="barcode != null" >
+        barcode,
+      </if>
+      <if test="isShow != null" >
+        is_show,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="favourablePrice != null" >
+        favourable_price,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by,
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="actFlag != null" >
+        act_flag,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="commodityAttributeValueIds != null" >
+        commodity_attribute_value_ids,
+      </if>
+      <if test="commodityAttributeValues != null" >
+        commodity_attribute_values,
+      </if>
+      <if test="commodityAttributeIds != null" >
+        commodity_attribute_ids,
+      </if>
+      <if test="commodityAttributes != null" >
+        commodity_attributes,
+      </if>
+      <if test="discountPlanId != null" >
+        discount_plan_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityCode != null" >
+        #{commodityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="skuCode != null" >
+        #{skuCode,jdbcType=VARCHAR},
+      </if>
+      <if test="barcode != null" >
+        #{barcode,jdbcType=VARCHAR},
+      </if>
+      <if test="isShow != null" >
+        #{isShow,jdbcType=CHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="favourablePrice != null" >
+        #{favourablePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null" >
+        #{lastUpdateBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="actFlag != null" >
+        #{actFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="commodityAttributeValueIds != null" >
+        #{commodityAttributeValueIds,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="commodityAttributeValues != null" >
+        #{commodityAttributeValues,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="commodityAttributeIds != null" >
+        #{commodityAttributeIds,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="commodityAttributes != null" >
+        #{commodityAttributes,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="discountPlanId != null" >
+        #{discountPlanId,jdbcType=VARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.promotion.api.dto.CommoditySku" >
+    update cims_db.commodity_sku
+    <set >
+      <if test="commodityCode != null" >
+        commodity_code = #{commodityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="skuCode != null" >
+        sku_code = #{skuCode,jdbcType=VARCHAR},
+      </if>
+      <if test="barcode != null" >
+        barcode = #{barcode,jdbcType=VARCHAR},
+      </if>
+      <if test="isShow != null" >
+        is_show = #{isShow,jdbcType=CHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="favourablePrice != null" >
+        favourable_price = #{favourablePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="actFlag != null" >
+        act_flag = #{actFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="commodityAttributeValueIds != null" >
+        commodity_attribute_value_ids = #{commodityAttributeValueIds,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="commodityAttributeValues != null" >
+        commodity_attribute_values = #{commodityAttributeValues,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="commodityAttributeIds != null" >
+        commodity_attribute_ids = #{commodityAttributeIds,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="commodityAttributes != null" >
+        commodity_attributes = #{commodityAttributes,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="discountPlanId != null" >
+        discount_plan_id = #{discountPlanId,jdbcType=VARBINARY},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ffzx.promotion.api.dto.CommoditySku" >
+    update cims_db.commodity_sku
+    set commodity_code = #{commodityCode,jdbcType=VARCHAR},
+      sku_code = #{skuCode,jdbcType=VARCHAR},
+      barcode = #{barcode,jdbcType=VARCHAR},
+      is_show = #{isShow,jdbcType=CHAR},
+      price = #{price,jdbcType=DECIMAL},
+      favourable_price = #{favourablePrice,jdbcType=DECIMAL},
+      sort = #{sort,jdbcType=INTEGER},
+      status = #{status,jdbcType=VARCHAR},
+      create_by = #{createBy.id,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+      last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      act_flag = #{actFlag,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR},
+      commodity_attribute_value_ids = #{commodityAttributeValueIds,jdbcType=LONGVARCHAR},
+      commodity_attribute_values = #{commodityAttributeValues,jdbcType=LONGVARCHAR},
+      commodity_attribute_ids = #{commodityAttributeIds,jdbcType=LONGVARCHAR},
+      commodity_attributes = #{commodityAttributes,jdbcType=LONGVARCHAR},
+      discount_plan_id = #{discountPlanId,jdbcType=VARBINARY}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.promotion.api.dto.CommoditySku" >
+    update cims_db.commodity_sku
+    set commodity_code = #{commodityCode,jdbcType=VARCHAR},
+      sku_code = #{skuCode,jdbcType=VARCHAR},
+      barcode = #{barcode,jdbcType=VARCHAR},
+      is_show = #{isShow,jdbcType=CHAR},
+      price = #{price,jdbcType=DECIMAL},
+      favourable_price = #{favourablePrice,jdbcType=DECIMAL},
+      sort = #{sort,jdbcType=INTEGER},
+      status = #{status,jdbcType=VARCHAR},
+      create_by = #{createBy.id,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+      last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      act_flag = #{actFlag,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <!-- 根据sku查询商品信息 -->
+  <select id="getCommodityInfoBySku" parameterType="String" resultType="com.ffzx.promotion.api.dto.Commodity">
+	    SELECT
+			c.id AS "id",
+			c.buy_type AS "buyType",
+			c.title AS "title",
+			c.status as "status",
+			c.code as "code",
+			sku.id AS "commoditySku.id",
+			sku.sku_code as "commoditySku.skuCode",
+			sku.commodity_attribute_values as "commoditySku.commodityAttributeValues",
+			(CASE  
+ 			 	WHEN sku.small_image is  NULL THEN c.thumbnail
+			 	WHEN sku.small_image='' THEN c.thumbnail
+			 	ELSE sku.small_image END
+			) AS "commoditySku.smallImage",
+			sku.price AS "commoditySku.price",
+			sku.favourable_price AS "commoditySku.favourablePrice",
+			c.give_type as "giveType" 
+		FROM
+			cims_db.commodity c
+		LEFT JOIN cims_db.commodity_sku sku ON c.code = sku.commodity_code
+		<where>
+		   <if test="params.skuIds != null">
+		      and sku.id in 
+		      <foreach collection="params.skuIds" separator="," open="(" close=")" item="item">
+		         '${item}'
+		      </foreach>
+		   </if>
+		  <if test="params.commodityCodes != null">
+	         and c.code in
+	         <foreach collection="params.commodityCodes" separator="," open="(" close=")" item="item">
+	             '${item}'
+	         </foreach>
+	      </if>
+		</where>
+  </select>
+</mapper>

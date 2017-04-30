@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ffzx.promotion.mapper.GiveOrderCouponMapper" >
+  <resultMap id="BaseResultMap" type="com.ffzx.promotion.api.dto.GiveOrderCoupon" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="give_id" property="giveId" jdbcType="VARCHAR" />
+    <result column="coupon_id" property="couponId" jdbcType="VARCHAR" />
+    <result column="gift_coupon_id" property="giftCouponId" jdbcType="VARCHAR" />
+    <result column="createDate" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="endDate" property="enddate" jdbcType="TIMESTAMP" />
+    <result column="limit_day" property="limitDay" jdbcType="CHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+    <result column="send_num" property="sendNum" jdbcType="CHAR" />
+     <result column="sendDate" property="sendDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    t.id, t.order_no, t.order_id, t.give_id, t.coupon_id, t.gift_coupon_id, t.createDate, 
+    t.endDate, t.limit_day,t.del_flag,t.send_num,t.sendDate
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null and '' != params.id" >
+        and t.id = #{params.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.orderNo != null and '' != params.orderNo" >
+        and t.order_no = #{params.orderNo,jdbcType=VARCHAR}
+      </if>
+      <if test="params.orderId != null and '' != params.orderId" >
+        and t.order_id = #{params.orderId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.giveId != null and '' != params.giveId" >
+        and t.give_id = #{params.giveId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.couponId != null and '' != params.couponId" >
+        and t.coupon_id = #{params.couponId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.giftCouponId != null and '' != params.giftCouponId" >
+        and t.gift_coupon_id = #{params.giftCouponId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.createDate != null" >
+        and t.createDate = #{params.createDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.enddate != null" >
+        and t.endDate = #{params.enddate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.limitDay != null and '' != params.limitDay" >
+        and t.limit_day = #{params.limitDay,jdbcType=CHAR}
+      </if>
+      <if test="params.selectDelFlag!=null and ''!=params.selectDelFlag">
+        and t.del_flag!='1' or t.del_flag is null
+      </if>
+       <if test="params.sendDate != null" >
+        and t.sendDate = #{params.sendDate,jdbcType=TIMESTAMP}
+      </if>
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from give_order_coupon t 
+    where t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from give_order_coupon t 
+    where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from give_order_coupon t  where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from give_order_coupon t 
+    where 1=1
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from give_order_coupon
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.promotion.api.dto.GiveOrderCoupon" >
+    delete from give_order_coupon
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ffzx.promotion.api.dto.GiveOrderCoupon" >
+    insert into give_order_coupon (id, order_no, order_id, 
+      give_id, coupon_id, gift_coupon_id, 
+      createDate, endDate, limit_day,send_num,sendDate
+      )
+    values (#{id,jdbcType=VARCHAR}, #{orderNo,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR}, 
+      #{giveId,jdbcType=VARCHAR}, #{couponId,jdbcType=VARCHAR}, #{giftCouponId,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{enddate,jdbcType=TIMESTAMP}, #{limitDay,jdbcType=CHAR},
+       #{sendNum,jdbcType=CHAR},#{sendDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.promotion.api.dto.GiveOrderCoupon" >
+    insert into give_order_coupon
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="giveId != null" >
+        give_id,
+      </if>
+      <if test="couponId != null" >
+        coupon_id,
+      </if>
+      <if test="giftCouponId != null" >
+        gift_coupon_id,
+      </if>
+      <if test="createDate != null" >
+        createDate,
+      </if>
+      <if test="enddate != null" >
+        endDate,
+      </if>
+      <if test="limitDay != null" >
+        limit_day,
+      </if>
+       <if test="sendNum != null" >
+        send_num,
+      </if>
+       <if test="sendDate != null" >
+        sendDate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="giveId != null" >
+        #{giveId,jdbcType=VARCHAR},
+      </if>
+      <if test="couponId != null" >
+        #{couponId,jdbcType=VARCHAR},
+      </if>
+      <if test="giftCouponId != null" >
+        #{giftCouponId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enddate != null" >
+        #{enddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="limitDay != null" >
+        #{limitDay,jdbcType=CHAR},
+      </if>
+      <if test="sendNum != null" >
+        #{sendNum,jdbcType=CHAR},
+      </if>
+      <if test="sendDate != null" >
+        #{sendDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.promotion.api.dto.GiveOrderCoupon" >
+    update give_order_coupon
+    <set >
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="giveId != null" >
+        give_id = #{giveId,jdbcType=VARCHAR},
+      </if>
+      <if test="couponId != null" >
+        coupon_id = #{couponId,jdbcType=VARCHAR},
+      </if>
+      <if test="giftCouponId != null" >
+        gift_coupon_id = #{giftCouponId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        createDate = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enddate != null" >
+        endDate = #{enddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="limitDay != null" >
+        limit_day = #{limitDay,jdbcType=CHAR},
+      </if>
+        <if test="sendNum != null" >
+        send_num = #{sendNum,jdbcType=CHAR},
+      </if>
+        <if test="sendDate != null" >
+        sendDate = #{sendNum,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.promotion.api.dto.GiveOrderCoupon" >
+    update give_order_coupon
+    set order_no = #{orderNo,jdbcType=VARCHAR},
+      order_id = #{orderId,jdbcType=VARCHAR},
+      give_id = #{giveId,jdbcType=VARCHAR},
+      coupon_id = #{couponId,jdbcType=VARCHAR},
+      gift_coupon_id = #{giftCouponId,jdbcType=VARCHAR},
+      createDate = #{createDate,jdbcType=TIMESTAMP},
+      endDate = #{enddate,jdbcType=TIMESTAMP},
+      limit_day = #{limitDay,jdbcType=CHAR},
+      send_num = #{sendNum,jdbcType=CHAR},
+      sendDate = #{sendDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+   <update id="updateDelFlag" parameterType="com.ffzx.promotion.api.dto.GiveOrderCoupon">
+  	update give_order_coupon
+  	set del_flag ='1'
+  	where id in 
+  	<foreach collection="giveOrderCouponList" open="(" close=")" item="item" separator=",">
+  		#{item.id}
+  	</foreach>
+  </update>
+</mapper>

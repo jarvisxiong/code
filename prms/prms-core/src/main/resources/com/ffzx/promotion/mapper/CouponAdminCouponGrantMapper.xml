@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ffzx.promotion.mapper.CouponAdminCouponGrantMapper" >
+  <resultMap id="BaseResultMap" type="com.ffzx.promotion.api.dto.CouponAdminCouponGrant" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="coupon_admin_id" property="couponAdmin.id" jdbcType="VARCHAR" />
+    <result column="coupon_grant_id" property="couponGrant.id" jdbcType="VARCHAR" />
+    <result column="receive_num" property="receiveNum" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    t.id, t.coupon_admin_id, t.coupon_grant_id, t.receive_num
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null and '' != params.id" >
+        and t.id = #{params.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.couponAdmin.id != null and '' != params.couponAdmin.id" >
+        and t.coupon_admin_id = #{params.couponAdmin.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.couponGrant.id != null and '' != params.couponGrant.id" >
+        and t.coupon_grant_id = #{params.couponGrant.id,jdbcType=VARCHAR}
+      </if>
+      
+      
+      
+    </if>
+  </sql>
+         <select id="selectByGrantIdRedpack" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+     t.id, t.coupon_admin_id, t.coupon_grant_id as 'couponGrant.id',
+     	c.id as 'couponAdmin.id',
+     	c.name as 'couponAdmin.name',
+		c.number as 'couponAdmin.number',
+		c.face_value as 'couponAdmin.faceValue',
+		c.goods_select as 'couponAdmin.goodsSelect',
+		c.effective_date_state as 'couponAdmin.effectiveDateState',
+		c.effective_date_start as 'couponAdmin.effectiveDateStart',
+		c.effective_date_end as 'couponAdmin.effectiveDateEnd',
+		c.effective_date_num as 'couponAdmin.effectiveDateNum',
+		c.consumption_limit as "couponAdmin.consumptionLimit"
+	 from coupon_admin_coupon_grant t 
+    left join coupon_admin c on c.id=t.coupon_admin_id
+    where t.coupon_grant_id = #{couponGrantId,jdbcType=VARCHAR}
+  </select>
+  
+   <select id="selectByGrantId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+     t.id, t.coupon_admin_id, t.coupon_grant_id as 'couponGrant.id',
+     	c.id as 'couponAdmin.id',
+     	c.name as 'couponAdmin.name',
+		c.number as 'couponAdmin.number',
+		c.face_value as 'couponAdmin.faceValue',
+		c.goods_select as 'couponAdmin.goodsSelect',
+		c.effective_date_state as 'couponAdmin.effectiveDateState',
+		c.effective_date_start as 'couponAdmin.effectiveDateStart',
+		c.effective_date_end as 'couponAdmin.effectiveDateEnd',
+		c.effective_date_num as 'couponAdmin.effectiveDateNum',
+		c.consumption_limit as "couponAdmin.consumptionLimit"
+    from coupon_admin_coupon_grant t 
+    left join coupon_admin c on c.id=t.coupon_admin_id
+    where t.coupon_grant_id = #{couponGrantId,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectByGrantIdStr" resultMap="BaseResultMap" parameterType="map">
+    select 
+     t.id, t.coupon_admin_id, t.coupon_grant_id as 'couponGrant.id',
+     	c.id as 'couponAdmin.id',
+     	c.name as 'couponAdmin.name',
+		c.number as 'couponAdmin.number',
+		c.face_value as 'couponAdmin.faceValue',
+		c.goods_select as 'couponAdmin.goodsSelect',
+		c.effective_date_state as 'couponAdmin.effectiveDateState',
+		c.effective_date_start as 'couponAdmin.effectiveDateStart',
+		c.effective_date_end as 'couponAdmin.effectiveDateEnd',
+		c.effective_date_num as 'couponAdmin.effectiveDateNum',
+		c.consumption_limit as "couponAdmin.consumptionLimit"
+    from coupon_admin_coupon_grant t 
+    left join coupon_admin c on c.id=t.coupon_admin_id
+     where 1=1
+     <if test="params.couponIdStr != null and '' != params.couponIdStr" >
+	    and t.coupon_grant_id in 
+	  	<foreach collection="params.couponIdStr" item="item" index="index" open="(" separator="," close=")">#{item}</foreach>
+	 </if>
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from coupon_admin_coupon_grant t 
+    where t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from coupon_admin_coupon_grant t 
+    where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from coupon_admin_coupon_grant t  where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from coupon_admin_coupon_grant t 
+    where 1=1
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from coupon_admin_coupon_grant
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.promotion.api.dto.CouponAdminCouponGrant" >
+    delete from coupon_admin_coupon_grant
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ffzx.promotion.api.dto.CouponAdminCouponGrant" >
+    insert into coupon_admin_coupon_grant (id, coupon_admin_id, coupon_grant_id
+      )
+    values (#{id,jdbcType=VARCHAR}, #{couponAdmin.id,jdbcType=VARCHAR}, #{couponGrant.id,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.promotion.api.dto.CouponAdminCouponGrant" >
+    insert into coupon_admin_coupon_grant
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="couponAdmin.id != null" >
+        coupon_admin_id,
+      </if>
+      <if test="couponGrant.id != null" >
+        coupon_grant_id,
+      </if>
+      <if test="receiveNum != null" >
+        receive_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="couponAdmin.id != null" >
+        #{couponAdmin.id,jdbcType=VARCHAR},
+      </if>
+      <if test="couponGrant.id != null" >
+        #{couponGrant.id,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveNum != null" >
+        #{receiveNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.promotion.api.dto.CouponAdminCouponGrant" >
+    update coupon_admin_coupon_grant
+    <set >
+      <if test="couponAdmin.id != null" >
+        coupon_admin_id = #{couponAdmin.id,jdbcType=VARCHAR},
+      </if>
+      <if test="couponGrant.id != null" >
+        coupon_grant_id = #{couponGrant.id,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveNum != null" >
+        receive_num = #{receiveNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.promotion.api.dto.CouponAdminCouponGrant" >
+    update coupon_admin_coupon_grant
+    set coupon_admin_id = #{couponAdmin.id,jdbcType=VARCHAR},
+      coupon_grant_id = #{couponGrant.id,jdbcType=VARCHAR},
+      receive_num = #{receiveNum,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <delete id="deleteByCouponGrantId" parameterType="java.lang.String" >
+    delete from coupon_admin_coupon_grant
+    where coupon_grant_id = #{CouponGrantId,jdbcType=VARCHAR}
+  </delete>
+  <select id="selectCouponAdminId" resultType="java.lang.String"  parameterType="java.lang.String" >
+    select 
+    t.coupon_admin_id
+    from coupon_admin_coupon_grant t 
+    where t.coupon_grant_id=#{couponGrantId,jdbcType=VARCHAR}
+  </select>
+</mapper>

@@ -1,0 +1,1281 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ffzx.promotion.mapper.ActivityCommodityMapper" >
+  <resultMap id="BaseResultMap" type="com.ffzx.promotion.api.dto.ActivityCommodity" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="activity_no" property="activityNo" jdbcType="VARCHAR" />
+    <result column="pic_path" property="picPath" jdbcType="VARCHAR" />
+    <result column="activity_type" property="activityType" jdbcType="VARCHAR" />
+    <result column="commodity_no" property="commodityNo" jdbcType="VARCHAR" />
+    <result column="commodity_id" property="commodityId" jdbcType="VARCHAR" />
+    <result column="activity_title" property="activityTitle" jdbcType="VARCHAR" />
+    <result column="commodity_barcode" property="commodityBarcode" jdbcType="VARCHAR" />
+    <result column="show_price" property="showPrice" jdbcType="VARCHAR" />
+    <result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
+    <result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
+    <result column="sort_top_no" property="sortTopNo" jdbcType="INTEGER" />
+    <result column="sort_no" property="sortNo" jdbcType="INTEGER" />
+    <result column="is_recommend" property="isRecommend" jdbcType="VARCHAR" />
+    <result column="recommend_sort" property="recommendSort" jdbcType="INTEGER" />
+    <result column="id_limit_count" property="idLimitCount" jdbcType="INTEGER" />
+    <result column="limit_count" property="limitCount" jdbcType="INTEGER" />
+    <result column="sale_increase" property="saleIncrease" jdbcType="INTEGER" />
+    <result column="enable_special_count" property="enableSpecialCount" jdbcType="VARCHAR" />
+    <result column="special_count" property="specialCount" jdbcType="INTEGER" />
+    <result column="activity_id" property="activity.id" jdbcType="VARCHAR" />
+    <result column="deliver_date" property="deliverDate" jdbcType="TIMESTAMP" />
+    <result column="islimit" property="islimit" jdbcType="CHAR" />
+    <result column="is_neworder" property="isNeworder" jdbcType="CHAR" />
+    <result column="buy_count" property="buyCount" jdbcType="CHAR" />
+    <result column="follow_count" property="followCount" jdbcType="INTEGER" />
+    <result column="activity_commodity_status" property="activityCommodityStatus" jdbcType="CHAR" />
+    <result column="max_price" property="maxPrice" jdbcType="DECIMAL" />
+    <result column="min_price" property="minPrice" jdbcType="DECIMAL" />
+    <result column="pre_sale_tag_id" property="preSaleTag.id" jdbcType="VARCHAR" />
+  </resultMap>
+	
+   <resultMap id="BaseResultCommodityMap" type="com.ffzx.promotion.api.dto.ActivityCommodity" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="activity_no" property="activityNo" jdbcType="VARCHAR" />
+    <result column="pic_path" property="picPath" jdbcType="VARCHAR" />
+    <result column="activity_type" property="activityType" jdbcType="VARCHAR" />
+    <result column="commodity_no" property="commodityNo" jdbcType="VARCHAR" />
+    <result column="commodity_id" property="commodityId" jdbcType="VARCHAR" />
+    <result column="activity_title" property="activityTitle" jdbcType="VARCHAR" />
+    <result column="commodity_barcode" property="commodityBarcode" jdbcType="VARCHAR" />
+    <result column="show_price" property="showPrice" jdbcType="VARCHAR" />
+    <result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
+    <result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
+    <result column="sort_top_no" property="sortTopNo" jdbcType="INTEGER" />
+    <result column="sort_no" property="sortNo" jdbcType="INTEGER" />
+    <result column="is_recommend" property="isRecommend" jdbcType="VARCHAR" />
+    <result column="recommend_sort" property="recommendSort" jdbcType="INTEGER" />
+    <result column="id_limit_count" property="idLimitCount" jdbcType="INTEGER" />
+    <result column="limit_count" property="limitCount" jdbcType="INTEGER" />
+    <result column="sale_increase" property="saleIncrease" jdbcType="INTEGER" />
+    <result column="enable_special_count" property="enableSpecialCount" jdbcType="VARCHAR" />
+    <result column="special_count" property="specialCount" jdbcType="INTEGER" />
+    <result column="activity_id" property="activity.id" jdbcType="VARCHAR" />
+    <result column="deliver_date" property="deliverDate" jdbcType="TIMESTAMP" />
+    <result column="islimit" property="islimit" jdbcType="CHAR" />
+    <result column="is_neworder" property="isNeworder" jdbcType="CHAR" />
+    <result column="buy_count" property="buyCount" jdbcType="CHAR" />
+    <result column="follow_count" property="followCount" jdbcType="INTEGER" />
+    <result column="is_remind" property="isRemind" jdbcType="CHAR" />
+    <result column="max_price" property="maxPrice" jdbcType="DECIMAL" />
+    <result column="min_price" property="minPrice" jdbcType="DECIMAL" />
+    <result column="activity_commodity_status" property="activityCommodityStatus" jdbcType="CHAR" />
+       <result column="commodity_id" property="commodity.id" jdbcType="VARCHAR" />
+    <result column="commoditycode" property="commodity.code" jdbcType="VARCHAR" />
+    <result column="commodityname" property="commodity.name" jdbcType="VARCHAR" />
+    <result column="commodityalias_name" property="commodity.aliasName" jdbcType="VARCHAR" />
+    <result column="commoditytitle" property="commodity.title" jdbcType="VARCHAR" />
+    <result column="commoditysub_title" property="commodity.subTitle" jdbcType="VARCHAR" />
+    <result column="commoditycategory_id" property="commodity.categoryId" jdbcType="VARCHAR" />
+    <result column="commoditycommodity_attribute_parameter" property="commodity.commodityAttributeParameter" jdbcType="VARCHAR" />
+    <result column="commoditybrand_id" property="commodity.brandId" jdbcType="VARCHAR" />
+    <result column="commoditybrand_name" property="commodity.brandName" jdbcType="VARCHAR" />
+    <result column="commodityvendor_id" property="commodity.vendorId" jdbcType="VARCHAR" />
+    <result column="commodityvendor_name" property="commodity.vendorName" jdbcType="VARCHAR" />
+    <result column="commodityretail_price" property="commodity.retailPrice" jdbcType="DECIMAL" />
+    <result column="commoditypreferential_price" property="commodity.preferentialPrice" jdbcType="DECIMAL" />
+    <result column="commodityunit_id" property="commodity.unitId" jdbcType="VARCHAR" />
+    <result column="commodityarea_category" property="commodity.areaCategory" jdbcType="CHAR" />
+    <result column="commoditystock_limit" property="commodity.stockLimit" jdbcType="CHAR" />
+    <result column="commoditysplit_single" property="commodity.splitSingle" jdbcType="CHAR" />
+    <result column="commoditywarehouse" property="commodity.warehouse" jdbcType="CHAR" />
+    <result column="commoditystatus" property="commodity.status" jdbcType="VARCHAR" />
+    <result column="commoditydescription" property="commodity.description" jdbcType="VARCHAR" />
+    <result column="commoditythumbnail" property="commodity.thumbnail" jdbcType="VARCHAR" />
+    <result column="commoditysmall_image" property="commodity.smallImage" jdbcType="VARCHAR" />
+    <result column="commoditybig_image" property="commodity.bigImage" jdbcType="VARCHAR" />
+    <result column="commoditykeyword" property="commodity.keyword" jdbcType="VARCHAR" />
+    <result column="commodityis_hot_sale" property="commodity.isHotSale" jdbcType="CHAR" />
+    <result column="commodityis_new" property="commodity.isNew" jdbcType="CHAR" />
+    <result column="commoditypublish_time" property="commodity.publishTime" jdbcType="TIMESTAMP" />
+    <result column="commoditycreate_by" property="commodity.createBy.id" jdbcType="VARCHAR" />
+    <result column="commoditycreate_date" property="commodity.createDate" jdbcType="TIMESTAMP" />
+    <result column="commoditylast_update_by" property="commodity.lastUpdateBy.id" jdbcType="VARCHAR" />
+    <result column="commoditylast_update_date" property="commodity.lastUpdateDate" jdbcType="TIMESTAMP" />
+    <result column="commodityremarks" property="commodity.remarks" jdbcType="VARCHAR" />
+    <result column="commodityentity_storage" property="commodity.entityStorage" jdbcType="CHAR" />
+    <result column="commoditybuy_type" property="commodity.buyType" jdbcType="CHAR" />
+    <result column="commodityunit_name" property="commodity.unitName" jdbcType="VARCHAR" />
+    <result column="commodityunit_group_id" property="commodity.unitGroupId" jdbcType="VARCHAR" />
+    <result column="commoditysku_code" property="commodity.skuCode" jdbcType="VARCHAR" />
+    <result column="commoditybar_code" property="commodity.barCode" jdbcType="VARCHAR" />
+    <result column="commodityspecification" property="commodity.specification" jdbcType="VARCHAR" />
+    <result column="commoditycategoryAttribute_name" property="commodity.categoryattributeName" jdbcType="VARCHAR" />
+    <result column="commoditysale_attribute_ids" property="commodity.saleAttributeIds" jdbcType="VARCHAR" />
+    <result column="commoditygiveType" property="commodity.giveType" jdbcType="INTEGER" />
+    <result column="activityManagestart_date" property="activity.startDate" jdbcType="TIMESTAMP" />
+    <result column="activityManageend_date" property="activity.endDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <resultMap type="com.ffzx.promotion.api.dto.ActivityCommodityVo" id="advertBaseResultMap">
+  <id column="id" property="id" jdbcType="VARCHAR" />
+  <result column="activity_title" property="commodityTitle" jdbcType="CHAR" />
+  <result column="commodity_barcode" property="commodityBarcode" jdbcType="VARCHAR" />
+  <result column="show_price" property="showPrice" jdbcType="VARCHAR" />
+  <result column="release_status" property="releaseStatus" jdbcType="VARCHAR" />
+   <result column="activity_id" property="activityId" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="CommodityResultMap" type="com.ffzx.promotion.api.dto.ActivityCommodity" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="activity_no" property="activityNo" jdbcType="VARCHAR" />
+    <result column="pic_path" property="picPath" jdbcType="VARCHAR" />
+    <result column="activity_type" property="activityType" jdbcType="VARCHAR" />
+    <result column="commodity_no" property="commodityNo" jdbcType="VARCHAR" />
+    <result column="commodity_id" property="commodity.id" jdbcType="VARCHAR" />
+    <result column="activity_title" property="activityTitle" jdbcType="VARCHAR" />
+    <result column="commodity_barcode" property="commodityBarcode" jdbcType="VARCHAR" />
+    <result column="show_price" property="showPrice" jdbcType="VARCHAR" />
+    <result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
+    <result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
+    <result column="sort_top_no" property="sortTopNo" jdbcType="INTEGER" />
+    <result column="sort_no" property="sortNo" jdbcType="INTEGER" />
+    <result column="is_recommend" property="isRecommend" jdbcType="VARCHAR" />
+    <result column="recommend_sort" property="recommendSort" jdbcType="INTEGER" />
+    <result column="id_limit_count" property="idLimitCount" jdbcType="INTEGER" />
+    <result column="limit_count" property="limitCount" jdbcType="INTEGER" />
+    <result column="sale_increase" property="saleIncrease" jdbcType="INTEGER" />
+    <result column="enable_special_count" property="enableSpecialCount" jdbcType="VARCHAR" />
+    <result column="special_count" property="specialCount" jdbcType="INTEGER" />
+    <result column="activity_id" property="activity.id" jdbcType="VARCHAR" />
+    <result column="deliver_date" property="deliverDate" jdbcType="TIMESTAMP" />
+    <result column="islimit" property="islimit" jdbcType="CHAR" />
+    <result column="is_neworder" property="isNeworder" jdbcType="CHAR" />
+    <result column="buy_count" property="buyCount" jdbcType="CHAR" />
+    <result column="follow_count" property="followCount" jdbcType="INTEGER" />
+	<result column="activity_commodity_status" property="activityCommodityStatus" jdbcType="CHAR" />
+    <result column="max_price" property="maxPrice" jdbcType="DECIMAL" />
+    <result column="min_price" property="minPrice" jdbcType="DECIMAL" />
+  </resultMap>
+    <sql id="Base_Column_List_MianCommodity" >
+    t.id, t.activity_no, t.pic_path, t.activity_type, t.commodity_no, t.commodity_id, t.activity_title, 
+    t.commodity_barcode, t.show_price, t.start_date, t.end_date, t.sort_top_no, t.sort_no, 
+    t.is_recommend, t.recommend_sort, t.id_limit_count, t.limit_count, t.sale_increase, 
+    t.enable_special_count, t.special_count, t.activity_id, t.deliver_date, t.islimit, 
+    t.is_neworder,t.buy_count, t.follow_count, t.max_price, t.min_price,
+    d.id as "commodityid", d.code as "commoditycode",d.give_type as  "commoditygiveType"
+    </sql>
+  <sql id="Base_Column_List_Commodity" >
+    t.id, t.activity_no, t.pic_path, t.activity_type, t.commodity_no, t.commodity_id, t.activity_title, 
+    t.commodity_barcode, t.show_price, t.start_date, t.end_date, t.sort_top_no, t.sort_no, 
+    t.is_recommend, t.recommend_sort, t.id_limit_count, t.limit_count, t.sale_increase, 
+    t.enable_special_count, t.special_count, t.activity_id, t.deliver_date, t.islimit, 
+    t.is_neworder,t.buy_count, t.follow_count, t.max_price, 
+    t.min_price,
+     d.id as "commodityid", d.code as "commoditycode", d.name as "commodityname", d.alias_name as "commodityalias_name", d.title as "commoditytitle", d.sub_title as "commoditysub_title", d.category_id as "commoditycategory_id", d.commodity_attribute_parameter as "commoditycommodity_attribute_parameter", 
+    d.brand_id as "commoditybrand_id", d.brand_name as "commoditybrand_name", d.vendor_id as "commodityvendor_id", d.vendor_name as "commodityvendor_name", d.retail_price as "commodityretail_price", d.preferential_price as "commoditypreferential_price", 
+    d.unit_id as "commodityunit_id", d.area_category as "commodityarea_category", d.stock_limit as "commoditystock_limit", d.split_single as "commoditysplit_single", d.warehouse as "commoditywarehouse", d.status as "commoditystatus", 
+    d.description as "commoditydescription", d.thumbnail as "commoditythumbnail", d.small_image as "commoditysmall_image", d.big_image as "commoditybig_image", d.keyword as "commoditykeyword", d.is_hot_sale as "commodityis_hot_sale", 
+    d.is_new as "commodityis_new", d.publish_time as "commoditypublish_time", d.create_date as "commoditycreate_date",  
+    d.last_update_date as "commoditylast_update_date", d.remarks as "commodityremarks", d.entity_storage as "commodityentity_storage", d.buy_type as "commoditybuy_type", d.unit_name as "commodityunit_name", d.unit_group_id as "commodityunit_group_id", 
+    d.sku_code as "commoditysku_code", d.bar_code as "commoditybar_code", d.specification as "commodityspecification", d.categoryAttribute_name as "commoditycategoryAttribute_name",d.sale_attribute_ids as "commoditysale_attribute_ids"
+  </sql>
+  
+  <sql id="Base_Column_List_Commodity_Category" >
+    d.category_id as "commoditycategory_id", 
+    d.categoryAttribute_name as "commoditycategoryAttribute_name"
+   </sql>
+  <sql id="Base_Column_List" >
+    t.id, t.activity_no, t.pic_path, t.activity_type, t.commodity_no, t.commodity_id, t.activity_title, 
+    t.commodity_barcode, t.show_price, t.start_date, t.end_date, t.sort_top_no, t.sort_no, 
+    t.is_recommend, t.recommend_sort, t.id_limit_count, t.limit_count, t.sale_increase, 
+    t.enable_special_count, t.special_count, t.activity_id, t.deliver_date, t.islimit, 
+	t.is_neworder,t.buy_count, t.follow_count,t.activity_commodity_status, t.max_price, 
+    t.min_price,t.pre_sale_tag_id
+</sql>
+  <sql id="Commodity_Column_List" >
+    t.id, t.activity_no, t.pic_path, t.activity_type, t.commodity_no, t.commodity_id, t.activity_title, 
+    t.commodity_barcode, t.show_price, t.start_date, t.end_date, t.sort_top_no, t.sort_no, 
+    t.is_recommend, t.recommend_sort, t.id_limit_count, t.limit_count, t.sale_increase, 
+    t.enable_special_count, t.special_count, t.activity_id, t.deliver_date, t.islimit, t.is_neworder, t.buy_count,  t.follow_count, 
+    t.activity_commodity_status, t.max_price, t.min_price,
+    
+    d.id as "commodity.id", d.code as "commodity.code", d.name as "commodity.name", d.stock_Limit as "commodity.stockLimit",
+    d.title as "commodity.title", d.preferential_price as "commodity.preferentialPrice", d.retail_price as "commodity.retailPrice", 
+    d.status as "commodity.status", d.thumbnail as "commodity.thumbnail", d.sale_attribute_ids as "commodity.saleAttributeIds" 
+  </sql>
+  
+  
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null and '' != params.id" >
+        and t.id = #{params.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.activityNo != null and '' != params.activityNo" >
+        and t.activity_no = #{params.activityNo,jdbcType=VARCHAR}
+      </if>
+      <if test="params.picPath != null and '' != params.picPath" >
+        and t.pic_path = #{params.picPath,jdbcType=VARCHAR}
+      </if>
+      <if test="params.activityType != null and '' != params.activityType" >
+        and t.activity_type = #{params.activityType,jdbcType=VARCHAR}
+      </if>
+      <if test="params.commodityNo != null and '' != params.commodityNo" >
+        and t.commodity_no = #{params.commodityNo,jdbcType=VARCHAR}
+      </if>
+      <if test="params.commodityId != null and '' != params.commodityId" >
+        and t.commodity_id = #{params.commodityId,jdbcType=VARCHAR}
+      </if>
+       <if test="params.presaleTagId != null and '' != params.presaleTagId " >
+        and t.pre_sale_tag_id = #{params.presaleTagId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.activityTitle != null and '' != params.activityTitle" >
+        and (t.activity_title = #{params.activityTitle,jdbcType=VARCHAR} or t.activity_title like CONCAT('%', #{params.activityTitle}, '%'))
+      </if>
+      <if test="params.commodityBarcode != null and '' != params.commodityBarcode" >
+        and (t.commodity_barcode = #{params.commodityBarcode,jdbcType=VARCHAR} or t.commodity_barcode like CONCAT('%', #{params.commodityBarcode}, '%'))
+      </if>
+      <if test="params.showPrice != null and '' != params.showPrice" >
+        and t.show_price = #{params.showPrice,jdbcType=VARCHAR}
+      </if>
+      <if test="params.startDate != null" >
+        and t.start_date = #{params.startDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.endDate != null" >
+        and t.end_date = #{params.endDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.sortTopNo != null" >
+        and t.sort_top_no = #{params.sortTopNo,jdbcType=INTEGER}
+      </if>
+      <if test="params.sortNo != null" >
+        and t.sort_no = #{params.sortNo,jdbcType=INTEGER}
+      </if>
+      <if test="params.isRecommend != null and '' != params.isRecommend" >
+        and t.is_recommend = #{params.isRecommend,jdbcType=VARCHAR}
+      </if>
+      <if test="params.recommendSort != null" >
+        and t.recommend_sort = #{params.recommendSort,jdbcType=INTEGER}
+      </if>
+      <if test="params.idLimitCount != null" >
+        and t.id_limit_count = #{params.idLimitCount,jdbcType=INTEGER}
+      </if>
+      <if test="params.limitCount != null" >
+        and t.limit_count = #{params.limitCount,jdbcType=INTEGER}
+      </if>
+      <if test="params.saleIncrease != null" >
+        and t.sale_increase = #{params.saleIncrease,jdbcType=INTEGER}
+      </if>
+      <if test="params.enableSpecialCount != null and '' != params.enableSpecialCount" >
+        and t.enable_special_count = #{params.enableSpecialCount,jdbcType=VARCHAR}
+      </if>
+      <if test="params.specialCount != null" >
+        and t.special_count = #{params.specialCount,jdbcType=INTEGER}
+      </if>
+      <if test="params.activity!=null" >
+	      <if test="params.activity.id != null and '' != params.activity.id" >
+	        and t.activity_id = #{params.activity.id,jdbcType=VARCHAR}
+	      </if>
+	  </if>
+      <if test="params.deliverDate != null" >
+        and t.deliver_date = #{params.deliverDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.islimit != null and '' != params.islimit" >
+        and t.islimit = #{params.islimit,jdbcType=CHAR}
+      </if>
+      <if test="params.isNeworder != null and '' != params.isNeworder" >
+        and t.is_neworder = #{params.isNeworder,jdbcType=CHAR}
+      </if>
+      <if test="params.buyCount != null and '' != params.buyCount" >
+        and t.buy_count = #{params.buyCount,jdbcType=CHAR}
+      </if>
+      <if test="params.followCount != null" >
+        and t.follow_count = #{params.followCount,jdbcType=INTEGER}
+      </if>
+      <if test="params.activityStatus != null and '' != params.activityStatus">
+	   	  <if test="params.activityStatus==0" >
+   				<![CDATA[and t.activity_commodity_status !='3' and t.start_date > #{params.nowDate,jdbcType=TIMESTAMP}]]>
+	   	  </if>
+	   	  <if test="params.activityStatus==1" >
+   				<![CDATA[and t.activity_commodity_status !='3' and t.start_date <= #{params.nowDate,jdbcType=TIMESTAMP}]]>
+   				<![CDATA[and t.end_date >= #{params.nowDate,jdbcType=TIMESTAMP}]]>
+	   	  </if>
+	   	  <if test="params.activityStatus==2">
+   				<![CDATA[and t.end_date < #{params.nowDate,jdbcType=TIMESTAMP}]]>
+	   	  </if>
+	   	  <if test="params.activityStatus==3">
+   				<![CDATA[and t.activity_commodity_status = #{params.activityStatus,jdbcType=TIMESTAMP} and t.end_date > #{params.nowDate,jdbcType=TIMESTAMP}]]>
+	   	  </if>
+		</if>
+		
+       <if test="params.categoryId!= null and '' != params.categoryId">
+        and d.category_id=#{params.categoryId,jdbcType=VARCHAR} 
+      </if>
+      
+      <if test="params.maxPrice != null" >
+        and t.max_price = #{params.maxPrice,jdbcType=DECIMAL}
+      </if>
+      <if test="params.minPrice != null" >
+        and t.min_price = #{params.minPrice,jdbcType=DECIMAL}
+      </if>
+	  <if test="params.activityIds != null and '' != params.activityIds" >
+	    and t.activity_id in 
+	  	<foreach collection="params.activityIds" item="item" index="index" open="(" separator="," close=")">#{item}</foreach>
+	  </if>
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,g.name as "preSaleTag.name"
+    from activity_commodity t 
+    left join activity_pre_sale_tag g on g.id=t.pre_sale_tag_id
+    where t.id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <!-- 广告中详情列表 -->
+    <select id="selectByAdvert" resultMap="advertBaseResultMap" parameterType="map" >
+    SELECT t.id,t.`activity_title`,t.`commodity_barcode`,t.`show_price`,m.`release_status`,t.`activity_id`   FROM activity_commodity t   LEFT JOIN `activity_manager` m ON t.`activity_no`=m.`activity_no`  
+    <where>
+    	<include refid="condition" />
+      <if test="params.releaseStatus!= null and '' != params.releaseStatus">
+        and m.`release_status`=#{params.releaseStatus,jdbcType=VARCHAR} 
+      </if>
+    </where>
+    </select>
+  <select id="selectByCommodityPrimaryKey" resultMap="BaseResultCommodityMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List_Commodity" />
+      <if test="params.uid != null and '' != params.uid" >
+      ,p.is_remind as "is_remind"
+      </if>
+      ,am.start_date as "activityManagestart_date", am.end_date as "activityManageend_date"
+    from activity_commodity t 
+     left join cims_db.commodity d on t.commodity_id = d.id 
+     left join activity_manager am on am.id=t.activity_id
+      <if test="params.uid != null and '' != params.uid" >
+     left join panicbuy_remind p on t.id= p.activity_id and p.member_id = #{params.uid,jdbcType=VARCHAR}
+     </if>
+     
+      <if test="params.status != null and '' != params.status" >
+        and d.status = #{params.status,jdbcType=VARCHAR}
+      </if>
+    where t.id = #{params.id,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 根据uId、commodityId查询活动商品 -->
+  <select id="selectActivityCommodityByCommodityId" resultMap="BaseResultCommodityMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List_Commodity" />
+      <if test="params.uid != null and '' != params.uid" >
+      ,p.is_remind as "is_remind"
+      </if>
+      ,am.start_date as "activityManagestart_date", am.end_date as "activityManageend_date"
+    from activity_commodity t 
+     left join cims_db.commodity d on t.commodity_id = d.id 
+     left join activity_manager am on am.id=t.activity_id
+     <if test="params.uid != null and '' != params.uid" >
+     left join panicbuy_remind p on t.id= p.activity_id and p.member_id = #{params.uid,jdbcType=VARCHAR}
+     </if>
+     <if test="params.status != null and '' != params.status" >
+        and d.status = #{params.status,jdbcType=VARCHAR}
+     </if>
+    where 1=1 
+    <if test="params.effective != null and '' != params.effective" >
+    	and am.start_date &lt;= NOW() and am.end_date &gt;= NOW() 
+    </if>
+    <if test="params.commodityId != null and '' != params.commodityId" >
+    	and t.commodity_id = #{params.commodityId,jdbcType=VARCHAR}
+    </if>
+  </select>
+  
+  <select id="selectSaleList" resultMap="BaseResultCommodityMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List_Commodity" />
+      <if test="params.uid != null and '' != params.uid" >
+      ,p.is_remind as "is_remind"
+      </if>
+    from activity_commodity t 
+     left join cims_db.commodity d on t.commodity_id = d.id 
+     LEFT JOIN activity_manager ma ON ma.id = t.activity_id
+      <if test="params.uid != null and '' != params.uid" >
+     left join panicbuy_remind p on t.id=p.activity_id 
+     	and t.commodity_id = p.commodity_id 
+     	and p.member_id = #{params.uid,jdbcType=VARCHAR}
+     </if>
+    where 1=1 
+      
+      <if test="params.releaseStatus != null and '' != params.releaseStatus" >
+        and ma.release_status = #{params.releaseStatus,jdbcType=CHAR}
+      </if>
+      
+      
+      <if test="params.activityId != null and '' != params.activityId" >
+        and ma.id = #{params.activityId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.status != null and '' != params.status" >
+        and d.status = #{params.status,jdbcType=VARCHAR}
+      </if>
+    <include refid="condition" />
+    
+    <!-- 按置顶序号排序，之后按进行中（排序后），即将开始（接近开始时间)，已结束排序， -->
+ORDER BY t.sort_top_no desc, t.sort_no desc
+  </select>
+  
+  
+  <select id="selectNewSaleBuy" resultMap="BaseResultCommodityMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List_Commodity" />
+      <if test="params.uid != null and '' != params.uid" >,
+      p.is_remind as "is_remind"
+      </if>,
+      <![CDATA[(case when t.start_date <= now() and t.end_date >= now() then 2 
+			   when t.start_date > now() then 1 else 0 end) as "sortdate",
+			(case when t.start_date <= now() and t.end_date >= now() then t.sort_no else 0 end) as "sort_noorder",
+			(case when t.start_date <= now() and t.end_date >= now() then t.start_date 
+			   when t.start_date > now() then t.start_date else t.end_date end) as "order_filed"
+      ]]>
+    from activity_commodity t 
+    <if test="params.activityType != null and '' != params.activityType and params.activityType=='PRE_SALE' " >
+    	left join activity_pre_sale_tag g on g.id=t.pre_sale_tag_id
+    </if>
+     left join cims_db.commodity d on t.commodity_id = d.id 
+     LEFT JOIN activity_manager ma ON ma.id = t.activity_id
+      <if test="params.uid != null and '' != params.uid" >
+     left join panicbuy_remind p on t.id=p.activity_id 
+     	and t.commodity_id = p.commodity_id 
+     	and p.member_id = #{params.uid,jdbcType=VARCHAR}
+     </if>
+    where 1=1 
+    
+ <!-- 如果是预售，就显示进行中批次中的进行中和已结束 -->
+         <!-- ma.start_date <= now() and ma.end_date >= now() and  -->
+      <if test="params.activityType != null and '' != params.activityType and params.activityType=='PRE_SALE' " >
+        and <![CDATA[
+        ((ma.start_date <= now() and ma.end_date >= now()) and t.start_date <= now()  )
+         ]]>
+         <if test="params.tagId != null and '' != params.tagId" >
+         	and t.pre_sale_tag_id=#{params.tagId,jdbcType=VARCHAR}
+         </if>
+      </if>
+      
+      <if test="params.releaseStatus != null and '' != params.releaseStatus" >
+        and ma.release_status = #{params.releaseStatus,jdbcType=CHAR}
+      </if>
+      
+      <if test="params.status != null and '' != params.status" >
+        and d.status = #{params.status,jdbcType=VARCHAR}
+      </if>
+    <include refid="condition" />
+    
+    <!-- 按置顶序号排序，之后按进行中（排序后），即将开始（接近开始时间)，已结束排序， -->
+ORDER BY t.sort_top_no desc, sortdate desc,sort_noorder desc,order_filed desc
+  </select>
+  
+  <select id="selectSaleBuy" resultMap="BaseResultCommodityMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List_Commodity" />
+      <if test="params.uid != null and '' != params.uid" >,
+      p.is_remind as "is_remind"
+      </if>,
+      <![CDATA[(case when t.start_date <= now() and t.end_date >= now() then 2 
+			   when t.start_date > now() then 1 else 0 end) as "sortdate",
+			(case when t.start_date <= now() and t.end_date >= now() then t.sort_no else 0 end) as "sort_noorder",
+			(case when t.start_date <= now() and t.end_date >= now() then t.start_date 
+			   when t.start_date > now() then t.start_date else t.end_date end) as "order_filed"
+      ]]>
+    from activity_commodity t 
+     left join cims_db.commodity d on t.commodity_id = d.id 
+     LEFT JOIN activity_manager ma ON ma.id = t.activity_id
+      <if test="params.uid != null and '' != params.uid" >
+     left join panicbuy_remind p on t.id=p.activity_id 
+     	and t.commodity_id = p.commodity_id 
+     	and p.member_id = #{params.uid,jdbcType=VARCHAR}
+     </if>
+    where 1=1 
+    
+ <!-- 如果是预售，就显示进行中批次中的进行中和已结束 -->
+         <!-- ma.start_date <= now() and ma.end_date >= now() and  -->
+      <if test="params.activityType != null and '' != params.activityType and params.activityType=='PRE_SALE' " >
+        and <![CDATA[
+        ((ma.start_date <= now() and ma.end_date >= now()) and t.start_date <= now()  )
+         ]]>
+      </if>
+      
+      <if test="params.releaseStatus != null and '' != params.releaseStatus" >
+        and ma.release_status = #{params.releaseStatus,jdbcType=CHAR}
+      </if>
+      
+      <if test="params.status != null and '' != params.status" >
+        and d.status = #{params.status,jdbcType=VARCHAR}
+      </if>
+    <include refid="condition" />
+    
+    <!-- 按置顶序号排序，之后按进行中（排序后），即将开始（接近开始时间)，已结束排序， -->
+ORDER BY t.sort_top_no desc, sortdate desc,sort_noorder desc,order_filed desc
+  </select>
+  
+  <select id="selectSaleCatory" resultMap="BaseResultCommodityMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List_Commodity_Category" />
+    from activity_commodity t 
+     left join cims_db.commodity d on t.commodity_id = d.id 
+     LEFT JOIN activity_manager ma ON ma.id = t.activity_id
+    where 1=1 
+    and <![CDATA[
+        ((ma.start_date <= now() and ma.end_date >= now()) and t.start_date <= now()  )
+         ]]>
+      <if test="params.releaseStatus != null and '' != params.releaseStatus" >
+        and ma.release_status = #{params.releaseStatus,jdbcType=CHAR}
+      </if>
+    <include refid="condition" />
+    
+      <if test="params.status != null and '' != params.status" >
+        and d.status = #{params.status,jdbcType=VARCHAR}
+      </if>
+      
+      
+    <if test="params.orderByField != null and ''!=params.orderByField" >
+      order by t.${params.orderByField} 
+      <if test="params.orderByField" >
+        ${params.orderBy}
+      </if>
+    </if>
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from activity_commodity t 
+    where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByParamsAndMianCommodity" resultMap="BaseResultCommodityMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List_MianCommodity" />
+    from activity_commodity t 
+    left join cims_db.commodity c on c.id = t.commodity_id
+    where 1=1
+    <include refid="condition" />
+  </select>
+   <select id="getActivityCommodityByPresaleTag" resultMap="BaseResultMap" parameterType="com.ffzx.promotion.model.PreSaleTag" >
+    select 
+    <include refid="Base_Column_List" />
+    from activity_commodity t 
+    where 1=1
+     <if test="params.presaleTagId != null and '' != params.presaleTagId " >
+        and t.pre_sale_tag_id = #{params.presaleTagId,jdbcType=VARCHAR}
+      </if>
+  </select>
+  
+  <!-- 消息提醒（活动、商品信息） -->
+  <select id="selectActivityByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    	t.activity_title, 
+    	CASE WHEN length(t.pic_path) &gt; 0 THEN t.pic_path ELSE c.thumbnail END AS 'pic_path',
+    	t.activity_id, t.show_price
+    from activity_commodity t 
+    left join cims_db.commodity c on c.id = t.commodity_id
+    where 1=1
+    <include refid="condition" />
+  </select>
+  
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from activity_commodity t  where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    <if test="params.activityType != null and '' != params.activityType and params.activityType=='PRE_SALE' " >
+    	,g.name as "preSaleTag.name"
+    </if>    
+    from activity_commodity t 
+    <if test="params.activityType != null and '' != params.activityType and params.activityType=='PRE_SALE' " >
+    	left join activity_pre_sale_tag g on g.id=t.pre_sale_tag_id
+    </if>
+    where 1=1
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+    <!-- 普通活动推荐管理排序 -->
+    <if test="params.isRecommend != null and '' != params.isRecommend">
+      order by t.recommend_sort DESC
+    </if>
+  </select>
+  
+  <!-- 活动Banner列表 -->
+  <select id="selectRecommend" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from activity_commodity t 
+    where 1=1 
+    <include refid="condition" />
+    order by t.recommend_sort DESC
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from activity_commodity
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <delete id="deleteActivityAllSku">
+	  DELETE ac,acsku
+	FROM activity_commodity ac
+	LEFT JOIN activity_commodity_sku acsku
+	ON acsku.activity_commodity_id=ac.id
+	WHERE ac.commodity_id in
+	<foreach collection="list" item="item" index="index" 
+			open="(" separator="," close=")">#{item}</foreach>
+  </delete>
+  
+  <update id="updateActivityCommodityStatus" parameterType="java.lang.String" >
+  	update activity_commodity set activity_commodity_status=3 where id= #{id,jdbcType=VARCHAR}
+  </update>
+   <update id="updateActivityCommodityStatusIng" parameterType="java.lang.String" >
+  	update activity_commodity set activity_commodity_status=0 where id= #{id,jdbcType=VARCHAR}
+  </update>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.promotion.api.dto.ActivityCommodity" >
+    delete from activity_commodity
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ffzx.promotion.api.dto.ActivityCommodity" >
+    insert into activity_commodity (id, activity_no, pic_path, 
+      activity_type, commodity_no, commodity_id, 
+      activity_title, commodity_barcode, show_price, 
+      start_date, end_date, sort_top_no, 
+      sort_no, is_recommend, recommend_sort, 
+      id_limit_count, limit_count, sale_increase, 
+      enable_special_count, special_count, activity_id, 
+      deliver_date, islimit, is_neworder, buy_count,pre_sale_tag_id)
+    values (#{id,jdbcType=VARCHAR}, #{activityNo,jdbcType=VARCHAR}, #{picPath,jdbcType=VARCHAR}, 
+      #{activityType,jdbcType=VARCHAR}, #{commodityNo,jdbcType=VARCHAR}, #{commodityId,jdbcType=VARCHAR}, 
+      #{activityTitle,jdbcType=VARCHAR}, #{commodityBarcode,jdbcType=VARCHAR}, #{showPrice,jdbcType=VARCHAR}, 
+      #{startDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP}, #{sortTopNo,jdbcType=INTEGER}, 
+      #{sortNo,jdbcType=INTEGER}, #{isRecommend,jdbcType=VARCHAR}, #{recommendSort,jdbcType=INTEGER}, 
+      #{idLimitCount,jdbcType=INTEGER}, #{limitCount,jdbcType=INTEGER}, #{saleIncrease,jdbcType=INTEGER}, 
+      #{enableSpecialCount,jdbcType=VARCHAR}, #{specialCount,jdbcType=INTEGER}, #{activity.id,jdbcType=VARCHAR}, 
+      #{deliverDate,jdbcType=TIMESTAMP}, #{islimit,jdbcType=CHAR}, #{isNeworder,jdbcType=CHAR},
+       , #{buyCount,jdbcType=CHAR},#{preSaleTag.id,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.promotion.api.dto.ActivityCommodity" >
+    insert into activity_commodity
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="activityNo != null" >
+        activity_no,
+      </if>
+      <if test="picPath != null" >
+        pic_path,
+      </if>
+      <if test="activityType != null" >
+        activity_type,
+      </if>
+      <if test="commodityNo != null" >
+        commodity_no,
+      </if>
+      <if test="commodityId != null" >
+        commodity_id,
+      </if>
+      <if test="activityTitle != null" >
+        activity_title,
+      </if>
+      <if test="commodityBarcode != null" >
+        commodity_barcode,
+      </if>
+      <if test="showPrice != null" >
+        show_price,
+      </if>
+      <if test="startDate != null" >
+        start_date,
+      </if>
+      <if test="endDate != null" >
+        end_date,
+      </if>
+      <if test="sortTopNo != null" >
+        sort_top_no,
+      </if>
+      <if test="sortNo != null" >
+        sort_no,
+      </if>
+      <if test="isRecommend != null" >
+        is_recommend,
+      </if>
+      <if test="recommendSort != null" >
+        recommend_sort,
+      </if>
+      <if test="idLimitCount != null" >
+        id_limit_count,
+      </if>
+      <if test="limitCount != null" >
+        limit_count,
+      </if>
+      <if test="saleIncrease != null" >
+        sale_increase,
+      </if>
+      <if test="enableSpecialCount != null" >
+        enable_special_count,
+      </if>
+      <if test="specialCount != null" >
+        special_count,
+      </if>
+      <if test="activity.id != null" >
+        activity_id,
+      </if>
+      <if test="deliverDate != null" >
+        deliver_date,
+      </if>
+      <if test="islimit != null" >
+        islimit,
+      </if>
+      <if test="isNeworder != null" >
+        is_neworder, 
+      </if>
+      <if test="buyCount != null" >
+        buy_count, 
+      </if>
+      <if test="followCount != null" >
+        follow_count,
+      </if>
+      <if test="activityCommodityStatus != null" >
+        activity_commodity_status,
+      </if>
+      <if test="maxPrice != null" >
+        max_price,
+      </if>
+      <if test="minPrice != null" >
+        min_price,
+      </if>
+      <if test="preSaleTag != null" >
+	       <if test="preSaleTag.id != null" >
+	        pre_sale_tag_id,
+	      </if>
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="activityNo != null" >
+        #{activityNo,jdbcType=VARCHAR},
+      </if>
+      <if test="picPath != null" >
+        #{picPath,jdbcType=VARCHAR},
+      </if>
+      <if test="activityType != null" >
+        #{activityType,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityNo != null" >
+        #{commodityNo,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityId != null" >
+        #{commodityId,jdbcType=VARCHAR},
+      </if>
+      <if test="activityTitle != null" >
+        #{activityTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityBarcode != null" >
+        #{commodityBarcode,jdbcType=VARCHAR},
+      </if>
+      <if test="showPrice != null" >
+        #{showPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null" >
+        #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sortTopNo != null" >
+        #{sortTopNo,jdbcType=INTEGER},
+      </if>
+      <if test="sortNo != null" >
+        #{sortNo,jdbcType=INTEGER},
+      </if>
+      <if test="isRecommend != null" >
+        #{isRecommend,jdbcType=VARCHAR},
+      </if>
+      <if test="recommendSort != null" >
+        #{recommendSort,jdbcType=INTEGER},
+      </if>
+      <if test="idLimitCount != null" >
+        #{idLimitCount,jdbcType=INTEGER},
+      </if>
+      <if test="limitCount != null" >
+        #{limitCount,jdbcType=INTEGER},
+      </if>
+      <if test="saleIncrease != null" >
+        #{saleIncrease,jdbcType=INTEGER},
+      </if>
+      <if test="enableSpecialCount != null" >
+        #{enableSpecialCount,jdbcType=VARCHAR},
+      </if>
+      <if test="specialCount != null" >
+        #{specialCount,jdbcType=INTEGER},
+      </if>
+      <if test="activity != null">
+	      <if test="activity.id != null" >
+	        #{activity.id,jdbcType=VARCHAR},
+	      </if>
+	  </if>
+      <if test="deliverDate != null" >
+        #{deliverDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="islimit != null" >
+        #{islimit,jdbcType=CHAR},
+      </if>
+      <if test="isNeworder != null" >
+        #{isNeworder,jdbcType=CHAR},
+      </if>
+      <if test="buyCount != null" >
+        #{buyCount,jdbcType=CHAR},
+      </if>
+      <if test="followCount != null" >
+        #{followCount,jdbcType=INTEGER},
+      </if>
+      <if test="activityCommodityStatus != null" >
+        #{activityCommodityStatus,jdbcType=CHAR},
+      </if>
+      <if test="maxPrice != null" >
+        #{maxPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="minPrice != null" >
+        #{minPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="preSaleTag != null" >
+	      <if test="preSaleTag.id !=null">
+	      #{preSaleTag.id,jdbcType=VARCHAR},
+	      </if>
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.promotion.api.dto.ActivityCommodity" >
+    update activity_commodity
+    <set >
+      <if test="activityNo != null" >
+        activity_no = #{activityNo,jdbcType=VARCHAR},
+      </if>
+      <if test="picPath != null" >
+        pic_path = #{picPath,jdbcType=VARCHAR},
+      </if>
+      <if test="activityType != null" >
+        activity_type = #{activityType,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityNo != null" >
+        commodity_no = #{commodityNo,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityId != null" >
+        commodity_id = #{commodityId,jdbcType=VARCHAR},
+      </if>
+      <if test="activityTitle != null" >
+        activity_title = #{activityTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityBarcode != null" >
+        commodity_barcode = #{commodityBarcode,jdbcType=VARCHAR},
+      </if>
+      <if test="showPrice != null" >
+        show_price = #{showPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null" >
+        start_date = #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null" >
+        end_date = #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sortTopNo != null" >
+        sort_top_no = #{sortTopNo,jdbcType=INTEGER},
+      </if>
+      <if test="sortNo != null" >
+        sort_no = #{sortNo,jdbcType=INTEGER},
+      </if>
+      <if test="isRecommend != null" >
+        is_recommend = #{isRecommend,jdbcType=VARCHAR},
+      </if>
+      <if test="recommendSort != null" >
+        recommend_sort = #{recommendSort,jdbcType=INTEGER},
+      </if>
+      <if test="idLimitCount != null" >
+        id_limit_count = #{idLimitCount,jdbcType=INTEGER},
+      </if>
+      <if test="limitCount != null" >
+        limit_count = #{limitCount,jdbcType=INTEGER},
+      </if>
+      <if test="saleIncrease != null" >
+        sale_increase = #{saleIncrease,jdbcType=INTEGER},
+      </if>
+      <if test="enableSpecialCount != null" >
+        enable_special_count = #{enableSpecialCount,jdbcType=VARCHAR},
+      </if>
+      <if test="specialCount != null" >
+        special_count = #{specialCount,jdbcType=INTEGER},
+      </if>
+      <if test="activity != null">
+	      <if test="activity.id != null" >
+	        activity_id = #{activity.id,jdbcType=VARCHAR},
+	      </if>
+      </if>
+       <if test="preSaleTag != null" >
+	        <if test="preSaleTag.id !=null">
+	     	pre_sale_tag_id= #{preSaleTag.id,jdbcType=VARCHAR},
+	      </if>
+      </if>
+      <if test="deliverDate != null" >
+        deliver_date = #{deliverDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="islimit != null" >
+        islimit = #{islimit,jdbcType=CHAR},
+      </if>
+      <if test="isNeworder != null" >
+        is_neworder = #{isNeworder,jdbcType=CHAR},
+      </if>
+      <if test="buyCount != null" >
+        buy_count = #{buyCount,jdbcType=CHAR},
+      </if>
+      <if test="followCount != null" >
+        follow_count = #{followCount,jdbcType=INTEGER},
+      </if>
+      <if test="activityCommodityStatus != null" >
+        activity_commodity_status = #{activityCommodityStatus,jdbcType=CHAR},
+      </if>
+      <if test="maxPrice != null" >
+        max_price = #{maxPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="minPrice != null" >
+        min_price = #{minPrice,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.promotion.api.dto.ActivityCommodity" >
+    update activity_commodity
+    set activity_no = #{activityNo,jdbcType=VARCHAR},
+      pic_path = #{picPath,jdbcType=VARCHAR},
+      activity_type = #{activityType,jdbcType=VARCHAR},
+      commodity_no = #{commodityNo,jdbcType=VARCHAR},
+      commodity_id = #{commodityId,jdbcType=VARCHAR},
+      activity_title = #{activityTitle,jdbcType=VARCHAR},
+      commodity_barcode = #{commodityBarcode,jdbcType=VARCHAR},
+      show_price = #{showPrice,jdbcType=VARCHAR},
+      start_date = #{startDate,jdbcType=TIMESTAMP},
+      end_date = #{endDate,jdbcType=TIMESTAMP},
+      sort_top_no = #{sortTopNo,jdbcType=INTEGER},
+      sort_no = #{sortNo,jdbcType=INTEGER},
+      is_recommend = #{isRecommend,jdbcType=VARCHAR},
+      recommend_sort = #{recommendSort,jdbcType=INTEGER},
+      id_limit_count = #{idLimitCount,jdbcType=INTEGER},
+      limit_count = #{limitCount,jdbcType=INTEGER},
+      sale_increase = #{saleIncrease,jdbcType=INTEGER},
+      enable_special_count = #{enableSpecialCount,jdbcType=VARCHAR},
+      special_count = #{specialCount,jdbcType=INTEGER},
+      activity_id = #{activity.id,jdbcType=VARCHAR},
+      deliver_date = #{deliverDate,jdbcType=TIMESTAMP},
+      islimit = #{islimit,jdbcType=CHAR},
+      is_neworder = #{isNeworder,jdbcType=CHAR},
+      buy_count = #{buyCount,jdbcType=CHAR},
+      follow_count = #{followCount,jdbcType=INTEGER},
+      activity_commodity_status = #{activityCommodityStatus,jdbcType=CHAR},
+      max_price = #{maxPrice,jdbcType=DECIMAL},
+      min_price = #{minPrice,jdbcType=DECIMAL},
+      activity_id = #{activity.id,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <!-- 根据活动id更新推荐商品信息 -->
+  <update id="updateRecommendInfo" parameterType="com.ffzx.promotion.api.dto.ActivityCommodity" >
+  	update activity_commodity
+  		set pic_path = #{picPath,jdbcType=VARCHAR},
+  			is_recommend = #{isRecommend,jdbcType=VARCHAR},
+      		recommend_sort = #{recommendSort,jdbcType=INTEGER}
+    where activity_id = #{activity.id,jdbcType=VARCHAR}	
+  </update>
+
+  <!-- 根据活动id更新活动提醒人数 -->
+  <update id="updatefollowCount" parameterType="com.ffzx.promotion.api.dto.ActivityCommodity" >
+  	update activity_commodity
+  		set follow_count =follow_count+ #{followCount,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}	
+  </update>
+
+  <!-- 批发商品列表 -->
+  <select id="selectWholeSaleCommodityByParams" resultMap="CommodityResultMap" parameterType="map" >
+    select 
+    <include refid="Commodity_Column_List" />
+    , (SELECT 
+		MIN(D1.activity_price) 
+		from activity_commodity_sku d1 where d1.activity_commodity_id = t.id) as "price"
+    from activity_commodity t 
+    left join cims_db.commodity d on t.commodity_id = d.id 
+    LEFT JOIN order_db.summary_sales sale ON d.code = sale.commodity_code
+    where 1=1 
+    and d.status = 'COMMODITY_STATUS_ADDED' 
+    <if test="params.activityId != null and '' != params.activityId" >
+        and t.activity_id = #{params.activityId,jdbcType=VARCHAR}
+    </if>
+    order by t.sort_top_no DESC 
+    <if test="params.sort != null and ''!= params.sort" >
+	    <if test="params.sort == 1">,IFNULL(sale.sale_num,0) DESC</if>
+	    <if test="params.sort == 2">,price DESC</if>
+	    <if test="params.sort == 3">,price </if>
+    </if>
+  </select>
+  
+  <!-- 普通活动商品列表   
+	, (SELECT 
+		MAX(D1.activity_price) 
+		from activity_commodity_sku d1 where d1.commodity_no = d.code) as "show_price"-->
+  <select id="selectActivityCommodityByParams" resultMap="CommodityResultMap" parameterType="map" >
+    select 
+    <include refid="Commodity_Column_List" />
+    ,(SELECT max(sku.id) from cims_db.commodity_sku sku where sku.commodity_code = t.commodity_no) as "skuId"
+    , (SELECT 
+		MIN(D1.activity_price) 
+		from activity_commodity_sku d1 where d1.activity_commodity_id = t.id) as "price"
+    from activity_commodity t 
+    left join cims_db.commodity d on t.commodity_id = d.id 
+    LEFT JOIN order_db.summary_sales sale ON d.code = sale.commodity_code
+    where 1=1 
+    and d.status = 'COMMODITY_STATUS_ADDED' 
+    <if test="params.activityId != null and '' != params.activityId" >
+        and t.activity_id = #{params.activityId,jdbcType=VARCHAR}
+    </if>
+     order by t.sort_top_no DESC
+    <!-- 价格排序 -->
+    <if test="params.sort != null and ''!= params.sort and params.sort == 'price'" >
+	    ,price 
+	    <if test="params.desc != null and ''!= params.desc and params.desc == 1" >
+	     DESC 
+    	</if>
+    </if>
+    <!-- 销量排序 -->
+    <if test="params.sort == null or ''== params.sort" >,IFNULL(sale.sale_num,0)+IFNULL(t.sale_increase,0) DESC</if>
+  </select>
+  
+  <select id="getActivityList" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from activity_commodity t 
+    where 1=1
+    <include refid="condition" />
+    and t.start_date &lt;= NOW() and t.end_date &gt;= NOW() 
+    <if test="orderByField != null and ''!=orderByField" >
+      order by t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+
+  
+  <!-- 商品搜索，by ying.cai -->
+ <select id="searchCommodity" resultType="Map" parameterType="Map">
+		SELECT DISTINCT
+			c.id AS commodityId,
+			c.code AS commodityNo,
+			c.stock_Limit AS stockLimit,
+			c.category_id AS categoryId,
+			c.retail_Price AS price,
+			c.give_type AS giveType,
+			c.create_date AS createDate,
+			(CASE WHEN TMP_SKU.skuCount IS NOT NULL AND TMP_SKU.skuCount>1 THEN NULL ELSE TMP_SKU.id END)skuId,
+			(CASE WHEN TMP_SKU.skuCount IS NOT NULL AND TMP_SKU.skuCount>1 THEN NULL ELSE TMP_SKU.sku_code END)skuCode,
+			act.id AS activityId,
+			act.activity_no AS activityNo,
+			act.activity_type AS showType,
+			inner_tmp.lowprice AS lowPrice,
+			inner_tmp.maxprice AS maxPrice,
+			(CASE WHEN c.Sale_Attribute_Ids IS NULL OR c.sale_attribute_name IS NULL THEN 0 ELSE 1 END) isUseAttr,
+			IFNULL(sale.sale_num,0) AS saleNum,
+			IFNULL(act.activity_title,c.title) AS finalTitle,
+			(CASE WHEN LENGTH(act.pic_path)>0 AND act.activity_type!='ORDINARY_ACTIVITY' THEN act.pic_path ELSE c.thumbnail END) AS finalImageUrl,
+			IFNULL(act.show_price,c.preferential_Price) AS finalPrice
+			FROM cims_db.commodity c
+			LEFT JOIN cims_db.category gory ON c.category_id = gory.id
+			LEFT JOIN (
+				SELECT sku.id,sku.sku_code,sku.commodity_code,COUNT(1) skuCount FROM cims_db.commodity_sku sku 
+				GROUP BY sku.commodity_code
+			)TMP_SKU ON TMP_SKU.commodity_code=c.code
+			LEFT JOIN order_db.summary_sales sale ON c.code = sale.commodity_code
+			LEFT JOIN (
+				SELECT
+					MIN(favourable_Price)lowPrice,
+					MAX(favourable_Price) maxPrice,
+					commodity_code
+				FROM cims_db.commodity_sku
+				GROUP BY commodity_code 
+			)inner_tmp ON inner_tmp.commodity_code = c.code
+			LEFT JOIN (
+				SELECT COUNT(1) COUNT_NUM,commodity_code,warehouse_Code
+				FROM order_db.stock_custom WHERE del_flag = '0' AND address_code = #{params.addressCode} 
+				GROUP BY commodity_code
+				UNION
+				SELECT COUNT(1) COUNT_NUM,commodity_code,warehouse_Code
+				FROM order_db.stock_wms WHERE del_flag = '0' AND warehouse_code = #{params.warehouseCode}
+				GROUP BY commodity_code
+			)inventory_tmp ON c.code = inventory_tmp.commodity_code
+			
+		   LEFT JOIN (
+		   	SELECT 
+		   		 ac.id AS id,ac.min_price, ac.activity_no AS activity_no,ac.commodity_no AS commodity_no,
+				 ac.activity_type AS activity_type,ac.activity_title AS activity_title,ac.pic_path AS pic_path,
+				 ac.show_price AS show_price,am.release_Status,
+				 ac.start_date AS ac_start_date,
+				 ac.end_date AS ac_end_date,
+				 am.start_date AS am_start_date,
+				 am.end_date AS am_end_date
+			 FROM activity_commodity ac 
+			 LEFT JOIN activity_manager am ON (ac.activity_no = am.activity_no  AND am.del_flag = '0' ) 
+			 WHERE ( am.activity_type IS NULL OR (am.activity_type!='NEWUSER_VIP' AND am.activity_type!='WHOLESALE_MANAGER'))
+			) act ON c.code = act.commodity_no 
+ 			WHERE 
+ 			c.status = 'COMMODITY_STATUS_ADDED' 
+ 			AND gory.is_show = '1' 
+ 			AND c.buy_type NOT IN ('NEWUSER_VIP','WHOLESALE_MANAGER')    
+			AND (act.activity_type IS NULL || (act.release_Status= 1)) 
+			AND (act.activity_type IS NULL OR act.activity_type !='PANIC_BUY' OR (act.ac_start_date &lt;= NOW() AND NOW()&lt;=act.ac_end_date) ) 
+			AND (act.activity_type IS NULL OR act.activity_type !='PRE_SALE' OR (act.am_start_date &lt;= NOW() AND NOW()&lt;=act.am_end_date AND act.ac_start_date &lt;= NOW()) ) 
+			AND (act.activity_type IS NULL OR act.activity_type !='ORDINARY_ACTIVITY' OR (act.am_start_date &lt;= NOW() AND NOW()&lt;=act.am_end_date) ) 
+			<if test="params.cid!=null and ''!=params.cid">
+				AND ( c.category_id =#{params.cid} OR gory.parent_ids LIKE '%${params.cid}%')
+			</if>
+			<!-- <if test="params.title!=null and ''!=params.title">
+		 		AND ( 
+		 		  c.title LIKE '%${params.title}%' OR  c.alias_name LIKE '%${params.title}%' OR 
+                  c.sub_title LIKE '%${params.title}%' OR c.keyword LIKE '%${params.title}%' OR
+                  act.activity_title LIKE '%${params.title}%'  )
+			</if> -->
+			<if test="params.whereSql!=null and ''!=params.whereSql">
+				AND (${params.whereSql})
+			</if>
+			ORDER BY IFNULL(inventory_tmp.COUNT_NUM,0)>0 OR c.area_category=1 DESC,
+		   <choose>
+			    <when test="params.sort == null or '' == params.sort or params.sort!='price'">IFNULL(sale.sale_num,0) DESC,createDate DESC</when>
+			    <otherwise>IFNULL(act.min_price,c.min_price) <if test="params.desc!=null and params.desc==1">DESC</if>,createDate DESC</otherwise>
+		   </choose>
+  </select>
+  
+  <select id="searchCommodityByCidAndSalecount" resultType="Map" parameterType="Map">
+		SELECT 
+			c.id AS commodityId,
+			c.code AS commodityNo,
+			c.title AS title,
+			c.category_id AS categoryId,
+			c.alias_name AS aliasName,
+			c.small_image AS smallImage,
+			c.thumbnail AS thumbnail,
+			c.retail_Price AS price,
+			c.create_date AS createDate,
+			c.sale_attribute_ids as saleAttributeIds,
+			c.preferential_price as preferentialPrice,
+			(SELECT max(sku.id) from cims_db.commodity_sku sku where sku.commodity_code = c.code)
+			AS skuId,
+			inner_tmp.lowprice AS lowPrice,
+			inner_tmp.maxprice AS maxPrice,
+			IFNULL(sales.sale_num,0) AS saleNum
+			FROM cims_db.commodity c
+			LEFT JOIN cims_db.category gory ON c.category_id = gory.id
+			LEFT JOIN order_db.summary_sales sales ON sales.commodity_code = c.code 
+			<if test="params.saleTime != null and '' != params.saleTime">
+			 and sales.update_date &gt;= #{params.saleTime,jdbcType=VARCHAR}
+	  		</if>
+			LEFT JOIN (
+				SELECT
+					MIN(favourable_Price)lowPrice,
+					MAX(favourable_Price) maxPrice,
+					commodity_code
+				FROM cims_db.commodity_sku
+				GROUP BY commodity_code 
+			)inner_tmp ON inner_tmp.commodity_code = c.code
+			WHERE 1=1 AND c.status = 'COMMODITY_STATUS_ADDED' AND c.buy_type = 'COMMON_BUY' AND gory.is_show = '1'
+			<!--  AND (IFNULL(STOCK_CUSTOM_TMP.customNum,0)+IFNULL(STOCK_WMS_TMP.wmsNum,0) )>0  -->
+			<if test="params.cid!=null and ''!=params.cid">
+				AND ( c.category_id =#{params.cid} OR gory.parent_ids LIKE '%${params.cid}%')
+			</if>
+          ORDER BY saleNum DESC,createDate DESC
+  </select>
+  
+  <!-- 活动商品同步活动时间 -->
+  <update id="updateCommodityDate" parameterType="Map" >
+  	update activity_commodity
+  		set start_date = #{params.startDate,jdbcType=TIMESTAMP},
+      		end_date = #{params.endDate,jdbcType=TIMESTAMP}
+    where activity_id = #{params.activityId,jdbcType=VARCHAR}	
+  </update>
+  
+  <!-- 获取抢购活动商品 时间重叠数据 -->
+  <select id="selectCommodityByDate" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from activity_commodity t 
+    where 1=1
+    <if test="params.activityType != null and '' != params.activityType" >
+        and t.activity_type = #{params.activityType,jdbcType=VARCHAR}
+    </if>
+    <if test="params.commodityNos != null and '' != params.commodityNos" >
+         and t.commodity_no in 
+         <foreach collection="params.commodityNos" item="item" index="index" 
+		open="(" separator="," close=")">#{item}</foreach>
+    </if>
+    <![CDATA[and ((t.start_date <= #{params.startDate,jdbcType=TIMESTAMP} and t.end_date >= #{params.startDate,jdbcType=TIMESTAMP})
+    	or (t.start_date <= #{params.endDate,jdbcType=TIMESTAMP} and t.end_date >= #{params.endDate,jdbcType=TIMESTAMP})
+    	or (t.start_date >= #{params.startDate,jdbcType=TIMESTAMP} and t.end_date <= #{params.endDate,jdbcType=TIMESTAMP}))
+    ]]>
+  </select>
+  
+  <select id="getActivityCommodityByGive" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from activity_commodity t 
+    where 1=1
+    <if test="commodity.commodityId !=null and ''!=commodity.commodityId">
+			AND t.commodity_id = #{commodity.commodityId,jdbcType=VARCHAR}
+	</if>
+	 <if test="commodity.activityType !=null and ''!=commodity.activityType">
+			AND  t.activity_type = #{commodity.activityType,jdbcType=VARCHAR}
+	</if>
+  </select>
+  	
+  	<!-- 搜索引擎数据提供 -->
+  	<select id="findActivityForESByCommodityId" resultType="com.ffzx.promotion.api.dto.ActivityEsVo" parameterType="String">
+  		SELECT 
+		  ac.commodity_id AS "goodsId",
+		  IFNULL(ac.activity_title,c.title) AS "title1",   
+		  (CASE WHEN LENGTH(ac.pic_path)>0 AND ac.activity_type!='ORDINARY_ACTIVITY' THEN ac.pic_path ELSE c.thumbnail END) AS "imgPath", 
+		  IFNULL(ac.show_price,c.preferential_Price) AS "discountPrice", 
+		  ac.activity_type AS "type",
+		  ac.id AS "activityId",
+		  "1" AS "isVip",
+		  (CASE WHEN ac.start_date IS NULL THEN am.start_date ELSE ac.start_date END) AS "startDate",
+		  (CASE WHEN ac.end_date IS NULL THEN am.end_date ELSE ac.end_date END) AS "endDate",
+		  ac.min_price AS "minPrice",
+		  ac.max_price AS "maxPrice"
+		FROM activity_commodity ac 
+		LEFT JOIN activity_manager am ON ( ac.activity_no = am.activity_no AND am.del_flag = '0') 
+		LEFT JOIN cims_db.commodity c ON ac.commodity_id = c.id
+		WHERE am.activity_type != 'NEWUSER_VIP' AND am.activity_type != 'WHOLESALE_MANAGER' 
+		AND am.release_Status = 1
+		AND c.id = #{goodsId}
+  	</select>
+  	<!-- 根据activityMamageid获取activityCommodityId获取活动商品明细 -->
+  	<select id="findActivityGoodsItemByMid" resultType="com.ffzx.promotion.api.dto.ActivityEsVo" parameterType="map">
+        SELECT 
+		  ac.commodity_id AS "goodsId",
+		  IFNULL(ac.activity_title,c.title) AS "title1",   
+		  (CASE WHEN LENGTH(ac.pic_path)>0 AND ac.activity_type!='ORDINARY_ACTIVITY' THEN ac.pic_path ELSE c.thumbnail END) AS "imgPath", 
+		  IFNULL(ac.show_price,c.preferential_Price) AS "discountPrice", 
+		  ac.activity_type AS "type",
+		  ac.id AS "activityId",
+		  "1" AS "isVip",
+  		  (CASE WHEN ac.start_date IS NULL THEN am.start_date ELSE ac.start_date END) AS "startDate",
+		  (CASE WHEN ac.end_date IS NULL THEN am.end_date ELSE ac.end_date END) AS "endDate",
+		  am.release_Status AS "releaseStatus",
+	      ac.min_price AS "minPrice",
+		  ac.max_price AS "maxPrice"
+		FROM activity_commodity ac 
+		LEFT JOIN activity_manager am ON ( ac.activity_no = am.activity_no AND am.del_flag = '0') 
+		LEFT JOIN cims_db.commodity c ON ac.commodity_id = c.id
+		WHERE 1=1
+		<if test="params.activityManagerId != null and '' != params.activityManagerId">
+		AND am.id = #{params.activityManagerId}
+		</if>
+		<if test="params.activityCommodityId != null and '' != params.activityCommodityId">
+		AND ac.id = #{params.activityCommodityId}
+		</if>
+  	</select>
+</mapper>

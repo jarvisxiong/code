@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ffzx.order.mapper.StockNumLogMapper">
+  <sql id="Base_Column_List" >
+		a.id, 
+		a.remarks AS "remarks",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.last_update_by AS "lastUpdateBy.id",
+		a.last_update_date AS "lastUpdateDate",
+		a.del_flag AS "delFlag",
+		a.handle_date AS "handleDate",
+		a.handle_msg AS "handleMsg",
+		a.op_user_id AS "opUserId",
+		a.op_user AS "opUser",
+		a.stock_custom_Id AS "stockCustomId"
+
+  </sql>  
+  <sql id="joins">
+
+  </sql> 
+  <sql id="condition" >
+	<if test="null!=params" >
+		<if test="params.id != null and '' != params.id">
+			and a.id = #{params.id,jdbcType=VARCHAR}
+		</if>
+		<if test="params.stockCustomId != null and '' != params.stockCustomId">
+			and a.stock_custom_Id = #{params.stockCustomId,jdbcType=VARCHAR}
+		</if>
+		<if test="params.remarks != null and '' != params.remarks">
+			and a.remarks = #{params.remarks,jdbcType=VARCHAR}
+		</if>
+		<if test="params.createBy != null and '' != params.createBy">
+			and a.create_by = #{params.createBy.id,jdbcType=VARCHAR}
+		</if>
+		<if test="params.createDate != null and '' != params.createDate">
+			and a.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+		</if>
+		<if test="params.lastUpdateBy != null and '' != params.lastUpdateBy">
+			and a.last_update_by = #{params.lastUpdateBy.id,jdbcType=VARCHAR}
+		</if>
+		<if test="params.lastUpdateDate != null and '' != params.lastUpdateDate">
+			and a.last_update_date = #{params.lastUpdateDate,jdbcType=TIMESTAMP}
+		</if>
+		<if test="params.delFlag != null and '' != params.delFlag">
+			and a.del_flag = #{params.delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="params.handleDate != null and '' != params.handleDate">
+			and a.handle_date = #{params.handleDate,jdbcType=TIMESTAMP}
+		</if>
+		<if test="params.handleMsg != null and '' != params.handleMsg">
+			and a.handle_msg = #{params.handleMsg,jdbcType=VARCHAR}
+		</if>
+		<if test="params.opUserId != null and '' != params.opUserId">
+			and a.op_user_id = #{params.opUserId,jdbcType=VARCHAR}
+		</if>
+		<if test="params.opUser != null and '' != params.opUser">
+			and a.op_user = #{params.opUser,jdbcType=VARCHAR}
+		</if>
+		<if test="params.delFlag == null or '' == params.delFlag or null == params" >
+			and a.del_flag = 0
+		</if>
+	</if>
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultType="com.ffzx.order.model.StockNumLog" parameterType="java.lang.String" >
+   	select 
+    <include refid="Base_Column_List" />
+    from stock_num_log as a 
+    <include refid="joins"/>
+    where  a.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParams" resultType="com.ffzx.order.model.StockNumLog" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from stock_num_log as  a 
+    <include refid="joins"/>
+    where 1=1 
+    <include refid="condition"/>
+    order by handle_date DESC
+  </select>
+  
+  <select id="selectCount" resultType="java.lang.Integer" >
+   select count(1) as s from stock_num_log as  a where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultType="com.ffzx.order.model.StockNumLog" parameterType="map" >
+   select 
+    <include refid="Base_Column_List" />
+    from stock_num_log as  a    
+    <include refid="joins"/>
+    where 1=1      
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by  a.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    	DELETE FROM stock_num_log WHERE id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.order.model.StockNumLog" >
+    	DELETE FROM stock_num_log WHERE id = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.ffzx.order.model.StockNumLog" >
+   	INSERT INTO stock_num_log
+		(
+			id,
+			remarks,
+			create_by,
+			create_date,
+			last_update_by,
+			last_update_date,
+			del_flag,
+			handle_date,
+			handle_msg,
+			op_user_id,
+			op_user,
+			stock_custom_Id
+		) VALUES
+		(
+			#{id,jdbcType=VARCHAR},
+			#{remarks,jdbcType=VARCHAR},
+			#{createBy.id,jdbcType=VARCHAR},
+			#{createDate,jdbcType=TIMESTAMP},
+			#{lastUpdateBy.id,jdbcType=VARCHAR},
+			#{lastUpdateDate,jdbcType=TIMESTAMP},
+			#{delFlag,jdbcType=VARCHAR},
+			#{handleDate,jdbcType=TIMESTAMP},
+			#{handleMsg,jdbcType=VARCHAR},
+			#{opUserId,jdbcType=VARCHAR},
+			#{opUser,jdbcType=VARCHAR},
+			#{stockCustomId,jdbcType=VARCHAR}
+		)
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.order.model.StockNumLog" >
+   	INSERT INTO stock_num_log 
+	<trim prefix="(" suffix=")" suffixOverrides="," >
+		<if test="id != null">id,</if>
+		<if test="remarks != null" >remarks,</if>
+		<if test="createBy != null" >create_by,</if>
+		<if test="createDate != null" >create_date,</if>
+		<if test="lastUpdateBy != null" >last_update_by,</if>
+		<if test="lastUpdateDate != null" >last_update_date,</if>
+		<if test="delFlag != null" >del_flag,</if>
+		<if test="handleDate != null" >handle_date,</if>
+		<if test="handleMsg != null" >handle_msg,</if>
+		<if test="opUserId != null" >op_user_id,</if>
+		<if test="opUser != null" >op_user,</if>
+		<if test="stockCustomId != null" >stock_custom_Id,</if>
+	</trim>
+	<trim prefix="values (" suffix=")" suffixOverrides="," >
+		<if test="id != null">#{id,jdbcType=VARCHAR},</if>
+		<if test="remarks != null" >#{remarks,jdbcType=VARCHAR},</if>
+		<if test="createBy != null" >#{createBy.id,jdbcType=VARCHAR},</if>
+		<if test="createDate != null" >#{createDate,jdbcType=TIMESTAMP},</if>
+		<if test="lastUpdateBy != null" >#{lastUpdateBy.id,jdbcType=VARCHAR},</if>
+		<if test="lastUpdateDate != null" >#{lastUpdateDate,jdbcType=TIMESTAMP},</if>
+		<if test="delFlag != null" >#{delFlag,jdbcType=VARCHAR},</if>
+		<if test="handleDate != null" >#{handleDate,jdbcType=TIMESTAMP},</if>
+		<if test="handleMsg != null" >#{handleMsg,jdbcType=VARCHAR},</if>
+		<if test="opUserId != null" >#{opUserId,jdbcType=VARCHAR},</if>
+		<if test="opUser != null" >#{opUser,jdbcType=VARCHAR},</if>
+		<if test="stockCustomId != null" >#{stockCustomId,jdbcType=VARCHAR},</if>
+	</trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.order.model.StockNumLog" >
+   	UPDATE stock_num_log
+	<set>
+		<if test="remarks != null" >
+			remarks = #{remarks,jdbcType=VARCHAR},
+		</if>
+		<if test="createBy != null" >
+			create_by = #{createBy.id,jdbcType=VARCHAR},
+		</if>
+		<if test="createDate != null" >
+			create_date = #{createDate,jdbcType=TIMESTAMP},
+		</if>
+		<if test="lastUpdateBy != null" >
+			last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+		</if>
+		<if test="lastUpdateDate != null" >
+			last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+		</if>
+		<if test="delFlag != null" >
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="handleDate != null" >
+			handle_date = #{handleDate,jdbcType=TIMESTAMP},
+		</if>
+		<if test="handleMsg != null" >
+			handle_msg = #{handleMsg,jdbcType=VARCHAR},
+		</if>
+		<if test="opUserId != null" >
+			op_user_id = #{opUserId,jdbcType=VARCHAR},
+		</if>
+		<if test="opUser != null" >
+			op_user = #{opUser,jdbcType=VARCHAR},
+		</if>
+		<if test="stockCustomId != null" >
+			stock_custom_Id = #{stockCustomId,jdbcType=VARCHAR},
+		</if>
+	</set>
+	where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.order.model.StockNumLog" >
+   	UPDATE stock_num_log
+		<set>
+			remarks = #{remarks,jdbcType=VARCHAR},
+			create_by = #{createBy.id,jdbcType=VARCHAR},
+			create_date = #{createDate,jdbcType=TIMESTAMP},
+			last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+			last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+			handle_date = #{handleDate,jdbcType=TIMESTAMP},
+			handle_msg = #{handleMsg,jdbcType=VARCHAR},
+			op_user_id = #{opUserId,jdbcType=VARCHAR},
+			op_user = #{opUser,jdbcType=VARCHAR},
+			stock_custom_Id = #{stockCustomId,jdbcType=VARCHAR}
+		</set>
+		WHERE id = #{id,jdbcType=VARCHAR} 
+  </update>
+</mapper>

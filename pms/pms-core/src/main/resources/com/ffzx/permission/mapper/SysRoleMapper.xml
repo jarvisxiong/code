@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ffzx.permission.mapper.SysRoleMapper" >
+  <resultMap id="BaseResultMap" type="com.ffzx.commerce.framework.system.entity.SysRole" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="data_scope" property="dataScope" jdbcType="CHAR" />
+    <result column="useable" property="useable" jdbcType="CHAR" />
+    <result column="create_by" property="createBy.id" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="last_update_by" property="lastUpdateBy.id" jdbcType="VARCHAR" />
+    <result column="last_update_date" property="lastUpdateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+    <result column="userRoleid" property="userRoleid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, data_scope, useable, create_by as "createBy.id", create_date, last_update_by as "lastUpdateBy.id", last_update_date, 
+    remarks, del_flag
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null and '' != params.id" >
+        and id = #{params.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.name != null and '' != params.name" >
+        and name LIKE CONCAT('%', #{params.name,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test="params.name_equal != null and '' != params.name_equal" >
+        and name = #{params.name_equal,jdbcType=VARCHAR}
+      </if>
+      <if test="params.dataScope != null and '' != params.dataScope" >
+        and data_scope = #{params.dataScope,jdbcType=CHAR}
+      </if>
+      <if test="params.useable != null and '' != params.useable" >
+        and useable = #{params.useable,jdbcType=CHAR}
+      </if>
+      <if test="params.createBy != null and '' != params.createBy" >
+        and create_by = #{params.createBy,jdbcType=VARCHAR}
+      </if>
+      <if test="params.createDate != null" >
+        and create_date = #{params.createDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.lastUpdateBy != null and '' != params.lastUpdateBy" >
+        and last_update_by = #{params.lastUpdateBy,jdbcType=VARCHAR}
+      </if>
+      <if test="params.lastUpdateDate != null" >
+        and last_update_date = #{params.lastUpdateDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.remarks != null and '' != params.remarks" >
+        and remarks = #{params.remarks,jdbcType=VARCHAR}
+      </if>
+      <if test="params.delFlag != null and '' != params.delFlag" >
+        and del_flag = #{params.delFlag,jdbcType=CHAR}
+      </if>
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_role
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_role
+    where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from sys_role where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_role
+    where 1=1
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by ${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from sys_role
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.commerce.framework.system.entity.SysRole" >
+    delete from sys_role
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ffzx.commerce.framework.system.entity.SysRole" >
+    insert into sys_role (id, name, data_scope, 
+      useable, create_by, create_date, 
+      last_update_by, last_update_date, remarks, 
+      del_flag)
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{dataScope,jdbcType=CHAR}, 
+      #{useable,jdbcType=CHAR}, #{createBy.id,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{lastUpdateBy.id,jdbcType=VARCHAR}, #{lastUpdateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, 
+      #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.commerce.framework.system.entity.SysRole" >
+    insert into sys_role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="dataScope != null" >
+        data_scope,
+      </if>
+      <if test="useable != null" >
+        useable,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by,
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="dataScope != null" >
+        #{dataScope,jdbcType=CHAR},
+      </if>
+      <if test="useable != null" >
+        #{useable,jdbcType=CHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null" >
+        #{lastUpdateBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.commerce.framework.system.entity.SysRole" >
+    update sys_role
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="dataScope != null" >
+        data_scope = #{dataScope,jdbcType=CHAR},
+      </if>
+      <if test="useable != null" >
+        useable = #{useable,jdbcType=CHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.commerce.framework.system.entity.SysRole" >
+    update sys_role
+    set name = #{name,jdbcType=VARCHAR},
+      data_scope = #{dataScope,jdbcType=CHAR},
+      useable = #{useable,jdbcType=CHAR},
+      create_by = #{createBy.id,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+      last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <delete id="delAllRoleMenu" parameterType="java.lang.String" >
+    delete from sys_role_menu where role_id = #{roleId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="delAllRoleOffice" parameterType="java.lang.String" >
+    delete from sys_role_office where role_id = #{roleId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteRoleUser" parameterType="map" >
+    delete from sys_user_role where role_id = #{roleId,jdbcType=VARCHAR} and user_id = #{userId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="delAllRoleUser" parameterType="java.lang.String" >
+    delete from sys_user_role where role_id = #{roleId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteRoleUserGroup" parameterType="map" >
+    delete from sys_user_group_role where role_id = #{roleId,jdbcType=VARCHAR} and user_group_id = #{userGroupId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="delAllRoleUserGroup" parameterType="java.lang.String" >
+    delete from sys_user_group_role where role_id = #{roleId,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="batchInsertRoleMenu" parameterType="java.util.List">
+    INSERT INTO sys_role_menu (id,role_id,menu_id)
+    VALUES 
+    <foreach collection="list" item="item" index="index" separator="," >
+        (#{item.id},#{item.roleId},#{item.menuId})
+    </foreach>
+  </insert>
+  <insert id="batchInsertRoleOffice" parameterType="java.util.List">
+    INSERT INTO sys_role_office (id,role_id,office_id)
+    VALUES 
+    <foreach collection="list" item="item" index="index" separator="," >
+        (#{item.id},#{item.roleId},#{item.officeId})
+    </foreach>
+  </insert>
+  <insert id="batchInsertRoleUser" parameterType="java.util.List">
+    INSERT INTO sys_user_role (id,user_id,role_id)
+    VALUES 
+    <foreach collection="list" item="item" index="index" separator="," >
+        (#{item.id},#{item.userId},#{item.roleId})
+    </foreach>
+  </insert>
+  <insert id="batchInsertRoleUserGroup" parameterType="java.util.List">
+    INSERT INTO sys_user_group_role (id,user_group_id,role_id)
+    VALUES 
+    <foreach collection="list" item="item" index="index" separator="," >
+        (#{item.id},#{item.userGroupId},#{item.roleId})
+    </foreach>
+  </insert>
+  
+  <!-- 通过用户查询所有角色，并标识已分配给用户的 -->
+  <select id="selectAllRoleByUserId" resultMap="BaseResultMap" parameterType="map">
+		SELECT DISTINCT 
+		  m.*,
+		  rm2.user_id as userRoleid
+		FROM sys_role m 
+		 LEFT JOIN 
+		    (SELECT 
+		      rm.role_id,
+		      rm.user_id 
+		    FROM
+		      sys_user_role rm 
+		    WHERE user_id = #{userId}) rm2 
+		    ON m.id = rm2.role_id  
+		WHERE m.del_flag = '0'
+		ORDER BY m.name;
+	</select>
+	  
+  <!-- 通过用户组查询所有角色，并标识已分配给用户的 -->
+  <select id="selectAllRoleByUserGroupId" resultMap="BaseResultMap" parameterType="map">
+        SELECT DISTINCT 
+          m.*,
+          rm2.user_group_id as userRoleid
+          FROM  sys_role m 
+         LEFT JOIN 
+            (SELECT 
+              rm.role_id,
+              rm.user_group_id 
+            FROM
+              sys_user_group_role rm 
+            WHERE rm.user_group_id = #{userGroupId}) rm2 
+            ON m.id = rm2.role_id  
+        WHERE m.del_flag = '0'
+        ORDER BY m.last_update_date;
+    </select>
+    
+    <!-- 通过用户查询所有角色，包括用户组中的角色 -->
+    <select id="selectAllRole" resultMap="BaseResultMap" parameterType="map">
+		(
+			SELECT distinct r.id, r.name, r.data_scope, r.useable, r.create_by as "createBy.id", r.create_date, r.last_update_by as "lastUpdateBy.id", r.last_update_date, r.remarks, r.del_flag 
+			FROM sys_role r, sys_user_role ur, sys_user u
+			WHERE r.id = ur.role_id and ur.user_id = u.id
+			and r.del_flag = '0' and u.del_flag = '0'
+			and u.id = #{userId}
+		)
+		union
+		(
+			SELECT distinct r.id, r.name, r.data_scope, r.useable, r.create_by as "createBy.id", r.create_date, r.last_update_by as "lastUpdateBy.id", r.last_update_date, r.remarks, r.del_flag
+			FROM sys_role r, sys_user_group_role gr, sys_user_group g, sys_user_group_user gu, sys_user u
+			WHERE r.id = gr.role_id and gr.user_group_id = g.id and g.id = gu.user_group_id and gu.user_id = u.id
+			and r.del_flag = '0' and g.del_flag = '0' and u .del_flag = '0'
+			and u.id = #{userId}
+		)
+	</select>
+	
+	<!-- 获取角色所有机构 -->
+	<select id="selectAllOfficeByRoleId" resultType="com.ffzx.commerce.framework.system.entity.SysOffice">
+		select distinct o.id, o.name, o.parent_id AS "parent.id", ro2.role_id AS roleId from `base_data_db`.office o
+		left join (
+			select ro.role_id, ro.office_id from sys_role r,
+			sys_role_office ro
+			where r.id = ro.role_id and r.id = #{roleId,jdbcType=INTEGER} 
+		) ro2
+		on o.id = ro2.office_id
+		where 1=1
+		<if test="parentId != null">
+			and parent_id = #{parentId,jdbcType=VARCHAR}
+		</if>
+		<if test="delFlag != null" >
+        	and o.del_flag = #{delFlag,jdbcType=INTEGER}
+        </if>
+	</select>
+</mapper>

@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+	<display-name>PRMS</display-name>
+	<context-param>
+		<param-name>webAppRootKey</param-name>
+		<param-value>prms.root</param-value>
+	</context-param>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			classpath*:/applicationContext-core.xml
+			classpath*:/cas-client.xml
+		</param-value>
+	</context-param>
+	<context-param>
+         <param-name>logbackConfigLocation</param-name>
+         <param-value>classpath:logback.xml</param-value>
+	</context-param>
+	<listener>
+         <listener-class>ch.qos.logback.ext.spring.web.LogbackConfigListener</listener-class>
+	</listener>
+	<context-param>  
+		<param-name>spring.profiles.default</param-name>  
+		<param-value>dev</param-value>  
+	</context-param> 
+	
+	<!-- 解决get请求乱码问题-->
+		<filter>
+		<filter-name>prmsEncodingFilter</filter-name>
+		<filter-class>com.ffzx.promotion.filter.EncodingFilter</filter-class>
+		<init-param>
+			<param-name>originCharacter</param-name>
+			<param-value>ISO-8859-1</param-value>
+		</init-param>
+		<init-param>
+			<param-name>character</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>excludePath</param-name>
+			<param-value></param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>prmsEncodingFilter</filter-name>
+		<url-pattern>*.do</url-pattern>
+	</filter-mapping> 
+	
+	
+	<!-- 解决中文乱码问题 -->
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>*.do</url-pattern>
+	</filter-mapping>
+	
+	<filter>
+		<filter-name>skipCasFilter</filter-name>   
+	    <filter-class>com.ffzx.parentweb.interceptor.SkipCasFilter</filter-class> 
+	    <init-param>
+			<param-name>noCasUrl</param-name>
+			<param-value>
+				/welcome.do
+			</param-value>
+		</init-param>  
+	</filter>  
+	<filter-mapping>  
+	    <filter-name>skipCasFilter</filter-name>   
+	    <url-pattern>*.do</url-pattern>
+	</filter-mapping>
+	
+	<!-- ======================== 单点登出开始 ======================== -->
+	<listener>  
+      <listener-class>org.jasig.cas.client.session.SingleSignOutHttpSessionListener</listener-class>   
+	</listener>  
+	<filter>  
+	<filter-name>CAS Single Sign Out Filter</filter-name>   
+	    <filter-class>org.jasig.cas.client.session.SingleSignOutFilter</filter-class>   
+	</filter>  
+	<filter-mapping>  
+	    <filter-name>CAS Single Sign Out Filter</filter-name>   
+	    <url-pattern>/*</url-pattern>   
+	</filter-mapping>
+	<!-- ======================== 单点登出结束 ======================== -->
+	
+	<!-- ======================== 单点登录开始 ======================== -->
+	<filter>
+		<filter-name>CAS Authentication Filter</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+		<init-param>
+			<param-name>targetBeanName</param-name>
+			<param-value>casAuthenticationFilter</param-value>
+		</init-param>
+	</filter> 
+	<filter-mapping>  
+	    <filter-name>CAS Authentication Filter</filter-name>  
+	    <url-pattern>/*</url-pattern>  
+	</filter-mapping>  
+	<filter>
+		<filter-name>CAS Validation Filter</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+		<init-param>
+			<param-name>targetBeanName</param-name>
+			<param-value>casTicketValidationFilter</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>  
+	    <filter-name>CAS Validation Filter</filter-name>   
+	    <url-pattern>/*</url-pattern>   
+	</filter-mapping>
+	<!-- 该过滤器使得开发者可以通过org.jasig.cas.client.util.AssertionHolder来获取用户的登录名。 比如AssertionHolder.getAssertion().getPrincipal().getName()。 -->
+	<!-- 如果不配置这个节点，也可以这样获取用户名：Assertion assertion = (Assertion) request.getSession().getAttribute(AbstractCasFilter.CONST_CAS_ASSERTION); -->
+ 	<filter>
+		<filter-name>CAS Assertion Thread Local Filter</filter-name>
+		<filter-class>org.jasig.cas.client.util.AssertionThreadLocalFilter</filter-class>
+	</filter>
+	<filter-mapping>
+	    <filter-name>CAS Assertion Thread Local Filter</filter-name>
+	    <url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<!-- ======================== 单点登录结束 ======================== -->
+	
+	<!-- 防止Spring内存溢出监听器 -->  
+    <listener>  
+        <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>  
+    </listener>  
+    
+	<!-- 加载Spring容器配置 -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	
+	<!-- sitemesh配置 -->
+	<filter>
+		<filter-name>sitemeshFilter</filter-name>
+		<filter-class>com.opensymphony.sitemesh.webapp.SiteMeshFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>sitemeshFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<!-- Spring MVC -->
+	<servlet>
+		<servlet-name>springmvc</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:springmvc-servlet.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>springmvc</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+	
+	<!--sitemesh freemarker -->
+    <servlet>
+        <servlet-name>sitemesh-freemarker</servlet-name>
+        <servlet-class>com.opensymphony.module.sitemesh.freemarker.FreemarkerDecoratorServlet</servlet-class>
+        <init-param>
+            <param-name>TemplatePath</param-name>
+            <param-value>/</param-value>
+        </init-param>
+        <init-param>
+            <param-name>default_encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>sitemesh-freemarker</servlet-name>
+        <url-pattern>*.ftl</url-pattern>
+    </servlet-mapping> 
+	
+    <servlet>
+		<servlet-name>initServlet</servlet-name>
+		<servlet-class>com.ffzx.parentweb.servlet.InitServlet</servlet-class>
+		<load-on-startup>3</load-on-startup>
+	</servlet>
+	
+	<mime-mapping>
+		<extension>csv</extension>
+		<mime-type>application/octet-stream</mime-type>
+	</mime-mapping>
+	
+	<error-page>
+		<error-code>500</error-code>
+		<location>/500.do</location>
+	</error-page>
+	<error-page>
+		<error-code>404</error-code>
+		<location>/WEB-INF/views/error/404.ftl</location>
+	</error-page>
+	
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+	<distributable />
+</web-app>

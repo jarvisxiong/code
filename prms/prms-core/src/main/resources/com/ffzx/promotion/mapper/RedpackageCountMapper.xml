@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ffzx.promotion.mapper.RedpackageCountMapper" >
+  <resultMap id="BaseResultMap" type="com.ffzx.promotion.api.dto.RedpackageCount" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="grant_num" property="grantNum" jdbcType="INTEGER" />
+    <result column="receive_num" property="receiveNum" jdbcType="INTEGER" />
+    <result column="receive_time" property="receiveTime" jdbcType="INTEGER" />
+    <result column="use_person" property="usePerson" jdbcType="INTEGER" />
+    <result column="use_num" property="useNum" jdbcType="INTEGER" />
+    <result column="use_change" property="useChange" jdbcType="DECIMAL" />
+    <result column="use_redpackage_price" property="useRedpackagePrice" jdbcType="DECIMAL" />
+    <result column="use_order_price" property="useOrderPrice" jdbcType="DECIMAL" />
+    <result column="use_order_person_price" property="useOrderPersonPrice" jdbcType="DECIMAL" />
+    <result column="redpackage_id" property="redpackageId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    t.id, t.grant_num, t.receive_num, t.receive_time, t.use_person, t.use_num, t.use_change, 
+    t.use_redpackage_price, t.use_order_price, t.use_order_person_price, t.redpackage_id
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null and '' != params.id" >
+        and t.id = #{params.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.grantNum != null" >
+        and t.grant_num = #{params.grantNum,jdbcType=INTEGER}
+      </if>
+      <if test="params.receiveNum != null" >
+        and t.receive_num = #{params.receiveNum,jdbcType=INTEGER}
+      </if>
+      <if test="params.receiveTime != null" >
+        and t.receive_time = #{params.receiveTime,jdbcType=INTEGER}
+      </if>
+      <if test="params.usePerson != null" >
+        and t.use_person = #{params.usePerson,jdbcType=INTEGER}
+      </if>
+      <if test="params.useNum != null" >
+        and t.use_num = #{params.useNum,jdbcType=INTEGER}
+      </if>
+      <if test="params.useChange != null" >
+        and t.use_change = #{params.useChange,jdbcType=DECIMAL}
+      </if>
+      <if test="params.useRedpackagePrice != null" >
+        and t.use_redpackage_price = #{params.useRedpackagePrice,jdbcType=DECIMAL}
+      </if>
+      <if test="params.useOrderPrice != null" >
+        and t.use_order_price = #{params.useOrderPrice,jdbcType=DECIMAL}
+      </if>
+      <if test="params.useOrderPersonPrice != null" >
+        and t.use_order_person_price = #{params.useOrderPersonPrice,jdbcType=DECIMAL}
+      </if>
+      <if test="params.redpackageId != null and '' != params.redpackageId" >
+        and t.redpackage_id = #{params.redpackageId,jdbcType=VARCHAR}
+      </if>
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from redpackage_count t 
+    where t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from redpackage_count t 
+    where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from redpackage_count t  where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from redpackage_count t 
+    where 1=1
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from redpackage_count
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.promotion.api.dto.RedpackageCount" >
+    delete from redpackage_count
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ffzx.promotion.api.dto.RedpackageCount" >
+    insert into redpackage_count (id, grant_num, receive_num, 
+      receive_time, use_person, use_num, 
+      use_change, use_redpackage_price, use_order_price, 
+      use_order_person_price, redpackage_id)
+    values (#{id,jdbcType=VARCHAR}, #{grantNum,jdbcType=INTEGER}, #{receiveNum,jdbcType=INTEGER}, 
+      #{receiveTime,jdbcType=INTEGER}, #{usePerson,jdbcType=INTEGER}, #{useNum,jdbcType=INTEGER}, 
+      #{useChange,jdbcType=DECIMAL}, #{useRedpackagePrice,jdbcType=DECIMAL}, #{useOrderPrice,jdbcType=DECIMAL}, 
+      #{useOrderPersonPrice,jdbcType=DECIMAL}, #{redpackageId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.promotion.api.dto.RedpackageCount" >
+    insert into redpackage_count
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="grantNum != null" >
+        grant_num,
+      </if>
+      <if test="receiveNum != null" >
+        receive_num,
+      </if>
+      <if test="receiveTime != null" >
+        receive_time,
+      </if>
+      <if test="usePerson != null" >
+        use_person,
+      </if>
+      <if test="useNum != null" >
+        use_num,
+      </if>
+      <if test="useChange != null" >
+        use_change,
+      </if>
+      <if test="useRedpackagePrice != null" >
+        use_redpackage_price,
+      </if>
+      <if test="useOrderPrice != null" >
+        use_order_price,
+      </if>
+      <if test="useOrderPersonPrice != null" >
+        use_order_person_price,
+      </if>
+      <if test="redpackageId != null" >
+        redpackage_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="grantNum != null" >
+        #{grantNum,jdbcType=INTEGER},
+      </if>
+      <if test="receiveNum != null" >
+        #{receiveNum,jdbcType=INTEGER},
+      </if>
+      <if test="receiveTime != null" >
+        #{receiveTime,jdbcType=INTEGER},
+      </if>
+      <if test="usePerson != null" >
+        #{usePerson,jdbcType=INTEGER},
+      </if>
+      <if test="useNum != null" >
+        #{useNum,jdbcType=INTEGER},
+      </if>
+      <if test="useChange != null" >
+        #{useChange,jdbcType=DECIMAL},
+      </if>
+      <if test="useRedpackagePrice != null" >
+        #{useRedpackagePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="useOrderPrice != null" >
+        #{useOrderPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="useOrderPersonPrice != null" >
+        #{useOrderPersonPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="redpackageId != null" >
+        #{redpackageId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.promotion.api.dto.RedpackageCount" >
+    update redpackage_count
+    <set >
+      <if test="grantNum != null" >
+        grant_num = #{grantNum,jdbcType=INTEGER},
+      </if>
+      <if test="receiveNum != null" >
+        receive_num = #{receiveNum,jdbcType=INTEGER},
+      </if>
+      <if test="receiveTime != null" >
+        receive_time = #{receiveTime,jdbcType=INTEGER},
+      </if>
+      <if test="usePerson != null" >
+        use_person = #{usePerson,jdbcType=INTEGER},
+      </if>
+      <if test="useNum != null" >
+        use_num = #{useNum,jdbcType=INTEGER},
+      </if>
+      <if test="useChange != null" >
+        use_change = #{useChange,jdbcType=DECIMAL},
+      </if>
+      <if test="useRedpackagePrice != null" >
+        use_redpackage_price = #{useRedpackagePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="useOrderPrice != null" >
+        use_order_price = #{useOrderPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="useOrderPersonPrice != null" >
+        use_order_person_price = #{useOrderPersonPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="redpackageId != null" >
+        redpackage_id = #{redpackageId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.promotion.api.dto.RedpackageCount" >
+    update redpackage_count
+    set grant_num = #{grantNum,jdbcType=INTEGER},
+      receive_num = #{receiveNum,jdbcType=INTEGER},
+      receive_time = #{receiveTime,jdbcType=INTEGER},
+      use_person = #{usePerson,jdbcType=INTEGER},
+      use_num = #{useNum,jdbcType=INTEGER},
+      use_change = #{useChange,jdbcType=DECIMAL},
+      use_redpackage_price = #{useRedpackagePrice,jdbcType=DECIMAL},
+      use_order_price = #{useOrderPrice,jdbcType=DECIMAL},
+      use_order_person_price = #{useOrderPersonPrice,jdbcType=DECIMAL},
+      redpackage_id = #{redpackageId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

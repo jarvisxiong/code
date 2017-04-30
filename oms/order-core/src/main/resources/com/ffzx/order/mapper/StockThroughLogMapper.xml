@@ -1,0 +1,499 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ffzx.order.mapper.StockThroughLogMapper" >
+  <resultMap id="BaseResultMap" type="com.ffzx.order.model.StockThroughLog" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy.id" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="last_update_by" property="lastUpdateBy.id" jdbcType="VARCHAR" />
+    <result column="last_update_date" property="lastUpdateDate" jdbcType="TIMESTAMP" />
+    <result column="del_flag" property="delFlag" jdbcType="VARCHAR" />
+    <result column="through_level" property="throughLevel" jdbcType="VARCHAR" />
+    <result column="through_dataType" property="throughDatatype" jdbcType="VARCHAR" />
+    <result column="through_data" property="throughData" jdbcType="VARCHAR" />
+    <result column="through_result" property="throughResult" jdbcType="VARCHAR" />
+    <result column="through_date" property="throughDate" jdbcType="TIMESTAMP" />
+    <result column="sku_code" property="skuCode" jdbcType="VARCHAR" />
+    <result column="warehouse_code" property="warehouseCode" jdbcType="VARCHAR" />
+    <result column="address_code" property="addressCode" jdbcType="VARCHAR" />
+    <result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+    <result column="address_name" property="addressName" jdbcType="VARCHAR" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="center_warehouse_Code" property="centerWarehouseCode" jdbcType="VARCHAR" />
+    <result column="center_warehouse_Name" property="centerWarehouseName" jdbcType="VARCHAR" />
+    <result column="center_changeData" property="centerChangedata" jdbcType="VARCHAR" />
+    <result column="center_stock_num" property="centerStockNum" jdbcType="VARCHAR" />
+    <result column="center_used_count" property="centerUsedCount" jdbcType="VARCHAR" />
+    <result column="wms_changeData" property="wmsChangedata" jdbcType="VARCHAR" />
+    <result column="wms_stock_num" property="wmsStockNum" jdbcType="VARCHAR" />
+    <result column="wms_used_count" property="wmsUsedCount" jdbcType="VARCHAR" />
+    <result column="address_changeData" property="addressChangedata" jdbcType="VARCHAR" />
+    <result column="address_stock_num" property="addressStockNum" jdbcType="VARCHAR" />
+    <result column="address_used_count" property="addressUsedCount" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    t.id, t.remarks, t.create_by as 'createBy.id', t.create_date, t.last_update_by as 'lastUpdateBy.id', 
+    t.last_update_date, t.del_flag, t.through_level, t.through_dataType, t.through_data, 
+    t.through_result, t.through_date, t.sku_code, t.warehouse_code, t.address_code, t.warehouse_name, 
+    t.address_name, t.order_no, t.center_warehouse_Code, t.center_warehouse_Name, t.center_changeData, 
+    t.center_stock_num, t.center_used_count, t.wms_changeData, t.wms_stock_num, t.wms_used_count, 
+    t.address_changeData, t.address_stock_num, t.address_used_count
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null and '' != params.id" >
+        and t.id = #{params.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.remarks != null and '' != params.remarks" >
+        and t.remarks = #{params.remarks,jdbcType=VARCHAR}
+      </if>
+      <if test="params.createBy != null and '' != params.createBy" >
+        and t.create_by = #{params.createBy.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.createDate != null" >
+        and t.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.lastUpdateBy != null and '' != params.lastUpdateBy" >
+        and t.last_update_by = #{params.lastUpdateBy.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.lastUpdateDate != null" >
+        and t.last_update_date = #{params.lastUpdateDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.delFlag != null and '' != params.delFlag" >
+        and t.del_flag = #{params.delFlag,jdbcType=VARCHAR}
+      </if>
+      <if test="params.throughLevel != null and '' != params.throughLevel" >
+        and t.through_level = #{params.throughLevel,jdbcType=VARCHAR}
+      </if>
+      <if test="params.throughDatatype != null and '' != params.throughDatatype" >
+        and t.through_dataType = #{params.throughDatatype,jdbcType=VARCHAR}
+      </if>
+      <if test="params.throughData != null and '' != params.throughData" >
+        and t.through_data = #{params.throughData,jdbcType=VARCHAR}
+      </if>
+      <if test="params.throughResult != null and '' != params.throughResult" >
+        and t.through_result = #{params.throughResult,jdbcType=VARCHAR}
+      </if>
+      <if test="params.throughDate != null" >
+        and t.through_date = #{params.throughDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.skuCode != null and '' != params.skuCode" >
+        and t.sku_code = #{params.skuCode,jdbcType=VARCHAR}
+      </if>
+      <if test="params.warehouseCode != null and '' != params.warehouseCode" >
+        and t.warehouse_code = #{params.warehouseCode,jdbcType=VARCHAR}
+      </if>
+      <if test="params.addressCode != null and '' != params.addressCode" >
+        and t.address_code = #{params.addressCode,jdbcType=VARCHAR}
+      </if>
+      <if test="params.warehouseName != null and '' != params.warehouseName" >
+        and t.warehouse_name = #{params.warehouseName,jdbcType=VARCHAR}
+      </if>
+      <if test="params.addressName != null and '' != params.addressName" >
+        and t.address_name = #{params.addressName,jdbcType=VARCHAR}
+      </if>
+      <if test="params.orderNo != null and '' != params.orderNo" >
+        and t.order_no = #{params.orderNo,jdbcType=VARCHAR}
+      </if>
+      <if test="params.centerWarehouseCode != null and '' != params.centerWarehouseCode" >
+        and t.center_warehouse_Code = #{params.centerWarehouseCode,jdbcType=VARCHAR}
+      </if>
+      <if test="params.centerWarehouseName != null and '' != params.centerWarehouseName" >
+        and t.center_warehouse_Name = #{params.centerWarehouseName,jdbcType=VARCHAR}
+      </if>
+      <if test="params.centerChangedata != null and '' != params.centerChangedata" >
+        and t.center_changeData = #{params.centerChangedata,jdbcType=VARCHAR}
+      </if>
+      <if test="params.centerStockNum != null and '' != params.centerStockNum" >
+        and t.center_stock_num = #{params.centerStockNum,jdbcType=VARCHAR}
+      </if>
+      <if test="params.centerUsedCount != null and '' != params.centerUsedCount" >
+        and t.center_used_count = #{params.centerUsedCount,jdbcType=VARCHAR}
+      </if>
+      <if test="params.wmsChangedata != null and '' != params.wmsChangedata" >
+        and t.wms_changeData = #{params.wmsChangedata,jdbcType=VARCHAR}
+      </if>
+      <if test="params.wmsStockNum != null and '' != params.wmsStockNum" >
+        and t.wms_stock_num = #{params.wmsStockNum,jdbcType=VARCHAR}
+      </if>
+      <if test="params.wmsUsedCount != null and '' != params.wmsUsedCount" >
+        and t.wms_used_count = #{params.wmsUsedCount,jdbcType=VARCHAR}
+      </if>
+      <if test="params.addressChangedata != null and '' != params.addressChangedata" >
+        and t.address_changeData = #{params.addressChangedata,jdbcType=VARCHAR}
+      </if>
+      <if test="params.addressStockNum != null and '' != params.addressStockNum" >
+        and t.address_stock_num = #{params.addressStockNum,jdbcType=VARCHAR}
+      </if>
+      <if test="params.addressUsedCount != null and '' != params.addressUsedCount" >
+        and t.address_used_count = #{params.addressUsedCount,jdbcType=VARCHAR}
+      </if>
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from stock_through_log t 
+    where t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from stock_through_log t 
+    where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from stock_through_log t  where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from stock_through_log t 
+    where 1=1
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from stock_through_log
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.order.model.StockThroughLog" >
+    delete from stock_through_log
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ffzx.order.model.StockThroughLog" >
+    insert into stock_through_log (id, remarks, create_by, 
+      create_date, last_update_by, last_update_date, 
+      del_flag, through_level, through_dataType, 
+      through_data, through_result, through_date, 
+      sku_code, warehouse_code, address_code, 
+      warehouse_name, address_name, order_no, 
+      center_warehouse_Code, center_warehouse_Name, 
+      center_changeData, center_stock_num, center_used_count, 
+      wms_changeData, wms_stock_num, wms_used_count, 
+      address_changeData, address_stock_num, address_used_count
+      )
+    values (#{id,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, #{createBy.id,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{lastUpdateBy.id,jdbcType=VARCHAR}, #{lastUpdateDate,jdbcType=TIMESTAMP}, 
+      #{delFlag,jdbcType=VARCHAR}, #{throughLevel,jdbcType=VARCHAR}, #{throughDatatype,jdbcType=VARCHAR}, 
+      #{throughData,jdbcType=VARCHAR}, #{throughResult,jdbcType=VARCHAR}, #{throughDate,jdbcType=TIMESTAMP}, 
+      #{skuCode,jdbcType=VARCHAR}, #{warehouseCode,jdbcType=VARCHAR}, #{addressCode,jdbcType=VARCHAR}, 
+      #{warehouseName,jdbcType=VARCHAR}, #{addressName,jdbcType=VARCHAR}, #{orderNo,jdbcType=VARCHAR}, 
+      #{centerWarehouseCode,jdbcType=VARCHAR}, #{centerWarehouseName,jdbcType=VARCHAR}, 
+      #{centerChangedata,jdbcType=VARCHAR}, #{centerStockNum,jdbcType=VARCHAR}, #{centerUsedCount,jdbcType=VARCHAR}, 
+      #{wmsChangedata,jdbcType=VARCHAR}, #{wmsStockNum,jdbcType=VARCHAR}, #{wmsUsedCount,jdbcType=VARCHAR}, 
+      #{addressChangedata,jdbcType=VARCHAR}, #{addressStockNum,jdbcType=VARCHAR}, #{addressUsedCount,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.order.model.StockThroughLog" >
+    insert into stock_through_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by,
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="throughLevel != null" >
+        through_level,
+      </if>
+      <if test="throughDatatype != null" >
+        through_dataType,
+      </if>
+      <if test="throughData != null" >
+        through_data,
+      </if>
+      <if test="throughResult != null" >
+        through_result,
+      </if>
+      <if test="throughDate != null" >
+        through_date,
+      </if>
+      <if test="skuCode != null" >
+        sku_code,
+      </if>
+      <if test="warehouseCode != null" >
+        warehouse_code,
+      </if>
+      <if test="addressCode != null" >
+        address_code,
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name,
+      </if>
+      <if test="addressName != null" >
+        address_name,
+      </if>
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+      <if test="centerWarehouseCode != null" >
+        center_warehouse_Code,
+      </if>
+      <if test="centerWarehouseName != null" >
+        center_warehouse_Name,
+      </if>
+      <if test="centerChangedata != null" >
+        center_changeData,
+      </if>
+      <if test="centerStockNum != null" >
+        center_stock_num,
+      </if>
+      <if test="centerUsedCount != null" >
+        center_used_count,
+      </if>
+      <if test="wmsChangedata != null" >
+        wms_changeData,
+      </if>
+      <if test="wmsStockNum != null" >
+        wms_stock_num,
+      </if>
+      <if test="wmsUsedCount != null" >
+        wms_used_count,
+      </if>
+      <if test="addressChangedata != null" >
+        address_changeData,
+      </if>
+      <if test="addressStockNum != null" >
+        address_stock_num,
+      </if>
+      <if test="addressUsedCount != null" >
+        address_used_count,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null" >
+        #{lastUpdateBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="throughLevel != null" >
+        #{throughLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="throughDatatype != null" >
+        #{throughDatatype,jdbcType=VARCHAR},
+      </if>
+      <if test="throughData != null" >
+        #{throughData,jdbcType=VARCHAR},
+      </if>
+      <if test="throughResult != null" >
+        #{throughResult,jdbcType=VARCHAR},
+      </if>
+      <if test="throughDate != null" >
+        #{throughDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="skuCode != null" >
+        #{skuCode,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseCode != null" >
+        #{warehouseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="addressCode != null" >
+        #{addressCode,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseName != null" >
+        #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="addressName != null" >
+        #{addressName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="centerWarehouseCode != null" >
+        #{centerWarehouseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="centerWarehouseName != null" >
+        #{centerWarehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="centerChangedata != null" >
+        #{centerChangedata,jdbcType=VARCHAR},
+      </if>
+      <if test="centerStockNum != null" >
+        #{centerStockNum,jdbcType=VARCHAR},
+      </if>
+      <if test="centerUsedCount != null" >
+        #{centerUsedCount,jdbcType=VARCHAR},
+      </if>
+      <if test="wmsChangedata != null" >
+        #{wmsChangedata,jdbcType=VARCHAR},
+      </if>
+      <if test="wmsStockNum != null" >
+        #{wmsStockNum,jdbcType=VARCHAR},
+      </if>
+      <if test="wmsUsedCount != null" >
+        #{wmsUsedCount,jdbcType=VARCHAR},
+      </if>
+      <if test="addressChangedata != null" >
+        #{addressChangedata,jdbcType=VARCHAR},
+      </if>
+      <if test="addressStockNum != null" >
+        #{addressStockNum,jdbcType=VARCHAR},
+      </if>
+      <if test="addressUsedCount != null" >
+        #{addressUsedCount,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.order.model.StockThroughLog" >
+    update stock_through_log
+    <set >
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="throughLevel != null" >
+        through_level = #{throughLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="throughDatatype != null" >
+        through_dataType = #{throughDatatype,jdbcType=VARCHAR},
+      </if>
+      <if test="throughData != null" >
+        through_data = #{throughData,jdbcType=VARCHAR},
+      </if>
+      <if test="throughResult != null" >
+        through_result = #{throughResult,jdbcType=VARCHAR},
+      </if>
+      <if test="throughDate != null" >
+        through_date = #{throughDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="skuCode != null" >
+        sku_code = #{skuCode,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseCode != null" >
+        warehouse_code = #{warehouseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="addressCode != null" >
+        address_code = #{addressCode,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="addressName != null" >
+        address_name = #{addressName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="centerWarehouseCode != null" >
+        center_warehouse_Code = #{centerWarehouseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="centerWarehouseName != null" >
+        center_warehouse_Name = #{centerWarehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="centerChangedata != null" >
+        center_changeData = #{centerChangedata,jdbcType=VARCHAR},
+      </if>
+      <if test="centerStockNum != null" >
+        center_stock_num = #{centerStockNum,jdbcType=VARCHAR},
+      </if>
+      <if test="centerUsedCount != null" >
+        center_used_count = #{centerUsedCount,jdbcType=VARCHAR},
+      </if>
+      <if test="wmsChangedata != null" >
+        wms_changeData = #{wmsChangedata,jdbcType=VARCHAR},
+      </if>
+      <if test="wmsStockNum != null" >
+        wms_stock_num = #{wmsStockNum,jdbcType=VARCHAR},
+      </if>
+      <if test="wmsUsedCount != null" >
+        wms_used_count = #{wmsUsedCount,jdbcType=VARCHAR},
+      </if>
+      <if test="addressChangedata != null" >
+        address_changeData = #{addressChangedata,jdbcType=VARCHAR},
+      </if>
+      <if test="addressStockNum != null" >
+        address_stock_num = #{addressStockNum,jdbcType=VARCHAR},
+      </if>
+      <if test="addressUsedCount != null" >
+        address_used_count = #{addressUsedCount,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.order.model.StockThroughLog" >
+    update stock_through_log
+    set remarks = #{remarks,jdbcType=VARCHAR},
+      create_by = #{createBy.id,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+      last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      del_flag = #{delFlag,jdbcType=VARCHAR},
+      through_level = #{throughLevel,jdbcType=VARCHAR},
+      through_dataType = #{throughDatatype,jdbcType=VARCHAR},
+      through_data = #{throughData,jdbcType=VARCHAR},
+      through_result = #{throughResult,jdbcType=VARCHAR},
+      through_date = #{throughDate,jdbcType=TIMESTAMP},
+      sku_code = #{skuCode,jdbcType=VARCHAR},
+      warehouse_code = #{warehouseCode,jdbcType=VARCHAR},
+      address_code = #{addressCode,jdbcType=VARCHAR},
+      warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      address_name = #{addressName,jdbcType=VARCHAR},
+      order_no = #{orderNo,jdbcType=VARCHAR},
+      center_warehouse_Code = #{centerWarehouseCode,jdbcType=VARCHAR},
+      center_warehouse_Name = #{centerWarehouseName,jdbcType=VARCHAR},
+      center_changeData = #{centerChangedata,jdbcType=VARCHAR},
+      center_stock_num = #{centerStockNum,jdbcType=VARCHAR},
+      center_used_count = #{centerUsedCount,jdbcType=VARCHAR},
+      wms_changeData = #{wmsChangedata,jdbcType=VARCHAR},
+      wms_stock_num = #{wmsStockNum,jdbcType=VARCHAR},
+      wms_used_count = #{wmsUsedCount,jdbcType=VARCHAR},
+      address_changeData = #{addressChangedata,jdbcType=VARCHAR},
+      address_stock_num = #{addressStockNum,jdbcType=VARCHAR},
+      address_used_count = #{addressUsedCount,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

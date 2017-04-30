@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ffzx.order.mapper.SummarySalesMapper" >
+  <resultMap id="BaseResultMap" type="com.ffzx.order.model.SummarySales" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="commodity_code" property="commodityCode" jdbcType="VARCHAR" />
+    <result column="sale_num" property="saleNum" jdbcType="INTEGER" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    t.id, t.commodity_code, t.sale_num, t.update_date
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null and '' != params.id" >
+        and t.id = #{params.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.commodityCode != null and '' != params.commodityCode" >
+        and t.commodity_code = #{params.commodityCode,jdbcType=VARCHAR}
+      </if>
+      <if test="params.saleNum != null" >
+        and t.sale_num = #{params.saleNum,jdbcType=INTEGER}
+      </if>
+      <if test="params.updateDate != null" >
+        and t.update_date = #{params.updateDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.commodityCodeList != null">
+         and t.commodity_code in
+          <foreach collection="params.commodityCodeList" separator="," open="(" close=")" item="item">
+	            '${item}'
+	      </foreach>
+      </if>
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from summary_sales t 
+    where t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from summary_sales t 
+    where 1=1
+    <include refid="condition" />
+    order by t.sale_num desc
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from summary_sales t  where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from summary_sales t 
+    where 1=1
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from summary_sales
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.order.model.SummarySales" >
+    delete from summary_sales
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ffzx.order.model.SummarySales" >
+    insert into summary_sales (id, commodity_code, sale_num, 
+      update_date)
+    values (#{id,jdbcType=VARCHAR}, #{commodityCode,jdbcType=VARCHAR}, #{saleNum,jdbcType=INTEGER}, 
+      #{updateDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.order.model.SummarySales" >
+    insert into summary_sales
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="commodityCode != null" >
+        commodity_code,
+      </if>
+      <if test="saleNum != null" >
+        sale_num,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityCode != null" >
+        #{commodityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="saleNum != null" >
+        #{saleNum,jdbcType=INTEGER},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+    <!-- 更新销量汇总数据 -->
+  <update id="dailyUpdateSummary" parameterType="com.ffzx.order.model.SummarySales" >
+     update summary_sales set sale_num = sale_num + #{saleNum,jdbcType=INTEGER},update_date=now()
+     where commodity_code = #{commodityCode,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.order.model.SummarySales" >
+    update summary_sales
+    <set >
+      <if test="commodityCode != null" >
+        commodity_code = #{commodityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="saleNum != null" >
+        sale_num = #{saleNum,jdbcType=INTEGER},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.order.model.SummarySales" >
+    update summary_sales
+    set commodity_code = #{commodityCode,jdbcType=VARCHAR},
+      sale_num = #{saleNum,jdbcType=INTEGER},
+      update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

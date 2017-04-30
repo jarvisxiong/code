@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ffzx.order.mapper.AftersalePickupMapper" >
+  <resultMap id="BaseResultMap" type="com.ffzx.order.api.dto.AftersalePickup" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="pickup_no" property="pickupNo" jdbcType="VARCHAR" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="apply_no" property="applyNo" jdbcType="VARCHAR" />
+    <result column="refund_no" property="refundNo" jdbcType="VARCHAR" />
+    <result column="exchange_order_no" property="exchangeOrderNo" jdbcType="VARCHAR" />
+    <result column="pickup_status" property="pickupStatus" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy.id" jdbcType="VARCHAR" />
+    <result column="last_update_date" property="lastUpdateDate" jdbcType="TIMESTAMP" />
+    <result column="last_update_by" property="lastUpdateBy.id" jdbcType="VARCHAR" />
+     <result column="apply_id" property="aftersaleApply.id" jdbcType="VARCHAR" />
+  </resultMap>
+ <resultMap id="BaseStateMap" type="com.ffzx.order.api.dto.AftersalePickup" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="pickup_no" property="pickupNo" jdbcType="VARCHAR" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="apply_no" property="applyNo" jdbcType="VARCHAR" />
+    <result column="pickup_status" property="pickupStatus" jdbcType="VARCHAR" />
+     <result column="apply_id" property="aftersaleApply.id" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    t.id, t.pickup_no, t.order_no, t.apply_no, t.refund_no, t.exchange_order_no, t.pickup_status, 
+    t.create_date, t.create_by as 'createBy.id', t.last_update_date, t.last_update_by as 'lastUpdateBy.id',t.apply_id as "aftersaleApply.id"
+  </sql>
+   <sql id="Base_state_Column" >
+    t.id,t.pickup_no, t.order_no, t.apply_no,t.pickup_status,t.apply_id as "aftersaleApply.id"
+  </sql>
+  <sql id="afterapply_Column_List" >
+    t.id, t.pickup_no, t.order_no, t.apply_no, t.refund_no, t.exchange_order_no, t.pickup_status, 
+    t.create_date, t.create_by as 'createBy.id', t.last_update_date, t.last_update_by as 'lastUpdateBy.id',
+	f.id as "aftersaleApply.id", f.apply_no as "aftersaleApply.applyNo", f.order_no as "aftersaleApply.orderNo",
+	f.refund_no as "aftersaleApply.refundNo", 
+	f.exchange_order_no as "aftersaleApply.exchangeOrderNo", f.apply_status as "aftersaleApply.applyStatus", 
+    f.apply_type as "aftersaleApply.applyType", f.service_approve_date as "aftersaleApply.serviceApproveDate", 
+    f.storage_approve_date as "aftersaleApply.storageApproveDate", 
+   	f.apply_person_name as "aftersaleApply.applyPersonName", f.apply_person_phone as "aftersaleApply.applyPersonPhone", 
+    f.apply_person_address as "aftersaleApply.applyPersonAddress", f.reason_select as "aftersaleApply.reasonSelect",
+     f.reason_explain as "aftersaleApply.reasonExplain",
+    f.apply_pic_img as "aftersaleApply.applyPicImg",f.order_id as "aftersaleApply.orderId"
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null and '' != params.id" >
+        and t.id = #{params.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.pickupNo != null and '' != params.pickupNo" >
+        and t.pickup_no = #{params.pickupNo,jdbcType=VARCHAR}
+      </if>
+      <if test="params.orderNo != null and '' != params.orderNo" >
+        and t.order_no = #{params.orderNo,jdbcType=VARCHAR}
+      </if>
+      <if test="params.applyNo != null and '' != params.applyNo" >
+        and t.apply_no = #{params.applyNo,jdbcType=VARCHAR}
+      </if>
+      <if test="params.refundNo != null and '' != params.refundNo" >
+        and t.refund_no = #{params.refundNo,jdbcType=VARCHAR}
+      </if>
+      
+      
+      <if test="params.pickupNo_like != null and '' != params.pickupNo_like" >
+        and t.pickup_no like CONCAT('%', #{params.pickupNo_like,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test="params.orderNo_like != null and '' != params.orderNo_like" >
+        and t.order_no like CONCAT('%', #{params.orderNo_like,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test="params.applyNo_like != null and '' != params.applyNo_like" >
+        and t.apply_no like CONCAT('%', #{params.applyNo_like,jdbcType=VARCHAR}, '%')
+      </if>
+	  <if test="params.refundNo_like != null and '' != params.refundNo_like" >
+        and f.refund_no like CONCAT('%', #{params.refundNo_like,jdbcType=VARCHAR}, '%')
+      </if>
+	   <if test="params.applyPersonPhone_like != null and '' != params.applyPersonPhone_like" >
+        and f.apply_person_phone like CONCAT('%', #{params.applyPersonPhone_like,jdbcType=VARCHAR}, '%')
+      </if>
+      
+      
+      <if test="params.exchangeOrderNo != null and '' != params.exchangeOrderNo" >
+        and t.exchange_order_no = #{params.exchangeOrderNo,jdbcType=VARCHAR}
+      </if>
+      <if test="params.pickupStatus != null and '' != params.pickupStatus" >
+        and t.pickup_status = #{params.pickupStatus,jdbcType=VARCHAR}
+      </if>
+      <if test="params.createDate != null" >
+        and t.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.createBy != null and '' != params.createBy" >
+        and t.create_by = #{params.createBy.id,jdbcType=VARCHAR}
+      </if>
+       <if test="params.aftersaleApply!= null and '' != params.aftersaleApply" >
+        and t.apply_id = #{params.aftersaleApply.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.lastUpdateDate != null" >
+        and t.last_update_date = #{params.lastUpdateDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.lastUpdateBy != null and '' != params.lastUpdateBy" >
+        and t.last_update_by = #{params.lastUpdateBy.id,jdbcType=VARCHAR}
+      </if>
+       <if test="params.id != null and '' != params.id" >
+        and f.id = #{params.id,jdbcType=VARCHAR}
+      </if>
+<!--       <if test="params.applyNo != null and '' != params.applyNo" >
+        and f.apply_no = #{params.applyNo,jdbcType=VARCHAR}
+      </if>
+      <if test="params.orderNo != null and '' != params.orderNo" >
+        and f.order_no = #{params.orderNo,jdbcType=VARCHAR}
+      </if> -->
+      <if test="params.refundNo != null and '' != params.refundNo" >
+        and f.refund_no = #{params.refundNo,jdbcType=VARCHAR}
+      </if>
+      <if test="params.exchangeOrderNo != null and '' != params.exchangeOrderNo" >
+        and f.exchange_order_no = #{params.exchangeOrderNo,jdbcType=VARCHAR}
+      </if>
+      <if test="params.applyStatus != null and '' != params.applyStatus" >
+        and f.apply_status = #{params.applyStatus,jdbcType=VARCHAR}
+      </if>
+      <if test="params.applyType != null and '' != params.applyType" >
+        and f.apply_type = #{params.applyType,jdbcType=VARCHAR}
+      </if>
+      <if test="params.serviceApproveDate != null" >
+        and f.service_approve_date = #{params.serviceApproveDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.storageApproveDate != null" >
+        and f.storage_approve_date = #{params.storageApproveDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.applyPersonName != null and '' != params.applyPersonName" >
+        and (f.apply_person_name = #{params.applyPersonName,jdbcType=VARCHAR} or f.apply_person_name like CONCAT('%', #{params.applyPersonName}, '%'))
+      </if>
+      <if test="params.applyPersonPhone != null and '' != params.applyPersonPhone" >
+        and f.apply_person_phone = #{params.applyPersonPhone,jdbcType=VARCHAR}
+      </if>
+      <if test="params.reasonSelect != null and '' != params.reasonSelect" >
+        and f.reason_select = #{params.reasonSelect,jdbcType=VARCHAR}
+      </if>
+      <if test="params.reasonExplain != null and '' != params.reasonExplain" >
+        and f.reason_explain = #{params.reasonExplain,jdbcType=VARCHAR}
+      </if>
+      <if test="params.delFlag != null and '' != params.delFlag" >
+        and f.del_flag = #{params.delFlag,jdbcType=VARCHAR}
+      </if>
+       <if test="params.applyPicImg!= null and '' != params.applyPicImg" >
+        	and f.apply_pic_img = #{params.applyPicImg,jdbcType=VARCHAR}
+      </if>
+	<!-- 雷2016/07/07加时间筛选 -->
+	<if test="params.applyStartDate!= null  and '' != params.applyStartDate">
+			<![CDATA[and f.create_date > #{params.applyStartDate,jdbcType=TIMESTAMP}]]>
+	</if>
+	<if test="params.applyEndDate!= null  and '' != params.applyEndDate">
+			<![CDATA[and f.create_date < #{params.applyEndDate,jdbcType=TIMESTAMP}]]>
+	</if>
+	<if test="params.serviceApproveStartDate!= null  and '' != params.serviceApproveStartDate">
+			<![CDATA[and f.service_approve_date > #{params.serviceApproveStartDate,jdbcType=TIMESTAMP}]]>
+	</if>
+	<if test="params.serviceApproveEndDate!= null  and '' != params.serviceApproveEndDate">
+			<![CDATA[and f.service_approve_date < #{params.serviceApproveEndDate,jdbcType=TIMESTAMP}]]>
+	</if>
+	<if test="params.storageApproveStartDate!= null  and '' != params.storageApproveStartDate">
+			<![CDATA[and f.storage_approve_date > #{params.storageApproveStartDate,jdbcType=TIMESTAMP}]]>
+	</if>
+	<if test="params.storageApproveEndDate!= null  and '' != params.storageApproveEndDate">
+			<![CDATA[and f.storage_approve_date < #{params.storageApproveEndDate,jdbcType=TIMESTAMP}]]>
+	</if>
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from aftersale_pickup t 
+    where t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="getPickupStateByPickNo" resultMap="BaseStateMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_state_Column" />
+    from aftersale_pickup t 
+    where t.pickup_no = #{pickupNo,jdbcType=VARCHAR} for update
+  </select>
+  <select id="selectByIdOrNo" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from aftersale_pickup t 
+    where 
+     	<if test="params.id!= null and '' != params.id" >
+        	 t.id = #{params.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.pickupNo!= null and '' != params.pickupNo" >
+        	 t.pickup_no = #{params.pickupNo,jdbcType=VARCHAR}
+      </if>
+  </select>
+  
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="afterapply_Column_List" />
+    from aftersale_pickup t 
+    left join aftersale_apply f on t.apply_id=f.id
+    where t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectByPickupNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  select 
+    <include refid="afterapply_Column_List" />
+    ,i.return_num as "pickupCount"
+    from aftersale_pickup t 
+    left join aftersale_apply f on t.apply_id=f.id
+    left join aftersale_apply_item i on i.apply_id=f.id
+    where t.pickup_no = #{pickupNo,jdbcType=VARCHAR}
+  </select>
+  
+    <select id="selectByAftersalPickupBy" resultMap="BaseResultMap" parameterType="map" >
+  select 
+    <include refid="afterapply_Column_List" />
+    ,i.return_num as "pickupCount"
+    from aftersale_pickup t 
+    left join aftersale_apply f on t.apply_id=f.id
+    left join aftersale_apply_item i on i.apply_id=f.id
+    where t.pickup_no = #{pickupNo,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from aftersale_pickup t 
+    where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from aftersale_pickup t  where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select 
+     <include refid="afterapply_Column_List" />
+    from aftersale_pickup t 
+    left join aftersale_apply f on t.apply_id=f.id
+    where 1=1
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from aftersale_pickup
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+    <delete id="deletePickupByNo" parameterType="java.lang.String" >
+    delete from aftersale_pickup
+    where pickup_no = #{pickupNo,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.order.api.dto.AftersalePickup" >
+    delete from aftersale_pickup
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ffzx.order.api.dto.AftersalePickup" >
+    insert into aftersale_pickup (id, pickup_no, order_no, 
+      apply_no, refund_no, exchange_order_no, 
+      pickup_status, create_date, create_by, 
+      last_update_date, last_update_by,apply_id)
+    values (#{id,jdbcType=VARCHAR}, #{pickupNo,jdbcType=VARCHAR}, #{orderNo,jdbcType=VARCHAR}, 
+      #{applyNo,jdbcType=VARCHAR}, #{refundNo,jdbcType=VARCHAR}, #{exchangeOrderNo,jdbcType=VARCHAR}, 
+      #{pickupStatus,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{createBy.id,jdbcType=VARCHAR}, 
+      #{lastUpdateDate,jdbcType=TIMESTAMP}, #{lastUpdateBy.id,jdbcType=VARCHAR},#{aftersaleApply.id,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.order.api.dto.AftersalePickup" >
+    insert into aftersale_pickup
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="pickupNo != null" >
+        pickup_no,
+      </if>
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+      <if test="applyNo != null" >
+        apply_no,
+      </if>
+      <if test="refundNo != null" >
+        refund_no,
+      </if>
+      <if test="exchangeOrderNo != null" >
+        exchange_order_no,
+      </if>
+      <if test="pickupStatus != null" >
+        pickup_status,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date,
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by,
+      </if>
+       <if test="aftersaleApply.id != null" >
+        apply_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="pickupNo != null" >
+        #{pickupNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="applyNo != null" >
+        #{applyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="refundNo != null" >
+        #{refundNo,jdbcType=VARCHAR},
+      </if>
+      <if test="exchangeOrderNo != null" >
+        #{exchangeOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="pickupStatus != null" >
+        #{pickupStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        #{createBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null" >
+        #{lastUpdateBy.id,jdbcType=VARCHAR},
+      </if>
+       <if test="aftersaleApply.id != null" >
+       #{aftersaleApply.id,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.order.api.dto.AftersalePickup" >
+    update aftersale_pickup
+    <set >
+      <if test="pickupNo != null" >
+        pickup_no = #{pickupNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="applyNo != null" >
+        apply_no = #{applyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="refundNo != null" >
+        refund_no = #{refundNo,jdbcType=VARCHAR},
+      </if>
+      <if test="exchangeOrderNo != null" >
+        exchange_order_no = #{exchangeOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="pickupStatus != null" >
+        pickup_status = #{pickupStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+      </if>
+       <if test="aftersaleApply.id != null" >
+      	apply_id= #{aftersaleApply.id,jdbcType=VARCHAR}
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.order.api.dto.AftersalePickup" >
+    update aftersale_pickup
+    set pickup_no = #{pickupNo,jdbcType=VARCHAR},
+      order_no = #{orderNo,jdbcType=VARCHAR},
+      apply_no = #{applyNo,jdbcType=VARCHAR},
+      refund_no = #{refundNo,jdbcType=VARCHAR},
+      exchange_order_no = #{exchangeOrderNo,jdbcType=VARCHAR},
+      pickup_status = #{pickupStatus,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      create_by = #{createBy.id,jdbcType=VARCHAR},
+      last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+      apply_id= #{aftersaleApply.id,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPickupNo" parameterType="map" >
+    update aftersale_pickup
+    set 
+      pickup_status = #{params.pickupStatus,jdbcType=VARCHAR},     
+      last_update_date = #{params.lastUpdateDate,jdbcType=TIMESTAMP},
+      last_update_by = #{params.lastUpdateBy.id,jdbcType=VARCHAR}
+    where pickup_no = #{params.pickupNo,jdbcType=VARCHAR}
+  </update>
+   <update id="cancelPick" parameterType="map" >
+    update aftersale_pickup
+    set 
+      order_no = #{params.orderNo,jdbcType=VARCHAR}, 
+      apply_no = #{params.applyNo,jdbcType=VARCHAR}, 
+      apply_id = #{params.applyId,jdbcType=VARCHAR}, 
+      pickup_status = #{params.pickupStatus,jdbcType=VARCHAR},     
+      last_update_date = #{params.lastUpdateDate,jdbcType=TIMESTAMP},
+      last_update_by = #{params.lastUpdateBy.id,jdbcType=VARCHAR}
+    where pickup_no = #{params.pickupNo,jdbcType=VARCHAR}
+  </update>
+</mapper>

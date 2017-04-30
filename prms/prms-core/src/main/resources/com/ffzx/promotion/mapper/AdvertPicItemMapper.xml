@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ffzx.promotion.mapper.AdvertPicItemMapper">
+  <sql id="Base_Column_List" >
+		d.id, 
+		d.remarks AS "remarks",
+		d.create_by AS "createBy.id",
+		d.create_date AS "createDate",
+		d.last_update_by AS "lastUpdateBy.id",
+		d.last_update_date AS "lastUpdateDate",
+		d.del_flag AS "delFlag",
+		d.advert_type AS "advertType",
+		d.pic_path AS "picPath",
+		d.ref_id AS "refId",
+		d.link_path AS "linkPath"
+
+  </sql>  
+  <sql id="joins">
+
+  </sql> 
+  <sql id="condition" >
+	<if test="null!=params" >
+		<if test="params.id != null and '' != params.id">
+			and d.id = #{params.id,jdbcType=VARCHAR}
+		</if>
+		<if test="params.remarks != null and '' != params.remarks">
+			and d.remarks = #{params.remarks,jdbcType=VARCHAR}
+		</if>
+		<if test="params.createBy != null and '' != params.createBy">
+			and d.create_by = #{params.createBy.id,jdbcType=VARCHAR}
+		</if>
+		<if test="params.createDate != null and '' != params.createDate">
+			and d.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+		</if>
+		<if test="params.lastUpdateBy != null and '' != params.lastUpdateBy">
+			and d.last_update_by = #{params.lastUpdateBy.id,jdbcType=VARCHAR}
+		</if>
+		<if test="params.lastUpdateDate != null and '' != params.lastUpdateDate">
+			and d.last_update_date = #{params.lastUpdateDate,jdbcType=TIMESTAMP}
+		</if>
+		<if test="params.delFlag != null and '' != params.delFlag">
+			and d.del_flag = #{params.delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="params.advertType != null and '' != params.advertType">
+			and d.advert_type = #{params.advertType,jdbcType=VARCHAR}
+		</if>
+		<if test="params.picPath != null and '' != params.picPath">
+			and d.pic_path = #{params.picPath,jdbcType=VARCHAR}
+		</if>
+		<if test="params.refId != null and '' != params.refId">
+			and d.ref_id = #{params.refId,jdbcType=VARCHAR}
+		</if>
+		<if test="params.linkPath != null and '' != params.linkPath">
+			and d.link_path = #{params.linkPath,jdbcType=VARCHAR}
+		</if>
+		<if test="params.delFlag == null or '' == params.delFlag or null == params" >
+			and d.del_flag = 0
+		</if>
+	</if>
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultType="com.ffzx.promotion.api.dto.AdvertPicItem" parameterType="java.lang.String" >
+   	select 
+    <include refid="Base_Column_List" />
+    from advertpicitem as d 
+    <include refid="joins"/>
+    where  d.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParams" resultType="com.ffzx.promotion.api.dto.AdvertPicItem" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from advertpicitem as  d 
+    <include refid="joins"/>
+    where 1=1 
+    <include refid="condition"/>
+  </select>
+  
+  <select id="selectCount" resultType="java.lang.Integer" >
+   select count(1) as s from advertpicitem as  d where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultType="com.ffzx.promotion.api.dto.AdvertPicItem" parameterType="map" >
+   select 
+    <include refid="Base_Column_List" />
+    from advertpicitem as  d    
+    <include refid="joins"/>
+    where 1=1      
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by  d.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    	DELETE FROM advertpicitem WHERE id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.promotion.api.dto.AdvertPicItem" >
+    	DELETE FROM advertpicitem WHERE id = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.ffzx.promotion.api.dto.AdvertPicItem" >
+   	INSERT INTO advertpicitem
+		(
+			id,
+			remarks,
+			create_by,
+			create_date,
+			last_update_by,
+			last_update_date,
+			del_flag,
+			advert_type,
+			pic_path,
+			ref_id,
+			link_path
+		) VALUES
+		(
+			#{id,jdbcType=VARCHAR},
+			#{remarks,jdbcType=VARCHAR},
+			#{createBy.id,jdbcType=VARCHAR},
+			#{createDate,jdbcType=TIMESTAMP},
+			#{lastUpdateBy.id,jdbcType=VARCHAR},
+			#{lastUpdateDate,jdbcType=TIMESTAMP},
+			#{delFlag,jdbcType=VARCHAR},
+			#{advertType,jdbcType=VARCHAR},
+			#{picPath,jdbcType=VARCHAR},
+			#{refId,jdbcType=VARCHAR},
+			#{linkPath,jdbcType=VARCHAR}
+		)
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.promotion.api.dto.AdvertPicItem" >
+   	INSERT INTO advertpicitem 
+	<trim prefix="(" suffix=")" suffixOverrides="," >
+		<if test="id != null">id,</if>
+		<if test="remarks != null" >remarks,</if>
+		<if test="createBy != null" >create_by,</if>
+		<if test="createDate != null" >create_date,</if>
+		<if test="lastUpdateBy != null" >last_update_by,</if>
+		<if test="lastUpdateDate != null" >last_update_date,</if>
+		<if test="delFlag != null" >del_flag,</if>
+		<if test="advertType != null" >advert_type,</if>
+		<if test="picPath != null" >pic_path,</if>
+		<if test="refId != null" >ref_id,</if>
+		<if test="linkPath != null" >link_path,</if>
+	</trim>
+	<trim prefix="values (" suffix=")" suffixOverrides="," >
+		<if test="id != null">#{id,jdbcType=VARCHAR},</if>
+		<if test="remarks != null" >#{remarks,jdbcType=VARCHAR},</if>
+		<if test="createBy != null" >#{createBy.id,jdbcType=VARCHAR},</if>
+		<if test="createDate != null" >#{createDate,jdbcType=TIMESTAMP},</if>
+		<if test="lastUpdateBy != null" >#{lastUpdateBy.id,jdbcType=VARCHAR},</if>
+		<if test="lastUpdateDate != null" >#{lastUpdateDate,jdbcType=TIMESTAMP},</if>
+		<if test="delFlag != null" >#{delFlag,jdbcType=VARCHAR},</if>
+		<if test="advertType != null" >#{advertType,jdbcType=VARCHAR},</if>
+		<if test="picPath != null" >#{picPath,jdbcType=VARCHAR},</if>
+		<if test="refId != null" >#{refId,jdbcType=VARCHAR},</if>
+		<if test="linkPath != null" >#{linkPath,jdbcType=VARCHAR},</if>
+	</trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.promotion.api.dto.AdvertPicItem" >
+   	UPDATE advertpicitem
+	<set>
+		<if test="remarks != null" >
+			remarks = #{remarks,jdbcType=VARCHAR},
+		</if>
+		<if test="createBy != null" >
+			create_by = #{createBy.id,jdbcType=VARCHAR},
+		</if>
+		<if test="createDate != null" >
+			create_date = #{createDate,jdbcType=TIMESTAMP},
+		</if>
+		<if test="lastUpdateBy != null" >
+			last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+		</if>
+		<if test="lastUpdateDate != null" >
+			last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+		</if>
+		<if test="delFlag != null" >
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="advertType != null" >
+			advert_type = #{advertType,jdbcType=VARCHAR},
+		</if>
+		<if test="picPath != null" >
+			pic_path = #{picPath,jdbcType=VARCHAR},
+		</if>
+		<if test="refId != null" >
+			ref_id = #{refId,jdbcType=VARCHAR},
+		</if>
+		<if test="linkPath != null" >
+			link_path = #{linkPath,jdbcType=VARCHAR},
+		</if>
+	</set>
+	where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.promotion.api.dto.AdvertPicItem" >
+   	UPDATE advertpicitem
+		<set>
+			remarks = #{remarks,jdbcType=VARCHAR},
+			create_by = #{createBy.id,jdbcType=VARCHAR},
+			create_date = #{createDate,jdbcType=TIMESTAMP},
+			last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+			last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+			advert_type = #{advertType,jdbcType=VARCHAR},
+			pic_path = #{picPath,jdbcType=VARCHAR},
+			ref_id = #{refId,jdbcType=VARCHAR},
+			link_path = #{linkPath,jdbcType=VARCHAR}
+		</set>
+		WHERE id = #{id,jdbcType=VARCHAR} 
+  </update>
+</mapper>

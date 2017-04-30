@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ffzx.promotion.mapper.JoinRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.ffzx.promotion.api.dto.JoinRecord" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="head_image" property="headImage" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="ticket" property="ticket" jdbcType="VARCHAR" />
+    <result column="reward_no" property="rewardNo" jdbcType="VARCHAR" />
+    <result column="reward_id" property="rewardId" jdbcType="VARCHAR" />
+    <result column="member_id" property="memberId" jdbcType="VARCHAR" />
+    <result column="is_bond" property="isBond" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    t.id, t.phone, t.head_image, t.create_date, t.ticket, t.reward_no, t.reward_id, t.member_id, 
+    t.is_bond
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null and '' != params.id" >
+        and t.id = #{params.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.phone != null and '' != params.phone" >
+        and t.phone = #{params.phone,jdbcType=VARCHAR}
+      </if>
+      <if test="params.headImage != null and '' != params.headImage" >
+        and t.head_image = #{params.headImage,jdbcType=VARCHAR}
+      </if>
+      <if test="params.createDate != null" >
+        and t.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.ticket != null and '' != params.ticket" >
+        and t.ticket = #{params.ticket,jdbcType=VARCHAR}
+      </if>
+      <if test="params.rewardNo != null and '' != params.rewardNo" >
+        and t.reward_no = #{params.rewardNo,jdbcType=VARCHAR}
+      </if>
+      <if test="params.rewardId != null and '' != params.rewardId" >
+        and t.reward_id = #{params.rewardId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.memberId != null and '' != params.memberId" >
+        and t.member_id = #{params.memberId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.isBond != null and '' != params.isBond" >
+        and t.is_bond = #{params.isBond,jdbcType=CHAR}
+      </if>
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from join_record t 
+    where t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from join_record t 
+    where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from join_record t  where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from join_record t 
+    where 1=1
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from join_record
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.promotion.api.dto.JoinRecord" >
+    delete from join_record
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ffzx.promotion.api.dto.JoinRecord" >
+    insert into join_record (id, phone, head_image, 
+      create_date, ticket, reward_no, 
+      reward_id, member_id, is_bond
+      )
+    values (#{id,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{headImage,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{ticket,jdbcType=VARCHAR}, #{rewardNo,jdbcType=VARCHAR}, 
+      #{rewardId,jdbcType=VARCHAR}, #{memberId,jdbcType=VARCHAR}, #{isBond,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.promotion.api.dto.JoinRecord" >
+    insert into join_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="headImage != null" >
+        head_image,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="ticket != null" >
+        ticket,
+      </if>
+      <if test="rewardNo != null" >
+        reward_no,
+      </if>
+      <if test="rewardId != null" >
+        reward_id,
+      </if>
+      <if test="memberId != null" >
+        member_id,
+      </if>
+      <if test="isBond != null" >
+        is_bond,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="headImage != null" >
+        #{headImage,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ticket != null" >
+        #{ticket,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardNo != null" >
+        #{rewardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardId != null" >
+        #{rewardId,jdbcType=VARCHAR},
+      </if>
+      <if test="memberId != null" >
+        #{memberId,jdbcType=VARCHAR},
+      </if>
+      <if test="isBond != null" >
+        #{isBond,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.promotion.api.dto.JoinRecord" >
+    update join_record
+    <set >
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="headImage != null" >
+        head_image = #{headImage,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ticket != null" >
+        ticket = #{ticket,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardNo != null" >
+        reward_no = #{rewardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardId != null" >
+        reward_id = #{rewardId,jdbcType=VARCHAR},
+      </if>
+      <if test="memberId != null" >
+        member_id = #{memberId,jdbcType=VARCHAR},
+      </if>
+      <if test="isBond != null" >
+        is_bond = #{isBond,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.promotion.api.dto.JoinRecord" >
+    update join_record
+    set phone = #{phone,jdbcType=VARCHAR},
+      head_image = #{headImage,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      ticket = #{ticket,jdbcType=VARCHAR},
+      reward_no = #{rewardNo,jdbcType=VARCHAR},
+      reward_id = #{rewardId,jdbcType=VARCHAR},
+      member_id = #{memberId,jdbcType=VARCHAR},
+      is_bond = #{isBond,jdbcType=CHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

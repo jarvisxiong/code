@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ffzx.permission.mapper.SysMenuMapper" >
+  <sql id="Base_Column_List" >
+	a.id, a.name, a.parent_id AS "parent.id",a.parent_ids AS "parentIds", a.target, a.icon,a.href, 
+	a.is_show AS "isShow",a.sort,a.remarks,a.permission,a.sub_system_code AS "subSystemCode",a.create_date,a.create_by as "createBy.id",a.last_update_date,a.last_update_by as "lastUpdateBy.id",a.del_flag
+  </sql>
+  <!--<sql id="officeJoins">
+		LEFT JOIN sub_system_config s on a.sub_system_code = s.sub_system_code
+  </sql>
+  -->
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null and '' != params.id" >
+        and a.id = #{params.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.name != null and '' != params.name" >
+        and a.name = #{params.name,jdbcType=VARCHAR}
+      </if>
+      <if test="params.parentId != null and '' != params.parentId" >
+        and a.parent_id = #{params.parentId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.parentIds != null and '' != params.parentIds" >
+        and a.parent_ids = #{params.parentIds,jdbcType=VARCHAR}
+      </if>
+      <if test="params.href != null and '' != params.href" >
+        and a.href = #{params.href,jdbcType=VARCHAR}
+      </if>
+      <if test="params.target != null and '' != params.target" >
+        and a.target = #{params.target,jdbcType=VARCHAR}
+      </if>
+      <if test="params.icon != null and '' != params.icon" >
+        and a.icon = #{params.icon,jdbcType=VARCHAR}
+      </if>
+      <if test="params.isShow != null and '' != params.isShow" >
+        and a.is_show = #{params.isShow,jdbcType=CHAR}
+      </if>
+      <if test="params.sort != null" >
+        and a.sort = #{params.sort,jdbcType=DECIMAL}
+      </if>
+      <if test="params.remarks != null and '' != params.desc" >
+        and a.remarks = #{params.remarks,jdbcType=VARCHAR}
+      </if>
+      <if test="params.permission != null and '' != params.permission" >
+        and a.permission = #{params.permission,jdbcType=VARCHAR}
+      </if>
+      <if test="params.subSystemCode != null and '' != params.subSystemCode" >
+        and a.sub_system_code = #{params.subSystemCode,jdbcType=VARCHAR}
+      </if>
+      <if test="params.createDate != null" >
+        and a.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.createBy != null and '' != params.createBy" >
+        and a.create_by = #{params.createBy,jdbcType=VARCHAR}
+      </if>
+      <if test="params.lastUpdateDate != null" >
+        and a.last_update_date = #{params.lastUpdateDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.lastUpdateBy != null and '' != params.lastUpdateBy" >
+        and a.last_update_by = #{params.lastUpdateBy,jdbcType=VARCHAR}
+      </if>
+      <if test="params.delFlag != null and '' != params.delFlag" >
+        and a.del_flag = #{params.delFlag,jdbcType=CHAR}
+      </if>
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultType="com.ffzx.commerce.framework.system.entity.SysMenu" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_menu a
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParams" resultType="com.ffzx.commerce.framework.system.entity.SysMenu" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    <!--  ,CONCAT("http://",s.sub_system_domain,":",s.sub_system_port,s.sub_system_base_path,a.href) as "url"-->
+    from sys_menu a
+    <!--<include refid="officeJoins"/>-->
+    where 1=1
+    <include refid="condition" />
+     order by sort
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from sys_menu where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultType="com.ffzx.commerce.framework.system.entity.SysMenu" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_menu a
+    where 1=1
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by ${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from sys_menu
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.commerce.framework.system.entity.SysMenu" >
+    delete from sys_menu
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insertSelective" parameterType="com.ffzx.commerce.framework.system.entity.SysMenu" >
+    insert into sys_menu
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="parent != null" >
+        parent_id,
+      </if>
+      <if test="parentIds != null" >
+        parent_ids,
+      </if>
+      <if test="href != null" >
+        href,
+      </if>
+      <if test="target != null" >
+        target,
+      </if>
+      <if test="icon != null" >
+        icon,
+      </if>
+      <if test="isShow != null" >
+        is_show,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="permission != null" >
+        permission,
+      </if>
+      <if test="subSystemCode != null" >
+        sub_system_code,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date,
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parent != null" >
+        #{parent.id,jdbcType=VARCHAR},
+      </if>
+      <if test="parentIds != null" >
+         #{parentIds,jdbcType=VARCHAR},
+      </if>
+      <if test="href != null" >
+        #{href,jdbcType=VARCHAR},
+      </if>
+      <if test="target != null" >
+        #{target,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null" >
+        #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="isShow != null" >
+        #{isShow,jdbcType=CHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=DECIMAL},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="permission != null" >
+        #{permission,jdbcType=VARCHAR},
+      </if>
+      <if test="subSystemCode != null" >
+        #{subSystemCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        #{createBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null" >
+        #{lastUpdateBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.commerce.framework.system.entity.SysMenu" >
+    update sys_menu
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parent != null" >
+        parent_id = #{parent.id,jdbcType=VARCHAR},
+      </if>
+       <if test="parentIds != null" >
+         parent_ids = #{parentIds,jdbcType=VARCHAR},
+      </if>
+      <if test="href != null" >
+        href = #{href,jdbcType=VARCHAR},
+      </if>
+      <if test="target != null" >
+        target = #{target,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null" >
+        icon = #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="isShow != null" >
+        is_show = #{isShow,jdbcType=CHAR},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=DECIMAL},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="permission != null" >
+        permission = #{permission,jdbcType=VARCHAR},
+      </if>
+      <if test="subSystemCode != null" >
+        sub_system_code = #{subSystemCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <!-- 用户id查询菜单 -->
+  <select id="selectMenuByUserId" resultType="com.ffzx.commerce.framework.system.entity.SysMenu" parameterType="map">
+		(select distinct m.id, m.name, m.parent_id AS "parent.id",m.permission,m.href,m.icon,m.sort,m.sub_system_code AS "subSystemCode"
+		from sys_menu m	, sys_role_menu rm, sys_user_role a	
+			where 1=1 and m.id = rm.menu_id and rm.role_id = a.role_id
+        	<if test="params.userId != null and '' != params.userId" >
+        		and a.user_id = #{params.userId,jdbcType=VARCHAR}
+      		</if>
+			<if test="params.isShow != null and '' != params.isShow" >
+        		and m.is_show = #{params.isShow,jdbcType=CHAR}
+      		</if>
+      		<if test="params.delFlag != null and '' != params.deFlag">
+      			and m.del_flag = #{params.delFlag,jdbcType=CHAR}
+      		</if>
+      	)
+		union
+		(select distinct m.id, m.name, m.parent_id AS "parent.id",m.permission,m.href,m.icon,m.sort,m.sub_system_code AS "subSystemCode"
+		from sys_menu m,sys_role_menu rm,sys_user_group_user ug,sys_user_group_role uga
+			where 1 = 1 and ug.user_group_id = uga.user_group_id and  rm.role_id = uga.role_id and m.id = rm.menu_id
+			<if test="params.userId != null and '' != params.userId" >
+        		and ug.user_id = #{params.userId,jdbcType=VARCHAR}
+      		</if>
+			<if test="params.isShow != null and '' != params.isShow" >
+        		and m.is_show = #{params.isShow,jdbcType=CHAR}
+      		</if>
+      		<if test="params.delFlag != null and '' != params.deFlag">
+      			and m.del_flag = #{params.delFlag,jdbcType=CHAR}
+      		</if>
+      	)
+      	union
+      	(select distinct m.id, m.name, m.parent_id AS "parent.id",m.permission,m.href,m.icon,m.sort,m.sub_system_code AS "subSystemCode"
+		from sys_menu m	, sys_user_menu um	
+			where 1=1 and m.id = um.menu_id
+        	<if test="params.userId != null and '' != params.userId" >
+        		and um.user_id = #{params.userId,jdbcType=VARCHAR}
+      		</if>
+			<if test="params.isShow != null and '' != params.isShow" >
+        		and m.is_show = #{params.isShow,jdbcType=CHAR}
+      		</if>
+      		<if test="params.delFlag != null and '' != params.deFlag">
+      			and m.del_flag = #{params.delFlag,jdbcType=CHAR}
+      		</if>
+      	)
+      	order by sort
+	</select>
+	<!-- 用户id查询功能功能权限-->
+	<select id="selectPermissionByUserId" resultType="String" parameterType="map">
+		(select distinct m.permission 
+		from sys_menu m	, sys_role_menu rm, sys_user_role a	
+			where 1=1 and m.id = rm.menu_id and rm.role_id = a.role_id
+			<if test="params.userId != null and '' != params.userId" >
+        		and a.user_id = #{params.userId,jdbcType=VARCHAR}
+      		</if>
+			<if test="params.isShow != null and '' != params.isShow" >
+        		and m.is_show = #{params.isShow,jdbcType=CHAR}
+      		</if>
+      		<if test="params.delFlag != null and '' != params.deFlag">
+      			and m.del_flag = #{params.delFlag,jdbcType=CHAR}
+      		</if>
+      	)
+		union
+		(select distinct m.permission 
+		from sys_menu m,sys_role_menu rm,sys_user_group_user ug,sys_user_group_role uga
+			where 1 = 1 and ug.user_group_id = uga.user_group_id and  rm.role_id = uga.role_id and m.id = rm.menu_id
+			<if test="params.userId != null and '' != params.userId" >
+        		and ug.user_id = #{params.userId,jdbcType=VARCHAR}
+      		</if>
+			<if test="params.isShow != null and '' != params.isShow" >
+        		and m.is_show = #{params.isShow,jdbcType=CHAR}
+      		</if>
+      		<if test="params.delFlag != null and '' != params.deFlag">
+      			and m.del_flag = #{params.delFlag,jdbcType=CHAR}
+      		</if>
+      	)
+      	union
+      	(select distinct m.permission 
+		from sys_menu m	, sys_user_menu um
+			where 1=1 and m.id = um.menu_id
+			<if test="params.userId != null and '' != params.userId" >
+        		and um.user_id = #{params.userId,jdbcType=VARCHAR}
+      		</if>
+			<if test="params.isShow != null and '' != params.isShow" >
+        		and m.is_show = #{params.isShow,jdbcType=CHAR}
+      		</if>
+      		<if test="params.delFlag != null and '' != params.deFlag">
+      			and m.del_flag = #{params.delFlag,jdbcType=CHAR}
+      		</if>
+      	)
+	</select>
+	<!-- 查询功所有功能权限 -->
+	<select id="selectPermissionAll" resultType="String" parameterType="map">
+		select permission from sys_menu m
+		where 1 = 1
+		<if test="params.isShow != null and '' != params.isShow" >
+     		and m.is_show = #{params.isShow,jdbcType=CHAR}
+   		</if>
+   		<if test="params.delFlag != null and '' != params.deFlag">
+   			and m.del_flag = #{params.delFlag,jdbcType=CHAR}
+   		</if>		
+	</select>
+  <select id="selectSubMenuList" resultType="com.ffzx.commerce.framework.system.entity.SysMenu">
+      select 
+      <include refid="Base_Column_List" />
+      from sys_menu a WHERE a.PARENT_ID = #{id,jdbcType=VARCHAR} order by a.sort
+  </select>
+  
+  <!-- 删除时候要用到的sql -->
+  <delete id="deleteAllRoleMenu" parameterType="java.lang.String" >
+    delete from sys_ROLE_MENU where menu_id = #{id,jdbcType=VARCHAR}
+  </delete>
+	<delete id="deleteAllMenuAction"  parameterType="java.lang.String"  >
+    delete from sys_menu_ACTION where menu_id = #{id,jdbcType=VARCHAR}
+  </delete>
+	<delete id="deleteAllMenuRoleAction"   parameterType="java.lang.String" >
+    delete from sys_ROLE_ACTION where menu_id = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <!-- 移动的时候要调用的sql -->
+    <select id="selectParentMenu" resultType="com.ffzx.commerce.framework.system.entity.SysMenu">
+		select distinct 
+		<include refid="Base_Column_List" /> 
+		from sys_menu a where a.id = (SELECT PARENT_ID FROM sys_menu WHERE id = #{id,jdbcType=VARCHAR} )
+	</select>
+	<update id="updateMenuOrder" parameterType="com.ffzx.commerce.framework.system.entity.SysMenu">
+		UPDATE sys_menu SET sort = #{sort,jdbcType=INTEGER} WHERE id = #{id,jdbcType=VARCHAR}
+	</update>
+	
+	 <select id="isHasMenu" parameterType="com.ffzx.commerce.framework.system.entity.SysMenu" resultType="java.lang.Integer" >
+	 	select  count(*) from  sys_menu m
+		where 1=1
+		<if test="id != null and id != ''">
+		<![CDATA[ 
+			and m.id <> #{id,jdbcType=VARCHAR}
+		]]>
+		</if>
+		<if test="name != null" >
+        	and m.name = #{name,jdbcType=VARCHAR}
+     	 </if> 
+		<if test="parent != null">
+			and m.parent_id = #{parent.id,jdbcType=VARCHAR}
+		</if>
+	 </select>
+	
+	<!-- 获取所有菜单并标识角色所拥有的菜单 -->
+	<select id="selectAllMenuByRoleId" resultType="com.ffzx.commerce.framework.system.entity.SysMenu">
+		select distinct m.id, m.name, m.parent_id AS "parent.id", rm2.role_id AS roleId from sys_menu m
+		left join (
+			select rm.role_id, rm.menu_id from sys_role r,
+			sys_role_menu rm
+			where r.id = rm.role_id and r.id = #{roleId,jdbcType=INTEGER} 
+		) rm2
+		on m.id = rm2.menu_id
+		where 1 = 1
+		<if test="delFlag != null" >
+        	and m.del_flag = #{delFlag,jdbcType=INTEGER}
+      	</if>
+		order by m.sort
+	</select>
+	<!-- 获取所有菜单并标识用户所拥有的菜单 -->
+	<select id="selectAllMenuByUserId" resultType="com.ffzx.commerce.framework.system.entity.SysMenu">
+		select distinct m.id, m.name, m.parent_id AS "parent.id", um2.user_id AS userId from sys_menu m
+		left join (
+			select um.user_id, um.menu_id from sys_user u,
+			sys_user_menu um
+			where u.id = um.user_id and u.id = #{userId,jdbcType=INTEGER} 
+		) um2
+		on m.id = um2.menu_id
+		where 1 = 1
+		<if test="delFlag != null" >
+        	and m.del_flag = #{delFlag,jdbcType=INTEGER}
+      	</if>
+		order by m.sort
+	</select>
+	<!-- 获取所有子集 -->
+	<select id="getByParentIdsLike" resultType="com.ffzx.commerce.framework.system.entity.SysMenu" >
+		select 
+	    <include refid="Base_Column_List" />
+	    from sys_menu a
+	    WHERE 1 = 1
+		<if test="delFlag != null">
+			and a.del_flag = #{delFlag,jdbcType=CHAR} 
+		</if>
+		<if test="parentIds != null">
+			and a.parent_ids LIKE #{parentIds}
+		</if>
+    	order by a.sort
+	</select>
+	<!--  更改删除状态为删除 -->
+	<update id="updateDelFlag">
+		UPDATE sys_menu SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id} OR parent_ids LIKE CONCAT('%,', #{id}, ',%')
+	</update>
+</mapper>

@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ffzx.promotion.mapper.PanicBuyRemindMapper">
+<!-- <resultMap id="BaseResultMap" type="com.ffzx.promotion.api.dto.ActivityCommodity" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="activity_id" property="activityId" jdbcType="VARCHAR" />
+    <result column="commodity_id" property="commodityId" jdbcType="VARCHAR" />
+    <result column="member_id" property="memberId" jdbcType="VARCHAR" />
+    <result column="is_remind" property="isRemind" jdbcType="CHAR" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="last_update_by" property="lastUpdateBy" jdbcType="VARCHAR" />
+    <result column="last_update_date" property="lastUpdateDate" jdbcType="TIMESTAMP" />
+    <result column="del_flag" property="delFlag" jdbcType="VARCHAR" />
+  </resultMap> -->
+  
+  <sql id="Base_Column_List" >
+		a.id, 
+		a.activity_id AS "activityId",
+		a.commodity_id AS "commodityId",
+		a.member_id AS "memberId",
+		a.is_remind AS "isRemind",
+		a.is_jiguang_remind AS "isJiguangRemind",
+		a.schedule_id AS "scheduleId"
+
+  </sql>  
+  <sql id="joins">
+
+  </sql> 
+  <sql id="joinALLs">
+	
+LEFT JOIN activity_commodity ac on ac.id=a.activity_id
+  </sql> 
+  
+  <sql id="conditionActivityList" >
+	<if test="null!=params" >
+		
+		<if test="params.memberId != null and '' != params.memberId">
+			and a.member_id = #{params.memberId,jdbcType=VARCHAR}
+		</if>
+		<if test="params.activityManageId != null and '' != params.activityManageId">
+			and ac.activity_id = #{params.activityManageId,jdbcType=VARCHAR}
+		</if>
+  
+	</if>
+  </sql>
+  <sql id="condition" >
+	<if test="null!=params" >
+		<if test="params.id != null and '' != params.id">
+			and a.id = #{params.id,jdbcType=VARCHAR}
+		</if>
+		<if test="params.activityId != null and '' != params.activityId">
+			and a.activity_id = #{params.activityId,jdbcType=VARCHAR}
+		</if>
+		<if test="params.commodityId != null and '' != params.commodityId">
+			and a.commodity_id = #{params.commodityId,jdbcType=VARCHAR}
+		</if>
+		<if test="params.memberId != null and '' != params.memberId">
+			and a.member_id = #{params.memberId,jdbcType=VARCHAR}
+		</if>
+		<if test="params.isRemind != null and '' != params.isRemind">
+			and a.is_remind = #{params.isRemind,jdbcType=VARCHAR}
+		</if>
+	</if>
+  </sql>
+  <!-- 返回已提醒的list -->
+  <select id="getActivityList" resultType="java.lang.String" parameterType="map" >
+   	select 
+    a.activity_id
+    from panicbuy_remind as a 
+    <include refid="joinALLs"/>
+    where  1=1 
+    <include refid="conditionActivityList"/>
+  </select>
+  
+  <select id="selectByPrimaryKey" resultType="com.ffzx.promotion.api.dto.PanicBuyRemind" parameterType="java.lang.String" >
+   	select 
+    <include refid="Base_Column_List" />
+    from panicbuy_remind as a 
+    <include refid="joins"/>
+    where  a.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParams" resultType="com.ffzx.promotion.api.dto.PanicBuyRemind" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from panicbuy_remind as  a 
+    <include refid="joins"/>
+    where 1=1 
+    <include refid="condition"/>
+  </select>
+  
+  <select id="selectCount" resultType="java.lang.Integer" >
+   select count(1) as s from panicbuy_remind as  a where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultType="com.ffzx.promotion.api.dto.PanicBuyRemind" parameterType="map" >
+   select 
+    <include refid="Base_Column_List" />
+    from panicbuy_remind as  a    
+    <include refid="joins"/>
+    where 1=1      
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by  a.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    	DELETE FROM panicbuy_remind WHERE id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.promotion.api.dto.PanicBuyRemind" >
+    	DELETE FROM panicbuy_remind WHERE id = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.ffzx.promotion.api.dto.PanicBuyRemind" >
+   	INSERT INTO panicbuy_remind
+		(
+			id,
+			activity_id,
+			commodity_id,
+			member_id,
+			is_remind
+		) VALUES
+		(
+			#{id,jdbcType=VARCHAR},
+			#{activityId,jdbcType=VARCHAR},
+			#{commodityId,jdbcType=VARCHAR},
+			#{memberId,jdbcType=VARCHAR},
+			#{isRemind,jdbcType=VARCHAR}
+		)
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.promotion.api.dto.PanicBuyRemind" >
+   	INSERT INTO panicbuy_remind 
+	<trim prefix="(" suffix=")" suffixOverrides="," >
+		<if test="id != null">id,</if>
+		<if test="activityId != null" >activity_id,</if>
+		<if test="commodityId != null" >commodity_id,</if>
+		<if test="memberId != null" >member_id,</if>
+		<if test="isRemind != null" >is_remind,</if>
+	</trim>
+	<trim prefix="values (" suffix=")" suffixOverrides="," >
+		<if test="id != null">#{id,jdbcType=VARCHAR},</if>
+		<if test="activityId != null" >#{activityId,jdbcType=VARCHAR},</if>
+		<if test="commodityId != null" >#{commodityId,jdbcType=VARCHAR},</if>
+		<if test="memberId != null" >#{memberId,jdbcType=VARCHAR},</if>
+		<if test="isRemind != null" >#{isRemind,jdbcType=VARCHAR},</if>
+	</trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.promotion.api.dto.PanicBuyRemind" >
+   	UPDATE panicbuy_remind
+	<set>
+		<if test="activityId != null" >
+			activity_id = #{activityId,jdbcType=VARCHAR},
+		</if>
+		<if test="commodityId != null" >
+			commodity_id = #{commodityId,jdbcType=VARCHAR},
+		</if>
+		<if test="memberId != null" >
+			member_id = #{memberId,jdbcType=VARCHAR},
+		</if>
+		<if test="isRemind != null" >
+			is_remind = #{isRemind,jdbcType=VARCHAR},
+		</if>
+	</set>
+	where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.promotion.api.dto.PanicBuyRemind" >
+   	UPDATE panicbuy_remind
+		<set>
+			activity_id = #{activityId,jdbcType=VARCHAR},
+			commodity_id = #{commodityId,jdbcType=VARCHAR},
+			member_id = #{memberId,jdbcType=VARCHAR},
+			is_remind = #{isRemind,jdbcType=VARCHAR}
+		</set>
+		WHERE id = #{id,jdbcType=VARCHAR} 
+  </update>
+  <update id="updateScheduleIdByParams" >
+   	UPDATE panicbuy_remind
+		<set>
+			schedule_id = #{params.scheduleId,jdbcType=VARCHAR},
+		</set>
+		WHERE activity_id = #{params.activityId,jdbcType=VARCHAR} and commodity_id = #{params.commodityId,jdbcType=VARCHAR} and member_id = #{params.memberId,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="countRemindByMember" resultType="java.lang.Integer">
+    select count(1) from prms_db.panicbuy_remind r INNER JOIN prms_db.activity_commodity c on r.commodity_id=c.commodity_id and r.activity_id=c.id 
+    where r.member_id = #{params.memberId,jdbcType=VARCHAR} and c.start_date = #{params.startDate,jdbcType=TIMESTAMP}  </select>
+</mapper>

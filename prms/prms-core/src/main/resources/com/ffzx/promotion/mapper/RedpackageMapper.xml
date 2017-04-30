@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ffzx.promotion.mapper.RedpackageMapper" >
+  <resultMap id="BaseResultMap" type="com.ffzx.promotion.api.dto.Redpackage" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="number" property="number" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="fack_value" property="fackValue" jdbcType="DECIMAL" />
+    <result column="receive_limit" property="receiveLimit" jdbcType="INTEGER" />
+    <result column="date_start" property="dateStart" jdbcType="CHAR" />
+    <result column="state" property="state" jdbcType="CHAR" />
+    <result column="create_by" property="createBy.id" jdbcType="VARCHAR" />
+    <result column="create_name" property="createName" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="last_update_by" property="lastUpdateBy.id" jdbcType="VARCHAR" />
+    <result column="last_update_date" property="lastUpdateDate" jdbcType="TIMESTAMP" />
+    <result column="last_update_name" property="lastUpdateName" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+    <result column="is_grant" property="isGrant" jdbcType="CHAR" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="receivedate" property="receivedate" jdbcType="INTEGER" />
+    <result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
+    <result column="end_date" property="endDate" jdbcType="TIMESTAMP" />
+    <result column="grant_num" property="grantNum" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    t.id, t.number, t.name, t.fack_value, t.receive_limit, t.date_start, t.state, t.create_by as 'createBy.id', 
+    t.create_name, t.create_date, t.last_update_by as 'lastUpdateBy.id', t.last_update_date, 
+    t.last_update_name, t.del_flag, t.is_grant, t.remarks, t.receivedate, t.start_date, 
+    t.end_date, t.grant_num
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.lastUpdateName != null and '' != params.lastUpdateName" >
+        and t.last_update_name like  CONCAT('%', #{params.lastUpdateName}, '%')
+      </if>
+      <!-- 当前时间   小于 <  （如果自定义0结束时间 红包结束时间+10(本+1，但是防止定时出现问题+10）  或者  （领取有效1）（领取截止时间+天数）+10） -->
+      <if test="params.useRedpackageDate != null  and '' != params.useRedpackageDate" >
+        and (( #{params.useRedpackageDate,jdbcType=TIMESTAMP} &lt;=date_add(t.end_date, INTERVAL 10 day) and t.date_start='0' )
+             or ( #{params.useRedpackageDate,jdbcType=TIMESTAMP} &lt;=date_add(rg.end_date, INTERVAL t.receivedate+10 day) and t.date_start='1' )
+             )
+      </if>
+      <if test="params.startDateStr != null  and '' != params.startDateStr" >
+        <![CDATA[and t.start_date >= #{params.startDateStr,jdbcType=TIMESTAMP}]]>
+      </if>
+      <if test="params.validDate != null  and '' != params.validDate " ><!-- 结束时间晚于选择时间 -->
+        <![CDATA[and (t.end_date > #{params.validDate,jdbcType=TIMESTAMP} or date_start='1')    ]]>
+      </if>
+      <if test="params.endDateStr != null  and '' != params.endDateStr " >
+        <![CDATA[and t.end_date <= #{params.endDateStr,jdbcType=TIMESTAMP}]]>
+      </if>
+       <if test="params.lastUpdateDateStartStr!= null and '' != params.lastUpdateDateStartStr" >
+        	<![CDATA[and t.last_update_date >= #{params.lastUpdateDateStartStr,jdbcType=TIMESTAMP}]]>
+      </if>
+         <if test="params.lastUpdateDateEndtStr!= null and '' != params.lastUpdateDateEndtStr" >
+        	<![CDATA[and t.last_update_date <= #{params.lastUpdateDateEndtStr,jdbcType=TIMESTAMP}]]>
+      </if>
+      <if test="params.fackValuestart != null and '' != params.fackValuestart" >
+        and t.fack_value &gt;= #{params.fackValuestart,jdbcType=DECIMAL}<!-- 大于 -->
+      </if>
+      <if test="params.fackValueend != null and '' != params.fackValueend" >
+        and t.fack_value &lt;= #{params.fackValueend,jdbcType=DECIMAL}<!-- 小于 -->
+      </if>
+      <if test="params.id != null and '' != params.id" >
+        and t.id = #{params.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.number != null and '' != params.number" >
+        and t.number  like  CONCAT('%', #{params.number}, '%')
+      </if>
+      <if test="params.name != null and '' != params.name" >
+        and t.name  like  CONCAT('%', #{params.name}, '%')
+      </if>
+      <if test="params.fackValue != null and '' != params.fackValue" >
+        and t.fack_value = #{params.fackValue,jdbcType=DECIMAL}
+      </if>
+      <if test="params.receiveLimit != null" >
+        and t.receive_limit = #{params.receiveLimit,jdbcType=INTEGER}
+      </if>
+      <if test="params.dateStart != null and '' != params.dateStart" >
+        and t.date_start = #{params.dateStart,jdbcType=CHAR}
+      </if>
+      <if test="params.state != null and '' != params.state" >
+        and t.state = #{params.state,jdbcType=CHAR}
+      </if>
+      <if test="params.createBy != null and '' != params.createBy" >
+        and t.create_by = #{params.createBy.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.createName != null and '' != params.createName" >
+        and t.create_name = #{params.createName,jdbcType=VARCHAR}
+      </if>
+      <if test="params.createDate != null" >
+        and t.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.lastUpdateBy != null and '' != params.lastUpdateBy" >
+        and t.last_update_by = #{params.lastUpdateBy.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.lastUpdateDate != null" >
+        and t.last_update_date = #{params.lastUpdateDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.delFlag != null and '' != params.delFlag" >
+        and t.del_flag = #{params.delFlag,jdbcType=CHAR}
+      </if>
+      <if test="params.isGrant != null and '' != params.isGrant" >
+        and t.is_grant = #{params.isGrant,jdbcType=CHAR}
+      </if>
+      <if test="params.remarks != null and '' != params.remarks" >
+        and t.remarks = #{params.remarks,jdbcType=VARCHAR}
+      </if>
+      <if test="params.receivedate != null" >
+        and t.receivedate = #{params.receivedate,jdbcType=INTEGER}
+      </if>
+      <if test="params.startDate != null" >
+        and t.start_date = #{params.startDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.endDate != null" >
+        and t.end_date = #{params.endDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.grantNum != null" >
+        and t.grant_num = #{params.grantNum,jdbcType=INTEGER}
+      </if>
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from redpackage t 
+    where t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from redpackage t 
+    LEFT JOIN redpackage_grant rg on rg.redpackage_id=t.id  
+    where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from redpackage t  where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from redpackage t 
+    where 1=1
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from redpackage
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.promotion.api.dto.Redpackage" >
+    delete from redpackage
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ffzx.promotion.api.dto.Redpackage" >
+    insert into redpackage (id, number, name, 
+      fack_value, receive_limit, date_start, 
+      state, create_by, create_name, 
+      create_date, last_update_by, last_update_date, 
+      last_update_name, del_flag, is_grant, 
+      remarks, receivedate, start_date, 
+      end_date, grant_num)
+    values (#{id,jdbcType=VARCHAR}, #{number,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{fackValue,jdbcType=DECIMAL}, #{receiveLimit,jdbcType=INTEGER}, #{dateStart,jdbcType=CHAR}, 
+      #{state,jdbcType=CHAR}, #{createBy.id,jdbcType=VARCHAR}, #{createName,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{lastUpdateBy.id,jdbcType=VARCHAR}, #{lastUpdateDate,jdbcType=TIMESTAMP}, 
+      #{lastUpdateName,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}, #{isGrant,jdbcType=CHAR}, 
+      #{remarks,jdbcType=VARCHAR}, #{receivedate,jdbcType=INTEGER}, #{startDate,jdbcType=TIMESTAMP}, 
+      #{endDate,jdbcType=TIMESTAMP}, #{grantNum,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.promotion.api.dto.Redpackage" >
+    insert into redpackage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="number != null" >
+        number,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="fackValue != null" >
+        fack_value,
+      </if>
+      <if test="receiveLimit != null" >
+        receive_limit,
+      </if>
+      <if test="dateStart != null" >
+        date_start,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createName != null" >
+        create_name,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by,
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date,
+      </if>
+      <if test="lastUpdateName != null" >
+        last_update_name,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="isGrant != null" >
+        is_grant,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="receivedate != null" >
+        receivedate,
+      </if>
+      <if test="startDate != null" >
+        start_date,
+      </if>
+      <if test="endDate != null" >
+        end_date,
+      </if>
+      <if test="grantNum != null" >
+        grant_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null" >
+        #{number,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="fackValue != null" >
+        #{fackValue,jdbcType=DECIMAL},
+      </if>
+      <if test="receiveLimit != null" >
+        #{receiveLimit,jdbcType=INTEGER},
+      </if>
+      <if test="dateStart != null" >
+        #{dateStart,jdbcType=CHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=CHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null" >
+        #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null" >
+        #{lastUpdateBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateName != null" >
+        #{lastUpdateName,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="isGrant != null" >
+        #{isGrant,jdbcType=CHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="receivedate != null" >
+        #{receivedate,jdbcType=INTEGER},
+      </if>
+      <if test="startDate != null" >
+        #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="grantNum != null" >
+        #{grantNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.promotion.api.dto.Redpackage" >
+    update redpackage
+    <set >
+      <if test="number != null" >
+        number = #{number,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="fackValue != null" >
+        fack_value = #{fackValue,jdbcType=DECIMAL},
+      </if>
+      <if test="receiveLimit != null" >
+        receive_limit = #{receiveLimit,jdbcType=INTEGER},
+      </if>
+      <if test="dateStart != null" >
+        date_start = #{dateStart,jdbcType=CHAR},
+      </if>
+      <if test="dateStartupdate != null" >
+      <!-- 自领取后生效 -->
+	      <if test="dateStartupdate == 1" >
+	        start_date = #{startDate,jdbcType=TIMESTAMP},
+	        end_date = #{endDate,jdbcType=TIMESTAMP},
+	      </if>
+	      <!-- 自定有效期0 -->
+	      <if test="dateStartupdate == 0" >
+        	receivedate = #{receivedate,jdbcType=INTEGER},
+	      </if>
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=CHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null" >
+        create_name = #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateName != null" >
+        last_update_name = #{lastUpdateName,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="isGrant != null" >
+        is_grant = #{isGrant,jdbcType=CHAR},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="receivedate != null" >
+        receivedate = #{receivedate,jdbcType=INTEGER},
+      </if>
+      <if test="startDate != null" >
+        start_date = #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null" >
+        end_date = #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="grantNum != null" >
+        grant_num = #{grantNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.promotion.api.dto.Redpackage" >
+    update redpackage
+    set number = #{number,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      fack_value = #{fackValue,jdbcType=DECIMAL},
+      receive_limit = #{receiveLimit,jdbcType=INTEGER},
+      date_start = #{dateStart,jdbcType=CHAR},
+      state = #{state,jdbcType=CHAR},
+      create_by = #{createBy.id,jdbcType=VARCHAR},
+      create_name = #{createName,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+      last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      last_update_name = #{lastUpdateName,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR},
+      is_grant = #{isGrant,jdbcType=CHAR},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      receivedate = #{receivedate,jdbcType=INTEGER},
+      start_date = #{startDate,jdbcType=TIMESTAMP},
+      end_date = #{endDate,jdbcType=TIMESTAMP},
+      grant_num = #{grantNum,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

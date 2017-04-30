@@ -1,0 +1,504 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ffzx.order.mapper.OrderRecycleMapper" >
+  <resultMap id="BaseResultMap" type="com.ffzx.order.model.OrderRecycle" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="order_no_signed" property="orderNoSigned" jdbcType="VARCHAR" />
+    <result column="bar_code_signed" property="barCodeSigned" jdbcType="VARCHAR" />
+    <result column="partner" property="partner" jdbcType="VARCHAR" />
+    <result column="partner_no" property="partnerNo" jdbcType="VARCHAR" />
+    <result column="partner_address" property="partnerAddress" jdbcType="VARCHAR" />
+    <result column="partner_phone" property="partnerPhone" jdbcType="VARCHAR" />
+    <result column="sale_no" property="saleNo" jdbcType="VARCHAR" />
+    <result column="sale_no_delivery" property="saleNoDelivery" jdbcType="VARCHAR" />
+    <result column="commodity_name" property="commodityName" jdbcType="VARCHAR" />
+    <result column="commodity_bar_code" property="commodityBarCode" jdbcType="VARCHAR" />
+    <result column="commodity_num" property="commodityNum" jdbcType="INTEGER" />
+    <result column="commodity_price" property="commodityPrice" jdbcType="DECIMAL" />
+    <result column="commodity_money" property="commodityMoney" jdbcType="DECIMAL" />
+    <result column="logistics_recyle_status" property="logisticsRecyleStatus" jdbcType="CHAR" />
+    <result column="finance_recyle_status" property="financeRecyleStatus" jdbcType="CHAR" />
+    <result column="recyle_date" property="recyleDate" jdbcType="TIMESTAMP" />
+    <result column="warehouse_called" property="warehouseCalled" jdbcType="VARCHAR" />
+    <result column="delivery_date" property="deliveryDate" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy.id" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="last_update_by" property="lastUpdateBy.id" jdbcType="VARCHAR" />
+    <result column="last_update_date" property="lastUpdateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    t.id, t.order_no_signed, t.bar_code_signed, t.partner, t.partner_no, t.partner_address, 
+    t.partner_phone, t.sale_no, t.sale_no_delivery, t.commodity_name, t.commodity_bar_code, t.commodity_num, 
+    t.commodity_price, t.commodity_money, t.logistics_recyle_status, t.finance_recyle_status, 
+    t.recyle_date, t.warehouse_called, t.delivery_date, t.create_by as 'createBy.id', 
+    t.create_date, t.last_update_by as 'lastUpdateBy.id', t.last_update_date, t.remarks
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null and '' != params.id" >
+        and t.id = #{params.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.partnerNo != null and '' != params.partnerNo" >
+        and t.partner_no = #{params.partnerNo,jdbcType=VARCHAR}
+      </if>
+      <if test="params.partnerAddress != null and '' != params.partnerAddress" >
+        and t.partner_address = #{params.partnerAddress,jdbcType=VARCHAR}
+      </if>
+      <if test="params.saleNoDelivery != null and '' != params.saleNoDelivery" >
+        and t.sale_no_delivery = #{params.saleNoDelivery,jdbcType=VARCHAR}
+      </if>
+      <if test="params.commodityName != null and '' != params.commodityName" >
+        and t.commodity_name = #{params.commodityName,jdbcType=VARCHAR}
+      </if>
+      <if test="params.commodityBarCode != null and '' != params.commodityBarCode" >
+        and t.commodity_bar_code = #{params.commodityBarCode,jdbcType=VARCHAR}
+      </if>
+      <if test="params.commodityNum != null" >
+        and t.commodity_num = #{params.commodityNum,jdbcType=INTEGER}
+      </if>
+      <if test="params.commodityPrice != null" >
+        and t.commodity_price = #{params.commodityPrice,jdbcType=DECIMAL}
+      </if>
+      <if test="params.commodityMoney != null" >
+        and t.commodity_money = #{params.commodityMoney,jdbcType=DECIMAL}
+      </if>
+      <if test="params.logisticsRecyleStatus != null and '' != params.logisticsRecyleStatus" >
+        and t.logistics_recyle_status = #{params.logisticsRecyleStatus,jdbcType=CHAR}
+      </if>
+      <if test="params.financeRecyleStatus != null and '' != params.financeRecyleStatus" >
+        and t.finance_recyle_status = #{params.financeRecyleStatus,jdbcType=CHAR}
+      </if>
+      <if test="params.recyleStartDate != null" >
+        and t.recyle_date > #{params.recyleStartDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.recyleEndDate != null" >
+        and t.recyle_date &lt; #{params.recyleEndDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.warehouseCalled != null and '' != params.warehouseCalled" >
+        and t.warehouse_called = #{params.warehouseCalled,jdbcType=VARCHAR}
+      </if>
+      <if test="params.deliveryStartDate != null" >
+        and t.delivery_date > #{params.deliveryStartDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.deliveryEndDate != null" >
+        and t.delivery_date &lt; #{params.deliveryEndDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.createBy != null and '' != params.createBy" >
+        and t.create_by = #{params.createBy.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.createDate != null" >
+        and t.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.lastUpdateBy != null and '' != params.lastUpdateBy" >
+        and t.last_update_by = #{params.lastUpdateBy.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.lastUpdateDate != null" >
+        and t.last_update_date = #{params.lastUpdateDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.remarks != null and '' != params.remarks" >
+        and t.remarks = #{params.remarks,jdbcType=VARCHAR}
+      </if>
+      
+      <!-- 单个文本框的多个条件查询 -->
+      <if test="params.multipleCondition != null">
+	      <if test="params.orderNoSigned != null and '' != params.orderNoSigned" >
+	        and (t.order_no_signed like CONCAT( #{params.orderNoSigned,jdbcType=VARCHAR}, '%')
+	      </if>
+	       <if test="params.barCodeSigned != null and '' != params.barCodeSigned" >
+	        or t.bar_code_signed like CONCAT( #{params.barCodeSigned,jdbcType=VARCHAR}, '%')
+	      </if>
+	      <if test="params.saleNo != null and '' != params.saleNo" >
+	        or t.sale_no like CONCAT( #{params.saleNo,jdbcType=VARCHAR}, '%')
+	      </if>
+	      <if test="params.partner != null and '' != params.partner" >
+	        or t.partner like CONCAT( #{params.partner,jdbcType=VARCHAR}, '%')
+	      </if>
+	       <if test="params.partnerPhone != null and '' != params.partnerPhone" >
+	        or t.partner_phone like CONCAT( #{params.partnerPhone,jdbcType=VARCHAR}, '%'))
+	      </if>
+      </if>
+      <if test="params.multipleCondition == null">
+      	  <if test="params.orderNoSigned != null and '' != params.orderNoSigned" >
+	        and t.order_no_signed = #{params.orderNoSigned,jdbcType=VARCHAR}
+	      </if>
+	       <if test="params.barCodeSigned != null and '' != params.barCodeSigned" >
+	        and t.bar_code_signed = #{params.barCodeSigned,jdbcType=VARCHAR}
+	      </if>
+	      <if test="params.saleNo != null and '' != params.saleNo" >
+	        and t.sale_no = #{params.saleNo,jdbcType=VARCHAR}
+	      </if>
+	      <if test="params.partner != null and '' != params.partner" >
+	        and t.partner = #{params.partner,jdbcType=VARCHAR}
+	      </if>
+	       <if test="params.partnerPhone != null and '' != params.partnerPhone" >
+	        and t.partner_phone = #{params.partnerPhone,jdbcType=VARCHAR}
+	      </if>
+      </if>
+      
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from order_recycle t 
+    where t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from order_recycle t 
+    where 1=1
+    <include refid="condition" />
+    <if test="params.isSort != null">
+	    <if test="params.orderByField != null and ''!=params.orderByField" >
+	      order by t.${params.orderByField} 
+	      <if test="params.orderByField" >
+	        ${params.orderBy}
+	      </if>
+	    </if>
+	 </if>
+  </select>
+  
+  <select id="selectByOrderNoSigned" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from order_recycle t 
+    where t.order_no_signed = #{orderNoSigned,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from order_recycle t  where 1=1
+    <include refid="condition" />
+    <if test="params.groupByField != null and '' != params.groupByField" >
+      group by t.${params.groupByField}
+    </if>
+    <if test="orderByField != null and ''!=orderByField" >
+      order by t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from order_recycle t 
+    where 1=1
+    <include refid="condition" />
+    <if test="params.groupByField != null and '' != params.groupByField" >
+      group by t.${params.groupByField}
+    </if>
+    <if test="orderByField != null and ''!=orderByField" >
+      order by t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  
+  <select id="queryByParamsForpeat" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from order_recycle t 
+    where 1=1
+     <if test="params.orderNoSigned != null and '' != params.orderNoSigned" >
+     	and t.order_no_signed = #{params.orderNoSigned,jdbcType=VARCHAR}
+     </if>
+     <if test="params.saleNo != null and '' != params.saleNo" >
+	     and t.sale_no = #{params.saleNo,jdbcType=VARCHAR}
+	  </if>
+	  <if test="params.commodityBarCode != null and '' != params.commodityBarCode" >
+	  	 and t.commodity_bar_code = #{params.commodityBarCode,jdbcType=VARCHAR}
+	  </if>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from order_recycle
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.order.model.OrderRecycle" >
+    delete from order_recycle
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ffzx.order.model.OrderRecycle" >
+    insert into order_recycle (id, order_no_signed, bar_code_signed, 
+      partner, partner_no, partner_address, 
+      partner_phone, sale_no, sale_no_delivery, commodity_name, 
+      commodity_bar_code, commodity_num, commodity_price, 
+      commodity_money, logistics_recyle_status, finance_recyle_status, 
+      recyle_date, warehouse_called, delivery_date, 
+      create_by, create_date, last_update_by, 
+      last_update_date, remarks)
+    values (#{id,jdbcType=VARCHAR}, #{orderNoSigned,jdbcType=VARCHAR}, #{barCodeSigned,jdbcType=VARCHAR}, 
+      #{partner,jdbcType=VARCHAR}, #{partnerNo,jdbcType=VARCHAR}, #{partnerAddress,jdbcType=VARCHAR}, 
+      #{partnerPhone,jdbcType=VARCHAR}, #{saleNo,jdbcType=VARCHAR}, #{saleNoDelivery,jdbcType=VARCHAR}, #{commodityName,jdbcType=VARCHAR}, 
+      #{commodityBarCode,jdbcType=VARCHAR}, #{commodityNum,jdbcType=INTEGER}, #{commodityPrice,jdbcType=DECIMAL}, 
+      #{commodityMoney,jdbcType=DECIMAL}, #{logisticsRecyleStatus,jdbcType=CHAR}, #{financeRecyleStatus,jdbcType=CHAR}, 
+      #{recyleDate,jdbcType=TIMESTAMP}, #{warehouseCalled,jdbcType=VARCHAR}, #{deliveryDate,jdbcType=TIMESTAMP}, 
+      #{createBy.id,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{lastUpdateBy.id,jdbcType=VARCHAR}, 
+      #{lastUpdateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.order.model.OrderRecycle" >
+    insert into order_recycle
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orderNoSigned != null" >
+        order_no_signed,
+      </if>
+      <if test="barCodeSigned != null" >
+        bar_code_signed,
+      </if>
+      <if test="partner != null" >
+        partner,
+      </if>
+      <if test="partnerNo != null" >
+        partner_no,
+      </if>
+      <if test="partnerAddress != null" >
+        partner_address,
+      </if>
+      <if test="partnerPhone != null" >
+        partner_phone,
+      </if>
+      <if test="saleNo != null" >
+        sale_no,
+      </if>
+       <if test="saleNoDelivery != null" >
+        sale_no_delivery,
+      </if>
+      <if test="commodityName != null" >
+        commodity_name,
+      </if>
+      <if test="commodityBarCode != null" >
+        commodity_bar_code,
+      </if>
+      <if test="commodityNum != null" >
+        commodity_num,
+      </if>
+      <if test="commodityPrice != null" >
+        commodity_price,
+      </if>
+      <if test="commodityMoney != null" >
+        commodity_money,
+      </if>
+      <if test="logisticsRecyleStatus != null" >
+        logistics_recyle_status,
+      </if>
+      <if test="financeRecyleStatus != null" >
+        finance_recyle_status,
+      </if>
+      <if test="recyleDate != null" >
+        recyle_date,
+      </if>
+      <if test="warehouseCalled != null" >
+        warehouse_called,
+      </if>
+      <if test="deliveryDate != null" >
+        delivery_date,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+        create_date,
+      <if test="lastUpdateBy != null" >
+        last_update_by,
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNoSigned != null" >
+        #{orderNoSigned,jdbcType=VARCHAR},
+      </if>
+      <if test="barCodeSigned != null" >
+        #{barCodeSigned,jdbcType=VARCHAR},
+      </if>
+      <if test="partner != null" >
+        #{partner,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerNo != null" >
+        #{partnerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerAddress != null" >
+        #{partnerAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerPhone != null" >
+        #{partnerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="saleNo != null" >
+        #{saleNo,jdbcType=VARCHAR},
+      </if>
+      <if test="saleNoDelivery != null" >
+        #{saleNoDelivery,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityName != null" >
+        #{commodityName,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityBarCode != null" >
+        #{commodityBarCode,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityNum != null" >
+        #{commodityNum,jdbcType=INTEGER},
+      </if>
+      <if test="commodityPrice != null" >
+        #{commodityPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="commodityMoney != null" >
+        #{commodityMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="logisticsRecyleStatus != null" >
+        '0',
+      </if>
+      <if test="financeRecyleStatus != null" >
+        '0',
+      </if>
+      <if test="recyleDate != null" >
+        #{recyleDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="warehouseCalled != null" >
+        #{warehouseCalled,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryDate != null" >
+        #{deliveryDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        #{createBy.id,jdbcType=VARCHAR},
+      </if>
+        now(),
+      <if test="lastUpdateBy != null" >
+        #{lastUpdateBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.order.model.OrderRecycle" >
+    update order_recycle
+    <set >
+      <if test="orderNoSigned != null" >
+        order_no_signed = #{orderNoSigned,jdbcType=VARCHAR},
+      </if>
+      <if test="barCodeSigned != null" >
+        bar_code_signed = #{barCodeSigned,jdbcType=VARCHAR},
+      </if>
+      <if test="partner != null" >
+        partner = #{partner,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerNo != null" >
+        partner_no = #{partnerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerAddress != null" >
+        partner_address = #{partnerAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="partnerPhone != null" >
+        partner_phone = #{partnerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="saleNo != null" >
+        sale_no = #{saleNo,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityName != null" >
+        commodity_name = #{commodityName,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityBarCode != null" >
+        commodity_bar_code = #{commodityBarCode,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityNum != null" >
+        commodity_num = #{commodityNum,jdbcType=INTEGER},
+      </if>
+      <if test="commodityPrice != null" >
+        commodity_price = #{commodityPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="commodityMoney != null" >
+        commodity_money = #{commodityMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="logisticsRecyleStatus != null" >
+        logistics_recyle_status = #{logisticsRecyleStatus,jdbcType=CHAR},
+      </if>
+      <if test="financeRecyleStatus != null" >
+        finance_recyle_status = #{financeRecyleStatus,jdbcType=CHAR},
+      </if>
+      <if test="recyleDate != null" >
+        recyle_date = #{recyleDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="warehouseCalled != null" >
+        warehouse_called = #{warehouseCalled,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryDate != null" >
+        delivery_date = #{deliveryDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null" >
+        last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null" >
+        last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.order.model.OrderRecycle" >
+    update order_recycle
+    set order_no_signed = #{orderNoSigned,jdbcType=VARCHAR},
+      bar_code_signed = #{barCodeSigned,jdbcType=VARCHAR},
+      partner = #{partner,jdbcType=VARCHAR},
+      partner_no = #{partnerNo,jdbcType=VARCHAR},
+      partner_address = #{partnerAddress,jdbcType=VARCHAR},
+      partner_phone = #{partnerPhone,jdbcType=VARCHAR},
+      sale_no = #{saleNo,jdbcType=VARCHAR},
+      sale_no_delivery = #{saleNoDelivery,jdbcType=VARCHAR},
+      commodity_name = #{commodityName,jdbcType=VARCHAR},
+      commodity_bar_code = #{commodityBarCode,jdbcType=VARCHAR},
+      commodity_num = #{commodityNum,jdbcType=INTEGER},
+      commodity_price = #{commodityPrice,jdbcType=DECIMAL},
+      commodity_money = #{commodityMoney,jdbcType=DECIMAL},
+      logistics_recyle_status = #{logisticsRecyleStatus,jdbcType=CHAR},
+      finance_recyle_status = #{financeRecyleStatus,jdbcType=CHAR},
+      recyle_date = #{recyleDate,jdbcType=TIMESTAMP},
+      warehouse_called = #{warehouseCalled,jdbcType=VARCHAR},
+      delivery_date = #{deliveryDate,jdbcType=TIMESTAMP},
+      create_by = #{createBy.id,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+      last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateStatusByBarCodeSigned" parameterType="java.lang.String" >
+    update order_recycle
+    <set >
+	      <if test="logisticsRecyleStatus != null" >
+	       logistics_recyle_status = #{status},
+	      </if>
+	       <if test="financeRecyleStatus != null" >
+	       finance_recyle_status = #{status},
+	       recyle_date = now(),
+	     </if>
+	     last_update_date = now()
+     </set>
+     where bar_code_signed = #{barCodeSigned,jdbcType=VARCHAR}
+  </update>
+</mapper>

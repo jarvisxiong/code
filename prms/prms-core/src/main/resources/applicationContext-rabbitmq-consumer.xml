@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p" xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:util="http://www.springframework.org/schema/util" xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.1.xsd
+		http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit-1.5.xsd">
+	
+	
+	<!-- 注册送优惠券-->
+	<rabbit:queue id="QUEUE_PRMS_COUPONMEMBER" name="QUEUE_PRMS_COUPONMEMBER">
+		<rabbit:queue-arguments>
+			<entry key="x-ha-policy" value="all" />
+		</rabbit:queue-arguments>
+	</rabbit:queue>
+	<!-- 购买虚拟商品优惠券ORDER_PAYMENT_VIRTUAL_ITEMS-->
+	<rabbit:queue id="ORDER_PAYMENT_VIRTUAL_ITEMS" name="ORDER_PAYMENT_VIRTUAL_ITEMS">
+		<rabbit:queue-arguments>
+			<entry key="x-ha-policy" value="all" />
+		</rabbit:queue-arguments>
+	</rabbit:queue>
+	<!-- 注册广播队列 -->
+	<rabbit:queue id="QUERY_UC_REGISTRY" name="QUERY_UC_REGISTRY">
+		<rabbit:queue-arguments>
+			<entry key="x-ha-policy" value="all" />
+		</rabbit:queue-arguments>
+	</rabbit:queue>
+	<!-- 订单交易完成广播队列 -->
+	<rabbit:queue id="QUERY_ORDER_FULL" name="QUERY_ORDER_FULL">
+		<rabbit:queue-arguments>
+			<entry key="x-ha-policy" value="all" />
+		</rabbit:queue-arguments>
+	</rabbit:queue>
+	<!-- 注册广播交换器 -->
+	<rabbit:fanout-exchange name="UC_REGISTER_CHANGE_EXCHANGE">
+		<rabbit:bindings>
+			<rabbit:binding queue="QUERY_UC_REGISTRY"/>
+			<rabbit:binding queue="QUEUE_PRMS_COUPONMEMBER"/>
+		</rabbit:bindings>
+	</rabbit:fanout-exchange>
+	<!-- 订单交易完成广播交换器 -->
+	<rabbit:fanout-exchange name="OMS_ORDER24_CHANGE_EXCHANGE">
+		<rabbit:bindings>
+			<rabbit:binding queue="QUERY_ORDER_FULL"/>
+		</rabbit:bindings>
+	</rabbit:fanout-exchange>
+
+	<!-- #################################################################### -->
+	<!-- # RabbitMQ 消息监听容器（消费者） -->
+	<!-- #requeue-rejected 消息重试策略 可以参考死信队列重试 -->
+	<!-- #################################################################### -->	
+	<rabbit:listener-container connection-factory="rabbitConnectionFactory" message-converter="rabbitMessageConverter" channel-transacted="false" error-handler="logAndPropagateErrorHandler" requeue-rejected="false">
+		<!-- 注册立刻送优惠券-->
+		<rabbit:listener queues="QUEUE_PRMS_COUPONMEMBER" ref="couponGrantConsumer" method="onMessage" />
+		<!-- 购买虚拟商品优惠券ORDER_PAYMENT_VIRTUAL_ITEMS-->
+		<rabbit:listener queues="ORDER_PAYMENT_VIRTUAL_ITEMS" ref="couponBuyConsumer" method="onMessage" />
+		<rabbit:listener queue-names="QUERY_UC_REGISTRY"  ref="memberRegistryConsumer" method="onMessage" />
+		<rabbit:listener queue-names="QUERY_ORDER_FULL"  ref="orderFullConsumer" method="onMessage" />
+	</rabbit:listener-container>
+		
+</beans>

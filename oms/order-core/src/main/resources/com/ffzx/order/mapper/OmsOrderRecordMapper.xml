@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ffzx.order.mapper.OmsOrderRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.ffzx.order.api.dto.OmsOrderRecord" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="opr_id" property="oprId" jdbcType="VARCHAR" />
+    <result column="opr_name" property="oprName" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="record_type" property="recordType" jdbcType="VARCHAR" />
+     <result column="outbound_status" property="outboundStatus" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    t.id, t.description, t.opr_id, t.opr_name, t.create_date, t.order_id, t.order_no,t.record_type,t.outbound_status
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null and '' != params.id" >
+        and t.id = #{params.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.description != null and '' != params.description" >
+        and t.description = #{params.description,jdbcType=VARCHAR}
+      </if>
+      <if test="params.oprId != null and '' != params.oprId" >
+        and t.opr_id = #{params.oprId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.oprName != null and '' != params.oprName" >
+        and t.opr_name = #{params.oprName,jdbcType=VARCHAR}
+      </if>
+      <if test="params.createDate != null" >
+        and t.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.orderId != null and '' != params.orderId" >
+        and t.order_id = #{params.orderId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.orderNo != null and '' != params.orderNo" >
+        and t.order_no = #{params.orderNo,jdbcType=VARCHAR}
+      </if>
+      <if test="params.recordType != null and '' != params.recordType" >
+        and t.record_type = #{params.recordType,jdbcType=VARCHAR}
+      </if>
+      <if test="params.outboundStatus != null and '' != params.outboundStatus" >
+        and t.outbound_status = #{params.outboundStatus,jdbcType=VARCHAR}
+      </if>
+      <if test="params.orderBy != null and '' != params.orderBy" >
+        order by ${params.orderBy}
+      </if>
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from oms_order_record t 
+    where t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from oms_order_record t 
+    where 1=1
+    <include refid="condition" />
+  </select>
+
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from oms_order_record t  where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from oms_order_record t 
+    where 1=1
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by ${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from oms_order_record
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.order.api.dto.OmsOrderRecord" >
+    delete from oms_order_record
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ffzx.order.api.dto.OmsOrderRecord" >
+    insert into oms_order_record (id, description, opr_id, 
+      opr_name, create_date, order_id, 
+      order_no,record_type,outbound_status)
+    values (#{id,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{oprId,jdbcType=VARCHAR}, 
+      #{oprName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{orderId,jdbcType=VARCHAR}, 
+      #{orderNo,jdbcType=VARCHAR},#{recordType,jdbcType=VARCHAR},#{outboundStatus,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.order.api.dto.OmsOrderRecord" >
+    insert into oms_order_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="oprId != null" >
+        opr_id,
+      </if>
+      <if test="oprName != null" >
+        opr_name,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+      <if test="recordType != null" >
+        record_type,
+      </if>
+      <if test="outboundStatus != null" >
+        outbound_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="oprId != null" >
+        #{oprId,jdbcType=VARCHAR},
+      </if>
+      <if test="oprName != null" >
+        #{oprName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+       <if test="recordType != null" >
+       #{recordType,jdbcType=VARCHAR},
+      </if>
+      <if test="outboundStatus != null" >
+       #{outboundStatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.order.api.dto.OmsOrderRecord" >
+    update oms_order_record
+    <set >
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="oprId != null" >
+        opr_id = #{oprId,jdbcType=VARCHAR},
+      </if>
+      <if test="oprName != null" >
+        opr_name = #{oprName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="recordType != null" >
+       record_type = #{recordType,jdbcType=VARCHAR},
+      </if>
+      <if test="outboundStatus != null" >
+       outbound_status = #{outboundStatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.order.api.dto.OmsOrderRecord" >
+    update oms_order_record
+    set description = #{description,jdbcType=VARCHAR},
+      opr_id = #{oprId,jdbcType=VARCHAR},
+      opr_name = #{oprName,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      order_id = #{orderId,jdbcType=VARCHAR},
+      order_no = #{orderNo,jdbcType=VARCHAR},
+      record_type = #{recordType,jdbcType=VARCHAR},
+      outbound_status = #{outboundStatus,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+   <!-- 根据订单编号列表查询对应最新物流状态 -->
+   <select id="selectLogisticsStatusByOrderNos" resultType="com.ffzx.order.api.vo.OmsOrderVo" parameterType="java.util.List" >
+    SELECT
+        r.order_no as "orderNo",
+        r.description as "logisticsStatus"
+    FROM
+        oms_order_record r
+    WHERE
+        r.create_date = (
+            SELECT
+                MAX(d.create_date)
+            FROM
+                oms_order_record d
+            WHERE
+                d.order_no = r.order_no
+            AND d.record_type='1'
+        )
+        AND r.order_no IN 
+        <foreach collection="orderNoList" open="(" separator="," close=")" item="item">
+            '${item}'
+        </foreach>
+        AND r.record_type='1'
+  </select>
+</mapper>

@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ffzx.promotion.mapper.AppStartPageMapper">
+  <sql id="Base_Column_List" >
+		t.id, 
+		t.create_by AS "createBy.id",
+		t.create_date AS "createDate",
+		t.last_update_by AS "lastUpdateBy.id",
+		t.last_update_date AS "lastUpdateDate",
+		t.del_flag AS "delFlag",
+		t.terminal AS "terminal",
+		t.effective_date AS "effectiveDate",
+		t.expired_date AS "expiredDate",
+		t.advert_type AS "advertType",
+		t.activity_id AS "activityId",
+		t.obj_id AS "objId",
+		t.obj_name AS "objName",
+		t.url AS "url",
+		t.img_path1 AS "imgPath1",
+		t.img_path2 AS "imgPath2",
+		t.img_path3 AS "imgPath3",
+		t.img_path4 AS "imgPath4",
+		t.operator AS "operator"
+
+  </sql>  
+  <sql id="joins">
+
+  </sql> 
+  <sql id="condition" >
+	<if test="null!=params" >
+		<if test="params.id != null and '' != params.id">
+			and t.id = #{params.id,jdbcType=VARCHAR}
+		</if>
+		<if test="params.createBy != null and '' != params.createBy">
+			and t.create_by = #{params.createBy.id,jdbcType=VARCHAR}
+		</if>
+		<if test="params.createDate != null and '' != params.createDate">
+			and t.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+		</if>
+		<if test="params.lastUpdateBy != null and '' != params.lastUpdateBy">
+			and t.last_update_by = #{params.lastUpdateBy.id,jdbcType=VARCHAR}
+		</if>
+		<if test="params.lastUpdateDate != null and '' != params.lastUpdateDate">
+			and t.last_update_date = #{params.lastUpdateDate,jdbcType=TIMESTAMP}
+		</if>
+		<if test="params.delFlag != null and '' != params.delFlag">
+			and t.del_flag = #{params.delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="params.terminal != null and '' != params.terminal">
+			and t.terminal = #{params.terminal,jdbcType=VARCHAR}
+		</if>
+		<if test="params.effectiveDate != null and '' != params.effectiveDate">
+			and t.effective_date = #{params.effectiveDate,jdbcType=TIMESTAMP}
+		</if>
+		<if test="params.expiredDate != null and '' != params.expiredDate">
+			and t.expired_date = #{params.expiredDate,jdbcType=TIMESTAMP}
+		</if>
+		<if test="params.advertType != null and '' != params.advertType">
+			and t.advert_type = #{params.advertType,jdbcType=VARCHAR}
+		</if>
+		<if test="params.activityId != null and '' != params.activityId">
+			and t.activity_id = #{params.activityId,jdbcType=VARCHAR}
+		</if>
+		<if test="params.objId != null and '' != params.objId">
+			and t.obj_id = #{params.objId,jdbcType=VARCHAR}
+		</if>
+		<if test="params.objName != null and '' != params.objName">
+			and t.obj_name = #{params.objName,jdbcType=VARCHAR}
+		</if>
+		<if test="params.url != null and '' != params.url">
+			and t.url = #{params.url,jdbcType=VARCHAR}
+		</if>
+		<if test="params.imgPath1 != null and '' != params.imgPath1">
+			and t.img_path1 = #{params.imgPath1,jdbcType=VARCHAR}
+		</if>
+		<if test="params.imgPath2 != null and '' != params.imgPath2">
+			and t.img_path2 = #{params.imgPath2,jdbcType=VARCHAR}
+		</if>
+		<if test="params.imgPath3 != null and '' != params.imgPath3">
+			and t.img_path3 = #{params.imgPath3,jdbcType=VARCHAR}
+		</if>
+		<if test="params.imgPath4 != null and '' != params.imgPath4">
+			and t.img_path4 = #{params.imgPath4,jdbcType=VARCHAR}
+		</if>
+		<if test="params.delFlag == null or '' == params.delFlag or null == params" >
+			and t.del_flag = 0
+		</if>
+		<!-- 列表过滤条件 -->
+		<!-- 状态 -->
+		<if test="params.status != null and '' != params.status">
+	   	  <if test="params.status==0" >
+   				<![CDATA[and t.effective_date > #{params.nowDate,jdbcType=TIMESTAMP}]]>
+	   	  </if>
+	   	  <if test="params.status==1" >
+   				<![CDATA[and t.effective_date <= #{params.nowDate,jdbcType=TIMESTAMP}]]>
+   				<![CDATA[and t.expired_date >= #{params.nowDate,jdbcType=TIMESTAMP}]]>
+	   	  </if>
+	   	  <if test="params.status==2">
+   				<![CDATA[and t.expired_date < #{params.nowDate,jdbcType=TIMESTAMP}]]>
+	   	  </if>
+        </if>
+        <!-- 生效时间段 -->
+        <if test="params.effectiveStartDate != null and '' != params.effectiveStartDate">
+			<![CDATA[and t.effective_date >= #{params.effectiveStartDate,jdbcType=TIMESTAMP}]]>
+		</if>
+		<if test="params.effectiveEndDate != null and '' != params.effectiveEndDate">
+			<![CDATA[and t.effective_date <= #{params.effectiveEndDate,jdbcType=TIMESTAMP}]]>
+		</if>
+        <!-- 过期时间段 -->
+        <if test="params.expiredStartDate != null and '' != params.expiredStartDate">
+			<![CDATA[and t.expired_date >= #{params.expiredStartDate,jdbcType=TIMESTAMP}]]>
+		</if>
+		<if test="params.expiredEndDate != null and '' != params.expiredEndDate">
+			<![CDATA[and t.expired_date <= #{params.expiredEndDate,jdbcType=TIMESTAMP}]]>
+		</if>
+		<!-- 验证是否存在时间重叠的数据 -->
+		<if test="params.effectiveDateStr != null and '' != params.effectiveDateStr and params.expiredDateStr != null and '' != params.expiredDateStr">
+			<![CDATA[and t.effective_date >= #{params.effectiveStartDate,jdbcType=TIMESTAMP}]]>
+			<![CDATA[and t.expired_date >= #{params.nowDate,jdbcType=TIMESTAMP}]]>
+			<![CDATA[and t.effective_date >= #{params.effectiveStartDate,jdbcType=TIMESTAMP}]]>
+			<![CDATA[and t.expired_date >= #{params.nowDate,jdbcType=TIMESTAMP}]]>
+		</if>
+	</if>
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultType="com.ffzx.promotion.api.dto.AppStartPage" parameterType="java.lang.String" >
+   	select 
+    <include refid="Base_Column_List" />
+    from app_startpage as t 
+    <include refid="joins"/>
+    where  t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParams" resultType="com.ffzx.promotion.api.dto.AppStartPage" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from app_startpage as  t 
+    <include refid="joins"/>
+    where 1=1 
+    <include refid="condition"/>
+  </select>
+  
+  <select id="selectCount" resultType="java.lang.Integer" >
+   select count(1) as s from app_startpage as  t where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultType="com.ffzx.promotion.api.dto.AppStartPage" parameterType="map" >
+   select 
+    <include refid="Base_Column_List" />
+    from app_startpage as  t    
+    <include refid="joins"/>
+    where 1=1      
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by  t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  
+  <!-- 验证是否存在时间重叠的数据 -->
+  <select id="selectByDate" resultType="com.ffzx.promotion.api.dto.AppStartPage" parameterType="map" >
+  	select 
+    <include refid="Base_Column_List" />
+    from app_startpage as  t  
+    where 1=1 
+    and t.terminal = #{params.terminal,jdbcType=VARCHAR} 
+    and ((t.effective_date &lt;= #{params.effectiveDateStr,jdbcType=TIMESTAMP}
+		 	and t.expired_date &gt;= #{params.effectiveDateStr,jdbcType=TIMESTAMP})
+		or (t.effective_date &lt;= #{params.expiredDateStr,jdbcType=TIMESTAMP}
+			and t.expired_date &gt;= #{params.expiredDateStr,jdbcType=TIMESTAMP})
+		or (t.effective_date &gt;= #{params.effectiveDateStr,jdbcType=TIMESTAMP}
+			and t.expired_date &lt;= #{params.expiredDateStr,jdbcType=TIMESTAMP})
+		)
+	and t.del_flag = 0 
+  </select>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    	DELETE FROM app_startpage WHERE id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.promotion.api.dto.AppStartPage" >
+    	DELETE FROM app_startpage WHERE id = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.ffzx.promotion.api.dto.AppStartPage" >
+   	INSERT INTO app_startpage
+		(
+			id,
+			create_by,
+			create_date,
+			last_update_by,
+			last_update_date,
+			del_flag,
+			terminal,
+			effective_date,
+			expired_date,
+			advert_type,
+			activity_id,
+			obj_id,
+			obj_name,
+			url,
+			img_path1,
+			img_path2,
+			img_path3,
+			img_path4,
+			operator
+		) VALUES
+		(
+			#{id,jdbcType=VARCHAR},
+			#{createBy.id,jdbcType=VARCHAR},
+			#{createDate,jdbcType=TIMESTAMP},
+			#{lastUpdateBy.id,jdbcType=VARCHAR},
+			#{lastUpdateDate,jdbcType=TIMESTAMP},
+			#{delFlag,jdbcType=VARCHAR},
+			#{terminal,jdbcType=VARCHAR},
+			#{effectiveDate,jdbcType=TIMESTAMP},
+			#{expiredDate,jdbcType=TIMESTAMP},
+			#{advertType,jdbcType=VARCHAR},
+			#{activityId,jdbcType=VARCHAR},
+			#{objId,jdbcType=VARCHAR},
+			#{objName,jdbcType=VARCHAR},
+			#{url,jdbcType=VARCHAR},
+			#{imgPath1,jdbcType=VARCHAR},
+			#{imgPath2,jdbcType=VARCHAR},
+			#{imgPath3,jdbcType=VARCHAR},
+			#{imgPath4,jdbcType=VARCHAR},
+			#{operator,jdbcType=VARCHAR}
+		)
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.promotion.api.dto.AppStartPage" >
+   	INSERT INTO app_startpage 
+	<trim prefix="(" suffix=")" suffixOverrides="," >
+		<if test="id != null">id,</if>
+		<if test="createBy != null" >create_by,</if>
+		<if test="createDate != null" >create_date,</if>
+		<if test="lastUpdateBy != null" >last_update_by,</if>
+		<if test="lastUpdateDate != null" >last_update_date,</if>
+		<if test="delFlag != null" >del_flag,</if>
+		<if test="terminal != null" >terminal,</if>
+		<if test="effectiveDate != null" >effective_date,</if>
+		<if test="expiredDate != null" >expired_date,</if>
+		<if test="advertType != null" >advert_type,</if>
+		<if test="activityId != null" >activity_id,</if>
+		<if test="objId != null" >obj_id,</if>
+		<if test="objName != null" >obj_name,</if>
+		<if test="url != null" >url,</if>
+		<if test="imgPath1 != null" >img_path1,</if>
+		<if test="imgPath2 != null" >img_path2,</if>
+		<if test="imgPath3 != null" >img_path3,</if>
+		<if test="imgPath4 != null" >img_path4,</if>
+		<if test="operator != null" >operator,</if>
+	</trim>
+	<trim prefix="values (" suffix=")" suffixOverrides="," >
+		<if test="id != null">#{id,jdbcType=VARCHAR},</if>
+		<if test="createBy != null" >#{createBy.id,jdbcType=VARCHAR},</if>
+		<if test="createDate != null" >#{createDate,jdbcType=TIMESTAMP},</if>
+		<if test="lastUpdateBy != null" >#{lastUpdateBy.id,jdbcType=VARCHAR},</if>
+		<if test="lastUpdateDate != null" >#{lastUpdateDate,jdbcType=TIMESTAMP},</if>
+		<if test="delFlag != null" >#{delFlag,jdbcType=VARCHAR},</if>
+		<if test="terminal != null" >#{terminal,jdbcType=VARCHAR},</if>
+		<if test="effectiveDate != null" >#{effectiveDate,jdbcType=TIMESTAMP},</if>
+		<if test="expiredDate != null" >#{expiredDate,jdbcType=TIMESTAMP},</if>
+		<if test="advertType != null" >#{advertType,jdbcType=VARCHAR},</if>
+		<if test="activityId != null" >#{activityId,jdbcType=VARCHAR},</if>
+		<if test="objId != null" >#{objId,jdbcType=VARCHAR},</if>
+		<if test="objName != null" >#{objName,jdbcType=VARCHAR},</if>
+		<if test="url != null" >#{url,jdbcType=VARCHAR},</if>
+		<if test="imgPath1 != null" >#{imgPath1,jdbcType=VARCHAR},</if>
+		<if test="imgPath2 != null" >#{imgPath2,jdbcType=VARCHAR},</if>
+		<if test="imgPath3 != null" >#{imgPath3,jdbcType=VARCHAR},</if>
+		<if test="imgPath4 != null" >#{imgPath4,jdbcType=VARCHAR},</if>
+		<if test="operator != null" >#{operator,jdbcType=VARCHAR},</if>
+	</trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.promotion.api.dto.AppStartPage" >
+   	UPDATE app_startpage
+	<set>
+		<if test="createBy != null" >
+			create_by = #{createBy.id,jdbcType=VARCHAR},
+		</if>
+		<if test="createDate != null" >
+			create_date = #{createDate,jdbcType=TIMESTAMP},
+		</if>
+		<if test="lastUpdateBy != null" >
+			last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+		</if>
+		<if test="lastUpdateDate != null" >
+			last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+		</if>
+		<if test="delFlag != null" >
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="terminal != null" >
+			terminal = #{terminal,jdbcType=VARCHAR},
+		</if>
+		<if test="effectiveDate != null" >
+			effective_date = #{effectiveDate,jdbcType=TIMESTAMP},
+		</if>
+		<if test="expiredDate != null" >
+			expired_date = #{expiredDate,jdbcType=TIMESTAMP},
+		</if>
+		<if test="advertType != null" >
+			advert_type = #{advertType,jdbcType=VARCHAR},
+		</if>
+		<if test="activityId != null" >
+			activity_id = #{activityId,jdbcType=VARCHAR},
+		</if>
+		<if test="objId != null" >
+			obj_id = #{objId,jdbcType=VARCHAR},
+		</if>
+		<if test="objName != null" >
+			obj_name = #{objName,jdbcType=VARCHAR},
+		</if>
+		<if test="url != null" >
+			url = #{url,jdbcType=VARCHAR},
+		</if>
+		<if test="imgPath1 != null" >
+			img_path1 = #{imgPath1,jdbcType=VARCHAR},
+		</if>
+		<if test="imgPath2 != null" >
+			img_path2 = #{imgPath2,jdbcType=VARCHAR},
+		</if>
+		<if test="imgPath3 != null" >
+			img_path3 = #{imgPath3,jdbcType=VARCHAR},
+		</if>
+		<if test="imgPath4 != null" >
+			img_path4 = #{imgPath4,jdbcType=VARCHAR},
+		</if>
+		<if test="operator != null" >
+			operator = #{operator,jdbcType=VARCHAR},
+		</if>
+	</set>
+	where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 修改启动页广告 -->
+  <update id="updateBySelective" parameterType="com.ffzx.promotion.api.dto.AppStartPage" >
+   	UPDATE app_startpage
+	<set>
+		<if test="createBy != null" >
+			create_by = #{createBy.id,jdbcType=VARCHAR},
+		</if>
+		<if test="createDate != null" >
+			create_date = #{createDate,jdbcType=TIMESTAMP},
+		</if>
+		<if test="lastUpdateBy != null" >
+			last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+		</if>
+		<if test="lastUpdateDate != null" >
+			last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+		</if>
+		<if test="delFlag != null" >
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="terminal != null" >
+			terminal = #{terminal,jdbcType=VARCHAR},
+		</if>
+		<if test="effectiveDate != null" >
+			effective_date = #{effectiveDate,jdbcType=TIMESTAMP},
+		</if>
+		<if test="expiredDate != null" >
+			expired_date = #{expiredDate,jdbcType=TIMESTAMP},
+		</if>
+		<if test="advertType != null" >
+			advert_type = #{advertType,jdbcType=VARCHAR},
+		</if>
+		<if test="activityId != null" >
+			activity_id = #{activityId,jdbcType=VARCHAR},
+		</if>
+			obj_id = #{objId,jdbcType=VARCHAR},
+			obj_name = #{objName,jdbcType=VARCHAR},
+			url = #{url,jdbcType=VARCHAR},
+		<if test="imgPath1 != null" >
+			img_path1 = #{imgPath1,jdbcType=VARCHAR},
+		</if>
+		<if test="imgPath2 != null" >
+			img_path2 = #{imgPath2,jdbcType=VARCHAR},
+		</if>
+		<if test="imgPath3 != null" >
+			img_path3 = #{imgPath3,jdbcType=VARCHAR},
+		</if>
+		<if test="imgPath4 != null" >
+			img_path4 = #{imgPath4,jdbcType=VARCHAR},
+		</if>
+		<if test="operator != null" >
+			operator = #{operator,jdbcType=VARCHAR},
+		</if>
+	</set>
+	where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.promotion.api.dto.AppStartPage" >
+   	UPDATE app_startpage
+		<set>
+			create_by = #{createBy.id,jdbcType=VARCHAR},
+			create_date = #{createDate,jdbcType=TIMESTAMP},
+			last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+			last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+			terminal = #{terminal,jdbcType=VARCHAR},
+			effective_date = #{effectiveDate,jdbcType=TIMESTAMP},
+			expired_date = #{expiredDate,jdbcType=TIMESTAMP},
+			advert_type = #{advertType,jdbcType=VARCHAR},
+			activity_id = #{activityId,jdbcType=VARCHAR},
+			obj_id = #{objId,jdbcType=VARCHAR},
+			obj_name = #{objName,jdbcType=VARCHAR},
+			url = #{url,jdbcType=VARCHAR},
+			img_path1 = #{imgPath1,jdbcType=VARCHAR},
+			img_path2 = #{imgPath2,jdbcType=VARCHAR},
+			img_path3 = #{imgPath3,jdbcType=VARCHAR},
+			img_path4 = #{imgPath4,jdbcType=VARCHAR},
+			operator = #{operator,jdbcType=VARCHAR}
+		</set>
+		WHERE id = #{id,jdbcType=VARCHAR} 
+  </update>
+  
+  <!-- 启动页接口 -->
+  <select id="findAPPStartPageList" resultType="com.ffzx.promotion.api.dto.AppStartPage" parameterType="map" >
+    select * from (
+	    select 
+	    <include refid="Base_Column_List" />
+	    ,
+	    <![CDATA[
+	    	(case when t.effective_date <= now() and t.expired_date >= now() then 2
+	    	 when t.effective_date > now() then 1 else 0 end) as "sortdate"
+	    ]]>
+	    from app_startpage as  t 
+	    <include refid="joins"/>
+	    where 1=1 
+	    <include refid="condition"/>
+	    order by sortdate DESC,t.effective_date ASC
+	  ) d where d.sortdate >= 1
+	  
+  </select>
+  
+</mapper>

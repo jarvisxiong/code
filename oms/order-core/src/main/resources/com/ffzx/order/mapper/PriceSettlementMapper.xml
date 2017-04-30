@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ffzx.order.mapper.PriceSettlementMapper">
+  <sql id="Base_Column_List" >
+		t.id, 
+		t.remarks AS "remarks",
+		t.create_by AS "createBy.id",
+		t.create_date AS "createDate",
+		t.last_update_by AS "lastUpdateBy.id",
+		t.last_update_date AS "lastUpdateDate",
+		t.del_flag AS "delFlag",
+		t.ps_no AS "psNo",
+		t.total_count AS "totalCount",
+		t.tota_sale_amount AS "totaSaleAmount",
+		t.total_balance AS "totalBalance",
+		t.partner_id AS "partnerId",
+		t.partner_code AS "partnerCode",
+		t.partner_name AS "partnerName",
+		t.status AS "status",
+		t.cut_off_time AS "cutOffTime",
+		t.service_station_id AS "serviceStationId",
+		t.service_station_code AS "serviceStationCode",
+		t.service_station_name AS "serviceStationName",
+		t.print_date AS "printDate",
+		t.print_times AS "printTimes",
+		t.partner_phone AS "partnerPhone"
+
+  </sql> 
+  
+   <sql id="Dtail_Column_List" >
+		d.id, 
+		d.remarks AS "remarks",
+		d.create_by AS "createBy.id",
+		d.create_date AS "createDate",
+		d.last_update_by AS "lastUpdateBy.id",
+		d.last_update_date AS "lastUpdateDate",
+		d.del_flag AS "delFlag",
+		d.ps_no AS "psNo",
+		d.order_no AS "orderNo",
+		d.commodity_image AS "commodityImage",
+		d.commodity_title AS "commodityTitle",
+		d.sku_id AS "skuId",
+		d.sku_code AS "skuCode",
+		d.virtual_gd_id AS "virtualGdId",
+		d.commodity_unit AS "commodityUnit",
+		d.act_sale_price AS "actSalePrice",
+		d.pifa_price AS "pifaPrice",
+		d.act_pay_amount AS "actPayAmount",
+		d.sale_amount AS "saleAmount",
+		d.buy_num AS "buyNum",
+		d.balance AS "balance",
+		d.member_id AS "memberId",
+		d.member_account AS "memberAccount",
+		d.member_name AS "memberName",
+		d.partner_id AS "partnerId",
+		d.partner_code AS "partnerCode",
+		d.partner_name AS "partnerName",
+		d.service_station_id AS "serviceStationId",
+		d.service_station_code AS "serviceStationCode",
+		d.service_station_name AS "serviceStationName",
+		d.serial_code AS "serialCode",
+		d.oms_order_detail_id AS "omsOrderDetailId",
+		d.partner_phone AS "partnerPhone",
+		d.refund_num AS "refundNum",
+		d.order_time AS "orderTime"
+  </sql>  
+
+   <resultMap type="com.ffzx.order.model.PriceSettlement" id="unionDetailsResultMap">
+   			<result property="psNo" column="ps_no" javaType="java.lang.String" />
+		<collection property="detailList" column="{ps_no=psNo}" javaType="ArrayList" ofType="com.ffzx.order.model.PriceSettlementDetail" select="selectDetailBypsNo"></collection>
+	</resultMap>
+   
+   <select id="selectDetailBypsNo" resultType="com.ffzx.order.model.PriceSettlementDetail" parameterType="map" >
+   	select 
+    <include refid="Dtail_Column_List" />
+    from price_settlement_detail as d
+    where  d.ps_no = #{ps_no}
+  </select>
+  
+  <select id="selectUninoDeatail" resultMap="unionDetailsResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from price_settlement as  t 
+    <include refid="joins"/>
+    where 1=1 
+    <include refid="condition"/>
+  </select>
+  
+  <sql id="joins">
+
+  </sql> 
+  <sql id="condition" >
+	<if test="null!=params" >
+		<if test="params.id != null and '' != params.id">
+			and t.id = #{params.id,jdbcType=VARCHAR}
+		</if>
+		<if test="params.remarks != null and '' != params.remarks">
+			and t.remarks = #{params.remarks,jdbcType=VARCHAR}
+		</if>
+		<if test="params.createBy != null and '' != params.createBy">
+			and t.create_by = #{params.createBy.id,jdbcType=VARCHAR}
+		</if>
+		<if test="params.createDate != null and '' != params.createDate">
+			and t.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+		</if>
+		<if test="params.createDateStart != null and '' != params.createDateStart">
+			and DATE_FORMAT(t.create_date,'%Y-%m-%d') &gt;= #{params.createDateStart,jdbcType=VARCHAR}
+	  	</if>
+	  	<if test="params.createDateEnd != null and '' != params.createDateEnd">
+			and DATE_FORMAT(t.create_date,'%Y-%m-%d') &lt;= #{params.createDateEnd,jdbcType=VARCHAR}
+	 	 </if>
+		<if test="params.lastUpdateBy != null and '' != params.lastUpdateBy">
+			and t.last_update_by = #{params.lastUpdateBy.id,jdbcType=VARCHAR}
+		</if>
+		<if test="params.lastUpdateDate != null and '' != params.lastUpdateDate">
+			and t.last_update_date = #{params.lastUpdateDate,jdbcType=TIMESTAMP}
+		</if>
+		<if test="params.delFlag != null and '' != params.delFlag">
+			and t.del_flag = #{params.delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="params.psNo != null and '' != params.psNo">
+			and t.ps_no = #{params.psNo,jdbcType=VARCHAR}
+		</if>
+		<if test="params.totalCount != null and '' != params.totalCount">
+			and t.total_count = #{params.totalCount,jdbcType=INTEGER}
+		</if>
+		<if test="params.totaSaleAmount != null and '' != params.totaSaleAmount">
+			and t.tota_sale_amount = #{params.totaSaleAmount,jdbcType=NUMERIC}
+		</if>
+		<if test="params.totalBalance != null and '' != params.totalBalance">
+			and t.total_balance = #{params.totalBalance,jdbcType=NUMERIC}
+		</if>
+		<if test="params.partnerId != null and '' != params.partnerId">
+			and t.partner_id = #{params.partnerId,jdbcType=VARCHAR}
+		</if>
+		<if test="params.partnerCode != null and '' != params.partnerCode">
+			and t.partner_code = #{params.partnerCode,jdbcType=VARCHAR}
+		</if>
+		<if test="params.partnerName != null and '' != params.partnerName">
+			and t.partner_name = #{params.partnerName,jdbcType=VARCHAR}
+		</if>
+		<if test="params.status != null and '' != params.status">
+			and t.status = #{params.status,jdbcType=VARCHAR}
+		</if>
+		<if test="params.cutOffTime != null and '' != params.cutOffTime">
+			and t.cut_off_time = #{params.cutOffTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="params.cutOffTimeStart != null and '' != params.cutOffTimeStart">
+			and DATE_FORMAT(t.cut_off_time,'%Y-%m-%d') &gt;= #{params.cutOffTimeStart,jdbcType=VARCHAR}
+	  	</if>
+	  	<if test="params.cutOffTimeEnd != null and '' != params.cutOffTimeEnd">
+			and DATE_FORMAT(t.cut_off_time,'%Y-%m-%d') &lt;= #{params.cutOffTimeEnd,jdbcType=VARCHAR}
+	 	 </if>
+		<if test="params.serviceStationId != null and '' != params.serviceStationId">
+			and t.service_station_id = #{params.serviceStationId,jdbcType=VARCHAR}
+		</if>
+		<if test="params.serviceStationCode != null and '' != params.serviceStationCode">
+			and t.service_station_code = #{params.serviceStationCode,jdbcType=VARCHAR}
+		</if>
+
+		<if test="params.delFlag == null or '' == params.delFlag or null == params" >
+			and t.del_flag = 0
+		</if>
+		<if test="params.partnerNameLike != null and '' != params.partnerNameLike">
+			and t.partner_name like '%${params.partnerNameLike}%'
+		</if>
+		<if test="params.serviceStationNameLike != null and '' != params.serviceStationNameLike">
+			and t.service_station_name like '%${params.serviceStationNameLike}%'
+		</if>		
+		<if test="params.psNoLike!= null and '' != params.psNoLike">
+			and t.ps_no like '%${params.psNoLike}%'
+		</if>
+		<if test="params.partnerCodeLike != null and '' != params.partnerCodeLike">
+			and t.partner_code like '%${params.partnerCodeLike}%'
+		</if>	
+		<if test="params.psNoList != null and '' != params.psNoList" >
+        	and t.ps_no in
+        	 <foreach collection="params.psNoList" item="item" separator="," open="(" close=")">
+              #{item}
+         	</foreach>
+      	</if>
+		
+	</if>
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultType="com.ffzx.order.model.PriceSettlement" parameterType="java.lang.String" >
+   	select 
+    <include refid="Base_Column_List" />
+    from price_settlement as t 
+    <include refid="joins"/>
+    where  t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParams" resultType="com.ffzx.order.model.PriceSettlement" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from price_settlement as  t 
+    <include refid="joins"/>
+    where 1=1 
+    <include refid="condition"/>
+  </select>
+  
+  <select id="selectCount" resultType="java.lang.Integer" >
+   select count(1) as s from price_settlement as  t where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultType="com.ffzx.order.model.PriceSettlement" parameterType="map" >
+   select 
+    <include refid="Base_Column_List" />
+    from price_settlement as  t    
+    <include refid="joins"/>
+    where 1=1      
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by  t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    	DELETE FROM price_settlement WHERE id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.order.model.PriceSettlement" >
+    	DELETE FROM price_settlement WHERE id = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.ffzx.order.model.PriceSettlement" >
+   	INSERT INTO price_settlement
+		(
+			id,
+			remarks,
+			create_by,
+			create_date,
+			last_update_by,
+			last_update_date,
+			del_flag,
+			ps_no,
+			total_count,
+			tota_sale_amount,
+			total_balance,
+			partner_id,
+			partner_code,
+			partner_name,
+			status,
+			cut_off_time,
+			service_station_id,
+			service_station_code,
+			service_station_name
+		) VALUES
+		(
+			#{id,jdbcType=VARCHAR},
+			#{remarks,jdbcType=VARCHAR},
+			#{createBy.id,jdbcType=VARCHAR},
+			#{createDate,jdbcType=TIMESTAMP},
+			#{lastUpdateBy.id,jdbcType=VARCHAR},
+			#{lastUpdateDate,jdbcType=TIMESTAMP},
+			#{delFlag,jdbcType=VARCHAR},
+			#{psNo,jdbcType=VARCHAR},
+			#{totalCount,jdbcType=INTEGER},
+			#{totaSaleAmount,jdbcType=NUMERIC},
+			#{totalBalance,jdbcType=NUMERIC},
+			#{partnerId,jdbcType=VARCHAR},
+			#{partnerCode,jdbcType=VARCHAR},
+			#{partnerName,jdbcType=VARCHAR},
+			#{status,jdbcType=VARCHAR},
+			#{cutOffTime,jdbcType=TIMESTAMP},
+			#{serviceStationId,jdbcType=VARCHAR},
+			#{serviceStationCode,jdbcType=VARCHAR},
+			#{serviceStationName,jdbcType=VARCHAR}
+		)
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.order.model.PriceSettlement" >
+   	INSERT INTO price_settlement 
+	<trim prefix="(" suffix=")" suffixOverrides="," >
+		<if test="id != null">id,</if>
+		<if test="remarks != null" >remarks,</if>
+		<if test="createBy != null" >create_by,</if>
+		<if test="createDate != null" >create_date,</if>
+		<if test="lastUpdateBy != null" >last_update_by,</if>
+		<if test="lastUpdateDate != null" >last_update_date,</if>
+		<if test="delFlag != null" >del_flag,</if>
+		<if test="psNo != null" >ps_no,</if>
+		<if test="totalCount != null" >total_count,</if>
+		<if test="totaSaleAmount != null" >tota_sale_amount,</if>
+		<if test="totalBalance != null" >total_balance,</if>
+		<if test="partnerId != null" >partner_id,</if>
+		<if test="partnerCode != null" >partner_code,</if>
+		<if test="partnerName != null" >partner_name,</if>
+		<if test="status != null" >status,</if>
+		<if test="cutOffTime != null" >cut_off_time,</if>
+		<if test="serviceStationId != null" >service_station_id,</if>
+		<if test="serviceStationCode != null" >service_station_code,</if>
+		<if test="serviceStationName != null" >service_station_name,</if>
+		<if test="printDate != null" >print_date,</if>
+		<if test="printTimes != null" >print_times,</if>
+		<if test="partnerPhone != null" >partner_phone,</if>
+
+	</trim>
+	<trim prefix="values (" suffix=")" suffixOverrides="," >
+		<if test="id != null">#{id,jdbcType=VARCHAR},</if>
+		<if test="remarks != null" >#{remarks,jdbcType=VARCHAR},</if>
+		<if test="createBy != null" >#{createBy.id,jdbcType=VARCHAR},</if>
+		<if test="createDate != null" >#{createDate,jdbcType=TIMESTAMP},</if>
+		<if test="lastUpdateBy != null" >#{lastUpdateBy.id,jdbcType=VARCHAR},</if>
+		<if test="lastUpdateDate != null" >#{lastUpdateDate,jdbcType=TIMESTAMP},</if>
+		<if test="delFlag != null" >#{delFlag,jdbcType=VARCHAR},</if>
+		<if test="psNo != null" >#{psNo,jdbcType=VARCHAR},</if>
+		<if test="totalCount != null" >#{totalCount,jdbcType=INTEGER},</if>
+		<if test="totaSaleAmount != null" >#{totaSaleAmount,jdbcType=NUMERIC},</if>
+		<if test="totalBalance != null" >#{totalBalance,jdbcType=NUMERIC},</if>
+		<if test="partnerId != null" >#{partnerId,jdbcType=VARCHAR},</if>
+		<if test="partnerCode != null" >#{partnerCode,jdbcType=VARCHAR},</if>
+		<if test="partnerName != null" >#{partnerName,jdbcType=VARCHAR},</if>
+		<if test="status != null" >#{status,jdbcType=VARCHAR},</if>
+		<if test="cutOffTime != null" >#{cutOffTime,jdbcType=TIMESTAMP},</if>
+		<if test="serviceStationId != null" >#{serviceStationId,jdbcType=VARCHAR},</if>
+		<if test="serviceStationCode != null" >#{serviceStationCode,jdbcType=VARCHAR},</if>
+		<if test="serviceStationName != null" >#{serviceStationName,jdbcType=VARCHAR},</if>
+		<if test="printDate != null" >#{printDate,jdbcType=TIMESTAMP},</if>
+		<if test="printTimes != null" >#{printTimes,jdbcType=INTEGER},</if>
+		<if test="partnerPhone != null" >#{partnerPhone,jdbcType=VARCHAR},</if>
+	</trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.order.model.PriceSettlement" >
+   	UPDATE price_settlement
+	<set>
+		<if test="remarks != null" >
+			remarks = #{remarks,jdbcType=VARCHAR},
+		</if>
+		<if test="createBy != null" >
+			create_by = #{createBy.id,jdbcType=VARCHAR},
+		</if>
+		<if test="createDate != null" >
+			create_date = #{createDate,jdbcType=TIMESTAMP},
+		</if>
+		<if test="lastUpdateBy != null" >
+			last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+		</if>
+		<if test="lastUpdateDate != null" >
+			last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+		</if>
+		<if test="delFlag != null" >
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="psNo != null" >
+			ps_no = #{psNo,jdbcType=VARCHAR},
+		</if>
+		<if test="totalCount != null" >
+			total_count = #{totalCount,jdbcType=INTEGER},
+		</if>
+		<if test="totaSaleAmount != null" >
+			tota_sale_amount = #{totaSaleAmount,jdbcType=NUMERIC},
+		</if>
+		<if test="totalBalance != null" >
+			total_balance = #{totalBalance,jdbcType=NUMERIC},
+		</if>
+		<if test="partnerId != null" >
+			partner_id = #{partnerId,jdbcType=VARCHAR},
+		</if>
+		<if test="partnerCode != null" >
+			partner_code = #{partnerCode,jdbcType=VARCHAR},
+		</if>
+		<if test="partnerName != null" >
+			partner_name = #{partnerName,jdbcType=VARCHAR},
+		</if>
+		<if test="status != null" >
+			status = #{status,jdbcType=VARCHAR},
+		</if>
+		<if test="cutOffTime != null" >
+			cut_off_time = #{cutOffTime,jdbcType=TIMESTAMP},
+		</if>
+		<if test="serviceStationId != null" >
+			service_station_id = #{serviceStationId,jdbcType=VARCHAR},
+		</if>
+		<if test="serviceStationCode != null" >
+			service_station_code = #{serviceStationCode,jdbcType=VARCHAR},
+		</if>
+		<if test="serviceStationName != null" >
+			service_station_name = #{serviceStationName,jdbcType=VARCHAR},
+		</if>
+		<if test="printDate != null" >
+			print_date = #{printDate,jdbcType=TIMESTAMP},
+		</if>
+		<if test="printTimes != null" >
+			print_times = #{printTimes,jdbcType=INTEGER},
+		</if>
+		<if test="partnerPhone != null" >
+			partner_phone = #{partnerPhone,jdbcType=VARCHAR},
+		</if>
+	</set>
+	where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.order.model.PriceSettlement" >
+   	UPDATE price_settlement
+		<set>
+			remarks = #{remarks,jdbcType=VARCHAR},
+			create_by = #{createBy.id,jdbcType=VARCHAR},
+			create_date = #{createDate,jdbcType=TIMESTAMP},
+			last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+			last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+			ps_no = #{psNo,jdbcType=VARCHAR},
+			total_count = #{totalCount,jdbcType=INTEGER},
+			tota_sale_amount = #{totaSaleAmount,jdbcType=NUMERIC},
+			total_balance = #{totalBalance,jdbcType=NUMERIC},
+			partner_id = #{partnerId,jdbcType=VARCHAR},
+			partner_code = #{partnerCode,jdbcType=VARCHAR},
+			partner_name = #{partnerName,jdbcType=VARCHAR},
+			status = #{status,jdbcType=VARCHAR},
+			cut_off_time = #{cutOffTime,jdbcType=TIMESTAMP},
+			service_station_id = #{serviceStationId,jdbcType=VARCHAR},
+			service_station_code = #{serviceStationCode,jdbcType=VARCHAR},
+			service_station_name = #{serviceStationName,jdbcType=VARCHAR},
+			print_date = #{printDate,jdbcType=TIMESTAMP},
+			print_times = #{printTimes,jdbcType=INTEGER},
+			partner_phone = #{partnerPhone,jdbcType=VARCHAR}
+		</set>
+		WHERE id = #{id,jdbcType=VARCHAR} 
+  </update>
+</mapper>

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ffzx.promotion.mapper.ShareDrawMapper" >
+  <resultMap id="BaseResultMap" type="com.ffzx.promotion.api.dto.ShareDraw" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+    <result column="is_share" property="isShare" jdbcType="CHAR" />
+    <result column="reward_no" property="rewardNo" jdbcType="VARCHAR" />
+    <result column="is_draw" property="isDraw" jdbcType="CHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="reward_id" property="rewardId" jdbcType="VARCHAR" />
+    <result column="member_id" property="memberId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    t.id, t.count, t.is_share, t.reward_no, t.is_draw, t.update_date, t.reward_id, t.member_id
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null and '' != params.id" >
+        and t.id = #{params.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.count != null" >
+        and t.count = #{params.count,jdbcType=INTEGER}
+      </if>
+      <if test="params.isShare != null and '' != params.isShare" >
+        and t.is_share = #{params.isShare,jdbcType=CHAR}
+      </if>
+      <if test="params.rewardNo != null and '' != params.rewardNo" >
+        and t.reward_no = #{params.rewardNo,jdbcType=VARCHAR}
+      </if>
+      <if test="params.isDraw != null and '' != params.isDraw" >
+        and t.is_draw = #{params.isDraw,jdbcType=CHAR}
+      </if>
+      <if test="params.updateDate != null" >
+        and t.update_date = #{params.updateDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.rewardId != null and '' != params.rewardId" >
+        and t.reward_id = #{params.rewardId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.memberId != null and '' != params.memberId" >
+        and t.member_id = #{params.memberId,jdbcType=VARCHAR}
+      </if>
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from share_draw t 
+    where t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from share_draw t 
+    where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from share_draw t  where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from share_draw t 
+    where 1=1
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from share_draw
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.promotion.api.dto.ShareDraw" >
+    delete from share_draw
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ffzx.promotion.api.dto.ShareDraw" >
+    insert into share_draw (id, count, is_share, 
+      reward_no, is_draw, update_date, 
+      reward_id, member_id)
+    values (#{id,jdbcType=VARCHAR}, #{count,jdbcType=INTEGER}, #{isShare,jdbcType=CHAR}, 
+      #{rewardNo,jdbcType=VARCHAR}, #{isDraw,jdbcType=CHAR}, #{updateDate,jdbcType=TIMESTAMP}, 
+      #{rewardId,jdbcType=VARCHAR}, #{memberId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.promotion.api.dto.ShareDraw" >
+    insert into share_draw
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="count != null" >
+        count,
+      </if>
+      <if test="isShare != null" >
+        is_share,
+      </if>
+      <if test="rewardNo != null" >
+        reward_no,
+      </if>
+      <if test="isDraw != null" >
+        is_draw,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="rewardId != null" >
+        reward_id,
+      </if>
+      <if test="memberId != null" >
+        member_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="count != null" >
+        #{count,jdbcType=INTEGER},
+      </if>
+      <if test="isShare != null" >
+        #{isShare,jdbcType=CHAR},
+      </if>
+      <if test="rewardNo != null" >
+        #{rewardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="isDraw != null" >
+        #{isDraw,jdbcType=CHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rewardId != null" >
+        #{rewardId,jdbcType=VARCHAR},
+      </if>
+      <if test="memberId != null" >
+        #{memberId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.promotion.api.dto.ShareDraw" >
+    update share_draw
+    <set >
+      <if test="count != null" >
+        count = #{count,jdbcType=INTEGER},
+      </if>
+      <if test="isShare != null" >
+        is_share = #{isShare,jdbcType=CHAR},
+      </if>
+      <if test="rewardNo != null" >
+        reward_no = #{rewardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="isDraw != null" >
+        is_draw = #{isDraw,jdbcType=CHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rewardId != null" >
+        reward_id = #{rewardId,jdbcType=VARCHAR},
+      </if>
+      <if test="memberId != null" >
+        member_id = #{memberId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.promotion.api.dto.ShareDraw" >
+    update share_draw
+    set count = #{count,jdbcType=INTEGER},
+      is_share = #{isShare,jdbcType=CHAR},
+      reward_no = #{rewardNo,jdbcType=VARCHAR},
+      is_draw = #{isDraw,jdbcType=CHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      reward_id = #{rewardId,jdbcType=VARCHAR},
+      member_id = #{memberId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

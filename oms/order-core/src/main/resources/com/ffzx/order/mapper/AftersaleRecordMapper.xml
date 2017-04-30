@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ffzx.order.mapper.AftersaleRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.ffzx.order.model.AftersaleRecord" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="opr_id" property="oprId" jdbcType="VARCHAR" />
+    <result column="opr_name" property="oprName" jdbcType="VARCHAR" />
+    <result column="apply_no" property="applyNo" jdbcType="VARCHAR" />
+    <result column="apply_id" property="applyId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    t.id, t.description, t.create_date, t.opr_id, t.opr_name, t.apply_no, t.apply_id
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null and '' != params.id" >
+        and t.id = #{params.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.description != null and '' != params.description" >
+        and t.description = #{params.description,jdbcType=VARCHAR}
+      </if>
+      <if test="params.createDate != null" >
+        and t.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+      </if>
+      <if test="params.oprId != null and '' != params.oprId" >
+        and t.opr_id = #{params.oprId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.oprName != null and '' != params.oprName" >
+        and t.opr_name = #{params.oprName,jdbcType=VARCHAR}
+      </if>
+      <if test="params.applyNo != null and '' != params.applyNo" >
+        and t.apply_no = #{params.applyNo,jdbcType=VARCHAR}
+      </if>
+      <if test="params.applyId != null and '' != params.applyId" >
+        and t.apply_id = #{params.applyId,jdbcType=VARCHAR}
+      </if>
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from aftersale_record t 
+    where t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from aftersale_record t 
+    where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from aftersale_record t  where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from aftersale_record t 
+    where 1=1
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from aftersale_record
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.order.model.AftersaleRecord" >
+    delete from aftersale_record
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ffzx.order.model.AftersaleRecord" >
+    insert into aftersale_record (id, description, create_date, 
+      opr_id, opr_name, apply_no, 
+      apply_id)
+    values (#{id,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{oprId,jdbcType=VARCHAR}, #{oprName,jdbcType=VARCHAR}, #{applyNo,jdbcType=VARCHAR}, 
+      #{applyId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.order.model.AftersaleRecord" >
+    insert into aftersale_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="oprId != null" >
+        opr_id,
+      </if>
+      <if test="oprName != null" >
+        opr_name,
+      </if>
+      <if test="applyNo != null" >
+        apply_no,
+      </if>
+      <if test="applyId != null" >
+        apply_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oprId != null" >
+        #{oprId,jdbcType=VARCHAR},
+      </if>
+      <if test="oprName != null" >
+        #{oprName,jdbcType=VARCHAR},
+      </if>
+      <if test="applyNo != null" >
+        #{applyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="applyId != null" >
+        #{applyId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.order.model.AftersaleRecord" >
+    update aftersale_record
+    <set >
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oprId != null" >
+        opr_id = #{oprId,jdbcType=VARCHAR},
+      </if>
+      <if test="oprName != null" >
+        opr_name = #{oprName,jdbcType=VARCHAR},
+      </if>
+      <if test="applyNo != null" >
+        apply_no = #{applyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="applyId != null" >
+        apply_id = #{applyId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.order.model.AftersaleRecord" >
+    update aftersale_record
+    set description = #{description,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      opr_id = #{oprId,jdbcType=VARCHAR},
+      opr_name = #{oprName,jdbcType=VARCHAR},
+      apply_no = #{applyNo,jdbcType=VARCHAR},
+      apply_id = #{applyId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ffzx.promotion.mapper.GiftCouponMapper" >
+  <resultMap id="BaseResultMap" type="com.ffzx.promotion.api.dto.GiftCoupon" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="coupon_code" property="couponCode" jdbcType="VARCHAR" />
+    <result column="coupon_name" property="couponName" jdbcType="VARCHAR" />
+    <result column="coupon_face" property="couponFace" jdbcType="VARCHAR" />
+    <result column="coupon_limit" property="couponLimit" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+    <result column="coupon_num" property="couponNum" jdbcType="VARCHAR" />
+    <result column="give_id" property="giveId" jdbcType="VARCHAR" />
+    <result column="commodity_id" property="commodityId" jdbcType="VARCHAR" />
+    <result column="coupon_id" property="couponId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    t.id, t.coupon_code, t.coupon_name, t.coupon_face, t.coupon_limit, t.del_flag, t.coupon_num, 
+    t.give_id, t.commodity_id, t.coupon_id
+  </sql>
+  
+  
+  <sql id="conditionDelete" >
+      <if test="id != null and '' != id" >
+        and id = #{id,jdbcType=VARCHAR}
+      </if>
+      
+      <if test="giveId != null and '' != giveId" >
+        and give_id = #{giveId,jdbcType=VARCHAR}
+      </if>
+  </sql>
+  
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null and '' != params.id" >
+        and t.id = #{params.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.couponCode != null and '' != params.couponCode" >
+        and t.coupon_code = #{params.couponCode,jdbcType=VARCHAR}
+      </if>
+      <if test="params.couponName != null and '' != params.couponName" >
+        and t.coupon_name = #{params.couponName,jdbcType=VARCHAR}
+      </if>
+      <if test="params.couponFace != null and '' != params.couponFace" >
+        and t.coupon_face = #{params.couponFace,jdbcType=VARCHAR}
+      </if>
+      <if test="params.couponLimit != null and '' != params.couponLimit" >
+        and t.coupon_limit = #{params.couponLimit,jdbcType=VARCHAR}
+      </if>
+      <if test="params.delFlag != null and '' != params.delFlag" >
+        and t.del_flag = #{params.delFlag,jdbcType=CHAR}
+      </if>
+      <if test="params.couponNum != null and '' != params.couponNum" >
+        and t.coupon_num = #{params.couponNum,jdbcType=VARCHAR}
+      </if>
+      <if test="params.giveId != null and '' != params.giveId" >
+        and t.give_id = #{params.giveId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.commodityId != null and '' != params.commodityId" >
+        and t.commodity_id = #{params.commodityId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.couponId != null and '' != params.couponId" >
+        and t.coupon_id = #{params.couponId,jdbcType=VARCHAR}
+      </if>
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from gift_coupon t 
+    where t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from gift_coupon t 
+    where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from gift_coupon t  where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from gift_coupon t 
+    where 1=1
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from gift_coupon
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.promotion.api.dto.GiftCoupon" >
+    delete from gift_coupon
+    where 1=1
+    <include refid="conditionDelete" />
+  </delete>
+  <insert id="insert" parameterType="com.ffzx.promotion.api.dto.GiftCoupon" >
+    insert into gift_coupon (id, coupon_code, coupon_name, 
+      coupon_face, coupon_limit, del_flag, 
+      coupon_num, give_id, commodity_id, 
+      coupon_id)
+    values (#{id,jdbcType=VARCHAR}, #{couponCode,jdbcType=VARCHAR}, #{couponName,jdbcType=VARCHAR}, 
+      #{couponFace,jdbcType=VARCHAR}, #{couponLimit,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}, 
+      #{couponNum,jdbcType=VARCHAR}, #{giveId,jdbcType=VARCHAR}, #{commodityId,jdbcType=VARCHAR}, 
+      #{couponId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.promotion.api.dto.GiftCoupon" >
+    insert into gift_coupon
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="couponCode != null" >
+        coupon_code,
+      </if>
+      <if test="couponName != null" >
+        coupon_name,
+      </if>
+      <if test="couponFace != null" >
+        coupon_face,
+      </if>
+      <if test="couponLimit != null" >
+        coupon_limit,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="couponNum != null" >
+        coupon_num,
+      </if>
+      <if test="giveId != null" >
+        give_id,
+      </if>
+      <if test="commodityId != null" >
+        commodity_id,
+      </if>
+      <if test="couponId != null" >
+        coupon_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="couponCode != null" >
+        #{couponCode,jdbcType=VARCHAR},
+      </if>
+      <if test="couponName != null" >
+        #{couponName,jdbcType=VARCHAR},
+      </if>
+      <if test="couponFace != null" >
+        #{couponFace,jdbcType=VARCHAR},
+      </if>
+      <if test="couponLimit != null" >
+        #{couponLimit,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="couponNum != null" >
+        #{couponNum,jdbcType=VARCHAR},
+      </if>
+      <if test="giveId != null" >
+        #{giveId,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityId != null" >
+        #{commodityId,jdbcType=VARCHAR},
+      </if>
+      <if test="couponId != null" >
+        #{couponId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.promotion.api.dto.GiftCoupon" >
+    update gift_coupon
+    <set >
+      <if test="couponCode != null" >
+        coupon_code = #{couponCode,jdbcType=VARCHAR},
+      </if>
+      <if test="couponName != null" >
+        coupon_name = #{couponName,jdbcType=VARCHAR},
+      </if>
+      <if test="couponFace != null" >
+        coupon_face = #{couponFace,jdbcType=VARCHAR},
+      </if>
+      <if test="couponLimit != null" >
+        coupon_limit = #{couponLimit,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="couponNum != null" >
+        coupon_num = #{couponNum,jdbcType=VARCHAR},
+      </if>
+      <if test="giveId != null" >
+        give_id = #{giveId,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityId != null" >
+        commodity_id = #{commodityId,jdbcType=VARCHAR},
+      </if>
+      <if test="couponId != null" >
+        coupon_id = #{couponId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateByGiveDelFlag" parameterType="com.ffzx.promotion.api.dto.GiftCoupon" >
+    update gift_coupon
+    <set >
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where give_id = #{giveId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.promotion.api.dto.GiftCoupon" >
+    update gift_coupon
+    set coupon_code = #{couponCode,jdbcType=VARCHAR},
+      coupon_name = #{couponName,jdbcType=VARCHAR},
+      coupon_face = #{couponFace,jdbcType=VARCHAR},
+      coupon_limit = #{couponLimit,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR},
+      coupon_num = #{couponNum,jdbcType=VARCHAR},
+      give_id = #{giveId,jdbcType=VARCHAR},
+      commodity_id = #{commodityId,jdbcType=VARCHAR},
+      coupon_id = #{couponId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

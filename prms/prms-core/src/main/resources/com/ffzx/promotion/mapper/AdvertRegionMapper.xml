@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ffzx.promotion.mapper.AdvertRegionMapper">
+  <sql id="Base_Column_List" >
+		d.id, 
+		d.remarks AS "remarks",
+		d.create_by AS "createBy.id",
+		d.create_date AS "createDate",
+		d.last_update_by AS "lastUpdateBy.id",
+		d.last_update_date AS "lastUpdateDate",
+		d.del_flag AS "delFlag",
+		d.parent_id AS "parent.id",
+		d.parent_ids AS "parentIds",
+		d.name AS "name",
+		d.sort AS "sort",
+		d.number AS "number",
+		d.support_types AS "supportTypes",
+		d.limit_count AS "limitCount",
+		d.is_system AS "isSystem"
+
+  </sql>  
+  <sql id="joins">
+  left join advertregion as parent on parent.id = d.parent_id
+  </sql> 
+  <sql id="condition" >
+	<if test="null!=params" >
+		<if test="params.id != null and '' != params.id">
+			and d.id = #{params.id,jdbcType=VARCHAR}
+		</if>
+		<if test="params.neqId != null and '' != params.neqId">
+			and d.id != #{params.neqId,jdbcType=VARCHAR}
+		</if>
+		<if test="params.remarks != null and '' != params.remarks">
+			and d.remarks = #{params.remarks,jdbcType=VARCHAR}
+		</if>
+		<if test="params.createBy != null and '' != params.createBy">
+			and d.create_by = #{params.createBy.id,jdbcType=VARCHAR}
+		</if>
+		<if test="params.createDate != null and '' != params.createDate">
+			and d.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+		</if>
+		<if test="params.lastUpdateBy != null and '' != params.lastUpdateBy">
+			and d.last_update_by = #{params.lastUpdateBy.id,jdbcType=VARCHAR}
+		</if>
+		<if test="params.lastUpdateDate != null and '' != params.lastUpdateDate">
+			and d.last_update_date = #{params.lastUpdateDate,jdbcType=TIMESTAMP}
+		</if>
+		<if test="params.delFlag != null and '' != params.delFlag">
+			and d.del_flag = #{params.delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="params.parent != null and '' != params.parent">
+			and d.parent_id = #{params.parent.id,jdbcType=VARCHAR}
+		</if>
+		<if test="params.parentId != null and '' != params.parentId">
+			and d.parent_id = #{params.parentId,jdbcType=VARCHAR}
+		</if>
+		<if test="params.parentIds != null and '' != params.parentIds">
+			and d.parent_ids = #{params.parentIds,jdbcType=VARCHAR}
+		</if>
+		<if test="params.name != null and '' != params.name">
+			and d.name = #{params.name,jdbcType=VARCHAR}
+		</if>
+		<if test="params.sort != null and '' != params.sort">
+			and d.sort = #{params.sort,jdbcType=INTEGER}
+		</if>
+		<if test="params.number != null and '' != params.number">
+			and d.number = #{params.number,jdbcType=VARCHAR}
+		</if>
+		<if test="params.numbers != null and '' != params.numbers">
+			and d.number in (${params.numbers})
+		</if>
+		<if test="params.supportTypes != null and '' != params.supportTypes">
+			and d.support_types = #{params.supportTypes,jdbcType=VARCHAR}
+		</if>
+		<if test="params.limitCount != null and '' != params.limitCount">
+			and d.limit_count = #{params.limitCount,jdbcType=INTEGER}
+		</if>
+		<if test="params.delFlag == null or '' == params.delFlag or null == params" >
+			and d.del_flag = 0
+		</if>
+		<if test="params.isParent != null or 'YES' == params.isParent" >
+			and d.parent_id = '0'
+		</if>
+		<if test="params.like_parentIds != null or '' != params.like_parentIds" >
+		 AND d.parent_ids LIKE '${params.like_parentIds}%'
+		</if>
+		<if test="params.orderBy != null and '' != params.orderBy" >
+		ORDER BY ${params.orderBy}
+		</if>
+		
+	</if>
+	 
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultType="com.ffzx.promotion.api.dto.AdvertRegion" parameterType="java.lang.String" >
+   	select 
+    	d.id, 
+		d.remarks AS "remarks",
+		d.create_by AS "createBy.id",
+		d.create_date AS "createDate",
+		d.last_update_by AS "lastUpdateBy.id",
+		d.last_update_date AS "lastUpdateDate",
+		d.del_flag AS "delFlag",
+		d.parent_id AS "parent.id",
+		parent.name as "parent.name",
+		d.parent_ids AS "parentIds",
+		d.name AS "name",
+		d.sort AS "sort",
+		d.number AS "number",
+		d.support_types AS "supportTypes",
+		d.limit_count AS "limitCount",
+		d.is_system AS "isSystem"
+    from advertregion  d 
+    left join advertregion parent on parent.id = d.parent_id
+    where  d.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParams" resultType="com.ffzx.promotion.api.dto.AdvertRegion" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from advertregion as  d 
+    <include refid="joins"/>
+    where 1=1 
+    <include refid="condition"/>
+  </select>
+  
+  <select id="selectCount" resultType="java.lang.Integer" >
+   select count(1) as s from advertregion as  d where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultType="com.ffzx.promotion.api.dto.AdvertRegion" parameterType="map" >
+   select 
+    <include refid="Base_Column_List" />
+    from advertregion as  d    
+    <include refid="joins"/>
+    where 1=1      
+    <include refid="condition" />
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    	DELETE FROM advertregion WHERE id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.promotion.api.dto.AdvertRegion" >
+    	DELETE FROM advertregion WHERE id = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.ffzx.promotion.api.dto.AdvertRegion" >
+   	INSERT INTO advertregion
+		(
+			id,
+			remarks,
+			create_by,
+			create_date,
+			last_update_by,
+			last_update_date,
+			del_flag,
+			parent_id,
+			parent_ids,
+			name,
+			sort,
+			number,
+			support_types,
+			limit_count,
+			is_system
+		) VALUES
+		(
+			#{id,jdbcType=VARCHAR},
+			#{remarks,jdbcType=VARCHAR},
+			#{createBy.id,jdbcType=VARCHAR},
+			#{createDate,jdbcType=TIMESTAMP},
+			#{lastUpdateBy.id,jdbcType=VARCHAR},
+			#{lastUpdateDate,jdbcType=TIMESTAMP},
+			#{delFlag,jdbcType=VARCHAR},
+			#{parent.id,jdbcType=VARCHAR},
+			#{parentIds,jdbcType=VARCHAR},
+			#{name,jdbcType=VARCHAR},
+			#{sort,jdbcType=INTEGER},
+			#{number,jdbcType=VARCHAR},
+			#{supportTypes,jdbcType=VARCHAR},
+			#{limitCount,jdbcType=INTEGER},
+			#{isSystem,jdbcType=INTEGER}
+		)
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.promotion.api.dto.AdvertRegion" >
+   	INSERT INTO advertregion 
+	<trim prefix="(" suffix=")" suffixOverrides="," >
+		<if test="id != null">id,</if>
+		<if test="remarks != null" >remarks,</if>
+		<if test="createBy != null" >create_by,</if>
+		<if test="createDate != null" >create_date,</if>
+		<if test="lastUpdateBy != null" >last_update_by,</if>
+		<if test="lastUpdateDate != null" >last_update_date,</if>
+		<if test="delFlag != null" >del_flag,</if>
+		<if test="parent != null" >parent_id,</if>
+		<if test="parentIds != null" >parent_ids,</if>
+		<if test="name != null" >name,</if>
+		<if test="sort != null" >sort,</if>
+		<if test="number != null" >number,</if>
+		<if test="supportTypes != null" >support_types,</if>
+		<if test="limitCount != null" >limit_count,</if>
+		<if test="isSystem != null" >is_system,</if>
+	</trim>
+	<trim prefix="values (" suffix=")" suffixOverrides="," >
+		<if test="id != null">#{id,jdbcType=VARCHAR},</if>
+		<if test="remarks != null" >#{remarks,jdbcType=VARCHAR},</if>
+		<if test="createBy != null" >#{createBy.id,jdbcType=VARCHAR},</if>
+		<if test="createDate != null" >#{createDate,jdbcType=TIMESTAMP},</if>
+		<if test="lastUpdateBy != null" >#{lastUpdateBy.id,jdbcType=VARCHAR},</if>
+		<if test="lastUpdateDate != null" >#{lastUpdateDate,jdbcType=TIMESTAMP},</if>
+		<if test="delFlag != null" >#{delFlag,jdbcType=VARCHAR},</if>
+		<if test="parent != null" >#{parent.id,jdbcType=VARCHAR},</if>
+		<if test="parentIds != null" >#{parentIds,jdbcType=VARCHAR},</if>
+		<if test="name != null" >#{name,jdbcType=VARCHAR},</if>
+		<if test="sort != null" >#{sort,jdbcType=INTEGER},</if>
+		<if test="number != null" >#{number,jdbcType=VARCHAR},</if>
+		<if test="supportTypes != null" >#{supportTypes,jdbcType=VARCHAR},</if>
+		<if test="limitCount != null" >#{limitCount,jdbcType=INTEGER},</if>
+		<if test="isSystem != null" >#{isSystem,jdbcType=INTEGER},</if>
+	</trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.promotion.api.dto.AdvertRegion" >
+   	UPDATE advertregion
+	<set>
+		<if test="remarks != null" >
+			remarks = #{remarks,jdbcType=VARCHAR},
+		</if>
+		<if test="createBy != null" >
+			create_by = #{createBy.id,jdbcType=VARCHAR},
+		</if>
+		<if test="createDate != null" >
+			create_date = #{createDate,jdbcType=TIMESTAMP},
+		</if>
+		<if test="lastUpdateBy != null" >
+			last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+		</if>
+		<if test="lastUpdateDate != null" >
+			last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+		</if>
+		<if test="delFlag != null" >
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="parent != null" >
+			parent_id = #{parent.id,jdbcType=VARCHAR},
+		</if>
+		<if test="parentIds != null" >
+			parent_ids = #{parentIds,jdbcType=VARCHAR},
+		</if>
+		<if test="name != null" >
+			name = #{name,jdbcType=VARCHAR},
+		</if>
+		<if test="sort != null" >
+			sort = #{sort,jdbcType=INTEGER},
+		</if>
+		<if test="number != null" >
+			number = #{number,jdbcType=VARCHAR},
+		</if>
+		<if test="supportTypes != null" >
+			support_types = #{supportTypes,jdbcType=VARCHAR},
+		</if>
+		<if test="limitCount != null" >
+			limit_count = #{limitCount,jdbcType=INTEGER},
+		</if>
+		<if test="isSystem != null" >
+			is_system = #{isSystem,jdbcType=INTEGER},
+		</if>
+	</set>
+	where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.promotion.api.dto.AdvertRegion" >
+   	UPDATE advertregion
+		<set>
+			remarks = #{remarks,jdbcType=VARCHAR},
+			create_by = #{createBy.id,jdbcType=VARCHAR},
+			create_date = #{createDate,jdbcType=TIMESTAMP},
+			last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+			last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+			parent_id = #{parent.id,jdbcType=VARCHAR},
+			parent_ids = #{parentIds,jdbcType=VARCHAR},
+			name = #{name,jdbcType=VARCHAR},
+			sort = #{sort,jdbcType=INTEGER},
+			number = #{number,jdbcType=VARCHAR},
+			support_types = #{supportTypes,jdbcType=VARCHAR},
+			limit_count = #{limitCount,jdbcType=INTEGER},
+			is_system = #{isSystem,jdbcType=INTEGER},
+		</set>
+		WHERE id = #{id,jdbcType=VARCHAR} 
+  </update>
+      <select id="getByParentIdsLike"  parameterType="com.ffzx.promotion.api.dto.AdvertRegion" >
+        SELECT
+            a.id,
+            a.parent_id AS "parent.id",
+            a.parent_ids AS "parentIds"
+        FROM advertregion as d
+        WHERE 1=1
+        AND d.parent_ids LIKE '${parentIds}%'
+        ORDER BY d.sort
+    </select>
+</mapper>

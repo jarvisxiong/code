@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans.xsd
+	 http://code.alibabatech.com/schema/dubbo	http://code.alibabatech.com/schema/dubbo/dubbo.xsd"
+	 default-lazy-init="true">    
+	
+    <dubbo:service interface="com.ffzx.order.api.service.OrderApiService" version="1.0" ref="orderApiService" registry="zookeeperService"/>
+    <bean id="orderApiService" class="com.ffzx.order.api.service.impl.OrderApiServiceImpl"/>
+
+    <!-- <dubbo:service interface="com.ffzx.order.api.service.StockManagerApiService" version="1.0" ref="stockManagerApiService" registry="zookeeperService"/>
+    <bean id="stockManagerApiService" class="com.ffzx.order.api.service.impl.StockManagerApiServiceImpl"/>
+   	
+   	<dubbo:service interface="com.ffzx.order.api.service.OrderProcessManagerApiService" version="1.0" ref="orderProcessManagerApiService" registry="zookeeperService"/>
+    <bean id="orderProcessManagerApiService" class="com.ffzx.order.api.service.impl.OrderProcessManagerApiServiceImpl"/>
+    
+    <dubbo:service interface="com.ffzx.order.api.service.OrderStockManagerApiService" version="1.0" ref="orderStockManagerApiService" registry="zookeeperService"/>
+    <bean id="orderStockManagerApiService" class="com.ffzx.order.api.service.impl.OrderStockManagerApiServiceImpl"/> -->
+    
+   	<dubbo:service interface="com.ffzx.order.api.service.OrderInvokeTaskService" version="1.0" ref="orderInvokeTaskService" registry="zookeeperService"/>
+    <bean id="orderInvokeTaskService" class="com.ffzx.order.api.service.impl.OrderInvokeTaskServiceImpl"/>
+   
+    <dubbo:service interface="com.ffzx.order.api.service.AftersaleApplyApiService" version="1.0" ref="afersaleApplyApiService" registry="zookeeperService"/>
+    <bean id="afersaleApplyApiService" class="com.ffzx.order.api.service.impl.AftersaleApplyApiServiceImpl"/>
+     
+     <dubbo:service interface="com.ffzx.order.api.service.AftersaleApplyItemApiService" version="1.0" ref="afersaleApplyItemApiService" registry="zookeeperService"/>
+    <bean id="afersaleApplyItemApiService" class="com.ffzx.order.api.service.impl.AftersaleApplyItemApiServiceImpl"/>
+    
+   <!--  <dubbo:service interface="com.ffzx.order.api.service.CommodityAddressApiService" version="1.0" ref="commodityAddressApiService" registry="zookeeperService"/>
+    <bean id="commodityAddressApiService" class="com.ffzx.order.api.service.impl.CommodityAddressApiServiceImpl"/>
+     
+     <dubbo:service interface="com.ffzx.order.api.service.StockApiService" version="1.0" ref="stockApiService" timeout="600000" registry="zookeeperService"/>
+     <bean id="stockApiService" class="com.ffzx.order.api.service.impl.StockApiServiceImpl"/>
+	-->
+    
+    <!-- 查询销量dubbo接口 -->
+    <dubbo:service interface="com.ffzx.order.api.service.DailySalesApiService" version="1.0" ref="dailySalesApiService" registry="zookeeperService"/>
+    <bean id="dailySalesApiService" class="com.ffzx.order.api.service.impl.DailySalesApiServiceImpl"/>
+    
+    <!-- 订单采购消息推送 -->
+    <dubbo:service interface="com.ffzx.order.api.service.PurchaseOrderMqApiService" version="1.0" ref="purchaseOrderMqApiService" registry="zookeeperService"/>
+    <bean id="purchaseOrderMqApiService" class="com.ffzx.order.mq.producer.PurchaseOrderMqApiServiceImpl"/>
+    
+    <!-- 定时统计销量 -->
+    <dubbo:service interface="com.ffzx.order.api.service.OmsJobApiService" version="1.0" ref="omsJobApiServiceImpl" registry="zookeeperService"/>
+    <bean id="omsJobApiServiceImpl" class="com.ffzx.order.api.service.impl.OmsJobApiServiceImpl"/>
+    
+        <!-- 售后接口 -->
+    <dubbo:service interface="com.ffzx.aftersale.service.AftersaleAppService" version="1.0" ref="aftersaleAppService" registry="zookeeperService"/>
+    <bean id="aftersaleAppService" class="com.ffzx.aftersale.service.impl.AftersaleAppServiceImpl"/>
+    
+        <!-- 腾付通退款回写 -->
+    <dubbo:service interface="com.ffzx.order.api.service.TFTRefundService" version="1.0" ref="tFTRefundServiceImpl" registry="zookeeperService"/>
+    <bean id="tFTRefundServiceImpl" class="com.ffzx.order.service.impl.TFTRefundServiceImpl"/>
+    
+    
+    <dubbo:service interface="com.ffzx.order.api.service.CollectionRecordApiService" version="1.0" ref="collectionRecordApiService" registry="zookeeperService"/>
+    <bean id="collectionRecordApiService" class="com.ffzx.order.api.service.impl.CollectionRecordApiServiceImpl"/>
+</beans>

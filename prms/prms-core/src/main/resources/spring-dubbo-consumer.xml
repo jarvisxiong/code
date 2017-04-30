@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans.xsd
+	 http://code.alibabatech.com/schema/dubbo	http://code.alibabatech.com/schema/dubbo/dubbo.xsd"
+	 default-lazy-init="true">    
+    	<dubbo:reference id="codeRuleApiService" interface="com.ffzx.basedata.api.service.CodeRuleApiService"  
+	 timeout="30000" version="1.0"  registry="zookeeperClient" protocol="dubbo" check="false"/>
+	 
+	   <dubbo:reference id="addressApiService" interface="com.ffzx.basedata.api.service.AddressApiService"  
+	 timeout="30000" version="1.0"  registry="zookeeperClient" protocol="dubbo" check="false"/>
+
+	 
+	  <dubbo:reference id="categoryApiService" interface="com.ffzx.commodity.api.service.CategoryApiService"  
+	 timeout="30000" version="1.0"  registry="zookeeperClient" protocol="dubbo" check="false"
+	 />
+	 
+	 	  <dubbo:reference id="commodityApiService" interface="com.ffzx.commodity.api.service.CommodityApiService"  
+	 timeout="30000" version="1.0"  registry="zookeeperClient" protocol="dubbo" check="false"
+	 />
+	 
+ 
+	 <dubbo:reference id="memberApiService" interface="com.ffzx.member.api.service.MemberApiService"  
+	 timeout="30000" version="1.0"  registry="zookeeperClient" protocol="dubbo" check="false" 
+	 />
+	 
+	  <dubbo:reference id="commoditySkuApiService" interface="com.ffzx.commodity.api.service.CommoditySkuApiService"  
+	 timeout="30000" version="1.0"  registry="zookeeperClient" protocol="dubbo" check="false"
+	 />
+	 
+	<!-- 库存管理旧接口 
+	 <dubbo:reference id="stockManagerApiService" interface="com.ffzx.order.api.service.StockManagerApiService"  
+	 timeout="30000" version="1.0"  registry="zookeeperClient" protocol="dubbo" check="false"
+	 /> -->
+	 
+	 <!-- 
+	  <dubbo:reference id="orderStockManagerApiService" interface="com.ffzx.order.api.service.OrderStockManagerApiService"  
+	 timeout="30000" version="1.0"  registry="zookeeperClient" protocol="dubbo" check="false"
+	 /> -->
+	 <!-- 库存管理新接口 -->
+	 <dubbo:reference id="orderStockManagerApiService" interface="com.ffzx.bms.api.service.OrderStockManagerApiService"  
+	 timeout="30000" version="1.0"  registry="zookeeperClient" protocol="dubbo" check="false" />
+	 
+	<!-- 会员消息服务 -->
+	 <dubbo:reference id="memberMessageApiService" interface="com.ffzx.member.api.service.MemberMessageApiService"   
+	 timeout="30000" version="1.0"  registry="zookeeperClient" protocol="dubbo" />
+	 
+	 <!-- 订单接口 -->
+	 <dubbo:reference id="orderApiService" interface="com.ffzx.order.api.service.OrderApiService"  
+	 timeout="30000" version="1.0"  registry="zookeeperClient" protocol="dubbo" check="false"/>
+	 
+	 <dubbo:reference id="dictApiService"
+		interface="com.ffzx.basedata.api.service.DictApiService" timeout="30000"
+		version="1.0" registry="zookeeperClient" protocol="dubbo"   check="false"
+		 />
+	  <!-- 推荐有奖的用户登记、领取记录 -->
+	  <dubbo:reference id="shareRewardApiService" interface="com.ffzx.member.api.service.ShareRewardApiService"  
+	 timeout="30000" version="1.0"  registry="zookeeperClient" protocol="dubbo" check="false"
+	 />
+	 <!--会员标签api -->
+	  <dubbo:reference id="memberLabelApiService" interface="com.ffzx.member.api.service.MemberLabelApiService"  
+	 timeout="30000" version="1.0"  registry="zookeeperClient" protocol="dubbo" check="false"
+	 /> 
+</beans>

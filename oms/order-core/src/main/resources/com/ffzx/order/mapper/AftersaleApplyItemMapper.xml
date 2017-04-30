@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ffzx.order.mapper.AftersaleApplyItemMapper" >
+  <resultMap id="BaseResultMap" type="com.ffzx.order.api.dto.AftersaleApplyItem" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="commodity_pic" property="commodityPic" jdbcType="VARCHAR" />
+    <result column="commodity_name" property="commodityName" jdbcType="VARCHAR" />
+    <result column="commodity_barcode" property="commodityBarcode" jdbcType="VARCHAR" />
+    <result column="commodity_specifications" property="commoditySpecifications" jdbcType="VARCHAR" />
+    <result column="commodity_unit" property="commodityUnit" jdbcType="VARCHAR" />
+    <result column="commodity_price" property="commodityPrice" jdbcType="DECIMAL" />
+    <result column="act_pay_amount" property="actPayAmount" jdbcType="DECIMAL" />
+    <result column="commodity_buy_type" property="commodityBuyType" jdbcType="VARCHAR" />
+    <result column="commodity_buy_num" property="commodityBuyNum" jdbcType="INTEGER" />
+    <result column="return_num" property="returnNum" jdbcType="INTEGER" />
+    <result column="aftersale_status" property="aftersaleStatus" jdbcType="VARCHAR" />
+    <result column="apply_id" property="applyId" jdbcType="VARCHAR" />
+    <result column="apply_no" property="applyNo" jdbcType="VARCHAR" />
+    <result column="sku_id" property="skuId" jdbcType="VARCHAR" />
+    <result column="favouredamount" property="favouredAmount" jdbcType="VARCHAR" />
+    <result column="main_commodity_id" property="mainCommodityId" jdbcType="VARCHAR" />
+    <result column="buy_gifts" property="buyGifts" jdbcType="VARCHAR" />
+    <result column="commodity_attribute_values" property="commodityAttributeValues" jdbcType="VARCHAR" />
+    <result column="red_packet_amount" property="redPacketAmount" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    t.id, t.commodity_pic, t.commodity_name, t.commodity_barcode, t.commodity_specifications, 
+    t.commodity_unit, t.commodity_price, t.act_pay_amount, t.commodity_buy_type, t.commodity_buy_num, 
+    t.return_num, t.aftersale_status, t.apply_id, t.apply_no,t.sku_id,t.favouredamount,t.main_commodity_id,t.buy_gifts,t.commodity_attribute_values,
+    t.red_packet_amount
+  </sql>
+  <sql id="condition" >
+    <if test="null!=params" >
+      <if test="params.id != null and '' != params.id" >
+        and t.id = #{params.id,jdbcType=VARCHAR}
+      </if>
+      <if test="params.commodityPic != null and '' != params.commodityPic" >
+        and t.commodity_pic = #{params.commodityPic,jdbcType=VARCHAR}
+      </if>
+      <if test="params.commodityName != null and '' != params.commodityName" >
+        and t.commodity_name = #{params.commodityName,jdbcType=VARCHAR}
+      </if>
+      <if test="params.commodityBarcode != null and '' != params.commodityBarcode" >
+        and t.commodity_barcode = #{params.commodityBarcode,jdbcType=VARCHAR}
+      </if>
+      <if test="params.commoditySpecifications != null and '' != params.commoditySpecifications" >
+        and t.commodity_specifications = #{params.commoditySpecifications,jdbcType=VARCHAR}
+      </if>
+      <if test="params.commodityUnit != null and '' != params.commodityUnit" >
+        and t.commodity_unit = #{params.commodityUnit,jdbcType=VARCHAR}
+      </if>
+      <if test="params.commodityPrice != null" >
+        and t.commodity_price = #{params.commodityPrice,jdbcType=DECIMAL}
+      </if>
+      <if test="params.actPayAmount != null" >
+        and t.act_pay_amount = #{params.actPayAmount,jdbcType=DECIMAL}
+      </if>
+      <if test="params.commodityBuyType != null and '' != params.commodityBuyType" >
+        and t.commodity_buy_type = #{params.commodityBuyType,jdbcType=VARCHAR}
+      </if>
+      <if test="params.commodityBuyNum != null" >
+        and t.commodity_buy_num = #{params.commodityBuyNum,jdbcType=INTEGER}
+      </if>
+      <if test="params.returnNum != null" >
+        and t.return_num = #{params.returnNum,jdbcType=INTEGER}
+      </if>
+      <if test="params.aftersaleStatus != null and '' != params.aftersaleStatus" >
+        and t.aftersale_status = #{params.aftersaleStatus,jdbcType=VARCHAR}
+      </if>
+      <if test="params.applyId != null and '' != params.applyId" >
+        and t.apply_id = #{params.applyId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.applyNo != null and '' != params.applyNo" >
+        and t.apply_no = #{params.applyNo,jdbcType=VARCHAR}
+      </if>
+        <if test="params.skuId != null and '' != params.skuId" >
+        and t.sku_id = #{params.skuId,jdbcType=VARCHAR}
+      </if>
+      <if test="params.favouredAmount != null and '' != params.favouredAmount" >
+        and t.favouredamount = #{params.favouredAmount,jdbcType=VARCHAR}
+      </if>
+       <if test="params.commodityAttributeValues != null and '' != params.commodityAttributeValues" >
+        and t.commodity_attribute_values = #{params.commodityAttributeValues,jdbcType=VARCHAR}
+      </if>
+    </if>
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from aftersale_apply_item t 
+    where t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByApplyId" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from aftersale_apply_item t 
+    where t.apply_id = #{applyId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from aftersale_apply_item t 
+    where 1=1
+    <include refid="condition" />
+    order by t.buy_gifts 
+  </select>
+  <select id="selectCount" resultType="java.lang.Integer" >
+    select count(1) as s from aftersale_apply_item t  where 1=1
+    <include refid="condition" />
+  </select>
+  
+   <select id="selectHadRreturnCount" parameterType="map" resultType="java.lang.Integer"  >
+      SELECT  
+		IFNULL(sum(aai.return_num),0)
+		from 
+ 		aftersale_apply_item aai  
+		left JOIN aftersale_apply  aa on aa.id = aai.apply_id
+		where 1=1
+		and aa.apply_status = '1'
+    <if test="null!=params" >
+      <if test="params.orderNo != null and '' != params.orderNo" >
+        and aa.order_no = #{params.orderNo,jdbcType=VARCHAR}
+      </if>
+      <if test="params.skuId != null and '' != params.skuId" >
+        and aai.sku_id = #{params.skuId,jdbcType=VARCHAR}
+      </if>
+    </if>  
+  </select>
+  
+
+  <select id="selectByPage" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from aftersale_apply_item t 
+    where 1=1
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from aftersale_apply_item
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.order.api.dto.AftersaleApplyItem" >
+    delete from aftersale_apply_item
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ffzx.order.api.dto.AftersaleApplyItem" >
+    insert into aftersale_apply_item (id, commodity_pic, commodity_name, 
+      commodity_barcode, commodity_specifications, 
+      commodity_unit, commodity_price, act_pay_amount, 
+      commodity_buy_type, commodity_buy_num, return_num, 
+      aftersale_status, apply_id, apply_no,sku_id,favouredamount,commodity_attribute_values,red_packet_amount      
+      )
+    values (#{id,jdbcType=VARCHAR}, #{commodityPic,jdbcType=VARCHAR}, #{commodityName,jdbcType=VARCHAR}, 
+      #{commodityBarcode,jdbcType=VARCHAR}, #{commoditySpecifications,jdbcType=VARCHAR}, 
+      #{commodityUnit,jdbcType=VARCHAR}, #{commodityPrice,jdbcType=DECIMAL}, #{actPayAmount,jdbcType=DECIMAL}, 
+      #{commodityBuyType,jdbcType=VARCHAR}, #{commodityBuyNum,jdbcType=INTEGER}, #{returnNum,jdbcType=INTEGER}, 
+      #{aftersaleStatus,jdbcType=VARCHAR}, #{applyId,jdbcType=VARCHAR}, #{applyNo,jdbcType=VARCHAR}, #{skuId,jdbcType=VARCHAR}, #{favouredAmount,jdbcType=VARCHAR},#{commodityAttributeValues,jdbcType=VARCHAR},#{redPacketAmount,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.order.api.dto.AftersaleApplyItem" >
+    insert into aftersale_apply_item
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="commodityPic != null" >
+        commodity_pic,
+      </if>
+      <if test="commodityName != null" >
+        commodity_name,
+      </if>
+      <if test="commodityBarcode != null" >
+        commodity_barcode,
+      </if>
+      <if test="commoditySpecifications != null" >
+        commodity_specifications,
+      </if>
+      <if test="commodityUnit != null" >
+        commodity_unit,
+      </if>
+      <if test="commodityPrice != null" >
+        commodity_price,
+      </if>
+      <if test="actPayAmount != null" >
+        act_pay_amount,
+      </if>
+      <if test="commodityBuyType != null" >
+        commodity_buy_type,
+      </if>
+      <if test="commodityBuyNum != null" >
+        commodity_buy_num,
+      </if>
+      <if test="returnNum != null" >
+        return_num,
+      </if>
+      <if test="aftersaleStatus != null" >
+        aftersale_status,
+      </if>
+      <if test="applyId != null" >
+        apply_id,
+      </if>
+      <if test="applyNo != null" >
+        apply_no,
+      </if>
+        <if test="skuId != null" >
+        sku_id,
+      </if>
+      <if test="favouredAmount != null" >
+        favouredamount,
+      </if>
+       <if test="mainCommodityId != null" >
+        main_commodity_id,
+      </if>
+      <if test="buyGifts != null" >
+        buy_gifts,
+      </if>
+     <if test="commodityAttributeValues != null and '' != commodityAttributeValues" >
+        commodity_attribute_values,
+      </if>
+      <if test="redPacketAmount != null" >
+        red_packet_amount
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityPic != null" >
+        #{commodityPic,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityName != null" >
+        #{commodityName,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityBarcode != null" >
+        #{commodityBarcode,jdbcType=VARCHAR},
+      </if>
+      <if test="commoditySpecifications != null" >
+        #{commoditySpecifications,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityUnit != null" >
+        #{commodityUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityPrice != null" >
+        #{commodityPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="actPayAmount != null" >
+        #{actPayAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="commodityBuyType != null" >
+        #{commodityBuyType,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityBuyNum != null" >
+        #{commodityBuyNum,jdbcType=INTEGER},
+      </if>
+      <if test="returnNum != null" >
+        #{returnNum,jdbcType=INTEGER},
+      </if>
+      <if test="aftersaleStatus != null" >
+        #{aftersaleStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="applyId != null" >
+        #{applyId,jdbcType=VARCHAR},
+      </if>
+      <if test="applyNo != null" >
+        #{applyNo,jdbcType=VARCHAR},
+      </if>
+         <if test="skuId != null" >
+        #{skuId,jdbcType=VARCHAR},
+      </if>
+        <if test="favouredAmount != null" >
+       #{favouredAmount,jdbcType=VARCHAR},
+      </if>
+       <if test="mainCommodityId != null" >
+        #{mainCommodityId,jdbcType=VARCHAR},
+      </if>
+      <if test="buyGifts != null" >
+        #{buyGifts,jdbcType=VARCHAR},
+      </if>
+       <if test="commodityAttributeValues != null and '' != commodityAttributeValues" >
+         #{commodityAttributeValues,jdbcType=VARCHAR},
+      </if>
+      <if test="redPacketAmount != null" >
+        #{redPacketAmount,jdbcType=DECIMAL}
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.order.api.dto.AftersaleApplyItem" >
+    update aftersale_apply_item
+    <set >
+      <if test="commodityPic != null" >
+        commodity_pic = #{commodityPic,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityName != null" >
+        commodity_name = #{commodityName,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityBarcode != null" >
+        commodity_barcode = #{commodityBarcode,jdbcType=VARCHAR},
+      </if>
+      <if test="commoditySpecifications != null" >
+        commodity_specifications = #{commoditySpecifications,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityUnit != null" >
+        commodity_unit = #{commodityUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityPrice != null" >
+        commodity_price = #{commodityPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="actPayAmount != null" >
+        act_pay_amount = #{actPayAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="commodityBuyType != null" >
+        commodity_buy_type = #{commodityBuyType,jdbcType=VARCHAR},
+      </if>
+      <if test="commodityBuyNum != null" >
+        commodity_buy_num = #{commodityBuyNum,jdbcType=INTEGER},
+      </if>
+      <if test="returnNum != null" >
+        return_num = #{returnNum,jdbcType=INTEGER},
+      </if>
+      <if test="aftersaleStatus != null" >
+        aftersale_status = #{aftersaleStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="applyId != null" >
+        apply_id = #{applyId,jdbcType=VARCHAR},
+      </if>
+      <if test="applyNo != null" >
+        apply_no = #{applyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="skuId != null" >
+       sku_id = #{skuId,jdbcType=VARCHAR},
+      </if>
+      <if test="favouredAmount != null" >
+        favouredamount = #{favouredAmount,jdbcType=VARCHAR},
+      </if>
+        <if test="commodityAttributeValues != null and '' != commodityAttributeValues" >
+        commodity_attribute_values= #{commodityAttributeValues,jdbcType=VARCHAR},
+      </if>
+      <if test="redPacketAmount != null">
+        red_packet_amount= #{redPacketAmount,jdbcType=DECIMAL}
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.order.api.dto.AftersaleApplyItem" >
+    update aftersale_apply_item
+    set commodity_pic = #{commodityPic,jdbcType=VARCHAR},
+      commodity_name = #{commodityName,jdbcType=VARCHAR},
+      commodity_barcode = #{commodityBarcode,jdbcType=VARCHAR},
+      commodity_specifications = #{commoditySpecifications,jdbcType=VARCHAR},
+      commodity_unit = #{commodityUnit,jdbcType=VARCHAR},
+      commodity_price = #{commodityPrice,jdbcType=DECIMAL},
+      act_pay_amount = #{actPayAmount,jdbcType=DECIMAL},
+      commodity_buy_type = #{commodityBuyType,jdbcType=VARCHAR},
+      commodity_buy_num = #{commodityBuyNum,jdbcType=INTEGER},
+      return_num = #{returnNum,jdbcType=INTEGER},
+      aftersale_status = #{aftersaleStatus,jdbcType=VARCHAR},
+      apply_id = #{applyId,jdbcType=VARCHAR},
+      apply_no = #{applyNo,jdbcType=VARCHAR},
+      sku_id = #{skuId,jdbcType=VARCHAR},
+      favouredamount = #{favouredAmount,jdbcType=VARCHAR},
+      commodity_attribute_values= #{commodityAttributeValues,jdbcType=VARCHAR},
+      red_packet_amount= #{redPacketAmount,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

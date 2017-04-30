@@ -1,0 +1,580 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ffzx.order.mapper.PriceSettlementDetailMapper">
+  <sql id="Base_Column_List" >
+		t.id, 
+		t.remarks AS "remarks",
+		t.create_by AS "createBy.id",
+		t.create_date AS "createDate",
+		t.last_update_by AS "lastUpdateBy.id",
+		t.last_update_date AS "lastUpdateDate",
+		t.del_flag AS "delFlag",
+		t.ps_no AS "psNo",
+		t.order_no AS "orderNo",
+		t.commodity_image AS "commodityImage",
+		t.commodity_title AS "commodityTitle",
+		t.sku_id AS "skuId",
+		t.sku_code AS "skuCode",
+		t.virtual_gd_id AS "virtualGdId",
+		t.commodity_unit AS "commodityUnit",
+		t.act_sale_price AS "actSalePrice",
+		t.pifa_price AS "pifaPrice",
+		t.act_pay_amount AS "actPayAmount",
+		t.sale_amount AS "saleAmount",
+		t.buy_num AS "buyNum",
+		t.balance AS "balance",
+		t.member_id AS "memberId",
+		t.member_account AS "memberAccount",
+		t.member_name AS "memberName",
+		t.partner_id AS "partnerId",
+		t.partner_code AS "partnerCode",
+		t.partner_name AS "partnerName",
+		t.service_station_id AS "serviceStationId",
+		t.service_station_code AS "serviceStationCode",
+		t.service_station_name AS "serviceStationName",
+		t.serial_code AS "serialCode",
+		t.oms_order_detail_id AS "omsOrderDetailId",
+		t.partner_phone AS "partnerPhone",
+		t.refund_num AS "refundNum",
+		t.order_time AS "orderTime"
+  </sql>  
+  <sql id="joins">
+
+  </sql> 
+  <sql id="condition" >
+	<if test="null!=params" >
+		<if test="params.id != null and '' != params.id">
+			and t.id = #{params.id,jdbcType=VARCHAR}
+		</if>
+		<if test="params.remarks != null and '' != params.remarks">
+			and t.remarks = #{params.remarks,jdbcType=VARCHAR}
+		</if>
+		<if test="params.createBy != null and '' != params.createBy">
+			and t.create_by = #{params.createBy.id,jdbcType=VARCHAR}
+		</if>
+		<if test="params.createDate != null and '' != params.createDate">
+			and t.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+		</if>
+		<if test="params.createDateStart != null and '' != params.createDateStart">
+			and DATE_FORMAT(t.create_date,'%Y-%m-%d') &gt;= #{params.createDateStart,jdbcType=VARCHAR}
+	  	</if>
+	  	<if test="params.createDateEnd != null and '' != params.createDateEnd">
+			and DATE_FORMAT(t.create_date,'%Y-%m-%d') &lt;= #{params.createDateEnd,jdbcType=VARCHAR}
+	 	 </if>
+		<if test="params.lastUpdateBy != null and '' != params.lastUpdateBy">
+			and t.last_update_by = #{params.lastUpdateBy.id,jdbcType=VARCHAR}
+		</if>
+		<if test="params.lastUpdateDate != null and '' != params.lastUpdateDate">
+			and t.last_update_date = #{params.lastUpdateDate,jdbcType=TIMESTAMP}
+		</if>
+		<if test="params.delFlag != null and '' != params.delFlag">
+			and t.del_flag = #{params.delFlag,jdbcType=VARCHAR}
+		</if>
+		<if test="params.psNo != null and '' != params.psNo">
+			and t.ps_no = #{params.psNo,jdbcType=VARCHAR}
+		</if>
+		<if test="params.orderNo != null and '' != params.orderNo">
+			and t.order_no = #{params.orderNo,jdbcType=VARCHAR}
+		</if>
+		<if test="params.commodityImage != null and '' != params.commodityImage">
+			and t.commodity_image = #{params.commodityImage,jdbcType=VARCHAR}
+		</if>
+		<if test="params.commodityTitle != null and '' != params.commodityTitle">
+			and t.commodity_title = #{params.commodityTitle,jdbcType=VARCHAR}
+		</if>
+		<if test="params.skuId != null and '' != params.skuId">
+			and t.sku_id = #{params.skuId,jdbcType=VARCHAR}
+		</if>
+		<if test="params.skuCode != null and '' != params.skuCode">
+			and t.sku_code = #{params.skuCode,jdbcType=VARCHAR}
+		</if>
+		<if test="params.virtualGdId != null and '' != params.virtualGdId">
+			and t.virtual_gd_id = #{params.virtualGdId,jdbcType=VARCHAR}
+		</if>
+		<if test="params.commodityUnit != null and '' != params.commodityUnit">
+			and t.commodity_unit = #{params.commodityUnit,jdbcType=VARCHAR}
+		</if>
+		<if test="params.actSalePrice != null and '' != params.actSalePrice">
+			and t.act_sale_price = #{params.actSalePrice,jdbcType=NUMERIC}
+		</if>
+		<if test="params.saleAmount != null and '' != params.saleAmount">
+			and ( t.sale_amount &gt;= #{params.saleAmount,jdbcType=NUMERIC} and t.sale_amount &lt; #{params.saleAmount,jdbcType=NUMERIC})
+		</if>
+		<if test="params.pifaPrice != null and '' != params.pifaPrice">
+			and t.pifa_price = #{params.pifaPrice,jdbcType=NUMERIC}
+		</if>
+		<if test="params.actPayAmount != null and '' != params.actPayAmount">
+			and t.act_pay_amount = #{params.actPayAmount,jdbcType=NUMERIC}
+		</if>
+		<if test="params.buyNum != null and '' != params.buyNum">
+			and t.buy_num = #{params.buyNum,jdbcType=INTEGER}
+		</if>
+		<if test="params.balance != null and '' != params.balance">
+			and ( t.balance &gt;= #{params.balance,jdbcType=NUMERIC} and t.balance &lt; #{params.balance,jdbcType=NUMERIC})
+		</if>
+		
+		<if test="params.memberId != null and '' != params.memberId">
+			and t.member_id = #{params.memberId,jdbcType=VARCHAR}
+		</if>
+		<if test="params.memberAccount != null and '' != params.memberAccount">
+			and t.member_account = #{params.memberAccount,jdbcType=VARCHAR}
+		</if>
+		<if test="params.memberName != null and '' != params.memberName">
+			and t.member_name = #{params.memberName,jdbcType=VARCHAR}
+		</if>
+		<if test="params.partnerId != null and '' != params.partnerId">
+			and t.partner_id = #{params.partnerId,jdbcType=VARCHAR}
+		</if>
+		<if test="params.partnerCode != null and '' != params.partnerCode">
+			and t.partner_code = #{params.partnerCode,jdbcType=VARCHAR}
+		</if>
+		<if test="params.partnerName != null and '' != params.partnerName">
+			and t.partner_name = #{params.partnerName,jdbcType=VARCHAR}
+		</if>
+		<if test="params.serviceStationId != null and '' != params.serviceStationId">
+			and t.service_station_id = #{params.serviceStationId,jdbcType=VARCHAR}
+		</if>
+		<if test="params.serviceStationCode != null and '' != params.serviceStationCode">
+			and t.service_station_code = #{params.serviceStationCode,jdbcType=VARCHAR}
+		</if>
+		<if test="params.serviceStationName != null and '' != params.serviceStationName">
+			and t.service_station_name = #{params.serviceStationName,jdbcType=VARCHAR}
+		</if>
+		<if test="params.serialCode != null and '' != params.serialCode">
+			and t.serial_code = #{params.serialCode,jdbcType=VARCHAR}
+		</if>
+		<if test="params.omsOrderDetailId != null and '' != params.omsOrderDetailId">
+			and t.oms_order_detail_id = #{params.omsOrderDetailId,jdbcType=VARCHAR}
+		</if>
+		<if test="params.delFlag == null or '' == params.delFlag or null == params" >
+			and t.del_flag = 0
+		</if>
+		
+		<if test="params.partnerNameLike != null and '' != params.partnerNameLike">
+			and t.partner_name like '%${params.partnerNameLike}%'
+		</if>
+		<if test="params.serviceStationNameLike != null and '' != params.serviceStationNameLike">
+			and t.service_station_name like '%${params.serviceStationNameLike}%'
+		</if>		
+		<if test="params.psNoLike!= null and '' != params.psNoLike">
+			and t.ps_no like '%${params.psNoLike}%'
+		</if>
+		<if test="params.partnerCodeLike != null and '' != params.partnerCodeLike">
+			and t.partner_code like '%${params.partnerCodeLike}%'
+		</if>	
+	</if>
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultType="com.ffzx.order.model.PriceSettlementDetail" parameterType="java.lang.String" >
+   	select 
+    <include refid="Base_Column_List" />
+    from price_settlement_detail as t 
+    <include refid="joins"/>
+    where  t.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParams" resultType="com.ffzx.order.model.PriceSettlementDetail" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from price_settlement_detail as  t 
+    <include refid="joins"/>
+    where 1=1 
+    <include refid="condition"/>
+  </select>
+  
+  <select id="selectCount" resultType="java.lang.Integer" >
+   select count(1) as s from price_settlement_detail as  t where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultType="com.ffzx.order.model.PriceSettlementDetail" parameterType="map" >
+   select 
+    <include refid="Base_Column_List" />
+    from price_settlement_detail as  t    
+    <include refid="joins"/>
+    where 1=1      
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by  t.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  
+  
+    <select id="selectByCountDetail" resultType="com.ffzx.order.model.PriceSettlement" parameterType="map">
+  SELECT 
+	d.partner_id as "partnerId",
+	d.partner_code as "partnerCode",
+	d.partner_phone as "partnerPhone",
+	d.partner_name as "partnerName",
+	d.service_station_id as "serviceStationId",
+	d.service_station_code as "serviceStationCode",
+	d.service_station_name as "serviceStationName",
+	IFNULL(sum(d.buy_num),0) as "totalCount",
+	IFNULL(sum(d.balance),0) as "totalBalance",
+	IFNULL(sum(d.act_sale_price*d.buy_num),0) as "totaSaleAmount"
+	FROM price_settlement_detail d
+	where 1=1
+	and d.ps_no is null
+	<if test="null!=params" >
+		<if test="params.createDateStr != null and '' != params.createDateStr">
+			and DATE_FORMAT(d.create_date,'%Y-%m-%d %H:%i:%s') = #{params.createDateStr,jdbcType=VARCHAR}
+		</if>
+		<if test="params.serialCode != null and '' != params.serialCode">
+			and d.serial_code = #{params.serialCode,jdbcType=VARCHAR}
+		</if>
+		<if test="params.createDate != null and '' != params.createDate">
+			and d.create_date = #{params.createDate,jdbcType=TIMESTAMP}
+		</if>
+	</if>	
+	GROUP BY d.partner_id
+	,d.partner_code
+	,partner_phone
+	,d.partner_name
+	,d.service_station_id
+	,d.service_station_code
+	,d.service_station_name
+  </select>
+  
+   <select id="selectByCountByPsNo" resultType="com.ffzx.order.model.PriceSettlement" parameterType="map">
+  SELECT 
+	IFNULL(sum(d.buy_num),0) as "totalCount",
+	IFNULL(sum(d.balance),0) as "totalBalance",
+	IFNULL(sum(d.act_sale_price*d.buy_num),0) as "totaSaleAmount"
+	FROM price_settlement_detail d
+	where 1=1
+	and d.ps_no =  #{params.psNo,jdbcType=VARCHAR}
+  </select>
+  
+  <update id="updatepsNo" parameterType="map" >
+   	UPDATE price_settlement_detail
+	<set>
+			ps_no = #{params.psNo,jdbcType=VARCHAR}
+	</set>	
+	where 1=1
+	and ps_no is null
+	
+	<if test="params.partnerId != null and '' != params.partnerId">
+	and partner_id = #{params.partnerId,jdbcType=VARCHAR}
+	</if>
+	<if test="params.serialCode != null and '' != params.serialCode">
+	and serial_code = #{params.serialCode,jdbcType=VARCHAR}
+	</if>
+	<if test="params.createDate != null and '' != params.createDate">
+	and create_date = #{params.createDate,jdbcType=TIMESTAMP}
+	</if>
+	<if test="params.createDateStr != null and '' != params.createDateStr">
+			and DATE_FORMAT(create_date,'%Y-%m-%d %H:%i:%s') = #{params.createDate,jdbcType=VARCHAR}
+		</if>
+  </update>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    	DELETE FROM price_settlement_detail WHERE id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="com.ffzx.order.model.PriceSettlementDetail" >
+    	DELETE FROM price_settlement_detail WHERE id = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.ffzx.order.model.PriceSettlementDetail" >
+   	INSERT INTO price_settlement_detail
+		(
+			id,
+			remarks,
+			create_by,
+			create_date,
+			last_update_by,
+			last_update_date,
+			del_flag,
+			ps_no,
+			order_no,
+			commodity_image,
+			commodity_title,
+			sku_id,
+			sku_code,
+			virtual_gd_id,
+			commodity_unit,
+			act_sale_price,
+			pifa_price,
+			act_pay_amount,
+			buy_num,
+			balance,
+			member_id,
+			member_account,
+			member_name,
+			partner_id,
+			partner_code,
+			partner_name,
+			service_station_id,
+			service_station_code,
+			service_station_name,
+			serial_code,
+			oms_order_detail_id,
+			refund_num,
+			order_time
+		) VALUES
+		(
+			#{id,jdbcType=VARCHAR},
+			#{remarks,jdbcType=VARCHAR},
+			#{createBy.id,jdbcType=VARCHAR},
+			#{createDate,jdbcType=TIMESTAMP},
+			#{lastUpdateBy.id,jdbcType=VARCHAR},
+			#{lastUpdateDate,jdbcType=TIMESTAMP},
+			#{delFlag,jdbcType=VARCHAR},
+			#{psNo,jdbcType=VARCHAR},
+			#{orderNo,jdbcType=VARCHAR},
+			#{commodityImage,jdbcType=VARCHAR},
+			#{commodityTitle,jdbcType=VARCHAR},
+			#{skuId,jdbcType=VARCHAR},
+			#{skuCode,jdbcType=VARCHAR},
+			#{virtualGdId,jdbcType=VARCHAR},
+			#{commodityUnit,jdbcType=VARCHAR},
+			#{actSalePrice,jdbcType=NUMERIC},
+			#{pifaPrice,jdbcType=NUMERIC},
+			#{actPayAmount,jdbcType=NUMERIC},
+			#{buyNum,jdbcType=INTEGER},
+			#{balance,jdbcType=NUMERIC},
+			#{memberId,jdbcType=VARCHAR},
+			#{memberAccount,jdbcType=VARCHAR},
+			#{memberName,jdbcType=VARCHAR},
+			#{partnerId,jdbcType=VARCHAR},
+			#{partnerCode,jdbcType=VARCHAR},
+			#{partnerName,jdbcType=VARCHAR},
+			#{serviceStationId,jdbcType=VARCHAR},
+			#{serviceStationCode,jdbcType=VARCHAR},
+			#{serviceStationName,jdbcType=VARCHAR},
+			#{serialCode,jdbcType=VARCHAR},
+			#{omsOrderDetailId,jdbcType=VARCHAR},
+			#{refundNum,jdbcType=INTEGER},
+			#{orderTime,jdbcType=TIMESTAMP}
+
+		)
+  </insert>
+  <insert id="insertSelective" parameterType="com.ffzx.order.model.PriceSettlementDetail" >
+   	INSERT INTO price_settlement_detail 
+	<trim prefix="(" suffix=")" suffixOverrides="," >
+		<if test="id != null">id,</if>
+		<if test="remarks != null" >remarks,</if>
+		<if test="createBy != null" >create_by,</if>
+		<if test="createDate != null" >create_date,</if>
+		<if test="lastUpdateBy != null" >last_update_by,</if>
+		<if test="lastUpdateDate != null" >last_update_date,</if>
+		<if test="delFlag != null" >del_flag,</if>
+		<if test="psNo != null" >ps_no,</if>
+		<if test="orderNo != null" >order_no,</if>
+		<if test="commodityImage != null" >commodity_image,</if>
+		<if test="commodityTitle != null" >commodity_title,</if>
+		<if test="skuId != null" >sku_id,</if>
+		<if test="skuCode != null" >sku_code,</if>
+		<if test="virtualGdId != null" >virtual_gd_id,</if>
+		<if test="commodityUnit != null" >commodity_unit,</if>
+		<if test="actSalePrice != null" >act_sale_price,</if>
+		<if test="saleAmount != null">sale_amount,</if>
+		<if test="pifaPrice != null" >pifa_price,</if>
+		<if test="actPayAmount != null" >act_pay_amount,</if>
+		<if test="buyNum != null" >buy_num,</if>
+		<if test="balance != null" >balance,</if>
+		<if test="memberId != null" >member_id,</if>
+		<if test="memberAccount != null" >member_account,</if>
+		<if test="memberName != null" >member_name,</if>
+		<if test="partnerId != null" >partner_id,</if>
+		<if test="partnerCode != null" >partner_code,</if>
+		<if test="partnerName != null" >partner_name,</if>
+		<if test="serviceStationId != null" >service_station_id,</if>
+		<if test="serviceStationCode != null" >service_station_code,</if>
+		<if test="serviceStationName != null" >service_station_name,</if>
+		<if test="serialCode != null" >serial_code,</if>
+		<if test="omsOrderDetailId != null" >oms_order_detail_id,</if>
+		<if test="partnerPhone != null" >partner_phone,</if>
+		<if test="refundNum != null" >refund_num,</if>
+		<if test="orderTime != null" >order_time,</if>
+
+	</trim>
+	<trim prefix="values (" suffix=")" suffixOverrides="," >
+		<if test="id != null">#{id,jdbcType=VARCHAR},</if>
+		<if test="remarks != null" >#{remarks,jdbcType=VARCHAR},</if>
+		<if test="createBy != null" >#{createBy.id,jdbcType=VARCHAR},</if>
+		<if test="createDate != null" >#{createDate,jdbcType=TIMESTAMP},</if>
+		<if test="lastUpdateBy != null" >#{lastUpdateBy.id,jdbcType=VARCHAR},</if>
+		<if test="lastUpdateDate != null" >#{lastUpdateDate,jdbcType=TIMESTAMP},</if>
+		<if test="delFlag != null" >#{delFlag,jdbcType=VARCHAR},</if>
+		<if test="psNo != null" >#{psNo,jdbcType=VARCHAR},</if>
+		<if test="orderNo != null" >#{orderNo,jdbcType=VARCHAR},</if>
+		<if test="commodityImage != null" >#{commodityImage,jdbcType=VARCHAR},</if>
+		<if test="commodityTitle != null" >#{commodityTitle,jdbcType=VARCHAR},</if>
+		<if test="skuId != null" >#{skuId,jdbcType=VARCHAR},</if>
+		<if test="skuCode != null" >#{skuCode,jdbcType=VARCHAR},</if>
+		<if test="virtualGdId != null" >#{virtualGdId,jdbcType=VARCHAR},</if>
+		<if test="commodityUnit != null" >#{commodityUnit,jdbcType=VARCHAR},</if>
+		<if test="actSalePrice != null" >#{actSalePrice,jdbcType=NUMERIC},</if>
+		<if test="saleAmount != null">#{saleAmount,jdbcType=NUMERIC},</if>
+		<if test="pifaPrice != null" >#{pifaPrice,jdbcType=NUMERIC},</if>
+		<if test="actPayAmount != null" >#{actPayAmount,jdbcType=NUMERIC},</if>
+		<if test="buyNum != null" >#{buyNum,jdbcType=INTEGER},</if>
+		<if test="balance != null" >#{balance,jdbcType=NUMERIC},</if>
+		<if test="memberId != null" >#{memberId,jdbcType=VARCHAR},</if>
+		<if test="memberAccount != null" >#{memberAccount,jdbcType=VARCHAR},</if>
+		<if test="memberName != null" >#{memberName,jdbcType=VARCHAR},</if>
+		<if test="partnerId != null" >#{partnerId,jdbcType=VARCHAR},</if>
+		<if test="partnerCode != null" >#{partnerCode,jdbcType=VARCHAR},</if>
+		<if test="partnerName != null" >#{partnerName,jdbcType=VARCHAR},</if>
+		<if test="serviceStationId != null" >#{serviceStationId,jdbcType=VARCHAR},</if>
+		<if test="serviceStationCode != null" >#{serviceStationCode,jdbcType=VARCHAR},</if>
+		<if test="serviceStationName != null" >#{serviceStationName,jdbcType=VARCHAR},</if>
+		<if test="serialCode != null" >#{serialCode,jdbcType=VARCHAR},</if>
+		<if test="omsOrderDetailId != null" >#{omsOrderDetailId,jdbcType=VARCHAR},</if>
+		<if test="partnerPhone != null" >#{partnerPhone,jdbcType=VARCHAR},</if>
+		<if test="refundNum != null" >#{refundNum,jdbcType=INTEGER},</if>
+		<if test="orderTime != null" >#{orderTime,jdbcType=TIMESTAMP},</if>
+	</trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.ffzx.order.model.PriceSettlementDetail" >
+   	UPDATE price_settlement_detail
+	<set>
+		<if test="remarks != null" >
+			remarks = #{remarks,jdbcType=VARCHAR},
+		</if>
+		<if test="createBy != null" >
+			create_by = #{createBy.id,jdbcType=VARCHAR},
+		</if>
+		<if test="createDate != null" >
+			create_date = #{createDate,jdbcType=TIMESTAMP},
+		</if>
+		<if test="lastUpdateBy != null" >
+			last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+		</if>
+		<if test="lastUpdateDate != null" >
+			last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+		</if>
+		<if test="delFlag != null" >
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+		</if>
+		<if test="psNo != null" >
+			ps_no = #{psNo,jdbcType=VARCHAR},
+		</if>
+		<if test="orderNo != null" >
+			order_no = #{orderNo,jdbcType=VARCHAR},
+		</if>
+		<if test="commodityImage != null" >
+			commodity_image = #{commodityImage,jdbcType=VARCHAR},
+		</if>
+		<if test="commodityTitle != null" >
+			commodity_title = #{commodityTitle,jdbcType=VARCHAR},
+		</if>
+		<if test="skuId != null" >
+			sku_id = #{skuId,jdbcType=VARCHAR},
+		</if>
+		<if test="skuCode != null" >
+			sku_code = #{skuCode,jdbcType=VARCHAR},
+		</if>
+		<if test="virtualGdId != null" >
+			virtual_gd_id = #{virtualGdId,jdbcType=VARCHAR},
+		</if>
+		<if test="commodityUnit != null" >
+			commodity_unit = #{commodityUnit,jdbcType=VARCHAR},
+		</if>
+		<if test="actSalePrice != null" >
+			act_sale_price = #{actSalePrice,jdbcType=NUMERIC},
+		</if>
+		<if test="saleAmount != null">
+			sale_amount = #{params.saleAmount,jdbcType=NUMERIC},
+		</if>
+		<if test="pifaPrice != null" >
+			pifa_price = #{pifaPrice,jdbcType=NUMERIC},
+		</if>
+		<if test="actPayAmount != null" >
+			act_pay_amount = #{actPayAmount,jdbcType=NUMERIC},
+		</if>
+		<if test="buyNum != null" >
+			buy_num = #{buyNum,jdbcType=INTEGER},
+		</if>
+		<if test="balance != null" >
+			balance = #{balance,jdbcType=NUMERIC},
+		</if>
+		<if test="memberId != null" >
+			member_id = #{memberId,jdbcType=VARCHAR},
+		</if>
+		<if test="memberAccount != null" >
+			member_account = #{memberAccount,jdbcType=VARCHAR},
+		</if>
+		<if test="memberName != null" >
+			member_name = #{memberName,jdbcType=VARCHAR},
+		</if>
+		<if test="partnerId != null" >
+			partner_id = #{partnerId,jdbcType=VARCHAR},
+		</if>
+		<if test="partnerCode != null" >
+			partner_code = #{partnerCode,jdbcType=VARCHAR},
+		</if>
+		<if test="partnerName != null" >
+			partner_name = #{partnerName,jdbcType=VARCHAR},
+		</if>
+		<if test="serviceStationId != null" >
+			service_station_id = #{serviceStationId,jdbcType=VARCHAR},
+		</if>
+		<if test="serviceStationCode != null" >
+			service_station_code = #{serviceStationCode,jdbcType=VARCHAR},
+		</if>
+		<if test="serviceStationName != null" >
+			service_station_name = #{serviceStationName,jdbcType=VARCHAR},
+		</if>
+		<if test="serialCode != null" >
+			serial_code = #{serialCode,jdbcType=VARCHAR},
+		</if>
+		<if test="omsOrderDetailId != null" >
+			oms_order_detail_id = #{omsOrderDetailId,jdbcType=VARCHAR},
+		</if>
+		<if test="partnerPhone != null" >
+			partner_phone = #{partnerPhone,jdbcType=VARCHAR},
+		</if>		
+		<if test="refundNum != null" >
+			refund_num = #{partnerPhone,jdbcType=INTEGER},
+		</if>
+		<if test="orderTime != null" >
+			order_time = #{orderTime,jdbcType=TIMESTAMP},
+		</if>
+
+	</set>
+	where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ffzx.order.model.PriceSettlementDetail" >
+   	UPDATE price_settlement_detail
+		<set>
+			remarks = #{remarks,jdbcType=VARCHAR},
+			create_by = #{createBy.id,jdbcType=VARCHAR},
+			create_date = #{createDate,jdbcType=TIMESTAMP},
+			last_update_by = #{lastUpdateBy.id,jdbcType=VARCHAR},
+			last_update_date = #{lastUpdateDate,jdbcType=TIMESTAMP},
+			del_flag = #{delFlag,jdbcType=VARCHAR},
+			ps_no = #{psNo,jdbcType=VARCHAR},
+			order_no = #{orderNo,jdbcType=VARCHAR},
+			commodity_image = #{commodityImage,jdbcType=VARCHAR},
+			commodity_title = #{commodityTitle,jdbcType=VARCHAR},
+			sku_id = #{skuId,jdbcType=VARCHAR},
+			sku_code = #{skuCode,jdbcType=VARCHAR},
+			virtual_gd_id = #{virtualGdId,jdbcType=VARCHAR},
+			commodity_unit = #{commodityUnit,jdbcType=VARCHAR},
+			act_sale_price = #{actSalePrice,jdbcType=NUMERIC},
+			sale_amount = #{saleAmount,jdbcType=NUMERIC},
+			pifa_price = #{pifaPrice,jdbcType=NUMERIC},
+			act_pay_amount = #{actPayAmount,jdbcType=NUMERIC},
+			buy_num = #{buyNum,jdbcType=INTEGER},
+			balance = #{balance,jdbcType=NUMERIC},
+			member_id = #{memberId,jdbcType=VARCHAR},
+			member_account = #{memberAccount,jdbcType=VARCHAR},
+			member_name = #{memberName,jdbcType=VARCHAR},
+			partner_id = #{partnerId,jdbcType=VARCHAR},
+			partner_code = #{partnerCode,jdbcType=VARCHAR},
+			partner_name = #{partnerName,jdbcType=VARCHAR},
+			service_station_id = #{serviceStationId,jdbcType=VARCHAR},
+			service_station_code = #{serviceStationCode,jdbcType=VARCHAR},
+			service_station_name = #{serviceStationName,jdbcType=VARCHAR},
+			serial_code = #{serialCode,jdbcType=VARCHAR},
+			oms_order_detail_id = #{omsOrderDetailId,jdbcType=VARCHAR},
+			partner_phone = #{partnerPhone,jdbcType=VARCHAR}
+		</set>
+		WHERE id = #{id,jdbcType=VARCHAR} 
+  </update>
+</mapper>
