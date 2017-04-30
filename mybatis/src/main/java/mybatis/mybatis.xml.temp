@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="${nameSpace}">
+  <sql id="Base_Column_List" >
+	${baseColumnListSQL}
+  </sql>  
+  <sql id="joins">
+
+  </sql> 
+  <sql id="condition" >
+	${conditionSQL}
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultType="${className}" parameterType="java.lang.String" >
+   	select 
+    <include refid="Base_Column_List" />
+    from ${dbName} as ${alias} 
+    <include refid="joins"/>
+    where  ${alias}.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByParams" resultType="${className}" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from ${dbName} as  ${alias} 
+    <include refid="joins"/>
+    where 1=1 
+    <include refid="condition"/>
+  </select>
+  
+  <select id="selectCount" resultType="java.lang.Integer" >
+   select count(1) as s from ${dbName} as  ${alias} where 1=1
+    <include refid="condition" />
+  </select>
+  <select id="selectByPage" resultType="${className}" parameterType="map" >
+   select 
+    <include refid="Base_Column_List" />
+    from ${dbName} as  ${alias}    
+    <include refid="joins"/>
+    where 1=1      
+    <include refid="condition" />
+    <if test="orderByField != null and ''!=orderByField" >
+      order by  ${alias}.${orderByField} 
+      <if test="orderByField" >
+        ${orderBy}
+      </if>
+    </if>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    ${deleteSQL}
+  </delete>
+  <delete id="deleteByPrimarayKeyForModel" parameterType="${className}" >
+    ${deleteSQL}
+  </delete>
+  
+  <insert id="insert" parameterType="${className}" >
+   ${insertSQL}
+  </insert>
+  <insert id="insertSelective" parameterType="${className}" >
+   ${insertSelectiveSQL}
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="${className}" >
+   ${updateSelectiveSql}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="${className}" >
+   ${updateSQL} 
+  </update>
+</mapper>

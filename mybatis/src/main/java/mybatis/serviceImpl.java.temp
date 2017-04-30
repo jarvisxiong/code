@@ -1,0 +1,29 @@
+package ${package};
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+
+import com.ffzx.commerce.framework.dao.CrudMapper;
+import ${baseService};
+import ${daojavapg};
+import ${superPackage}.${super};
+
+/**
+ * @className ${javaName}
+ *
+ * @author liujunjun
+ * @date ${date}
+ * @version 1.0.0
+ */
+@Service("${superName}")
+public class ${javaName} extends ${baseServiceName} implements ${super} {
+
+	@Resource
+	private ${daoName} ${lowDaoName};
+	
+	@Override
+	public CrudMapper init() {
+		return ${lowDaoName};
+	}	
+}

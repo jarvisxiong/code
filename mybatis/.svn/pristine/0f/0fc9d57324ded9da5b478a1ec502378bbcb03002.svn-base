@@ -1,0 +1,14 @@
+package ${package};
+
+import com.ffzx.commerce.framework.service.BaseCrudService;
+
+/**
+ * @className ${javaName}
+ *
+ * @author liujunjun
+ * @date ${date}
+ * @version 1.0.0
+ */
+public interface ${javaName} extends BaseCrudService{
+	
+}

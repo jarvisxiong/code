@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC
+ "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+ "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+  
+  <classPathEntry location="E:/sqljdbc4-4.0.jar" />
+  
+  <!-- This should cause an error because sqlMapGenerator is required
+       if there is no javaClientGenerator -->
+  <context id="MyBatis3NoClient" targetRuntime="MyBatis3" defaultModelType="flat">
+    <!-- <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" /> -->
+	
+	<commentGenerator type="org.mybatis.generator.ext.MyCommentGenerator">
+		<property name="suppressAllComments" value="false" />
+	</commentGenerator>
+
+	<jdbcConnection driverClass="com.microsoft.sqlserver.jdbc.SQLServerDriver" 
+    connectionURL="jdbc:sqlserver://123.207.252.106:1433;DatabaseName=FPC_Hotel" 
+    userId="sa" 
+    password="adel@123" />
+	
+    <javaModelGenerator targetPackage="com.ffzx.adel.model"
+        targetProject="adel-core">
+      <property name="enableSubPackages" value="true" />
+      <property name="trimStrings" value="true" />
+    </javaModelGenerator>
+	
+	<sqlMapGenerator targetPackage="com.ffzx.adel.mapper"
+   		targetProject="adel-core/src/main/resources" />
+   		
+	<javaClientGenerator type="XMLMAPPER" targetPackage="com.ffzx.adel.mapper"
+     	targetProject="adel-core" interfaceExtendSupInterface="tk.mybatis.mapper.common.Mapper"
+     	mapperScanAnnotation="tk.mybatis.mapper.common.Mapper">
+    </javaClientGenerator>
+	
+	<javaServiceGenerator targetPackage="com.ffzx.adel.service"
+		targetProject="adel-core" interfaceExtendSupInterface="com.ffzx.common.service.BaseService"
+		extendSupClass="com.ffzx.common.service.impl.BaseServiceImpl" /> 
+	
+    <tableSetting isSchema="true" enableCountByExample="false"
+		enableUpdateByExample="false" enableDeleteByExample="false"
+		enableSelectByExample="false" selectByExampleQueryId="false">
+		<prop name="replaceTablePrefix">
+			<list>
+				<prefix name="" value="" />
+			</list>
+		</prop>
+		<!-- 忽略schema，避免在xml中出现schema.表名 -->
+		<prop name="ignoreGeneratorSchema" value="true" />
+	</tableSetting>
+  </context>
+
+</generatorConfiguration>

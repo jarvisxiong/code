@@ -1,0 +1,16 @@
+package ${package};
+
+import com.ffzx.commerce.framework.annotation.MyBatisDao;
+import com.ffzx.commerce.framework.dao.CrudMapper;
+
+/**
+ * @className ${javaName}
+ *
+ * @author liujunjun
+ * @date ${date}
+ * @version 1.0.0
+ */
+@MyBatisDao
+public interface ${javaName} extends CrudMapper {
+
+}
