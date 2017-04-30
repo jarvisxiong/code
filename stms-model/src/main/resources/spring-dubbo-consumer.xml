@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans.xsd
+	 http://code.alibabatech.com/schema/dubbo	http://code.alibabatech.com/schema/dubbo/dubbo.xsd"
+	default-lazy-init="true">
+
+	<dubbo:reference id="dictApiService" interface="com.ffzx.basedata.api.service.DictApiService" timeout="30000"
+		version="1.0" registry="zookeeperClient" protocol="dubbo" check="false" />
+		
+	<dubbo:reference id="vendorApiService" interface="com.ffzx.member.api.service.VendorApiService" timeout="30000"
+		version="1.0" registry="zookeeperClient" protocol="dubbo" check="false" />
+		
+	<dubbo:reference id="codeRuleApiService" interface="com.ffzx.basedata.api.service.CodeRuleApiService"  
+	 timeout="300000" version="1.0"  registry="zookeeperClient" protocol="dubbo" check="false"/>	
+
+	<dubbo:reference id="commodityApiService" interface="com.ffzx.commodity.api.service.CommodityApiService"  
+	 timeout="300000" version="1.0"  registry="zookeeperClient" protocol="dubbo" check="false"/>	
+</beans>

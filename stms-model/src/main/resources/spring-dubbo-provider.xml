@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans.xsd
+	 http://code.alibabatech.com/schema/dubbo	http://code.alibabatech.com/schema/dubbo/dubbo.xsd"
+	 default-lazy-init="true">    
+
+    
+	<!-- 自动产生应付账单数据 -->
+    <bean id="payableBillApiServiceImpl" class="com.ffzx.stms.api.service.impl.PayableBillApiServiceImpl"/>
+    <dubbo:service interface="com.ffzx.stms.api.service.PayableBillApiService" version="1.0" ref="payableBillApiServiceImpl" registry="zookeeperService"/>
+    
+    <bean id="refundBillMqApiServiceImpl" class="com.ffzx.stms.api.service.impl.RefundBillMqApiServiceImpl"/>
+    <dubbo:service interface="com.ffzx.stms.api.service.RefundBillMqApiService" version="1.0" ref="refundBillMqApiServiceImpl" registry="zookeeperService"/>
+    
+    <!-- 供货价管理接口(根据条形码获取供货价信息) -->
+    <bean id="priceSchemeApiServiceImpl" class="com.ffzx.stms.api.service.impl.PriceSchemeApiServiceImpl"/>
+    <dubbo:service interface="com.ffzx.stms.api.service.PriceSchemeApiService" version="1.0" ref="priceSchemeApiServiceImpl" registry="zookeeperService"/>
+</beans>

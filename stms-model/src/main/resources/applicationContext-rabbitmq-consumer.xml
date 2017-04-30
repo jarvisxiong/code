@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p" xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:util="http://www.springframework.org/schema/util" xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.1.xsd
+		http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit-1.5.xsd">
+
+
+
+	<!-- #################################################################### -->
+	<!-- # RabbitMQ 队列 -->
+	<!-- #################################################################### -->
+
+	
+	<rabbit:queue  name="QUEUE_STMS_RETURNGOODS_TO_OTHER_USE_CONSUMER">
+		<rabbit:queue-arguments>
+			<!-- 开启集群环境镜像队列 -->
+			<entry key="x-ha-policy" value="all" />
+		</rabbit:queue-arguments>
+	</rabbit:queue>
+	
+	<rabbit:queue  name="QUEUE_STMS_REFUND_TO_OTHER_USE_CONSUMER">
+		<rabbit:queue-arguments>
+			<!-- 开启集群环境镜像队列 -->
+			<entry key="x-ha-policy" value="all" />
+		</rabbit:queue-arguments>
+	</rabbit:queue>
+	
+	<rabbit:queue  name="QUEUE_OMS_PAID_CHANGE">
+		<rabbit:queue-arguments>
+			<!-- 开启集群环境镜像队列 -->
+			<entry key="x-ha-policy" value="all" />
+		</rabbit:queue-arguments>
+	</rabbit:queue>
+	
+	<rabbit:queue  name="QUEUE_OUTBOUND_WMS_TO_STMS_PAYABLE_BILL_DETAIL">
+		<rabbit:queue-arguments>
+			<!-- 开启集群环境镜像队列 -->
+			<entry key="x-ha-policy" value="all" />
+		</rabbit:queue-arguments>
+	</rabbit:queue>
+	
+	<rabbit:queue  name="QUEUE_STMS_GOODS_CHANGE_SUPPLIERS">
+		<rabbit:queue-arguments>
+			<!-- 开启集群环境镜像队列 -->
+			<entry key="x-ha-policy" value="all" />
+		</rabbit:queue-arguments>
+	</rabbit:queue>
+	
+	<rabbit:queue  name="QUEUE_STMS_SUPPLIER_CHANGE_PURCHASING_MODE">
+		<rabbit:queue-arguments>
+			<!-- 开启集群环境镜像队列 -->
+			<entry key="x-ha-policy" value="all" />
+		</rabbit:queue-arguments>
+	</rabbit:queue>
+	
+	<!-- #################################################################### -->
+	<!-- # RabbitMQ Exchange -->
+	<!-- # PS：RabbitMQ 中所有生产者提交的消息都由 Exchange 来接受，再由 Exchange 按照特定的策略转发到 Queue 进行存储/处理 -->
+	<!-- # 策略规则：pattern 表达式中 # 表示0个或若干个关键字， * 表示一个关键字 -->
+	<!-- # 示例A：queues.# 能匹配 queues.sample 也能匹配 queues.sample.one -->
+	<!-- # 示例B：queues.* 能匹配 queues.sample 不能匹配 queues.sample.one -->
+	<!-- #################################################################### -->
+
+	
+	<rabbit:fanout-exchange  name="EXACHANGE_RETURNGOODS_TO_OTHER_USE">
+		<rabbit:bindings>
+			<rabbit:binding queue="QUEUE_STMS_RETURNGOODS_TO_OTHER_USE_CONSUMER"  />
+		</rabbit:bindings>
+	</rabbit:fanout-exchange>
+	
+	<rabbit:fanout-exchange  name="EXACHANGE_REFUND_TO_OTHER_USE">
+		<rabbit:bindings>
+			<rabbit:binding queue="QUEUE_STMS_REFUND_TO_OTHER_USE_CONSUMER"  />
+		</rabbit:bindings>
+	</rabbit:fanout-exchange>
+	
+	<rabbit:fanout-exchange  name="OMS_PAID_CHANGE_EXCHANGE">
+		<rabbit:bindings>
+			<rabbit:binding queue="QUEUE_OMS_PAID_CHANGE"  />
+		</rabbit:bindings>
+	</rabbit:fanout-exchange>
+	
+	<rabbit:fanout-exchange  name="EXACHANG_OUTBOUND_WMS_TO_STMS_PAYABLE_BILL_DETAIL">
+		<rabbit:bindings>
+			<rabbit:binding queue="QUEUE_OUTBOUND_WMS_TO_STMS_PAYABLE_BILL_DETAIL"  />
+		</rabbit:bindings>
+	</rabbit:fanout-exchange>
+
+	<rabbit:fanout-exchange  name="CIMS_COMMODITY_CHANE">
+		<rabbit:bindings>
+			<rabbit:binding queue="QUEUE_STMS_GOODS_CHANGE_SUPPLIERS"  />
+		</rabbit:bindings>
+	</rabbit:fanout-exchange>
+	
+	<rabbit:fanout-exchange  name="UC_VENDOR_CHANGE_EXCHANGE">
+		<rabbit:bindings>
+			<rabbit:binding queue="QUEUE_STMS_SUPPLIER_CHANGE_PURCHASING_MODE"  />
+		</rabbit:bindings>
+	</rabbit:fanout-exchange>
+	
+	<!-- #################################################################### -->
+	<!-- # RabbitMQ 消息监听容器（消费者） -->
+	<!-- #requeue-rejected 消息重试策略 可以参考死信队列重试 -->
+	<!-- #################################################################### -->	
+	<rabbit:listener-container connection-factory="rabbitConnectionFactory" message-converter="rabbitMessageConverter" channel-transacted="false" error-handler="logAndPropagateErrorHandler" requeue-rejected="false">
+		<rabbit:listener queue-names="QUEUE_STMS_RETURNGOODS_TO_OTHER_USE_CONSUMER" ref="refundBillRefundApiConsumer" method="onMessage" />
+		<rabbit:listener queue-names="QUEUE_STMS_REFUND_TO_OTHER_USE_CONSUMER" ref="refundBillRefundUpateApiConsumer" method="onMessage" />
+		<rabbit:listener queue-names="QUEUE_OMS_PAID_CHANGE" ref="payableBillDetailConsumer" method="onMessage" />
+		<rabbit:listener queue-names="QUEUE_OUTBOUND_WMS_TO_STMS_PAYABLE_BILL_DETAIL" ref="payableBillDetailOutBoundConsumer" method="onMessage" />
+		<rabbit:listener queue-names="QUEUE_STMS_GOODS_CHANGE_SUPPLIERS" ref="commodityUpdateApiConsumer" method="onMessage" />
+		<rabbit:listener queue-names="QUEUE_STMS_SUPPLIER_CHANGE_PURCHASING_MODE" ref="vendorUpdateApiConsumer" method="onMessage" />
+	</rabbit:listener-container> 
+	
+</beans>
